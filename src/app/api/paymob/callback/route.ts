@@ -3,7 +3,9 @@ import { isDatabaseConfigured, prisma } from "@/lib/prisma";
 
 export async function GET(req: Request) {
   if (!isDatabaseConfigured()) {
-    return NextResponse.redirect(new URL("/checkout?error=server_config", req.url));
+    return NextResponse.redirect(
+      new URL("/checkout?error=server_config", req.url),
+    );
   }
 
   const { searchParams } = new URL(req.url);
@@ -11,7 +13,9 @@ export async function GET(req: Request) {
   const success = searchParams.get("success") === "true";
 
   if (!orderId || Number.isNaN(orderId)) {
-    return NextResponse.redirect(new URL("/checkout?error=payment_failed", req.url));
+    return NextResponse.redirect(
+      new URL("/checkout?error=payment_failed", req.url),
+    );
   }
 
   if (success) {
@@ -22,7 +26,9 @@ export async function GET(req: Request) {
         orderStatus: "paid",
       },
     });
-    return NextResponse.redirect(new URL(`/order-confirmation/${orderId}?paid=1`, req.url));
+    return NextResponse.redirect(
+      new URL(`/order-confirmation/${orderId}?paid=1`, req.url),
+    );
   }
 
   await prisma.order.update({
@@ -33,5 +39,7 @@ export async function GET(req: Request) {
     },
   });
 
-  return NextResponse.redirect(new URL("/checkout?error=payment_failed", req.url));
+  return NextResponse.redirect(
+    new URL("/checkout?error=payment_failed", req.url),
+  );
 }

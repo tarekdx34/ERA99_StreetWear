@@ -53,8 +53,14 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
   }, [items]);
 
-  const count = useMemo(() => items.reduce((sum, item) => sum + item.qty, 0), [items]);
-  const subtotal = useMemo(() => items.reduce((sum, item) => sum + item.unitPrice * item.qty, 0), [items]);
+  const count = useMemo(
+    () => items.reduce((sum, item) => sum + item.qty, 0),
+    [items],
+  );
+  const subtotal = useMemo(
+    () => items.reduce((sum, item) => sum + item.unitPrice * item.qty, 0),
+    [items],
+  );
 
   const addItem = (incoming: CartItem) => {
     setItems((prev) => {
@@ -73,14 +79,17 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     setOpen(true);
   };
 
-  const removeItem = (key: string) => setItems((prev) => prev.filter((item) => itemKey(item) !== key));
+  const removeItem = (key: string) =>
+    setItems((prev) => prev.filter((item) => itemKey(item) !== key));
 
   const updateQty = (key: string, qty: number) => {
     if (qty <= 0) {
       removeItem(key);
       return;
     }
-    setItems((prev) => prev.map((item) => (itemKey(item) === key ? { ...item, qty } : item)));
+    setItems((prev) =>
+      prev.map((item) => (itemKey(item) === key ? { ...item, qty } : item)),
+    );
   };
 
   return (

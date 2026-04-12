@@ -1,7 +1,8 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { isDatabaseConfigured, prisma } from "@/lib/prisma";
-import { orderNumberFromId } from "@/lib/utils";
+import { orderNumberFromIdWithPrefix } from "@/lib/utils";
+import { getAdminSettings } from "@/lib/admin-settings";
 import { sendAdminWhatsApp } from "@/lib/whatsapp";
 
 const itemSchema = z.object({
@@ -35,7 +36,7 @@ export async function POST(req: Request) {
     if (!isDatabaseConfigured()) {
       return NextResponse.json(
         { message: "Server configuration error: DATABASE_URL is missing" },
-        { status: 500 }
+        { status: 500 },
       );
     }
 
@@ -58,42 +59,65 @@ export async function POST(req: Request) {
         total: parsed.total,
         paymentMethod: parsed.paymentMethod,
         paymentStatus: parsed.paymentMethod === "COD" ? "pending" : "initiated",
-        orderStatus: parsed.paymentMethod === "COD" ? "pending_confirmation" : "pending_payment",
+        orderStatus:
+          parsed.paymentMethod === "COD"
+            ? "pending_confirmation"
+            : "pending_payment",
       },
     });
 
-    const orderNumber = orderNumberFromId(created.id);
+    const adminSettings = await getAdminSettings();
+    const orderNumber = orderNumberFromIdWithPrefix(
+      created.id,
+      adminSettings.orderNumberPrefix,
+    );
     const updated = await prisma.order.update({
       where: { id: created.id },
       data: { orderNumber },
     });
 
-    await sendAdminWhatsApp({
-      id: updated.id,
-      orderNumber: updated.orderNumber,
-      customerName: updated.customerName,
-      phone: updated.phone,
-      governorate: updated.governorate,
-      city: updated.city,
-      address: updated.address,
-      building: updated.building,
-      notes: updated.notes,
-      items: parsed.items.map((item) => ({
-        name: item.name,
-        color: item.color,
-        size: item.size,
-        qty: item.qty,
-        unitPrice: item.unitPrice,
-      })),
-      subtotal: updated.subtotal,
-      deliveryFee: updated.deliveryFee,
-      total: updated.total,
-      paymentMethod: updated.paymentMethod,
-    });
+    if (adminSettings.whatsappNotificationsEnabled) {
+      await sendAdminWhatsApp(
+        {
+          id: updated.id,
+          orderNumber: updated.orderNumber,
+          customerName: updated.customerName,
+          phone: updated.phone,
+          governorate: updated.governorate,
+          city: updated.city,
+          address: updated.address,
+          building: updated.building,
+          notes: updated.notes,
+          items: parsed.items.map((item) => ({
+            name: item.name,
+            color: item.color,
+            size: item.size,
+            qty: item.qty,
+            unitPrice: item.unitPrice,
+          })),
+          subtotal: updated.subtotal,
+          deliveryFee: updated.deliveryFee,
+          total: updated.total,
+          paymentMethod: updated.paymentMethod,
+        },
+        {
+          accountSid: adminSettings.twilioAccountSid,
+          authToken: adminSettings.twilioAuthToken,
+          from: adminSettings.twilioWhatsappFrom,
+          to: adminSettings.adminWhatsappNumber,
+        },
+      );
+    }
 
-    return NextResponse.json({ orderId: updated.id, orderNumber: updated.orderNumber });
+    return NextResponse.json({
+      orderId: updated.id,
+      orderNumber: updated.orderNumber,
+    });
   } catch (error) {
     console.error(error);
-    return NextResponse.json({ message: "Invalid or failed order submission" }, { status: 400 });
+    return NextResponse.json(
+      { message: "Invalid or failed order submission" },
+      { status: 400 },
+    );
   }
 }

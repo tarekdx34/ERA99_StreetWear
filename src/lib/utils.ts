@@ -7,5 +7,10 @@ export function isEgyptPhone(value: string) {
 }
 
 export function orderNumberFromId(id: number) {
-  return `QUTB-${String(id).padStart(5, "0")}`;
+  return `99-${String(id).padStart(5, "0")}`;
+}
+
+export function orderNumberFromIdWithPrefix(id: number, prefix: string) {
+  const cleanPrefix = (prefix || "99").trim() || "99";
+  return `${cleanPrefix}-${String(id).padStart(5, "0")}`;
 }

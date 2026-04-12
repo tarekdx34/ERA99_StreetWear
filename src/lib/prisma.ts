@@ -1,9 +1,18 @@
 import { PrismaClient } from "@prisma/client";
 
-const globalForPrisma = globalThis as unknown as { prisma: PrismaClient | undefined };
+const globalForPrisma = globalThis as unknown as {
+  prisma: PrismaClient | undefined;
+};
 
 export function isDatabaseConfigured() {
-  return Boolean(process.env.DATABASE_URL && process.env.DATABASE_URL.trim().length > 0);
+  const url = process.env.DATABASE_URL?.trim() ?? "";
+  const hasPlaceholderCreds =
+    /:\/\/USER:PASSWORD@/i.test(url) ||
+    /:\/\/postgres:PASSWORD@/i.test(url);
+
+  return Boolean(
+    url.length > 0 && !hasPlaceholderCreds,
+  );
 }
 
 export const prisma =

@@ -7,7 +7,7 @@ export async function POST(req: Request) {
     if (!isDatabaseConfigured()) {
       return NextResponse.json(
         { message: "Server configuration error: DATABASE_URL is missing" },
-        { status: 500 }
+        { status: 500 },
       );
     }
 
@@ -34,7 +34,10 @@ export async function POST(req: Request) {
     });
 
     const orderNumber = orderNumberFromId(created.id);
-    await prisma.order.update({ where: { id: created.id }, data: { orderNumber } });
+    await prisma.order.update({
+      where: { id: created.id },
+      data: { orderNumber },
+    });
 
     const successUrl = `${process.env.NEXT_PUBLIC_BASE_URL ?? "http://localhost:3000"}/api/paymob/callback?orderId=${created.id}&success=true`;
     const failureUrl = `${process.env.NEXT_PUBLIC_BASE_URL ?? "http://localhost:3000"}/checkout?error=payment_failed`;
@@ -44,9 +47,15 @@ export async function POST(req: Request) {
       return NextResponse.json({ redirectUrl: paymobHosted });
     }
 
-    return NextResponse.json({ redirectUrl: successUrl, fallbackFailure: failureUrl });
+    return NextResponse.json({
+      redirectUrl: successUrl,
+      fallbackFailure: failureUrl,
+    });
   } catch (error) {
     console.error(error);
-    return NextResponse.json({ message: "Payment initialization failed" }, { status: 400 });
+    return NextResponse.json(
+      { message: "Payment initialization failed" },
+      { status: 400 },
+    );
   }
 }

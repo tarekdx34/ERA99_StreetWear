@@ -25,7 +25,8 @@ type Props = {
 };
 
 export function OrderConfirmationClient(props: Props) {
-  const paid = props.paymentStatus === "paid" || props.paymentMethod === "ONLINE";
+  const paid =
+    props.paymentStatus === "paid" || props.paymentMethod === "ONLINE";
 
   return (
     <main className="min-h-screen bg-[#080808] px-6 pb-16 pt-28 md:px-10">
@@ -37,7 +38,14 @@ export function OrderConfirmationClient(props: Props) {
           animate={{ scale: 1, opacity: 1 }}
           transition={{ duration: 0.5, ease: "easeOut" }}
         >
-          <circle cx="40" cy="40" r="38" stroke="#F0EDE8" strokeWidth="2" fill="none" />
+          <circle
+            cx="40"
+            cy="40"
+            r="38"
+            stroke="#F0EDE8"
+            strokeWidth="2"
+            fill="none"
+          />
           <motion.path
             d="M22 41l12 12 24-26"
             stroke="#F0EDE8"
@@ -50,22 +58,33 @@ export function OrderConfirmationClient(props: Props) {
           />
         </motion.svg>
 
-        <h1 className="mt-6 font-blackletter text-5xl md:text-[64px]">ORDER RECEIVED</h1>
+        <h1 className="mt-6 font-blackletter text-5xl md:text-[64px]">
+          ORDER RECEIVED
+        </h1>
         <p className="mt-2 text-xl text-[#F0EDE8]/50">قطب</p>
-        <p className="mt-4 text-sm uppercase tracking-[0.2em]">#{props.orderNumber}</p>
+        <p className="mt-4 text-sm uppercase tracking-[0.2em]">
+          #{props.orderNumber}
+        </p>
 
         <section className="mt-8 border border-[#F0EDE8]/18 bg-[#111111] p-5 text-left">
-          <h2 className="text-xs uppercase tracking-[0.16em] text-[#F0EDE8]/65">Order Summary</h2>
+          <h2 className="text-xs uppercase tracking-[0.16em] text-[#F0EDE8]/65">
+            Order Summary
+          </h2>
           <div className="mt-4 space-y-2 text-sm">
             {props.items.map((item, index) => (
               <p key={`${item.name}-${index}`}>
-                {item.name} — {item.color} — {item.size} — x{item.qty} — {formatEGP(item.unitPrice * item.qty)}
+                {item.name} — {item.color} — {item.size} — x{item.qty} —{" "}
+                {formatEGP(item.unitPrice * item.qty)}
               </p>
             ))}
           </div>
           <div className="mt-4 border-t border-[#F0EDE8]/15 pt-4 text-sm text-[#F0EDE8]/75">
-            <p>{props.address}, {props.city}, {props.governorate}</p>
-            <p className="mt-1 text-lg font-bold text-[#F0EDE8]">Total: {formatEGP(props.total)}</p>
+            <p>
+              {props.address}, {props.city}, {props.governorate}
+            </p>
+            <p className="mt-1 text-lg font-bold text-[#F0EDE8]">
+              Total: {formatEGP(props.total)}
+            </p>
           </div>
         </section>
 
@@ -76,15 +95,26 @@ export function OrderConfirmationClient(props: Props) {
         </p>
 
         <div className="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-2">
-          <button disabled className="border border-[#F0EDE8]/25 px-4 py-3 text-xs uppercase tracking-[0.14em] opacity-50">
+          <button
+            disabled
+            className="border border-[#F0EDE8]/25 px-4 py-3 text-xs uppercase tracking-[0.14em] opacity-50"
+          >
             TRACK ORDER (COMING SOON)
           </button>
-          <Link href="/" className="bg-[#F0EDE8] px-4 py-3 text-center text-xs font-bold uppercase tracking-[0.14em] text-black">
+          <Link
+            href="/"
+            className="bg-[#F0EDE8] px-4 py-3 text-center text-xs font-bold uppercase tracking-[0.14em] text-black"
+          >
             CONTINUE SHOPPING →
           </Link>
         </div>
 
-        <a href="https://wa.me/201000000000" target="_blank" rel="noreferrer" className="mt-8 inline-block text-sm hover:underline">
+        <a
+          href="https://wa.me/201000000000"
+          target="_blank"
+          rel="noreferrer"
+          className="mt-8 inline-block text-sm hover:underline"
+        >
           Questions? WhatsApp us directly →
         </a>
       </div>

@@ -8,11 +8,24 @@ type WhatsAppOrderPayload = {
   address: string;
   building?: string | null;
   notes?: string | null;
-  items: Array<{ name: string; color: string; size: string; qty: number; unitPrice: number }>;
+  items: Array<{
+    name: string;
+    color: string;
+    size: string;
+    qty: number;
+    unitPrice: number;
+  }>;
   subtotal: number;
   deliveryFee: number;
   total: number;
   paymentMethod: string;
+};
+
+type WhatsAppCredentials = {
+  accountSid?: string;
+  authToken?: string;
+  from?: string;
+  to?: string;
 };
 
 function buildMessage(payload: WhatsAppOrderPayload) {
@@ -24,7 +37,7 @@ function buildMessage(payload: WhatsAppOrderPayload) {
     .join("\n");
 
   return [
-    `🖤 NEW QUTB ORDER #${String(payload.id).padStart(5, "0")}`,
+    `🖤 NEW ORDER — 99 #${String(payload.id).padStart(5, "0")}`,
     "───────────────",
     payload.customerName,
     payload.phone,
@@ -43,33 +56,43 @@ function buildMessage(payload: WhatsAppOrderPayload) {
   ].join("\n");
 }
 
-export async function sendAdminWhatsApp(payload: WhatsAppOrderPayload) {
-  const accountSid = process.env.TWILIO_ACCOUNT_SID;
-  const authToken = process.env.TWILIO_AUTH_TOKEN;
-  const from = process.env.TWILIO_WHATSAPP_FROM;
-  const to = process.env.ADMIN_WHATSAPP_TO;
-
-  const body = buildMessage(payload);
+export async function sendWhatsAppMessage(message: string, credentials?: WhatsAppCredentials) {
+  const accountSid = credentials?.accountSid || process.env.TWILIO_ACCOUNT_SID;
+  const authToken = credentials?.authToken || process.env.TWILIO_AUTH_TOKEN;
+  const from = credentials?.from || process.env.TWILIO_WHATSAPP_FROM;
+  const to = credentials?.to || process.env.ADMIN_WHATSAPP_TO;
 
   if (!accountSid || !authToken || !from || !to) {
-    console.log("[WHATSAPP_FALLBACK]", body);
+    console.log("[WHATSAPP_FALLBACK]", message);
     return;
   }
 
   const encoded = new URLSearchParams({
     From: from,
     To: to,
-    Body: body,
+    Body: message,
   });
 
   const auth = Buffer.from(`${accountSid}:${authToken}`).toString("base64");
 
-  await fetch(`https://api.twilio.com/2010-04-01/Accounts/${accountSid}/Messages.json`, {
-    method: "POST",
-    headers: {
-      Authorization: `Basic ${auth}`,
-      "Content-Type": "application/x-www-form-urlencoded",
+  await fetch(
+    `https://api.twilio.com/2010-04-01/Accounts/${accountSid}/Messages.json`,
+    {
+      method: "POST",
+      headers: {
+        Authorization: `Basic ${auth}`,
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body: encoded,
     },
-    body: encoded,
-  });
+  );
+}
+
+export async function sendAdminWhatsApp(
+  payload: WhatsAppOrderPayload,
+  credentials?: WhatsAppCredentials,
+) {
+  const body = buildMessage(payload);
+
+  await sendWhatsAppMessage(body, credentials);
 }

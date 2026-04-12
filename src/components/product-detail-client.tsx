@@ -6,18 +6,19 @@ import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { makeItemKey, useCart } from "@/contexts/cart-context";
 import type { Product } from "@/lib/products";
-import { products, sizes } from "@/lib/products";
+import { sizes } from "@/lib/products";
 import { formatEGP } from "@/lib/utils";
-import { MinusIcon, PlusIcon, ShieldIcon, TruckIcon, WeightIcon, CloseIcon } from "@/components/icons";
+import {
+  MinusIcon,
+  PlusIcon,
+  ShieldIcon,
+  TruckIcon,
+  WeightIcon,
+  CloseIcon,
+} from "@/components/icons";
 import { ProductCard } from "@/components/product-card";
 
-function Accordion({
-  title,
-  content,
-}: {
-  title: string;
-  content: string;
-}) {
+function Accordion({ title, content }: { title: string; content: string }) {
   const [open, setOpen] = useState(false);
   return (
     <div className="border-b border-[#F0EDE8]/15">
@@ -44,7 +45,13 @@ function Accordion({
   );
 }
 
-function SizeGuideModal({ open, onClose }: { open: boolean; onClose: () => void }) {
+function SizeGuideModal({
+  open,
+  onClose,
+}: {
+  open: boolean;
+  onClose: () => void;
+}) {
   return (
     <AnimatePresence>
       {open ? (
@@ -64,8 +71,13 @@ function SizeGuideModal({ open, onClose }: { open: boolean; onClose: () => void 
             className="fixed left-1/2 top-1/2 z-[100] w-[92vw] max-w-lg -translate-x-1/2 -translate-y-1/2 border border-[#F0EDE8]/30 bg-[#111111] p-5"
           >
             <div className="mb-4 flex items-center justify-between border-b border-[#F0EDE8]/15 pb-3">
-              <h4 className="text-sm uppercase tracking-[0.14em]">SIZE GUIDE (CM)</h4>
-              <button className="border border-[#F0EDE8]/25 p-2" onClick={onClose}>
+              <h4 className="text-sm uppercase tracking-[0.14em]">
+                SIZE GUIDE (CM)
+              </h4>
+              <button
+                className="border border-[#F0EDE8]/25 p-2"
+                onClick={onClose}
+              >
                 <CloseIcon />
               </button>
             </div>
@@ -96,7 +108,13 @@ function SizeGuideModal({ open, onClose }: { open: boolean; onClose: () => void 
   );
 }
 
-export function ProductDetailClient({ product }: { product: Product }) {
+export function ProductDetailClient({
+  product,
+  relatedProducts,
+}: {
+  product: Product;
+  relatedProducts?: Product[];
+}) {
   const [mainImage, setMainImage] = useState(product.images[0]);
   const [selectedSize, setSelectedSize] = useState<string | null>(null);
   const [qty, setQty] = useState(1);
@@ -105,7 +123,10 @@ export function ProductDetailClient({ product }: { product: Product }) {
   const { addItem, openCart } = useCart();
   const router = useRouter();
 
-  const related = useMemo(() => products.filter((p) => p.id !== product.id).slice(0, 4), [product.id]);
+  const related = useMemo(
+    () => (relatedProducts || []).filter((p) => p.id !== product.id).slice(0, 4),
+    [product.id, relatedProducts],
+  );
 
   const canAdd = !!selectedSize;
 
@@ -150,7 +171,11 @@ export function ProductDetailClient({ product }: { product: Product }) {
         <section>
           <div className="lg:sticky lg:top-28">
             <div className="overflow-hidden border border-[#F0EDE8]/15">
-              <img src={mainImage} alt={product.name} className="h-[68vh] w-full object-cover" />
+              <img
+                src={mainImage}
+                alt={product.name}
+                className="h-[68vh] w-full object-cover"
+              />
             </div>
             <div className="mt-3 grid grid-cols-4 gap-2">
               {product.images.map((image) => (
@@ -159,7 +184,11 @@ export function ProductDetailClient({ product }: { product: Product }) {
                   onClick={() => setMainImage(image)}
                   className={`overflow-hidden border ${mainImage === image ? "border-[#F0EDE8]" : "border-[#F0EDE8]/20"}`}
                 >
-                  <img src={image} alt={`${product.name} thumb`} className="h-24 w-full object-cover" />
+                  <img
+                    src={image}
+                    alt={`${product.name} thumb`}
+                    className="h-24 w-full object-cover"
+                  />
                 </button>
               ))}
             </div>
@@ -170,22 +199,39 @@ export function ProductDetailClient({ product }: { product: Product }) {
           <p className="text-[11px] uppercase tracking-[0.14em] text-[#F0EDE8]/45">
             HOME / SHOP / {product.name} {product.color}
           </p>
-          <h1 className="mt-4 text-[32px] font-medium">{product.name} — {product.color}</h1>
-          <p className="mt-2 text-[28px] font-bold">{formatEGP(product.price)}</p>
+          <h1 className="mt-4 text-[32px] font-medium">
+            {product.name} — {product.color}
+          </h1>
+          <p className="mt-2 text-[28px] font-bold">
+              {product.compareAtPrice ? (
+                <>
+                  <span className="mr-2 line-through text-[#F0EDE8]/45">{formatEGP(product.compareAtPrice)}</span>
+                  <span>{formatEGP(product.price)}</span>
+                </>
+              ) : (
+                <span>{formatEGP(product.price)}</span>
+              )}
+          </p>
 
           <div className="mt-4 flex items-center gap-2 text-xs uppercase tracking-[0.16em] text-[#8B0000]">
             <motion.span
               className="h-2 w-2 bg-[#8B0000]"
               animate={{ opacity: [0.4, 1, 0.4] }}
-              transition={{ duration: 1.4, repeat: Infinity, ease: "easeInOut" }}
+              transition={{
+                duration: 1.4,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
             />
-            DROP 001 — LIMITED
+            99 — LIMITED
           </div>
 
           <div className="my-6 border-b-[0.5px] border-[#F0EDE8]/15" />
 
           <div>
-            <p className="mb-3 text-xs uppercase tracking-[0.16em] text-[#F0EDE8]/65">Select size</p>
+            <p className="mb-3 text-xs uppercase tracking-[0.16em] text-[#F0EDE8]/65">
+              Select size
+            </p>
             <div className="flex flex-wrap gap-2">
               {sizes.map((size) => {
                 const inStock = product.stockBySize[size];
@@ -205,20 +251,35 @@ export function ProductDetailClient({ product }: { product: Product }) {
                 );
               })}
             </div>
-            {!selectedSize ? <p className="mt-2 text-xs text-[#8B0000]">Please select a size.</p> : null}
-            <button onClick={() => setOpenGuide(true)} className="mt-3 text-xs uppercase tracking-[0.16em] text-[#F0EDE8]/75 hover:underline">
+            {!selectedSize ? (
+              <p className="mt-2 text-xs text-[#8B0000]">
+                Please select a size.
+              </p>
+            ) : null}
+            <button
+              onClick={() => setOpenGuide(true)}
+              className="mt-3 text-xs uppercase tracking-[0.16em] text-[#F0EDE8]/75 hover:underline"
+            >
               SIZE GUIDE →
             </button>
           </div>
 
           <div className="mt-6 flex items-center gap-4">
-            <span className="text-xs uppercase tracking-[0.16em] text-[#F0EDE8]/65">Qty</span>
+            <span className="text-xs uppercase tracking-[0.16em] text-[#F0EDE8]/65">
+              Qty
+            </span>
             <div className="inline-flex items-center border border-[#F0EDE8]/30">
-              <button className="h-11 w-11 border-r border-[#F0EDE8]/30" onClick={() => setQty((q) => Math.max(1, q - 1))}>
+              <button
+                className="h-11 w-11 border-r border-[#F0EDE8]/30"
+                onClick={() => setQty((q) => Math.max(1, q - 1))}
+              >
                 <MinusIcon />
               </button>
               <span className="w-12 text-center text-sm">{qty}</span>
-              <button className="h-11 w-11 border-l border-[#F0EDE8]/30" onClick={() => setQty((q) => q + 1)}>
+              <button
+                className="h-11 w-11 border-l border-[#F0EDE8]/30"
+                onClick={() => setQty((q) => q + 1)}
+              >
                 <PlusIcon />
               </button>
             </div>
@@ -242,21 +303,38 @@ export function ProductDetailClient({ product }: { product: Product }) {
           </div>
 
           <div className="mt-6 grid grid-cols-1 gap-2 text-xs text-[#F0EDE8]/72 sm:grid-cols-3">
-            <div className="flex items-center gap-2 border border-[#F0EDE8]/12 px-3 py-2"><TruckIcon />Free Alex Delivery</div>
-            <div className="flex items-center gap-2 border border-[#F0EDE8]/12 px-3 py-2"><ShieldIcon />Limited Stock</div>
-            <div className="flex items-center gap-2 border border-[#F0EDE8]/12 px-3 py-2"><WeightIcon />220GSM Heavyweight</div>
+            <div className="flex items-center gap-2 border border-[#F0EDE8]/12 px-3 py-2">
+              <TruckIcon />
+              Free Alex Delivery
+            </div>
+            <div className="flex items-center gap-2 border border-[#F0EDE8]/12 px-3 py-2">
+              <ShieldIcon />
+              QUTB 99
+            </div>
+            <div className="flex items-center gap-2 border border-[#F0EDE8]/12 px-3 py-2">
+              <WeightIcon />
+              220GSM Heavyweight
+            </div>
           </div>
 
           <div className="mt-8">
-            <Accordion title="Fabric Details" content={product.description.fabric} />
+            <Accordion
+              title="Fabric Details"
+              content={product.description.fabric}
+            />
             <Accordion title="Size & Fit" content={product.description.fit} />
-            <Accordion title="Care Instructions" content={product.description.care} />
+            <Accordion
+              title="Care Instructions"
+              content={product.description.care}
+            />
           </div>
         </section>
       </div>
 
       <section className="mx-auto mt-16 max-w-7xl">
-        <h2 className="mb-8 text-2xl uppercase tracking-[0.14em]">YOU MIGHT ALSO LIKE</h2>
+        <h2 className="mb-8 text-2xl uppercase tracking-[0.14em]">
+          YOU MIGHT ALSO LIKE
+        </h2>
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-4">
           {related.map((item) => (
             <ProductCard key={item.id} product={item} />

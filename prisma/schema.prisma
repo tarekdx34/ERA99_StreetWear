@@ -28,3 +28,17 @@ model Order {
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
 }
+
+model LoginAttempt {
+  id        Int      @id @default(autoincrement())
+  ip        String
+  username  String?
+  success   Boolean
+  createdAt DateTime @default(now())
+}
+
+model Setting {
+  id    Int    @id @default(autoincrement())
+  key   String @unique
+  value String
+}

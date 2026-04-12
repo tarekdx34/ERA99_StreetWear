@@ -1,11 +1,14 @@
 import { NextResponse } from "next/server";
 import { isDatabaseConfigured, prisma } from "@/lib/prisma";
 
-export async function GET(_: Request, { params }: { params: Promise<{ id: string }> }) {
+export async function GET(
+  _: Request,
+  { params }: { params: Promise<{ id: string }> },
+) {
   if (!isDatabaseConfigured()) {
     return NextResponse.json(
       { message: "Server configuration error: DATABASE_URL is missing" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 
@@ -16,7 +19,8 @@ export async function GET(_: Request, { params }: { params: Promise<{ id: string
   }
 
   const order = await prisma.order.findUnique({ where: { id: orderId } });
-  if (!order) return NextResponse.json({ message: "Not found" }, { status: 404 });
+  if (!order)
+    return NextResponse.json({ message: "Not found" }, { status: 404 });
 
   return NextResponse.json(order);
 }

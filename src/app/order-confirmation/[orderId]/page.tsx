@@ -26,7 +26,15 @@ export default async function OrderConfirmationPage({
       address={order.address}
       city={order.city}
       governorate={order.governorate}
-      items={order.items as Array<{ name: string; color: string; size: string; qty: number; unitPrice: number }>}
+      items={
+        order.items as Array<{
+          name: string;
+          color: string;
+          size: string;
+          qty: number;
+          unitPrice: number;
+        }>
+      }
     />
   );
 }

@@ -37,7 +37,16 @@ export function ProductCard({ product }: { product: Product }) {
         <h3 className="mt-4 text-sm font-medium uppercase tracking-[0.1em]">
           {product.name} — {product.color}
         </h3>
-        <p className="mt-2 text-xs uppercase tracking-[0.14em] text-[#F0EDE8]/65">{formatEGP(product.price)}</p>
+        <p className="mt-2 text-xs uppercase tracking-[0.14em] text-[#F0EDE8]/65">
+          {product.compareAtPrice ? (
+            <>
+              <span className="mr-2 line-through text-[#F0EDE8]/45">{formatEGP(product.compareAtPrice)}</span>
+              <span>{formatEGP(product.price)}</span>
+            </>
+          ) : (
+            formatEGP(product.price)
+          )}
+        </p>
       </Link>
     </motion.article>
   );
