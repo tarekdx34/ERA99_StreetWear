@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { usePathname } from "next/navigation";
 import { useCart } from "@/contexts/cart-context";
 import { CartIcon, SearchIcon } from "@/components/icons";
 import { CartDrawer } from "@/components/cart-drawer";
@@ -27,6 +28,13 @@ export function SiteChrome({
   showAnnouncementStrip?: boolean;
   announcementText?: string;
 }) {
+  const pathname = usePathname();
+  const isAdminRoute = pathname?.startsWith("/admin");
+
+  if (isAdminRoute) {
+    return null;
+  }
+
   const { count, openCart } = useCart();
   const stripHeightClass = showAnnouncementStrip ? "top-8" : "top-0";
 

@@ -42,14 +42,19 @@ export async function PATCH(
   try {
     const body = await req.json();
     const parsed = statusSchema.parse(body);
+    const nextPaymentStatus = parsed.orderStatus === "delivered" ? "paid" : undefined;
 
     const updated = await prisma.order.update({
       where: { id: orderId },
-      data: { orderStatus: parsed.orderStatus },
+      data: {
+        orderStatus: parsed.orderStatus,
+        ...(nextPaymentStatus ? { paymentStatus: nextPaymentStatus } : {}),
+      },
       select: {
         id: true,
         orderNumber: true,
         orderStatus: true,
+        paymentStatus: true,
         updatedAt: true,
       },
     });

@@ -26,6 +26,12 @@ const settingsSchema = z.object({
   newOrderSoundEnabled: z.boolean(),
   lowStockAlertThreshold: z.number().int().positive(),
   lowStockWhatsappAlertEnabled: z.boolean(),
+  dashboardPaymentFailureWarningRate: z.number().positive(),
+  dashboardPaymentFailureCriticalRate: z.number().positive(),
+  dashboardStaleConfirmationWarningCount: z.number().int().positive(),
+  dashboardStaleConfirmationCriticalCount: z.number().int().positive(),
+  dashboardSecurityWarningCount: z.number().int().positive(),
+  dashboardSecurityCriticalCount: z.number().int().positive(),
 
   showAnnouncementStrip: z.boolean(),
   announcementStripText: z.string(),

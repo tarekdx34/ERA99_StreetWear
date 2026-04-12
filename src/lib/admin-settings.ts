@@ -27,6 +27,13 @@ export type AdminSettingsModel = {
   lowStockAlertThreshold: number;
   lowStockWhatsappAlertEnabled: boolean;
 
+  dashboardPaymentFailureWarningRate: number;
+  dashboardPaymentFailureCriticalRate: number;
+  dashboardStaleConfirmationWarningCount: number;
+  dashboardStaleConfirmationCriticalCount: number;
+  dashboardSecurityWarningCount: number;
+  dashboardSecurityCriticalCount: number;
+
   showAnnouncementStrip: boolean;
   announcementStripText: string;
   maintenanceMode: boolean;
@@ -61,6 +68,13 @@ export const defaultSettings: AdminSettingsModel = {
   lowStockAlertThreshold: 10,
   lowStockWhatsappAlertEnabled: true,
 
+  dashboardPaymentFailureWarningRate: 10,
+  dashboardPaymentFailureCriticalRate: 18,
+  dashboardStaleConfirmationWarningCount: 4,
+  dashboardStaleConfirmationCriticalCount: 10,
+  dashboardSecurityWarningCount: 6,
+  dashboardSecurityCriticalCount: 15,
+
   showAnnouncementStrip: true,
   announcementStripText:
     "QUTB - 99 - ALEXANDRIA - THE AXIS - NINETY NINE - EVERYTHING REVOLVES - 99",
@@ -68,10 +82,28 @@ export const defaultSettings: AdminSettingsModel = {
 };
 
 function sanitize(raw: any): AdminSettingsModel {
+  const paymentWarning = Math.max(1, Number(raw?.dashboardPaymentFailureWarningRate ?? defaultSettings.dashboardPaymentFailureWarningRate));
+  const paymentCriticalRaw = Math.max(1, Number(raw?.dashboardPaymentFailureCriticalRate ?? defaultSettings.dashboardPaymentFailureCriticalRate));
+  const paymentCritical = Math.max(paymentWarning, paymentCriticalRaw);
+
+  const staleWarning = Math.max(1, Number(raw?.dashboardStaleConfirmationWarningCount ?? defaultSettings.dashboardStaleConfirmationWarningCount));
+  const staleCriticalRaw = Math.max(1, Number(raw?.dashboardStaleConfirmationCriticalCount ?? defaultSettings.dashboardStaleConfirmationCriticalCount));
+  const staleCritical = Math.max(staleWarning, staleCriticalRaw);
+
+  const securityWarning = Math.max(1, Number(raw?.dashboardSecurityWarningCount ?? defaultSettings.dashboardSecurityWarningCount));
+  const securityCriticalRaw = Math.max(1, Number(raw?.dashboardSecurityCriticalCount ?? defaultSettings.dashboardSecurityCriticalCount));
+  const securityCritical = Math.max(securityWarning, securityCriticalRaw);
+
   return {
     ...defaultSettings,
     ...raw,
     currency: "EGP",
+    dashboardPaymentFailureWarningRate: paymentWarning,
+    dashboardPaymentFailureCriticalRate: paymentCritical,
+    dashboardStaleConfirmationWarningCount: staleWarning,
+    dashboardStaleConfirmationCriticalCount: staleCritical,
+    dashboardSecurityWarningCount: securityWarning,
+    dashboardSecurityCriticalCount: securityCritical,
     deliveryFees: Array.isArray(raw?.deliveryFees)
       ? raw.deliveryFees
           .map((item: any) => ({

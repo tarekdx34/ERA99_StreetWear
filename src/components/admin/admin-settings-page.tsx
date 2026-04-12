@@ -29,6 +29,13 @@ type SettingsModel = {
   lowStockAlertThreshold: number;
   lowStockWhatsappAlertEnabled: boolean;
 
+  dashboardPaymentFailureWarningRate: number;
+  dashboardPaymentFailureCriticalRate: number;
+  dashboardStaleConfirmationWarningCount: number;
+  dashboardStaleConfirmationCriticalCount: number;
+  dashboardSecurityWarningCount: number;
+  dashboardSecurityCriticalCount: number;
+
   showAnnouncementStrip: boolean;
   announcementStripText: string;
   maintenanceMode: boolean;
@@ -55,6 +62,13 @@ const EMPTY_SETTINGS: SettingsModel = {
   newOrderSoundEnabled: true,
   lowStockAlertThreshold: 10,
   lowStockWhatsappAlertEnabled: true,
+
+  dashboardPaymentFailureWarningRate: 10,
+  dashboardPaymentFailureCriticalRate: 18,
+  dashboardStaleConfirmationWarningCount: 4,
+  dashboardStaleConfirmationCriticalCount: 10,
+  dashboardSecurityWarningCount: 6,
+  dashboardSecurityCriticalCount: 15,
 
   showAnnouncementStrip: true,
   announcementStripText: "",
@@ -305,6 +319,72 @@ export function AdminSettingsPage() {
           </div>
         </div>
         <button type="button" onClick={testWhatsapp} className="mt-3 border border-[#F0EDE8]/20 px-3 py-2 text-xs uppercase tracking-[0.14em]">Send Test WhatsApp</button>
+      </section>
+
+      <section className="border border-[#F0EDE8]/12 bg-[#111111] p-4">
+        <h2 className="text-xs uppercase tracking-[0.2em] text-[#F0EDE8]/65">Dashboard Alert Rules</h2>
+        <div className="mt-3 grid gap-3 md:grid-cols-2">
+          <label className="flex items-center justify-between gap-3 border border-[#F0EDE8]/12 bg-[#151515] px-3 py-2 text-sm">
+            <span>Payment failure warning (%)</span>
+            <input
+              type="number"
+              min={1}
+              value={settings.dashboardPaymentFailureWarningRate}
+              onChange={(e) => setField("dashboardPaymentFailureWarningRate", Number(e.target.value || 1))}
+              className="w-24 border border-[#F0EDE8]/20 bg-[#0E0E0E] px-2 py-1"
+            />
+          </label>
+          <label className="flex items-center justify-between gap-3 border border-[#F0EDE8]/12 bg-[#151515] px-3 py-2 text-sm">
+            <span>Payment failure critical (%)</span>
+            <input
+              type="number"
+              min={1}
+              value={settings.dashboardPaymentFailureCriticalRate}
+              onChange={(e) => setField("dashboardPaymentFailureCriticalRate", Number(e.target.value || 1))}
+              className="w-24 border border-[#F0EDE8]/20 bg-[#0E0E0E] px-2 py-1"
+            />
+          </label>
+          <label className="flex items-center justify-between gap-3 border border-[#F0EDE8]/12 bg-[#151515] px-3 py-2 text-sm">
+            <span>Stale confirmation warning count</span>
+            <input
+              type="number"
+              min={1}
+              value={settings.dashboardStaleConfirmationWarningCount}
+              onChange={(e) => setField("dashboardStaleConfirmationWarningCount", Number(e.target.value || 1))}
+              className="w-24 border border-[#F0EDE8]/20 bg-[#0E0E0E] px-2 py-1"
+            />
+          </label>
+          <label className="flex items-center justify-between gap-3 border border-[#F0EDE8]/12 bg-[#151515] px-3 py-2 text-sm">
+            <span>Stale confirmation critical count</span>
+            <input
+              type="number"
+              min={1}
+              value={settings.dashboardStaleConfirmationCriticalCount}
+              onChange={(e) => setField("dashboardStaleConfirmationCriticalCount", Number(e.target.value || 1))}
+              className="w-24 border border-[#F0EDE8]/20 bg-[#0E0E0E] px-2 py-1"
+            />
+          </label>
+          <label className="flex items-center justify-between gap-3 border border-[#F0EDE8]/12 bg-[#151515] px-3 py-2 text-sm">
+            <span>Security warning count</span>
+            <input
+              type="number"
+              min={1}
+              value={settings.dashboardSecurityWarningCount}
+              onChange={(e) => setField("dashboardSecurityWarningCount", Number(e.target.value || 1))}
+              className="w-24 border border-[#F0EDE8]/20 bg-[#0E0E0E] px-2 py-1"
+            />
+          </label>
+          <label className="flex items-center justify-between gap-3 border border-[#F0EDE8]/12 bg-[#151515] px-3 py-2 text-sm">
+            <span>Security critical count</span>
+            <input
+              type="number"
+              min={1}
+              value={settings.dashboardSecurityCriticalCount}
+              onChange={(e) => setField("dashboardSecurityCriticalCount", Number(e.target.value || 1))}
+              className="w-24 border border-[#F0EDE8]/20 bg-[#0E0E0E] px-2 py-1"
+            />
+          </label>
+        </div>
       </section>
 
       <section className="border border-[#F0EDE8]/12 bg-[#111111] p-4">

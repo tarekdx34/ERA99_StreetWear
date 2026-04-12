@@ -34,15 +34,20 @@ export async function PATCH(req: Request) {
   try {
     const body = await req.json();
     const parsed = bulkSchema.parse(body);
+    const nextPaymentStatus = parsed.orderStatus === "delivered" ? "paid" : undefined;
 
     const updated = await prisma.order.updateMany({
       where: { id: { in: parsed.orderIds } },
-      data: { orderStatus: parsed.orderStatus },
+      data: {
+        orderStatus: parsed.orderStatus,
+        ...(nextPaymentStatus ? { paymentStatus: nextPaymentStatus } : {}),
+      },
     });
 
     return NextResponse.json({
       updatedCount: updated.count,
       orderStatus: parsed.orderStatus,
+      ...(nextPaymentStatus ? { paymentStatus: nextPaymentStatus } : {}),
     });
   } catch (error) {
     if (error instanceof z.ZodError) {
