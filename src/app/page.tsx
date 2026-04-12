@@ -1,7 +1,7 @@
-import { QutbLanding } from "@/components/landing/qutb-landing";
+import { SixStreetLanding } from "@/components/landing/sixstreet-landing";
 import { getHomepageCatalogProducts } from "@/lib/catalog";
 
 export default async function HomePage() {
   const products = await getHomepageCatalogProducts();
-  return <QutbLanding products={products} />;
+  return <SixStreetLanding products={products} />;
 }

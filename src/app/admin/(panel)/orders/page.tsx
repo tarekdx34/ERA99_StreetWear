@@ -54,7 +54,8 @@ export default async function AdminOrdersPage({
     : "all";
 
   const pageNum = Number(resolvedSearch.page || "1");
-  const page = Number.isFinite(pageNum) && pageNum > 0 ? Math.floor(pageNum) : 1;
+  const page =
+    Number.isFinite(pageNum) && pageNum > 0 ? Math.floor(pageNum) : 1;
 
   const fromDate = from ? parseDateInput(from) : null;
   const toDate = to ? parseDateInput(to) : null;
@@ -172,7 +173,9 @@ export default async function AdminOrdersPage({
           Showing {(safePage - 1) * PAGE_SIZE + (orders.length ? 1 : 0)}-
           {(safePage - 1) * PAGE_SIZE + orders.length} of {totalCount}
         </p>
-        <p>Page {safePage} / {totalPages}</p>
+        <p>
+          Page {safePage} / {totalPages}
+        </p>
       </div>
 
       <AdminOrdersTable

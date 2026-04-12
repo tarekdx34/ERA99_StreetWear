@@ -1,5 +1,9 @@
 import { AdminProductForm } from "@/components/admin/admin-product-form";
-import { buildDefaultVariant, getCatalogCollections, type CatalogProduct } from "@/lib/catalog";
+import {
+  buildDefaultVariant,
+  getCatalogCollections,
+  type CatalogProduct,
+} from "@/lib/catalog";
 
 function createBlankProduct(): CatalogProduct {
   const now = new Date().toISOString();
@@ -39,11 +43,17 @@ export default async function AdminNewProductPage() {
   return (
     <section>
       <div className="mb-4">
-        <p className="text-[12px] uppercase tracking-[0.28em] text-[#F0EDE8]/55">99 - PRODUCTS</p>
+        <p className="text-[12px] uppercase tracking-[0.28em] text-[#F0EDE8]/55">
+          99 - PRODUCTS
+        </p>
         <h1 className="mt-3 font-blackletter text-5xl">New Product</h1>
       </div>
 
-      <AdminProductForm mode="new" initialProduct={initial} collections={collections} />
+      <AdminProductForm
+        mode="new"
+        initialProduct={initial}
+        collections={collections}
+      />
     </section>
   );
 }

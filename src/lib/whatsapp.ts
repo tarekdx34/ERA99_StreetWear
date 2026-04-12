@@ -37,7 +37,7 @@ function buildMessage(payload: WhatsAppOrderPayload) {
     .join("\n");
 
   return [
-    `🖤 NEW ORDER — 99 #${String(payload.id).padStart(5, "0")}`,
+    `🖤 NEW 6 STREET ORDER #6S-${String(payload.id).padStart(5, "0")}`,
     "───────────────",
     payload.customerName,
     payload.phone,
@@ -52,11 +52,14 @@ function buildMessage(payload: WhatsAppOrderPayload) {
     `PAYMENT: ${payload.paymentMethod === "COD" ? "Cash on Delivery" : "Online Payment"}`,
     `NOTES: ${payload.notes || "-"}`,
     "───────────────",
-    `View order: qutb.co/admin/orders/${payload.id}`,
+    `View order: 6street.co/admin/orders/${payload.id}`,
   ].join("\n");
 }
 
-export async function sendWhatsAppMessage(message: string, credentials?: WhatsAppCredentials) {
+export async function sendWhatsAppMessage(
+  message: string,
+  credentials?: WhatsAppCredentials,
+) {
   const accountSid = credentials?.accountSid || process.env.TWILIO_ACCOUNT_SID;
   const authToken = credentials?.authToken || process.env.TWILIO_AUTH_TOKEN;
   const from = credentials?.from || process.env.TWILIO_WHATSAPP_FROM;

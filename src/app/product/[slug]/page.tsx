@@ -13,7 +13,11 @@ export default async function ProductPage({
   if (!product) notFound();
 
   const allProducts = await getCatalogProducts();
-  const relatedProducts = allProducts.filter((item) => item.id !== product.id).slice(0, 4);
+  const relatedProducts = allProducts
+    .filter((item) => item.id !== product.id)
+    .slice(0, 4);
 
-  return <ProductDetailClient product={product} relatedProducts={relatedProducts} />;
+  return (
+    <ProductDetailClient product={product} relatedProducts={relatedProducts} />
+  );
 }

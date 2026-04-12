@@ -30,7 +30,10 @@ export async function middleware(request: NextRequest) {
     return NextResponse.next({ request: { headers: nextRequestHeaders } });
   }
 
-  const token = await getToken({ req: request, secret: process.env.NEXTAUTH_SECRET });
+  const token = await getToken({
+    req: request,
+    secret: process.env.NEXTAUTH_SECRET,
+  });
   if (token) {
     return NextResponse.next({ request: { headers: nextRequestHeaders } });
   }

@@ -46,7 +46,7 @@ export function CartDrawer() {
                     Your cart is empty
                   </p>
                   <Link
-                    href="/"
+                    href="/shop"
                     onClick={closeCart}
                     className="text-xs uppercase tracking-[0.16em] hover:underline"
                   >

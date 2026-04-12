@@ -31,7 +31,9 @@ export default async function AdminPanelLayout({
 
   return (
     <AdminShell
-      username={String((session.user as any).username || session.user.name || "admin")}
+      username={String(
+        (session.user as any).username || session.user.name || "admin",
+      )}
       pendingOrdersCount={pendingOrdersCount}
       unreadCount={0}
       notifications={[]}

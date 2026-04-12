@@ -52,9 +52,16 @@ function encrypt(value: string) {
   const iv = crypto.randomBytes(12);
   const key = getEncryptionKey();
   const cipher = crypto.createCipheriv("aes-256-gcm", key, iv);
-  const encrypted = Buffer.concat([cipher.update(value, "utf8"), cipher.final()]);
+  const encrypted = Buffer.concat([
+    cipher.update(value, "utf8"),
+    cipher.final(),
+  ]);
   const tag = cipher.getAuthTag();
-  return [base64UrlEncode(iv), base64UrlEncode(tag), base64UrlEncode(encrypted)].join(".");
+  return [
+    base64UrlEncode(iv),
+    base64UrlEncode(tag),
+    base64UrlEncode(encrypted),
+  ].join(".");
 }
 
 function decrypt(payload: string) {
@@ -65,11 +72,18 @@ function decrypt(payload: string) {
   const tag = base64UrlToBuffer(tagPart);
   const encrypted = base64UrlToBuffer(dataPart);
 
-  const decipher = crypto.createDecipheriv("aes-256-gcm", getEncryptionKey(), iv);
+  const decipher = crypto.createDecipheriv(
+    "aes-256-gcm",
+    getEncryptionKey(),
+    iv,
+  );
   decipher.setAuthTag(tag);
 
   try {
-    const decrypted = Buffer.concat([decipher.update(encrypted), decipher.final()]);
+    const decrypted = Buffer.concat([
+      decipher.update(encrypted),
+      decipher.final(),
+    ]);
     return decrypted.toString("utf8");
   } catch {
     return null;
@@ -137,7 +151,9 @@ export async function getLockout(ip: string) {
     return { locked: false, retryAfterSeconds: 0 };
   }
 
-  const retryAfterSeconds = Math.ceil((lockedUntil.getTime() - now.getTime()) / 1000);
+  const retryAfterSeconds = Math.ceil(
+    (lockedUntil.getTime() - now.getTime()) / 1000,
+  );
   return { locked: true, retryAfterSeconds };
 }
 
@@ -156,12 +172,15 @@ export async function validatePrimaryCredentials(input: {
     };
   }
 
-  const expectedUsername = process.env.ADMIN_USERNAME || "qutb_admin";
+  const expectedUsername = process.env.ADMIN_USERNAME || "sixstreet_admin";
   const storedHash = await getSetting(ADMIN_PASSWORD_HASH_KEY);
   const hashFromB64 = process.env.ADMIN_PASSWORD_HASH_B64?.trim()
-    ? Buffer.from(process.env.ADMIN_PASSWORD_HASH_B64, "base64").toString("utf8")
+    ? Buffer.from(process.env.ADMIN_PASSWORD_HASH_B64, "base64").toString(
+        "utf8",
+      )
     : "";
-  const hash = storedHash?.value || hashFromB64 || process.env.ADMIN_PASSWORD_HASH;
+  const hash =
+    storedHash?.value || hashFromB64 || process.env.ADMIN_PASSWORD_HASH;
 
   if (!hash) {
     return {
@@ -251,7 +270,9 @@ export function verifyChallengeToken(token: string, ip: string) {
   }
 
   try {
-    const payload = JSON.parse(base64UrlToBuffer(encoded).toString("utf8")) as ChallengePayload;
+    const payload = JSON.parse(
+      base64UrlToBuffer(encoded).toString("utf8"),
+    ) as ChallengePayload;
     if (payload.exp < Date.now()) return null;
     if (payload.ip !== ip) return null;
     return payload;
@@ -323,11 +344,11 @@ export function verifyTotpCode(code: string, secret: string) {
 }
 
 export function buildOtpAuthUri(secret: string) {
-  const username = process.env.ADMIN_USERNAME || "qutb_admin";
+  const username = process.env.ADMIN_USERNAME || "sixstreet_admin";
   return generateURI({
     strategy: "totp",
     label: username,
-    issuer: "QUTB Admin",
+    issuer: "6 STREET Admin",
     secret,
     digits: 6,
     period: 30,
@@ -347,12 +368,18 @@ export async function rotateSessionVersion() {
   return next;
 }
 
-export async function changeAdminPassword(currentPassword: string, newPassword: string) {
+export async function changeAdminPassword(
+  currentPassword: string,
+  newPassword: string,
+) {
   const hashFromB64 = process.env.ADMIN_PASSWORD_HASH_B64?.trim()
-    ? Buffer.from(process.env.ADMIN_PASSWORD_HASH_B64, "base64").toString("utf8")
+    ? Buffer.from(process.env.ADMIN_PASSWORD_HASH_B64, "base64").toString(
+        "utf8",
+      )
     : "";
   const storedHash = await getSetting(ADMIN_PASSWORD_HASH_KEY);
-  const currentHash = storedHash?.value || hashFromB64 || process.env.ADMIN_PASSWORD_HASH || "";
+  const currentHash =
+    storedHash?.value || hashFromB64 || process.env.ADMIN_PASSWORD_HASH || "";
 
   if (!currentHash) {
     return { ok: false as const, message: "Server auth is not configured." };
@@ -442,7 +469,10 @@ export async function getActiveSessionsSnapshot() {
     },
   });
 
-  const byIp = new Map<string, { ip: string; username: string | null; lastSeen: Date }>();
+  const byIp = new Map<
+    string,
+    { ip: string; username: string | null; lastSeen: Date }
+  >();
   for (const row of rows) {
     if (!byIp.has(row.ip)) {
       byIp.set(row.ip, {

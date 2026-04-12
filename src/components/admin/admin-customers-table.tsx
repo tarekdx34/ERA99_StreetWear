@@ -30,7 +30,13 @@ type Props = {
   customers: Customer[];
 };
 
-type SortKey = "name" | "phone" | "governorate" | "orders" | "totalSpent" | "lastOrder";
+type SortKey =
+  | "name"
+  | "phone"
+  | "governorate"
+  | "orders"
+  | "totalSpent"
+  | "lastOrder";
 
 function formatEGP(value: number) {
   return new Intl.NumberFormat("en-EG", {
@@ -50,7 +56,10 @@ export function AdminCustomersTable({ customers }: Props) {
     const q = query.toLowerCase().trim();
     const rows = customers.filter((item) => {
       if (!q) return true;
-      return item.name.toLowerCase().includes(q) || item.phone.toLowerCase().includes(q);
+      return (
+        item.name.toLowerCase().includes(q) ||
+        item.phone.toLowerCase().includes(q)
+      );
     });
 
     rows.sort((a, b) => {
@@ -68,7 +77,8 @@ export function AdminCustomersTable({ customers }: Props) {
     return rows;
   }, [customers, query, sortBy, sortDirection]);
 
-  const selected = filtered.find((item) => item.phone === selectedPhone) || null;
+  const selected =
+    filtered.find((item) => item.phone === selectedPhone) || null;
 
   const toggleSort = (key: SortKey) => {
     if (sortBy === key) {
@@ -80,7 +90,14 @@ export function AdminCustomersTable({ customers }: Props) {
   };
 
   const exportCsv = () => {
-    const header = ["Name", "Phone", "Governorate", "Orders", "Total Spent EGP", "Last Order"];
+    const header = [
+      "Name",
+      "Phone",
+      "Governorate",
+      "Orders",
+      "Total Spent EGP",
+      "Last Order",
+    ];
     const rows = filtered.map((item) => [
       item.name,
       item.phone,
@@ -91,7 +108,9 @@ export function AdminCustomersTable({ customers }: Props) {
     ]);
 
     const csv = [header, ...rows]
-      .map((row) => row.map((col) => `"${String(col).replaceAll('"', '""')}"`).join(","))
+      .map((row) =>
+        row.map((col) => `"${String(col).replaceAll('"', '""')}"`).join(","),
+      )
       .join("\n");
 
     const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
@@ -127,12 +146,36 @@ export function AdminCustomersTable({ customers }: Props) {
         <table className="min-w-[1100px] text-left text-sm">
           <thead className="text-[11px] uppercase tracking-[0.16em] text-[#F0EDE8]/55">
             <tr>
-              <th className="py-2 pr-3"><button type="button" onClick={() => toggleSort("name")}>Name</button></th>
-              <th className="py-2 pr-3"><button type="button" onClick={() => toggleSort("phone")}>Phone</button></th>
-              <th className="py-2 pr-3"><button type="button" onClick={() => toggleSort("governorate")}>Governorate</button></th>
-              <th className="py-2 pr-3"><button type="button" onClick={() => toggleSort("orders")}>Orders</button></th>
-              <th className="py-2 pr-3"><button type="button" onClick={() => toggleSort("totalSpent")}>Total Spent EGP</button></th>
-              <th className="py-2 pr-3"><button type="button" onClick={() => toggleSort("lastOrder")}>Last Order</button></th>
+              <th className="py-2 pr-3">
+                <button type="button" onClick={() => toggleSort("name")}>
+                  Name
+                </button>
+              </th>
+              <th className="py-2 pr-3">
+                <button type="button" onClick={() => toggleSort("phone")}>
+                  Phone
+                </button>
+              </th>
+              <th className="py-2 pr-3">
+                <button type="button" onClick={() => toggleSort("governorate")}>
+                  Governorate
+                </button>
+              </th>
+              <th className="py-2 pr-3">
+                <button type="button" onClick={() => toggleSort("orders")}>
+                  Orders
+                </button>
+              </th>
+              <th className="py-2 pr-3">
+                <button type="button" onClick={() => toggleSort("totalSpent")}>
+                  Total Spent EGP
+                </button>
+              </th>
+              <th className="py-2 pr-3">
+                <button type="button" onClick={() => toggleSort("lastOrder")}>
+                  Last Order
+                </button>
+              </th>
               <th className="py-2">Actions</th>
             </tr>
           </thead>
@@ -144,7 +187,9 @@ export function AdminCustomersTable({ customers }: Props) {
                 <td className="py-3 pr-3">{customer.governorate}</td>
                 <td className="py-3 pr-3">{customer.orders}</td>
                 <td className="py-3 pr-3">{formatEGP(customer.totalSpent)}</td>
-                <td className="py-3 pr-3">{new Date(customer.lastOrder).toLocaleDateString("en-GB")}</td>
+                <td className="py-3 pr-3">
+                  {new Date(customer.lastOrder).toLocaleDateString("en-GB")}
+                </td>
                 <td className="py-3">
                   <button
                     type="button"
@@ -163,18 +208,43 @@ export function AdminCustomersTable({ customers }: Props) {
       {selected ? (
         <aside className="border border-[#F0EDE8]/15 bg-[#111111] p-4">
           <div className="mb-3 flex items-center justify-between">
-            <h3 className="text-sm uppercase tracking-[0.16em] text-[#F0EDE8]/75">Customer Detail</h3>
-            <button type="button" onClick={() => setSelectedPhone(null)} className="border border-[#F0EDE8]/20 px-2 py-1 text-xs uppercase">Close</button>
+            <h3 className="text-sm uppercase tracking-[0.16em] text-[#F0EDE8]/75">
+              Customer Detail
+            </h3>
+            <button
+              type="button"
+              onClick={() => setSelectedPhone(null)}
+              className="border border-[#F0EDE8]/20 px-2 py-1 text-xs uppercase"
+            >
+              Close
+            </button>
           </div>
 
           <div className="grid gap-4 md:grid-cols-2">
             <div className="space-y-2 text-sm">
-              <p><span className="text-[#F0EDE8]/55">Name:</span> {selected.name}</p>
-              <p><span className="text-[#F0EDE8]/55">Phone:</span> {selected.phone}</p>
-              <p><span className="text-[#F0EDE8]/55">Total spent:</span> {formatEGP(selected.totalSpent)}</p>
-              <p><span className="text-[#F0EDE8]/55">Average order value:</span> {formatEGP(selected.averageOrderValue)}</p>
-              <p><span className="text-[#F0EDE8]/55">Preferred payment:</span> {selected.preferredPayment}</p>
-              <p><span className="text-[#F0EDE8]/55">Sizes ordered:</span> {selected.sizesOrdered || "-"}</p>
+              <p>
+                <span className="text-[#F0EDE8]/55">Name:</span> {selected.name}
+              </p>
+              <p>
+                <span className="text-[#F0EDE8]/55">Phone:</span>{" "}
+                {selected.phone}
+              </p>
+              <p>
+                <span className="text-[#F0EDE8]/55">Total spent:</span>{" "}
+                {formatEGP(selected.totalSpent)}
+              </p>
+              <p>
+                <span className="text-[#F0EDE8]/55">Average order value:</span>{" "}
+                {formatEGP(selected.averageOrderValue)}
+              </p>
+              <p>
+                <span className="text-[#F0EDE8]/55">Preferred payment:</span>{" "}
+                {selected.preferredPayment}
+              </p>
+              <p>
+                <span className="text-[#F0EDE8]/55">Sizes ordered:</span>{" "}
+                {selected.sizesOrdered || "-"}
+              </p>
               <a
                 href={`https://wa.me/2${selected.phone.replace(/\D/g, "")}`}
                 target="_blank"
@@ -186,17 +256,26 @@ export function AdminCustomersTable({ customers }: Props) {
             </div>
 
             <div>
-              <p className="text-xs uppercase tracking-[0.14em] text-[#F0EDE8]/55">Addresses Used</p>
+              <p className="text-xs uppercase tracking-[0.14em] text-[#F0EDE8]/55">
+                Addresses Used
+              </p>
               <ul className="mt-2 space-y-1 text-sm">
                 {selected.addresses.map((address) => (
-                  <li key={address} className="border-b border-[#F0EDE8]/10 pb-1">{address}</li>
+                  <li
+                    key={address}
+                    className="border-b border-[#F0EDE8]/10 pb-1"
+                  >
+                    {address}
+                  </li>
                 ))}
               </ul>
             </div>
           </div>
 
           <div className="mt-4">
-            <p className="text-xs uppercase tracking-[0.14em] text-[#F0EDE8]/55">Order History</p>
+            <p className="text-xs uppercase tracking-[0.14em] text-[#F0EDE8]/55">
+              Order History
+            </p>
             <div className="mt-2 overflow-x-auto">
               <table className="min-w-full text-left text-sm">
                 <thead className="text-[11px] uppercase tracking-[0.14em] text-[#F0EDE8]/55">
@@ -210,12 +289,19 @@ export function AdminCustomersTable({ customers }: Props) {
                 </thead>
                 <tbody>
                   {selected.orderHistory.map((order) => (
-                    <tr key={order.orderId} className="border-t border-[#F0EDE8]/10">
+                    <tr
+                      key={order.orderId}
+                      className="border-t border-[#F0EDE8]/10"
+                    >
                       <td className="py-2 pr-3">{order.orderNumber}</td>
-                      <td className="py-2 pr-3">{new Date(order.createdAt).toLocaleString("en-GB")}</td>
+                      <td className="py-2 pr-3">
+                        {new Date(order.createdAt).toLocaleString("en-GB")}
+                      </td>
                       <td className="py-2 pr-3">{formatEGP(order.total)}</td>
                       <td className="py-2 pr-3">{order.paymentMethod}</td>
-                      <td className="py-2">{order.governorate} - {order.city} - {order.address}</td>
+                      <td className="py-2">
+                        {order.governorate} - {order.city} - {order.address}
+                      </td>
                     </tr>
                   ))}
                 </tbody>
@@ -224,7 +310,9 @@ export function AdminCustomersTable({ customers }: Props) {
           </div>
 
           <div className="mt-4">
-            <p className="text-xs uppercase tracking-[0.14em] text-[#F0EDE8]/55">Notes</p>
+            <p className="text-xs uppercase tracking-[0.14em] text-[#F0EDE8]/55">
+              Notes
+            </p>
             {selected.notes.length ? (
               <ul className="mt-2 list-disc space-y-1 pl-5 text-sm">
                 {selected.notes.map((note, index) => (

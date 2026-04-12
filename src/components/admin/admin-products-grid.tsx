@@ -47,11 +47,17 @@ export function AdminProductsGrid({ products }: Props) {
           <article
             key={item.id}
             className={`relative overflow-hidden border bg-[#111111] ${
-              lowStock ? "border-[#8B0000]/70 border-b-2" : "border-[#F0EDE8]/15"
+              lowStock
+                ? "border-[#8B0000]/70 border-b-2"
+                : "border-[#F0EDE8]/15"
             }`}
           >
             <div className="relative aspect-[4/5] overflow-hidden border-b border-[#F0EDE8]/10">
-              <img src={item.image} alt={item.name} className="h-full w-full object-cover" />
+              <img
+                src={item.image}
+                alt={item.name}
+                className="h-full w-full object-cover"
+              />
               {outOfStock ? (
                 <div className="absolute inset-0 grid place-items-center bg-black/60 text-xs uppercase tracking-[0.22em] text-[#F0EDE8]/80">
                   Out of Stock
@@ -61,11 +67,15 @@ export function AdminProductsGrid({ products }: Props) {
 
             <div className="space-y-3 p-3">
               <div>
-                <h3 className="text-sm font-medium uppercase tracking-[0.12em]">{item.name}</h3>
+                <h3 className="text-sm font-medium uppercase tracking-[0.12em]">
+                  {item.name}
+                </h3>
                 <p className="mt-1 text-xs uppercase tracking-[0.15em] text-[#F0EDE8]/70">
                   {item.compareAtPrice ? (
                     <>
-                      <span className="mr-2 line-through text-[#F0EDE8]/45">{item.compareAtPrice} EGP</span>
+                      <span className="mr-2 line-through text-[#F0EDE8]/45">
+                        {item.compareAtPrice} EGP
+                      </span>
                       <span>{item.price} EGP</span>
                     </>
                   ) : (
@@ -75,13 +85,18 @@ export function AdminProductsGrid({ products }: Props) {
               </div>
 
               <div>
-                <p className="text-[11px] uppercase tracking-[0.16em] text-[#F0EDE8]/55">Stock</p>
+                <p className="text-[11px] uppercase tracking-[0.16em] text-[#F0EDE8]/55">
+                  Stock
+                </p>
                 <button
                   type="button"
                   onClick={() => {
                     const current = stockDraft[item.id];
                     if (current === undefined) {
-                      setStockDraft((prev) => ({ ...prev, [item.id]: String(item.totalStock) }));
+                      setStockDraft((prev) => ({
+                        ...prev,
+                        [item.id]: String(item.totalStock),
+                      }));
                     }
                   }}
                   className="mt-1 text-lg font-semibold"
@@ -94,7 +109,10 @@ export function AdminProductsGrid({ products }: Props) {
                     <input
                       value={stockDraft[item.id]}
                       onChange={(event) =>
-                        setStockDraft((prev) => ({ ...prev, [item.id]: event.target.value }))
+                        setStockDraft((prev) => ({
+                          ...prev,
+                          [item.id]: event.target.value,
+                        }))
                       }
                       className="w-20 border border-[#F0EDE8]/20 bg-[#0E0E0E] px-2 py-1 text-sm"
                       inputMode="numeric"
@@ -126,7 +144,9 @@ export function AdminProductsGrid({ products }: Props) {
                   disabled={pending}
                   onClick={() => updateQuick(item.id, { active: !item.active })}
                   className={`border px-2 py-2 ${
-                    item.active ? "border-[#F0EDE8]/30 text-[#F0EDE8]" : "border-[#F0EDE8]/15 text-[#F0EDE8]/55"
+                    item.active
+                      ? "border-[#F0EDE8]/30 text-[#F0EDE8]"
+                      : "border-[#F0EDE8]/15 text-[#F0EDE8]/55"
                   }`}
                 >
                   Active: {item.active ? "On" : "Off"}
@@ -134,9 +154,13 @@ export function AdminProductsGrid({ products }: Props) {
                 <button
                   type="button"
                   disabled={pending}
-                  onClick={() => updateQuick(item.id, { featured: !item.featured })}
+                  onClick={() =>
+                    updateQuick(item.id, { featured: !item.featured })
+                  }
                   className={`border px-2 py-2 ${
-                    item.featured ? "border-[#F0EDE8]/30 text-[#F0EDE8]" : "border-[#F0EDE8]/15 text-[#F0EDE8]/55"
+                    item.featured
+                      ? "border-[#F0EDE8]/30 text-[#F0EDE8]"
+                      : "border-[#F0EDE8]/15 text-[#F0EDE8]/55"
                   }`}
                 >
                   Featured: {item.featured ? "On" : "Off"}
@@ -144,9 +168,13 @@ export function AdminProductsGrid({ products }: Props) {
                 <button
                   type="button"
                   disabled={pending}
-                  onClick={() => updateQuick(item.id, { newArrival: !item.newArrival })}
+                  onClick={() =>
+                    updateQuick(item.id, { newArrival: !item.newArrival })
+                  }
                   className={`col-span-2 border px-2 py-2 ${
-                    item.newArrival ? "border-[#F0EDE8]/30 text-[#F0EDE8]" : "border-[#F0EDE8]/15 text-[#F0EDE8]/55"
+                    item.newArrival
+                      ? "border-[#F0EDE8]/30 text-[#F0EDE8]"
+                      : "border-[#F0EDE8]/15 text-[#F0EDE8]/55"
                   }`}
                 >
                   New Arrival: {item.newArrival ? "On" : "Off"}

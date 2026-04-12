@@ -2,9 +2,11 @@
 
 import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { makeItemKey, useCart } from "@/contexts/cart-context";
+import { useAnalytics } from "@/hooks/useAnalytics";
+import { useMetaPixel } from "@/hooks/useMetaPixel";
 import type { Product } from "@/lib/products";
 import { sizes } from "@/lib/products";
 import { formatEGP } from "@/lib/utils";
@@ -108,6 +110,165 @@ function SizeGuideModal({
   );
 }
 
+function PhotoViewerModal({
+  open,
+  images,
+  currentIndex,
+  onChangeIndex,
+  alt,
+  onClose,
+}: {
+  open: boolean;
+  images: string[];
+  currentIndex: number;
+  onChangeIndex: (index: number) => void;
+  alt: string;
+  onClose: () => void;
+}) {
+  const [zoomActive, setZoomActive] = useState(false);
+  const [zoomX, setZoomX] = useState(50);
+  const [zoomY, setZoomY] = useState(50);
+  const navRef = useRef({
+    activeIndex: 0,
+    totalImages: 0,
+    onChangeIndex,
+  });
+
+  const totalImages = images.length;
+  const activeIndex = currentIndex >= 0 ? currentIndex : 0;
+  const activeImage = images[activeIndex] || images[0] || "";
+
+  useEffect(() => {
+    navRef.current = {
+      activeIndex,
+      totalImages,
+      onChangeIndex,
+    };
+  }, [activeIndex, totalImages, onChangeIndex]);
+
+  const goPrev = () => {
+    const { activeIndex: idx, totalImages: count, onChangeIndex: change } = navRef.current;
+    if (count <= 1) return;
+    const nextIndex = (idx - 1 + count) % count;
+    change(nextIndex);
+    setZoomActive(false);
+  };
+
+  const goNext = () => {
+    const { activeIndex: idx, totalImages: count, onChangeIndex: change } = navRef.current;
+    if (count <= 1) return;
+    const nextIndex = (idx + 1) % count;
+    change(nextIndex);
+    setZoomActive(false);
+  };
+
+  useEffect(() => {
+    if (!open) return;
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") onClose();
+      if (event.key === "ArrowLeft") goPrev();
+      if (event.key === "ArrowRight") goNext();
+    };
+
+    document.addEventListener("keydown", onKeyDown);
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      document.removeEventListener("keydown", onKeyDown);
+      document.body.style.overflow = "";
+    };
+  }, [open, onClose]);
+
+  return (
+    <AnimatePresence>
+      {open ? (
+        <>
+          <motion.button
+            aria-label="Close photo viewer"
+            className="fixed inset-0 z-[130] bg-black/80"
+            onClick={onClose}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          />
+
+          <motion.div
+            initial={{ opacity: 0, y: 18 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 18 }}
+            transition={{ duration: 0.25, ease: "easeOut" }}
+            className="fixed left-1/2 top-1/2 z-[140] w-[96vw] max-w-5xl -translate-x-1/2 -translate-y-1/2 border border-[#F0EDE8]/30 bg-[#0B0B0B] p-4 md:p-5"
+            role="dialog"
+            aria-modal="true"
+          >
+            <div className="mb-3 flex items-center justify-between">
+              <p className="text-[11px] uppercase tracking-[0.18em] text-[#F0EDE8]/65">
+                View Photo - Hover to Zoom
+              </p>
+              <p className="text-[11px] uppercase tracking-[0.18em] text-[#F0EDE8]/55">
+                {activeIndex + 1} / {totalImages}
+              </p>
+              <button
+                className="border border-[#F0EDE8]/25 p-2"
+                onClick={onClose}
+                aria-label="Close photo viewer"
+              >
+                <CloseIcon />
+              </button>
+            </div>
+
+            <div
+              className="relative overflow-hidden border border-[#F0EDE8]/15"
+              onMouseMove={(event) => {
+                const rect = event.currentTarget.getBoundingClientRect();
+                const x = ((event.clientX - rect.left) / rect.width) * 100;
+                const y = ((event.clientY - rect.top) / rect.height) * 100;
+                setZoomX(Math.max(0, Math.min(100, x)));
+                setZoomY(Math.max(0, Math.min(100, y)));
+              }}
+              onMouseEnter={() => setZoomActive(true)}
+              onMouseLeave={() => setZoomActive(false)}
+            >
+              {totalImages > 1 ? (
+                <>
+                  <button
+                    type="button"
+                    onClick={goPrev}
+                    aria-label="Previous photo"
+                    className="absolute left-2 top-1/2 z-[141] -translate-y-1/2 border border-[#F0EDE8]/35 bg-black/45 px-3 py-2 text-sm"
+                  >
+                    ←
+                  </button>
+                  <button
+                    type="button"
+                    onClick={goNext}
+                    aria-label="Next photo"
+                    className="absolute right-2 top-1/2 z-[141] -translate-y-1/2 border border-[#F0EDE8]/35 bg-black/45 px-3 py-2 text-sm"
+                  >
+                    →
+                  </button>
+                </>
+              ) : null}
+
+              <img
+                src={activeImage}
+                alt={alt}
+                className="max-h-[78vh] w-full object-contain"
+                style={{
+                  transform: zoomActive ? "scale(2)" : "scale(1)",
+                  transformOrigin: `${zoomX}% ${zoomY}%`,
+                  transition: zoomActive ? "transform 40ms linear" : "transform 220ms ease-out",
+                }}
+              />
+            </div>
+          </motion.div>
+        </>
+      ) : null}
+    </AnimatePresence>
+  );
+}
+
 export function ProductDetailClient({
   product,
   relatedProducts,
@@ -119,16 +280,35 @@ export function ProductDetailClient({
   const [selectedSize, setSelectedSize] = useState<string | null>(null);
   const [qty, setQty] = useState(1);
   const [openGuide, setOpenGuide] = useState(false);
+  const [openPhotoViewer, setOpenPhotoViewer] = useState(false);
   const [fly, setFly] = useState(false);
   const { addItem, openCart } = useCart();
   const router = useRouter();
+  const { trackEvent } = useAnalytics();
+  const { track } = useMetaPixel();
 
   const related = useMemo(
-    () => (relatedProducts || []).filter((p) => p.id !== product.id).slice(0, 4),
+    () =>
+      (relatedProducts || []).filter((p) => p.id !== product.id).slice(0, 4),
     [product.id, relatedProducts],
   );
 
   const canAdd = !!selectedSize;
+
+  useEffect(() => {
+    trackEvent("view_item", {
+      item_id: product.id,
+      item_name: product.name,
+      price: product.price,
+      currency: "EGP",
+    });
+    track("ViewContent", {
+      content_ids: [product.id],
+      content_name: product.name,
+      value: product.price,
+      currency: "EGP",
+    });
+  }, [product.id]);
 
   const handleAdd = () => {
     if (!selectedSize) return;
@@ -175,8 +355,15 @@ export function ProductDetailClient({
                 src={mainImage}
                 alt={product.name}
                 className="h-[68vh] w-full object-cover"
+                onClick={() => setOpenPhotoViewer(true)}
               />
             </div>
+            <button
+              onClick={() => setOpenPhotoViewer(true)}
+              className="mt-2 text-xs uppercase tracking-[0.16em] text-[#F0EDE8]/72 hover:underline"
+            >
+              VIEW PHOTO →
+            </button>
             <div className="mt-3 grid grid-cols-4 gap-2">
               {product.images.map((image) => (
                 <button
@@ -203,14 +390,16 @@ export function ProductDetailClient({
             {product.name} — {product.color}
           </h1>
           <p className="mt-2 text-[28px] font-bold">
-              {product.compareAtPrice ? (
-                <>
-                  <span className="mr-2 line-through text-[#F0EDE8]/45">{formatEGP(product.compareAtPrice)}</span>
-                  <span>{formatEGP(product.price)}</span>
-                </>
-              ) : (
+            {product.compareAtPrice ? (
+              <>
+                <span className="mr-2 line-through text-[#F0EDE8]/45">
+                  {formatEGP(product.compareAtPrice)}
+                </span>
                 <span>{formatEGP(product.price)}</span>
-              )}
+              </>
+            ) : (
+              <span>{formatEGP(product.price)}</span>
+            )}
           </p>
 
           <div className="mt-4 flex items-center gap-2 text-xs uppercase tracking-[0.16em] text-[#8B0000]">
@@ -308,8 +497,7 @@ export function ProductDetailClient({
               Free Alex Delivery
             </div>
             <div className="flex items-center gap-2 border border-[#F0EDE8]/12 px-3 py-2">
-              <ShieldIcon />
-              QUTB 99
+              <ShieldIcon />6 STREET 99
             </div>
             <div className="flex items-center gap-2 border border-[#F0EDE8]/12 px-3 py-2">
               <WeightIcon />
@@ -343,6 +531,14 @@ export function ProductDetailClient({
       </section>
 
       <SizeGuideModal open={openGuide} onClose={() => setOpenGuide(false)} />
+      <PhotoViewerModal
+        open={openPhotoViewer}
+        images={product.images}
+        currentIndex={Math.max(0, product.images.indexOf(mainImage))}
+        onChangeIndex={(index) => setMainImage(product.images[index])}
+        alt={`${product.name} enlarged view`}
+        onClose={() => setOpenPhotoViewer(false)}
+      />
 
       <AnimatePresence>
         {fly ? (

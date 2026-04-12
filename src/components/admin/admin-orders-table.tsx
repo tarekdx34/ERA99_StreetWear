@@ -36,7 +36,8 @@ const BULK_STATUSES = [
 export function AdminOrdersTable({ orders }: Props) {
   const router = useRouter();
   const [selectedIds, setSelectedIds] = useState<number[]>([]);
-  const [bulkStatus, setBulkStatus] = useState<(typeof BULK_STATUSES)[number]>("preparing");
+  const [bulkStatus, setBulkStatus] =
+    useState<(typeof BULK_STATUSES)[number]>("preparing");
   const [notice, setNotice] = useState<string | null>(null);
   const [pending, startTransition] = useTransition();
 
@@ -53,7 +54,9 @@ export function AdminOrdersTable({ orders }: Props) {
   };
 
   const toggleAll = () => {
-    setSelectedIds((current) => (current.length === allIds.length ? [] : allIds));
+    setSelectedIds((current) =>
+      current.length === allIds.length ? [] : allIds,
+    );
     setNotice(null);
   };
 
@@ -83,7 +86,9 @@ export function AdminOrdersTable({ orders }: Props) {
         setSelectedIds([]);
         router.refresh();
       } catch (error) {
-        setNotice(error instanceof Error ? error.message : "Bulk update failed");
+        setNotice(
+          error instanceof Error ? error.message : "Bulk update failed",
+        );
       }
     });
   };
@@ -101,7 +106,9 @@ export function AdminOrdersTable({ orders }: Props) {
 
         <select
           value={bulkStatus}
-          onChange={(event) => setBulkStatus(event.target.value as (typeof BULK_STATUSES)[number])}
+          onChange={(event) =>
+            setBulkStatus(event.target.value as (typeof BULK_STATUSES)[number])
+          }
           className="min-w-[220px] border border-[#F0EDE8]/20 bg-[#0E0E0E] px-3 py-2 text-xs uppercase tracking-[0.08em]"
         >
           {BULK_STATUSES.map((item) => (
@@ -117,10 +124,16 @@ export function AdminOrdersTable({ orders }: Props) {
           onClick={runBulkUpdate}
           className="border border-[#F0EDE8]/25 px-4 py-2 text-xs uppercase tracking-[0.16em] hover:border-[#F0EDE8]/45 disabled:cursor-not-allowed disabled:opacity-40"
         >
-          {pending ? "Updating..." : `Apply to selected (${selectedIds.length})`}
+          {pending
+            ? "Updating..."
+            : `Apply to selected (${selectedIds.length})`}
         </button>
 
-        {notice ? <p className="text-xs uppercase tracking-[0.12em] text-[#F0EDE8]/60">{notice}</p> : null}
+        {notice ? (
+          <p className="text-xs uppercase tracking-[0.12em] text-[#F0EDE8]/60">
+            {notice}
+          </p>
+        ) : null}
       </div>
 
       <div className="mt-3 overflow-x-auto border border-[#F0EDE8]/12 bg-[#111111] p-3">
@@ -143,7 +156,10 @@ export function AdminOrdersTable({ orders }: Props) {
             {orders.map((order) => {
               const selected = selectedIds.includes(order.id);
               return (
-                <tr key={order.id} className="border-t border-[#F0EDE8]/10 align-top text-[#F0EDE8]/88">
+                <tr
+                  key={order.id}
+                  className="border-t border-[#F0EDE8]/10 align-top text-[#F0EDE8]/88"
+                >
                   <td className="py-3 pr-3">
                     <input
                       type="checkbox"
@@ -163,7 +179,10 @@ export function AdminOrdersTable({ orders }: Props) {
                     {order.paymentStatus.replaceAll("_", " ")}
                   </td>
                   <td className="py-3 pr-3">
-                    <OrderStatusControl orderId={order.id} currentStatus={order.orderStatus} />
+                    <OrderStatusControl
+                      orderId={order.id}
+                      currentStatus={order.orderStatus}
+                    />
                   </td>
                   <td className="py-3 text-[#F0EDE8]/55">
                     {new Date(order.createdAt).toLocaleString("en-GB", {
@@ -179,7 +198,10 @@ export function AdminOrdersTable({ orders }: Props) {
             })}
             {orders.length === 0 ? (
               <tr>
-                <td colSpan={10} className="py-10 text-center text-sm text-[#F0EDE8]/45">
+                <td
+                  colSpan={10}
+                  className="py-10 text-center text-sm text-[#F0EDE8]/45"
+                >
                   No orders match the current filter.
                 </td>
               </tr>

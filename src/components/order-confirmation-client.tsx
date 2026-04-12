@@ -2,6 +2,9 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { useEffect } from "react";
+import { useAnalytics } from "@/hooks/useAnalytics";
+import { useMetaPixel } from "@/hooks/useMetaPixel";
 import { formatEGP } from "@/lib/utils";
 
 type OrderItem = {
@@ -25,6 +28,31 @@ type Props = {
 };
 
 export function OrderConfirmationClient(props: Props) {
+  const { trackEvent } = useAnalytics();
+  const { track } = useMetaPixel();
+
+  useEffect(() => {
+    const eventItems = props.items.map((item) => ({
+      item_name: item.name,
+      size: item.size,
+      quantity: item.qty,
+      price: item.unitPrice,
+    }));
+
+    trackEvent("purchase", {
+      transaction_id: props.orderNumber,
+      value: props.total,
+      currency: "EGP",
+      items: eventItems,
+    });
+
+    track("Purchase", {
+      value: props.total,
+      currency: "EGP",
+      order_id: props.orderNumber,
+    });
+  }, []);
+
   const paid =
     props.paymentStatus === "paid" || props.paymentMethod === "ONLINE";
 
@@ -58,10 +86,10 @@ export function OrderConfirmationClient(props: Props) {
           />
         </motion.svg>
 
-        <h1 className="mt-6 font-blackletter text-5xl md:text-[64px]">
+        <h1 className="mt-6 font-blackletter display-hero text-5xl md:text-[64px]">
           ORDER RECEIVED
         </h1>
-        <p className="mt-2 text-xl text-[#F0EDE8]/50">قطب</p>
+        <p className="mt-2 text-xl text-[#F0EDE8]/50">٦ ستريت</p>
         <p className="mt-4 text-sm uppercase tracking-[0.2em]">
           #{props.orderNumber}
         </p>
@@ -102,7 +130,7 @@ export function OrderConfirmationClient(props: Props) {
             TRACK ORDER (COMING SOON)
           </button>
           <Link
-            href="/"
+            href="/shop"
             className="bg-[#F0EDE8] px-4 py-3 text-center text-xs font-bold uppercase tracking-[0.14em] text-black"
           >
             CONTINUE SHOPPING →

@@ -18,7 +18,8 @@ export default async function AdminProductsPage() {
       </div>
 
       <p className="mt-4 text-sm text-[#F0EDE8]/70">
-        Manage product visibility, featured placement, and stock directly from cards.
+        Manage product visibility, featured placement, and stock directly from
+        cards.
       </p>
 
       <AdminProductsGrid products={products} />

@@ -81,7 +81,9 @@ export function AdminShell({
     <div className="min-h-screen bg-[#080808] text-[#F0EDE8]">
       <aside className="fixed left-0 top-0 z-40 h-screen w-[240px] border-r border-[#F0EDE8]/10 bg-[#0D0D0D]">
         <div className="px-5 pb-4 pt-6">
-          <p className="font-blackletter text-4xl leading-none">QUTB</p>
+          <p className="font-blackletter display-logo text-4xl leading-none">
+            6 STREET
+          </p>
           <p className="mt-2 text-[11px] font-medium uppercase tracking-[0.3em] text-[#F0EDE8]/55">
             99 ADMIN
           </p>
@@ -90,7 +92,8 @@ export function AdminShell({
         <nav className="mt-3 px-2">
           {links.map((item) => {
             const Icon = item.icon;
-            const active = pathname === item.href || pathname.startsWith(`${item.href}/`);
+            const active =
+              pathname === item.href || pathname.startsWith(`${item.href}/`);
 
             return (
               <Link
@@ -167,7 +170,9 @@ export function AdminShell({
           />
           <aside className="fixed right-0 top-0 z-50 h-screen w-full max-w-[420px] border-l border-[#F0EDE8]/10 bg-[#0D0D0D] p-5">
             <div className="flex items-center justify-between border-b border-[#F0EDE8]/10 pb-3">
-              <h2 className="text-xs uppercase tracking-[0.2em]">NOTIFICATIONS</h2>
+              <h2 className="text-xs uppercase tracking-[0.2em]">
+                NOTIFICATIONS
+              </h2>
               <button
                 onClick={() => setDrawerOpen(false)}
                 className="grid h-8 w-8 place-items-center border border-[#F0EDE8]/20"
@@ -177,9 +182,14 @@ export function AdminShell({
               </button>
             </div>
 
-            <div className="mt-4 space-y-2 overflow-y-auto pr-1" style={{ maxHeight: "calc(100vh - 90px)" }}>
+            <div
+              className="mt-4 space-y-2 overflow-y-auto pr-1"
+              style={{ maxHeight: "calc(100vh - 90px)" }}
+            >
               {notifications.length === 0 ? (
-                <p className="text-sm text-[#F0EDE8]/50">No notifications yet.</p>
+                <p className="text-sm text-[#F0EDE8]/50">
+                  No notifications yet.
+                </p>
               ) : (
                 notifications.map((note) => (
                   <div
@@ -193,7 +203,9 @@ export function AdminShell({
                     <p className="text-[11px] uppercase tracking-[0.16em] text-[#F0EDE8]/55">
                       {note.type}
                     </p>
-                    <p className="mt-1 text-sm text-[#F0EDE8]/85">{note.message}</p>
+                    <p className="mt-1 text-sm text-[#F0EDE8]/85">
+                      {note.message}
+                    </p>
                     <p className="mt-2 text-[11px] text-[#F0EDE8]/45">
                       {new Date(note.createdAt).toLocaleString()}
                     </p>

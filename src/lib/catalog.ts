@@ -118,7 +118,7 @@ function seedFromStaticProducts(): CatalogProduct[] {
       active: true,
       featured: index < 4,
       newArrival: index < 2,
-      metaTitle: `${item.name} ${item.color} | QUTB 99`,
+      metaTitle: `${item.name} ${item.color} | 6 STREET 99`,
       metaDescription: item.description.fit,
       mainImageAlt: `${item.name} ${item.color}`,
       colorVariants: [
@@ -197,7 +197,9 @@ function toStorefrontProduct(item: CatalogProduct): Product {
     price: item.price,
     compareAtPrice: item.compareAtPrice || undefined,
     shortDescription: item.shortDescription,
-    images: primaryVariant?.images?.length ? primaryVariant.images : ["/images/1.jpeg"],
+    images: primaryVariant?.images?.length
+      ? primaryVariant.images
+      : ["/images/1.jpeg"],
     description: {
       fabric: item.fabricComposition,
       fit: item.fitType,
@@ -216,7 +218,9 @@ export async function getCatalogCollections(): Promise<string[]> {
   });
 
   const stored = safeJsonParse<string[]>(setting?.value, []);
-  const merged = Array.from(new Set([...DEFAULT_COLLECTIONS, ...stored])).filter(Boolean);
+  const merged = Array.from(
+    new Set([...DEFAULT_COLLECTIONS, ...stored]),
+  ).filter(Boolean);
 
   if (!setting?.value) {
     await prisma.setting.upsert({
@@ -251,7 +255,9 @@ export async function getAdminCatalogProducts(): Promise<CatalogProduct[]> {
   return getCatalogProductsRaw();
 }
 
-export async function getAdminCatalogCardProducts(): Promise<AdminCatalogCardProduct[]> {
+export async function getAdminCatalogCardProducts(): Promise<
+  AdminCatalogCardProduct[]
+> {
   const list = await getAdminCatalogProducts();
   return list.map((item) => ({
     id: item.id,
@@ -267,7 +273,9 @@ export async function getAdminCatalogCardProducts(): Promise<AdminCatalogCardPro
   }));
 }
 
-export async function getAdminCatalogProductById(id: string): Promise<CatalogProduct | undefined> {
+export async function getAdminCatalogProductById(
+  id: string,
+): Promise<CatalogProduct | undefined> {
   const list = await getAdminCatalogProducts();
   return list.find((item) => item.id === id);
 }
@@ -281,11 +289,16 @@ export async function getHomepageCatalogProducts(): Promise<Product[]> {
   const list = await getAdminCatalogProducts();
   const active = list.filter((item) => item.active);
   const featured = active.filter((item) => item.featured);
-  const ordered = [...featured, ...active.filter((item) => !item.featured)].slice(0, 4);
+  const ordered = [
+    ...featured,
+    ...active.filter((item) => !item.featured),
+  ].slice(0, 4);
   return ordered.map(toStorefrontProduct);
 }
 
-export async function getCatalogProductBySlug(slug: string): Promise<Product | undefined> {
+export async function getCatalogProductBySlug(
+  slug: string,
+): Promise<Product | undefined> {
   const list = await getAdminCatalogProducts();
   const found = list.find((item) => item.slug === slug && item.active);
   return found ? toStorefrontProduct(found) : undefined;
@@ -305,7 +318,10 @@ export async function createCatalogProduct(input: Partial<CatalogProduct>) {
       typeof input.compareAtPrice === "number" && input.compareAtPrice > 0
         ? input.compareAtPrice
         : null,
-    collection: input.collection?.trim() || (await getCatalogCollections())[0] || "Drop 001",
+    collection:
+      input.collection?.trim() ||
+      (await getCatalogCollections())[0] ||
+      "Drop 001",
     shortDescription: (input.shortDescription || "").slice(0, 160),
     fullDescription: input.fullDescription || "<p></p>",
     fabricComposition: input.fabricComposition || "",
@@ -331,7 +347,10 @@ export async function createCatalogProduct(input: Partial<CatalogProduct>) {
   return product;
 }
 
-export async function updateCatalogProduct(id: string, patch: Partial<CatalogProduct>) {
+export async function updateCatalogProduct(
+  id: string,
+  patch: Partial<CatalogProduct>,
+) {
   const list = await getAdminCatalogProducts();
   const idx = list.findIndex((item) => item.id === id);
   if (idx < 0) return null;
@@ -354,16 +373,25 @@ export async function updateCatalogProduct(id: string, patch: Partial<CatalogPro
 
 export async function quickUpdateCatalogProduct(
   id: string,
-  patch: { active?: boolean; featured?: boolean; newArrival?: boolean; totalStock?: number },
+  patch: {
+    active?: boolean;
+    featured?: boolean;
+    newArrival?: boolean;
+    totalStock?: number;
+  },
 ) {
   const target = await getAdminCatalogProductById(id);
   if (!target) return null;
 
   if (typeof patch.active === "boolean") target.active = patch.active;
   if (typeof patch.featured === "boolean") target.featured = patch.featured;
-  if (typeof patch.newArrival === "boolean") target.newArrival = patch.newArrival;
+  if (typeof patch.newArrival === "boolean")
+    target.newArrival = patch.newArrival;
 
-  if (typeof patch.totalStock === "number" && Number.isFinite(patch.totalStock)) {
+  if (
+    typeof patch.totalStock === "number" &&
+    Number.isFinite(patch.totalStock)
+  ) {
     const variant = target.colorVariants[0];
     if (variant) {
       let remaining = Math.max(0, Math.floor(patch.totalStock));
@@ -390,7 +418,9 @@ export async function getProductQuickStats(productId: string) {
   }
 
   const orders = await prisma.order.findMany({
-    where: { orderStatus: { in: ["paid", "delivered", "shipped", "preparing"] } },
+    where: {
+      orderStatus: { in: ["paid", "delivered", "shipped", "preparing"] },
+    },
     select: { items: true },
   });
 
@@ -411,7 +441,8 @@ export async function getProductQuickStats(productId: string) {
     }
   }
 
-  const mostOrderedSize = Object.entries(sizeCount).sort((a, b) => b[1] - a[1])[0]?.[0] || "-";
+  const mostOrderedSize =
+    Object.entries(sizeCount).sort((a, b) => b[1] - a[1])[0]?.[0] || "-";
 
   return {
     totalUnitsSold,
@@ -425,7 +456,11 @@ export function makeSlugFromName(name: string) {
   return slugify(name);
 }
 
-export function buildDefaultVariant(productId: string, colorName = "Default", colorHex = "#F0EDE8"): ColorVariant {
+export function buildDefaultVariant(
+  productId: string,
+  colorName = "Default",
+  colorHex = "#F0EDE8",
+): ColorVariant {
   return {
     id: `${productId}-v-${Date.now()}`,
     colorName,
@@ -435,7 +470,9 @@ export function buildDefaultVariant(productId: string, colorName = "Default", co
   };
 }
 
-export async function getCatalogProductByIdRaw(id: string): Promise<CatalogProduct | undefined> {
+export async function getCatalogProductByIdRaw(
+  id: string,
+): Promise<CatalogProduct | undefined> {
   const list = await getAdminCatalogProducts();
   return list.find((item) => item.id === id);
 }

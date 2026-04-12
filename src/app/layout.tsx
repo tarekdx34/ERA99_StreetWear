@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Space_Grotesk, UnifrakturMaguntia } from "next/font/google";
+import { Archivo_Black, Space_Grotesk } from "next/font/google";
 import { headers } from "next/headers";
 import "./globals.css";
 import { Providers } from "@/components/providers";
@@ -11,15 +11,15 @@ const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
 });
 
-const unifraktur = UnifrakturMaguntia({
-  variable: "--font-unifraktur",
+const bigShoulders = Archivo_Black({
+  variable: "--font-big-shoulders",
   weight: "400",
   subsets: ["latin"],
 });
 
 export const metadata: Metadata = {
-  title: "QUTB Ordering",
-  description: "QUTB 99 — Alexandria streetwear",
+  title: "6 STREET Ordering",
+  description: "6 STREET 99 — Alexandria streetwear",
 };
 
 export default async function RootLayout({
@@ -38,9 +38,13 @@ export default async function RootLayout({
   return (
     <html
       lang="en"
-      className={`${spaceGrotesk.variable} ${unifraktur.variable} h-full antialiased`}
+      suppressHydrationWarning
+      className={`${spaceGrotesk.variable} ${bigShoulders.variable} h-full antialiased`}
     >
-      <body className="min-h-full bg-[#080808] text-[#F0EDE8]">
+      <body
+        suppressHydrationWarning
+        className="min-h-full bg-[#080808] text-[#F0EDE8]"
+      >
         <Providers>
           {!isAdminArea ? (
             <SiteChrome
@@ -52,11 +56,18 @@ export default async function RootLayout({
           {showMaintenance ? (
             <main className="min-h-screen bg-[#080808] px-6 py-24 text-[#F0EDE8]">
               <div className="mx-auto max-w-2xl border border-[#F0EDE8]/15 bg-[#111111] p-8 text-center">
-                <p className="font-blackletter text-6xl leading-none">QUTB</p>
-                <p className="mt-2 text-xs uppercase tracking-[0.28em] text-[#F0EDE8]/55">99</p>
-                <h1 className="mt-8 text-xl uppercase tracking-[0.2em]">Coming Soon</h1>
+                <p className="font-blackletter display-logo text-6xl leading-none">
+                  6 STREET
+                </p>
+                <p className="mt-2 text-xs uppercase tracking-[0.28em] text-[#F0EDE8]/55">
+                  99
+                </p>
+                <h1 className="mt-8 text-xl uppercase tracking-[0.2em]">
+                  Coming Soon
+                </h1>
                 <p className="mt-4 text-sm text-[#F0EDE8]/70">
-                  {publicSettings.storeName} is currently in maintenance mode. We are updating the store and will be back shortly.
+                  {publicSettings.storeName} is currently in maintenance mode.
+                  We are updating the store and will be back shortly.
                 </p>
               </div>
             </main>

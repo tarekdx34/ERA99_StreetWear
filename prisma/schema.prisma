@@ -9,6 +9,8 @@ datasource db {
 
 model Order {
   id            Int      @id @default(autoincrement())
+  userId        String?
+  user          User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
   orderNumber   String   @unique
   customerName  String
   phone         String
@@ -27,18 +29,129 @@ model Order {
   paymobOrderId String?
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
+
+  @@index([userId])
 }
 
 model LoginAttempt {
-  id        Int      @id @default(autoincrement())
+  id        String   @id @default(cuid())
+  userId    String?
+  user      User?    @relation(fields: [userId], references: [id])
   ip        String
   username  String?
   success   Boolean
   createdAt DateTime @default(now())
+
+  @@index([ip, createdAt])
+  @@index([userId])
 }
 
 model Setting {
   id    Int    @id @default(autoincrement())
   key   String @unique
   value String
+}
+
+model User {
+  id                      String                   @id @default(cuid())
+  firstName               String?
+  lastName                String?
+  email                   String                   @unique
+  emailVerified           Boolean                  @default(false)
+  passwordHash            String
+  authVersion             Int                      @default(0)
+  cart                    Cart?
+  orders                  Order[]
+  addresses               Address[]
+  loginAttempts           LoginAttempt[]
+  emailVerificationTokens EmailVerificationToken[]
+  passwordResetTokens     PasswordResetToken[]
+  createdAt               DateTime                 @default(now())
+  updatedAt               DateTime                 @updatedAt
+}
+
+model Cart {
+  id        String     @id @default(cuid())
+  userId    String     @unique
+  user      User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  items     CartItem[]
+  updatedAt DateTime   @updatedAt
+}
+
+model CartItem {
+  id        String   @id @default(cuid())
+  cartId    String
+  cart      Cart     @relation(fields: [cartId], references: [id], onDelete: Cascade)
+  productId String
+  variantId String
+  quantity  Int      @default(1)
+  addedAt   DateTime @default(now())
+
+  @@unique([cartId, productId, variantId])
+  @@index([productId])
+  @@index([variantId])
+}
+
+model Address {
+  id          String   @id @default(cuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  label       String?
+  firstName   String
+  lastName    String
+  phone       String
+  governorate String
+  city        String
+  street      String
+  building    String?
+  isDefault   Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([userId])
+}
+
+model EmailVerificationToken {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  token     String   @unique
+  expiresAt DateTime
+  used      Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+  @@index([expiresAt])
+}
+
+model PasswordResetToken {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  token     String   @unique
+  expiresAt DateTime
+  used      Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+  @@index([expiresAt])
+}
+
+model AnalyticsEvent {
+  id        Int      @id @default(autoincrement())
+  event     String
+  userId    String?
+  sessionId String?
+  productId Int?
+  orderId   Int?
+  page      String?
+  value     Float?
+  data      Json?
+  ip        String?
+  createdAt DateTime @default(now())
+
+  @@index([event, createdAt])
+  @@index([userId, createdAt])
+  @@index([orderId])
+  @@index([productId])
 }

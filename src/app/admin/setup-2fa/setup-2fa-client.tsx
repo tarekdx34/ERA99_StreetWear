@@ -82,9 +82,11 @@ export default function Setup2FAClient() {
   return (
     <main className="min-h-screen bg-[#080808] px-6 py-16 text-[#F0EDE8]">
       <div className="mx-auto w-full max-w-lg">
-        <p className="text-center font-blackletter text-6xl leading-none">QUTB</p>
+        <p className="text-center font-blackletter display-logo text-6xl leading-none">
+          6 STREET
+        </p>
         <p className="mt-3 text-center text-[12px] font-medium uppercase tracking-[0.3em] text-[#F0EDE8]/55">
-          99 — ADMIN
+          6 STREET — ADMIN
         </p>
 
         <h1 className="mt-10 text-center text-sm uppercase tracking-[0.2em] text-[#F0EDE8]/70">
@@ -92,12 +94,15 @@ export default function Setup2FAClient() {
         </h1>
 
         {loading ? (
-          <p className="mt-6 text-center text-sm text-[#F0EDE8]/60">Preparing setup...</p>
+          <p className="mt-6 text-center text-sm text-[#F0EDE8]/60">
+            Preparing setup...
+          </p>
         ) : (
           <>
             <div className="mt-6 border border-[#F0EDE8]/20 bg-[#111111] p-5">
               <p className="text-xs leading-6 text-[#F0EDE8]/75">
-                Scan this QR with Google Authenticator or Authy, then enter the current 6-digit code to confirm setup.
+                Scan this QR with Google Authenticator or Authy, then enter the
+                current 6-digit code to confirm setup.
               </p>
 
               {qrDataUrl ? (
@@ -115,7 +120,9 @@ export default function Setup2FAClient() {
                 {manualKey}
               </p>
 
-              <p className="mt-4 text-[11px] text-[#F0EDE8]/50">{storageNote}</p>
+              <p className="mt-4 text-[11px] text-[#F0EDE8]/50">
+                {storageNote}
+              </p>
             </div>
 
             <form onSubmit={confirm} className="mt-5 space-y-3">
@@ -140,7 +147,9 @@ export default function Setup2FAClient() {
           </>
         )}
 
-        {error ? <p className="mt-4 text-center text-xs text-[#8B0000]">{error}</p> : null}
+        {error ? (
+          <p className="mt-4 text-center text-xs text-[#8B0000]">{error}</p>
+        ) : null}
       </div>
     </main>
   );

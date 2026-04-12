@@ -15,7 +15,8 @@ const confirmSchema = z.object({
 
 async function ensureAdmin() {
   const session = await getServerSession(authOptions);
-  if (!session?.user) return { ok: false as const, status: 401, message: "Unauthorized" };
+  if (!session?.user)
+    return { ok: false as const, status: 401, message: "Unauthorized" };
 
   const currentVersion = await getSessionVersion();
   const sessionVersion = String((session.user as any).sessionVersion || "0");
@@ -28,7 +29,11 @@ async function ensureAdmin() {
 
 export async function POST(req: Request) {
   const auth = await ensureAdmin();
-  if (!auth.ok) return NextResponse.json({ message: auth.message }, { status: auth.status });
+  if (!auth.ok)
+    return NextResponse.json(
+      { message: auth.message },
+      { status: auth.status },
+    );
 
   const mode = req.headers.get("x-settings-action") || "start";
 
@@ -42,9 +47,15 @@ export async function POST(req: Request) {
       return NextResponse.json({ ok: true });
     } catch (error) {
       if (error instanceof z.ZodError) {
-        return NextResponse.json({ message: "Invalid 2FA confirm payload" }, { status: 400 });
+        return NextResponse.json(
+          { message: "Invalid 2FA confirm payload" },
+          { status: 400 },
+        );
       }
-      return NextResponse.json({ message: "Failed to confirm 2FA rotation" }, { status: 500 });
+      return NextResponse.json(
+        { message: "Failed to confirm 2FA rotation" },
+        { status: 500 },
+      );
     }
   }
 

@@ -8,7 +8,7 @@ import type { Product } from "@/lib/products";
 import Link from "next/link";
 
 const tickerText =
-  "QUTB — 99 — ALEXANDRIA — THE AXIS — NINETY NINE — EVERYTHING REVOLVES — 99 — FREE DELIVERY IN ALEX — QUTB — 99 — LIMITED DROP";
+  "6 STREET — 99 — ALEXANDRIA — THE AXIS — FREE DELIVERY IN ALEX — 6 STREET — NINETY NINE — EVERYTHING REVOLVES — 6 STREET";
 
 const heroImage = "/images/1.jpeg";
 
@@ -30,8 +30,7 @@ const instagramTiles = [
 function Logo({ className = "" }) {
   return (
     <span className={className}>
-      <span className="font-blackletter">Q</span>
-      <span className="font-sans uppercase tracking-[0.14em]">UTB</span>
+      <span className="font-blackletter">6 STREET</span>
     </span>
   );
 }
@@ -107,7 +106,7 @@ function HeroBanner() {
     <section className="relative h-screen w-screen overflow-hidden">
       <img
         src={heroImage}
-        alt="QUTB campaign"
+        alt="6 STREET campaign"
         className="h-full w-full object-cover"
       />
       <div className="absolute inset-0 bg-gradient-to-b from-black/30 to-black/60" />
@@ -254,15 +253,17 @@ function ProductCard({ product }: { product: Product }) {
       <h3 className="mt-4 font-sans text-sm font-medium uppercase tracking-[0.1em] text-ash">
         {product.name} - {product.color}
       </h3>
-         <p className="mt-2 text-xs uppercase tracking-[0.15em] text-ash/72">
-           {product.compareAtPrice ? (
-             <>
-               <span className="mr-2 line-through text-ash/45">{product.compareAtPrice} EGP</span>
-               <span>{product.price} EGP</span>
-             </>
-           ) : (
-             <span>{product.price} EGP</span>
-           )}
+      <p className="mt-2 text-xs uppercase tracking-[0.15em] text-ash/72">
+        {product.compareAtPrice ? (
+          <>
+            <span className="mr-2 line-through text-ash/45">
+              {product.compareAtPrice} EGP
+            </span>
+            <span>{product.price} EGP</span>
+          </>
+        ) : (
+          <span>{product.price} EGP</span>
+        )}
       </p>
 
       <motion.div
@@ -372,9 +373,15 @@ function useCountdown(targetTimestamp: number): CountdownTime {
     return { days, hours, minutes, seconds };
   };
 
-  const [time, setTime] = useState<CountdownTime>(calculate);
+  const [time, setTime] = useState<CountdownTime>({
+    days: 0,
+    hours: 0,
+    minutes: 0,
+    seconds: 0,
+  });
 
   useEffect(() => {
+    setTime(calculate());
     const id = window.setInterval(() => setTime(calculate()), 1000);
     return () => window.clearInterval(id);
   }, [targetTimestamp]);
@@ -421,7 +428,7 @@ function InstagramStrip() {
     <section className="bg-ink px-6 py-20 md:px-10">
       <div className="mx-auto max-w-7xl">
         <h2 className="font-blackletter text-5xl text-ash md:text-6xl">
-          @QUTBCO
+          @6STREETCO
         </h2>
         <div className="mt-8 grid grid-cols-1 gap-3 md:grid-cols-3 xl:grid-cols-6">
           {instagramTiles.map((image, index) => (
@@ -475,7 +482,7 @@ function Footer() {
           <p className="mt-3 text-xs uppercase tracking-[0.16em] text-ash/65">
             Alexandria, Egypt
           </p>
-          <p className="mt-2 text-sm text-ash/55">قطب</p>
+          <p className="mt-2 text-sm text-ash/55">6 STREET</p>
         </div>
 
         <div className="flex flex-col gap-3 text-xs uppercase tracking-[0.16em] text-ash/70 md:items-center">
@@ -514,13 +521,13 @@ function Footer() {
         </div>
       </div>
       <p className="mt-12 text-center text-[10px] uppercase tracking-[0.15em] text-ash/45">
-        © 2025 QUTB 99 — All rights reserved
+        © 2025 6 STREET — All rights reserved
       </p>
     </footer>
   );
 }
 
-export function QutbLanding({ products }: { products: Product[] }) {
+export function SixStreetLanding({ products }: { products: Product[] }) {
   return (
     <div className="bg-ink text-ash">
       {/* AnnouncementStrip and Nav are provided by SiteChrome in layout */}

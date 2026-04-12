@@ -24,7 +24,7 @@ const timelineEvents = [
   },
   {
     label: "THE NAME",
-    body: "After months of searching for a name that felt like a statement, we arrive at QUTB. The axis. The fixed point. The thing that doesn't move while everything else spins. It was always the right word.",
+    body: "After months of searching for a name that felt like a statement, we arrive at 6 STREET. The axis. The fixed point. The thing that doesn't move while everything else spins. It was always the right word.",
   },
   {
     label: "THE FABRIC",
@@ -74,7 +74,7 @@ export function StoryPage() {
             transition={{ duration: 0.35, ease: "easeOut" }}
           >
             <motion.div
-              className="font-blackletter text-[92px] text-[#F0EDE8] md:text-[124px]"
+              className="font-blackletter display-hero text-[92px] text-[#F0EDE8] md:text-[124px]"
               initial={{ opacity: 0 }}
               animate={{ opacity: [0, 1, 1, 0] }}
               transition={{
@@ -83,7 +83,7 @@ export function StoryPage() {
                 ease: "easeOut",
               }}
             >
-              QUTB
+              6 STREET
             </motion.div>
           </motion.div>
         ) : null}
@@ -115,7 +115,7 @@ export function StoryPage() {
             transition={{ duration: 0.7, ease: "easeOut", delay: 0.15 }}
             className="mt-8 text-[13px] uppercase tracking-[0.3em] text-[#F0EDE8]/65"
           >
-            99 — قطب — ALEXANDRIA
+            6 STREET — ALEXANDRIA
           </motion.p>
 
           <AnimatePresence>
@@ -153,9 +153,9 @@ export function StoryPage() {
               <motion.h2
                 {...reveal}
                 transition={{ duration: 0.7, ease: "easeOut", delay: 0.1 }}
-                className="mt-6 font-blackletter text-[56px] leading-none text-[#F0EDE8]"
+                className="mt-6 font-blackletter display-hero text-[56px] leading-none text-[#F0EDE8]"
               >
-                We are QUTB.
+                We are 6 STREET.
               </motion.h2>
 
               <motion.p
@@ -163,10 +163,10 @@ export function StoryPage() {
                 transition={{ duration: 0.7, ease: "easeOut", delay: 0.2 }}
                 className="mt-10 text-[18px] leading-[1.8] text-[rgba(240,237,232,0.85)]"
               >
-                QUTB is not a trend. It is not a drop. It is not a brand built
-                for the algorithm or the approval of strangers. QUTB is a fixed
-                point in a world that never stops spinning — the axis that
-                everything else revolves around.
+                6 STREET is not a trend. It is not a drop. It is not a brand
+                built for the algorithm or the approval of strangers. 6 STREET
+                is a fixed point in a world that never stops spinning — the axis
+                that everything else revolves around.
               </motion.p>
               <motion.p
                 {...reveal}
@@ -211,7 +211,7 @@ export function StoryPage() {
           <div className="mx-auto grid max-w-7xl grid-cols-1 items-start gap-10 md:grid-cols-2 md:gap-14">
             <motion.div {...reveal} className="order-2 md:order-1">
               <p className={chapterClass}>THE ORIGIN</p>
-              <h2 className="mt-6 font-blackletter text-[48px] leading-none">
+              <h2 className="mt-6 font-blackletter display-hero text-[48px] leading-none">
                 Built by two.
               </h2>
               <motion.p
@@ -219,11 +219,12 @@ export function StoryPage() {
                 transition={{ duration: 0.7, ease: "easeOut", delay: 0.2 }}
                 className="mt-10 text-[18px] leading-[1.8] text-[rgba(240,237,232,0.85)]"
               >
-                QUTB started with a conversation between a father and his son.
-                One who had spent over fifteen years inside Egyptian factories —
-                managing production, building relationships, understanding
-                fabric from the thread up. One who saw what that knowledge could
-                become if it was pointed at something of our own.
+                6 STREET started with a conversation between a father and his
+                son. One who had spent over fifteen years inside Egyptian
+                factories — managing production, building relationships,
+                understanding fabric from the thread up. One who saw what that
+                knowledge could become if it was pointed at something of our
+                own.
               </motion.p>
               <motion.p
                 {...reveal}
@@ -271,7 +272,7 @@ export function StoryPage() {
             <motion.h2
               {...reveal}
               transition={{ duration: 0.7, ease: "easeOut", delay: 0.1 }}
-              className="mt-6 font-blackletter text-[48px] leading-none md:text-[72px]"
+              className="mt-6 font-blackletter display-hero text-[48px] leading-none md:text-[72px]"
             >
               Alexandria.
             </motion.h2>
@@ -301,8 +302,8 @@ export function StoryPage() {
                   We did not choose Alexandria. We are Alexandria. The way the
                   sea hits the corniche at 2am, the way the old walls peel and
                   hold their ground, the way this city survives everything
-                  without making a sound about it — that is the identity of
-                  QUTB.
+                  without making a sound about it — that is the identity of 6
+                  STREET.
                 </p>
               </motion.div>
 
@@ -318,7 +319,7 @@ export function StoryPage() {
                   physics, it is the pole that orients everything else.
                 </p>
                 <p className="mt-8">
-                  Alexandria is our Qutb. The fixed point. The place we come
+                  Alexandria is our axis. The fixed point. The place we come
                   from and the place everything in this brand points back to.
                   Every shirt we make carries that address — even when no one
                   can read it.
@@ -347,9 +348,7 @@ export function StoryPage() {
                   </p>
                 </div>
                 <div>
-                  <p className="text-[48px] font-medium leading-none">
-                    99
-                  </p>
+                  <p className="text-[48px] font-medium leading-none">99</p>
                   <p className="mt-3 text-[12px] uppercase tracking-[0.2em] text-[#F0EDE8]/65">
                     The Code
                   </p>
@@ -367,7 +366,7 @@ export function StoryPage() {
             <motion.h2
               {...reveal}
               transition={{ duration: 0.7, ease: "easeOut", delay: 0.1 }}
-              className="mt-6 font-blackletter text-[48px] leading-none"
+              className="mt-6 font-blackletter display-hero text-[48px] leading-none"
             >
               How we got here.
             </motion.h2>
@@ -435,7 +434,7 @@ export function StoryPage() {
               transition={{ duration: 0.7, ease: "easeOut", delay: 0.3 }}
               className="mt-6 text-[13px] italic text-[#F0EDE8]/65"
             >
-              — QUTB, Alexandria
+              — 6 STREET, Alexandria
             </motion.p>
           </div>
         </section>
@@ -444,16 +443,16 @@ export function StoryPage() {
           <div className="mx-auto max-w-3xl">
             <motion.h2
               {...reveal}
-              className="font-blackletter text-[64px] leading-none text-[#F0EDE8]"
+              className="font-blackletter display-hero text-[64px] leading-none text-[#F0EDE8]"
             >
-              QUTB
+              6 STREET
             </motion.h2>
             <motion.p
               {...reveal}
               transition={{ duration: 0.7, ease: "easeOut", delay: 0.1 }}
               className="mt-4 text-[20px] text-[#F0EDE8]/65"
             >
-              قطب
+              ٦ ستريت
             </motion.p>
             <motion.p
               {...reveal}
@@ -469,7 +468,7 @@ export function StoryPage() {
               className="mt-10 flex flex-col justify-center gap-4 sm:flex-row"
             >
               <Link
-                href="/#drop"
+                href="/shop"
                 className="border border-[#F0EDE8] bg-[#F0EDE8] px-8 py-3 text-xs font-bold uppercase tracking-[0.16em] text-[#080808]"
               >
                 SHOP THE DROP →

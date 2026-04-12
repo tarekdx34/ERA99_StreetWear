@@ -19,9 +19,9 @@ export const sizes = ["S", "M", "L", "XL", "XXL"];
 
 export const products: Product[] = [
   {
-    id: "qutb-white-boxy",
-    slug: "qutb-boxy-tee-white",
-    name: "QUTB Boxy Tee",
+    id: "6street-white-boxy",
+    slug: "6street-boxy-tee-white",
+    name: "6 STREET Boxy Tee",
     color: "White",
     price: 450,
     images: [
@@ -39,9 +39,9 @@ export const products: Product[] = [
     stockBySize: { S: true, M: true, L: true, XL: true, XXL: false },
   },
   {
-    id: "qutb-black-boxy",
-    slug: "qutb-boxy-tee-black",
-    name: "QUTB Boxy Tee",
+    id: "6street-black-boxy",
+    slug: "6street-boxy-tee-black",
+    name: "6 STREET Boxy Tee",
     color: "Black",
     price: 450,
     images: [
@@ -59,9 +59,9 @@ export const products: Product[] = [
     stockBySize: { S: false, M: true, L: true, XL: true, XXL: true },
   },
   {
-    id: "qutb-gray-boxy",
-    slug: "qutb-boxy-tee-gray",
-    name: "QUTB Boxy Tee",
+    id: "6street-gray-boxy",
+    slug: "6street-boxy-tee-gray",
+    name: "6 STREET Boxy Tee",
     color: "Gray",
     price: 450,
     images: [
@@ -78,9 +78,9 @@ export const products: Product[] = [
     stockBySize: { S: true, M: true, L: false, XL: true, XXL: true },
   },
   {
-    id: "qutb-raw-white",
-    slug: "qutb-raw-tee-white",
-    name: "QUTB Raw Tee",
+    id: "6street-raw-white",
+    slug: "6street-raw-tee-white",
+    name: "6 STREET Raw Tee",
     color: "White",
     price: 520,
     images: [

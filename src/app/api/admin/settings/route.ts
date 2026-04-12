@@ -11,14 +11,15 @@ const settingsSchema = z.object({
   notificationEmail: z.string(),
   orderNumberPrefix: z.string().min(1),
   currency: z.literal("EGP"),
-  cloudinaryCloudName: z.string(),
-  cloudinaryUploadPreset: z.string(),
+  cloudinaryUrl: z.string(),
   twilioAccountSid: z.string(),
   twilioAuthToken: z.string(),
   twilioWhatsappFrom: z.string(),
 
   freeDeliveryGovernorate: z.string().min(1),
-  deliveryFees: z.array(z.object({ governorate: z.string().min(1), fee: z.number().nonnegative() })),
+  deliveryFees: z.array(
+    z.object({ governorate: z.string().min(1), fee: z.number().nonnegative() }),
+  ),
   minimumOrderForFreeDelivery: z.number().nonnegative(),
 
   whatsappNotificationsEnabled: z.boolean(),
@@ -55,7 +56,11 @@ async function ensureAdmin() {
 
 export async function GET() {
   const auth = await ensureAdmin();
-  if (!auth.ok) return NextResponse.json({ message: auth.message }, { status: auth.status });
+  if (!auth.ok)
+    return NextResponse.json(
+      { message: auth.message },
+      { status: auth.status },
+    );
 
   const settings = await getAdminSettings();
   return NextResponse.json(settings);
@@ -63,7 +68,11 @@ export async function GET() {
 
 export async function PATCH(req: Request) {
   const auth = await ensureAdmin();
-  if (!auth.ok) return NextResponse.json({ message: auth.message }, { status: auth.status });
+  if (!auth.ok)
+    return NextResponse.json(
+      { message: auth.message },
+      { status: auth.status },
+    );
 
   try {
     const payload = settingsSchema.parse(await req.json());
@@ -71,8 +80,14 @@ export async function PATCH(req: Request) {
     return NextResponse.json(saved);
   } catch (error) {
     if (error instanceof z.ZodError) {
-      return NextResponse.json({ message: "Invalid settings payload" }, { status: 400 });
+      return NextResponse.json(
+        { message: "Invalid settings payload" },
+        { status: 400 },
+      );
     }
-    return NextResponse.json({ message: "Failed to save settings" }, { status: 500 });
+    return NextResponse.json(
+      { message: "Failed to save settings" },
+      { status: 500 },
+    );
   }
 }

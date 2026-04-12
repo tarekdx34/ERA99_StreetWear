@@ -4,6 +4,7 @@ import { isDatabaseConfigured, prisma } from "@/lib/prisma";
 import { orderNumberFromIdWithPrefix } from "@/lib/utils";
 import { getAdminSettings } from "@/lib/admin-settings";
 import { sendAdminWhatsApp } from "@/lib/whatsapp";
+import { getShopperSessionUserId } from "@/lib/shopper-auth";
 
 const itemSchema = z.object({
   productId: z.string(),
@@ -42,9 +43,11 @@ export async function POST(req: Request) {
 
     const json = await req.json();
     const parsed = orderSchema.parse(json);
+    const userId = await getShopperSessionUserId();
 
     const created = await prisma.order.create({
       data: {
+        userId,
         orderNumber: "TEMP",
         customerName: parsed.customerName,
         phone: parsed.phone,
@@ -74,6 +77,20 @@ export async function POST(req: Request) {
     const updated = await prisma.order.update({
       where: { id: created.id },
       data: { orderNumber },
+    });
+
+    await prisma.analyticsEvent.create({
+      data: {
+        event: "checkout_start",
+        userId,
+        orderId: updated.id,
+        value: updated.total,
+        page: "/checkout",
+        data: {
+          paymentMethod: parsed.paymentMethod,
+          itemCount: parsed.items.length,
+        },
+      },
     });
 
     if (adminSettings.whatsappNotificationsEnabled) {

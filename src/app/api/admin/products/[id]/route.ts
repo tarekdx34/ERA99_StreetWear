@@ -51,7 +51,8 @@ const patchSchema = z.object({
 
 async function ensureAdmin() {
   const session = await getServerSession(authOptions);
-  if (!session?.user) return { ok: false as const, status: 401, message: "Unauthorized" };
+  if (!session?.user)
+    return { ok: false as const, status: 401, message: "Unauthorized" };
 
   const currentVersion = await getSessionVersion();
   const sessionVersion = String((session.user as any).sessionVersion || "0");
@@ -68,7 +69,10 @@ export async function GET(
 ) {
   const auth = await ensureAdmin();
   if (!auth.ok) {
-    return NextResponse.json({ message: auth.message }, { status: auth.status });
+    return NextResponse.json(
+      { message: auth.message },
+      { status: auth.status },
+    );
   }
 
   const { id } = await params;
@@ -86,37 +90,51 @@ export async function PATCH(
 ) {
   const auth = await ensureAdmin();
   if (!auth.ok) {
-    return NextResponse.json({ message: auth.message }, { status: auth.status });
+    return NextResponse.json(
+      { message: auth.message },
+      { status: auth.status },
+    );
   }
 
   try {
     const { id } = await params;
     const payload = patchSchema.parse(await req.json());
 
-    const normalizedVariants: ColorVariant[] = payload.colorVariants.map((variant) => {
-      const normalizedSizes = Object.fromEntries(
-        sizes.map((size) => [size, variant.sizes[size]]),
-      ) as ColorVariant["sizes"];
+    const normalizedVariants: ColorVariant[] = payload.colorVariants.map(
+      (variant) => {
+        const normalizedSizes = Object.fromEntries(
+          sizes.map((size) => [size, variant.sizes[size]]),
+        ) as ColorVariant["sizes"];
 
-      return {
-        ...variant,
-        sizes: normalizedSizes,
-      };
-    });
+        return {
+          ...variant,
+          sizes: normalizedSizes,
+        };
+      },
+    );
 
     const updated = await updateCatalogProduct(id, {
       ...payload,
       colorVariants: normalizedVariants,
     });
     if (!updated) {
-      return NextResponse.json({ message: "Product not found" }, { status: 404 });
+      return NextResponse.json(
+        { message: "Product not found" },
+        { status: 404 },
+      );
     }
 
     return NextResponse.json(updated);
   } catch (error) {
     if (error instanceof z.ZodError) {
-      return NextResponse.json({ message: "Invalid product payload" }, { status: 400 });
+      return NextResponse.json(
+        { message: "Invalid product payload" },
+        { status: 400 },
+      );
     }
-    return NextResponse.json({ message: "Failed to update product" }, { status: 500 });
+    return NextResponse.json(
+      { message: "Failed to update product" },
+      { status: 500 },
+    );
   }
 }

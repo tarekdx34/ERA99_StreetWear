@@ -11,8 +11,7 @@ export type AdminSettingsModel = {
   notificationEmail: string;
   orderNumberPrefix: string;
   currency: "EGP";
-  cloudinaryCloudName: string;
-  cloudinaryUploadPreset: string;
+  cloudinaryUrl: string;
   twilioAccountSid: string;
   twilioAuthToken: string;
   twilioWhatsappFrom: string;
@@ -42,13 +41,12 @@ export type AdminSettingsModel = {
 const SETTINGS_KEY = "admin_settings_v1";
 
 export const defaultSettings: AdminSettingsModel = {
-  storeName: "QUTB 99",
+  storeName: "6 STREET 99",
   adminWhatsappNumber: process.env.ADMIN_WHATSAPP_TO || "",
   notificationEmail: "",
   orderNumberPrefix: "99",
   currency: "EGP",
-  cloudinaryCloudName: process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME || "",
-  cloudinaryUploadPreset: process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET || "",
+  cloudinaryUrl: process.env.CLOUDINARY_URL || "",
   twilioAccountSid: process.env.TWILIO_ACCOUNT_SID || "",
   twilioAuthToken: process.env.TWILIO_AUTH_TOKEN || "",
   twilioWhatsappFrom: process.env.TWILIO_WHATSAPP_FROM || "",
@@ -77,27 +75,66 @@ export const defaultSettings: AdminSettingsModel = {
 
   showAnnouncementStrip: true,
   announcementStripText:
-    "QUTB - 99 - ALEXANDRIA - THE AXIS - NINETY NINE - EVERYTHING REVOLVES - 99",
+    "6 STREET — 99 — ALEXANDRIA — THE AXIS — FREE DELIVERY IN ALEX — 6 STREET — NINETY NINE — EVERYTHING REVOLVES — 6 STREET",
   maintenanceMode: false,
 };
 
 function sanitize(raw: any): AdminSettingsModel {
-  const paymentWarning = Math.max(1, Number(raw?.dashboardPaymentFailureWarningRate ?? defaultSettings.dashboardPaymentFailureWarningRate));
-  const paymentCriticalRaw = Math.max(1, Number(raw?.dashboardPaymentFailureCriticalRate ?? defaultSettings.dashboardPaymentFailureCriticalRate));
+  const cloudinaryUrl = String(raw?.cloudinaryUrl || "").trim();
+
+  const paymentWarning = Math.max(
+    1,
+    Number(
+      raw?.dashboardPaymentFailureWarningRate ??
+        defaultSettings.dashboardPaymentFailureWarningRate,
+    ),
+  );
+  const paymentCriticalRaw = Math.max(
+    1,
+    Number(
+      raw?.dashboardPaymentFailureCriticalRate ??
+        defaultSettings.dashboardPaymentFailureCriticalRate,
+    ),
+  );
   const paymentCritical = Math.max(paymentWarning, paymentCriticalRaw);
 
-  const staleWarning = Math.max(1, Number(raw?.dashboardStaleConfirmationWarningCount ?? defaultSettings.dashboardStaleConfirmationWarningCount));
-  const staleCriticalRaw = Math.max(1, Number(raw?.dashboardStaleConfirmationCriticalCount ?? defaultSettings.dashboardStaleConfirmationCriticalCount));
+  const staleWarning = Math.max(
+    1,
+    Number(
+      raw?.dashboardStaleConfirmationWarningCount ??
+        defaultSettings.dashboardStaleConfirmationWarningCount,
+    ),
+  );
+  const staleCriticalRaw = Math.max(
+    1,
+    Number(
+      raw?.dashboardStaleConfirmationCriticalCount ??
+        defaultSettings.dashboardStaleConfirmationCriticalCount,
+    ),
+  );
   const staleCritical = Math.max(staleWarning, staleCriticalRaw);
 
-  const securityWarning = Math.max(1, Number(raw?.dashboardSecurityWarningCount ?? defaultSettings.dashboardSecurityWarningCount));
-  const securityCriticalRaw = Math.max(1, Number(raw?.dashboardSecurityCriticalCount ?? defaultSettings.dashboardSecurityCriticalCount));
+  const securityWarning = Math.max(
+    1,
+    Number(
+      raw?.dashboardSecurityWarningCount ??
+        defaultSettings.dashboardSecurityWarningCount,
+    ),
+  );
+  const securityCriticalRaw = Math.max(
+    1,
+    Number(
+      raw?.dashboardSecurityCriticalCount ??
+        defaultSettings.dashboardSecurityCriticalCount,
+    ),
+  );
   const securityCritical = Math.max(securityWarning, securityCriticalRaw);
 
   return {
     ...defaultSettings,
     ...raw,
     currency: "EGP",
+    cloudinaryUrl,
     dashboardPaymentFailureWarningRate: paymentWarning,
     dashboardPaymentFailureCriticalRate: paymentCritical,
     dashboardStaleConfirmationWarningCount: staleWarning,

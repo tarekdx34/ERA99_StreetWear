@@ -40,7 +40,9 @@ export function ProductCard({ product }: { product: Product }) {
         <p className="mt-2 text-xs uppercase tracking-[0.14em] text-[#F0EDE8]/65">
           {product.compareAtPrice ? (
             <>
-              <span className="mr-2 line-through text-[#F0EDE8]/45">{formatEGP(product.compareAtPrice)}</span>
+              <span className="mr-2 line-through text-[#F0EDE8]/45">
+                {formatEGP(product.compareAtPrice)}
+              </span>
               <span>{formatEGP(product.price)}</span>
             </>
           ) : (

@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { isDatabaseConfigured, prisma } from "@/lib/prisma";
 import { orderNumberFromId } from "@/lib/utils";
+import { getShopperSessionUserId } from "@/lib/shopper-auth";
 
 export async function POST(req: Request) {
   try {
@@ -12,9 +13,11 @@ export async function POST(req: Request) {
     }
 
     const payload = await req.json();
+    const userId = await getShopperSessionUserId();
 
     const created = await prisma.order.create({
       data: {
+        userId,
         orderNumber: "TEMP",
         customerName: payload.customerName,
         phone: payload.phone,
@@ -30,6 +33,20 @@ export async function POST(req: Request) {
         paymentMethod: "ONLINE",
         paymentStatus: "pending",
         orderStatus: "pending_payment",
+      },
+    });
+
+    await prisma.analyticsEvent.create({
+      data: {
+        event: "checkout_start",
+        userId,
+        orderId: created.id,
+        value: created.total,
+        page: "/checkout",
+        data: {
+          paymentMethod: "ONLINE",
+          itemCount: Array.isArray(payload.items) ? payload.items.length : 0,
+        },
       },
     });
 

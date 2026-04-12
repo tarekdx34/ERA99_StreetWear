@@ -16,7 +16,10 @@ export async function POST(req: Request) {
 
     const challenge = verifyChallengeToken(challengeToken, ip);
     if (!challenge || !challenge.setupMode) {
-      return NextResponse.json({ message: "Invalid setup challenge." }, { status: 401 });
+      return NextResponse.json(
+        { message: "Invalid setup challenge." },
+        { status: 401 },
+      );
     }
 
     const existing = await getTotpSecret();
@@ -39,6 +42,9 @@ export async function POST(req: Request) {
         "Secret is stored encrypted in database table Setting under key admin_totp_secret_enc after verification.",
     });
   } catch {
-    return NextResponse.json({ message: "Unable to generate 2FA setup." }, { status: 400 });
+    return NextResponse.json(
+      { message: "Unable to generate 2FA setup." },
+      { status: 400 },
+    );
   }
 }

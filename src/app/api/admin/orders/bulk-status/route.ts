@@ -34,7 +34,8 @@ export async function PATCH(req: Request) {
   try {
     const body = await req.json();
     const parsed = bulkSchema.parse(body);
-    const nextPaymentStatus = parsed.orderStatus === "delivered" ? "paid" : undefined;
+    const nextPaymentStatus =
+      parsed.orderStatus === "delivered" ? "paid" : undefined;
 
     const updated = await prisma.order.updateMany({
       where: { id: { in: parsed.orderIds } },
@@ -51,8 +52,14 @@ export async function PATCH(req: Request) {
     });
   } catch (error) {
     if (error instanceof z.ZodError) {
-      return NextResponse.json({ message: "Invalid bulk payload" }, { status: 400 });
+      return NextResponse.json(
+        { message: "Invalid bulk payload" },
+        { status: 400 },
+      );
     }
-    return NextResponse.json({ message: "Failed to bulk update orders" }, { status: 500 });
+    return NextResponse.json(
+      { message: "Failed to bulk update orders" },
+      { status: 500 },
+    );
   }
 }

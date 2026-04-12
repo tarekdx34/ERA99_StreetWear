@@ -42,7 +42,8 @@ export async function PATCH(
   try {
     const body = await req.json();
     const parsed = statusSchema.parse(body);
-    const nextPaymentStatus = parsed.orderStatus === "delivered" ? "paid" : undefined;
+    const nextPaymentStatus =
+      parsed.orderStatus === "delivered" ? "paid" : undefined;
 
     const updated = await prisma.order.update({
       where: { id: orderId },
@@ -62,8 +63,14 @@ export async function PATCH(
     return NextResponse.json(updated);
   } catch (error) {
     if (error instanceof z.ZodError) {
-      return NextResponse.json({ message: "Invalid status payload" }, { status: 400 });
+      return NextResponse.json(
+        { message: "Invalid status payload" },
+        { status: 400 },
+      );
     }
-    return NextResponse.json({ message: "Failed to update order status" }, { status: 500 });
+    return NextResponse.json(
+      { message: "Failed to update order status" },
+      { status: 500 },
+    );
   }
 }

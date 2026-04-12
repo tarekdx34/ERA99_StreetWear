@@ -40,28 +40,31 @@ export async function getAdminCustomersData() {
     orderBy: { createdAt: "desc" },
   })) as OrderLite[];
 
-  const map = new Map<string, {
-    name: string;
-    phone: string;
-    governorate: string;
-    orders: number;
-    totalSpent: number;
-    lastOrder: string;
-    addresses: Set<string>;
-    sizes: Record<string, number>;
-    paymentMap: Record<string, number>;
-    notes: string[];
-    orderHistory: Array<{
-      orderId: number;
-      orderNumber: string;
-      createdAt: string;
-      total: number;
-      paymentMethod: string;
+  const map = new Map<
+    string,
+    {
+      name: string;
+      phone: string;
       governorate: string;
-      city: string;
-      address: string;
-    }>;
-  }>();
+      orders: number;
+      totalSpent: number;
+      lastOrder: string;
+      addresses: Set<string>;
+      sizes: Record<string, number>;
+      paymentMap: Record<string, number>;
+      notes: string[];
+      orderHistory: Array<{
+        orderId: number;
+        orderNumber: string;
+        createdAt: string;
+        total: number;
+        paymentMethod: string;
+        governorate: string;
+        city: string;
+        address: string;
+      }>;
+    }
+  >();
 
   for (const order of orders) {
     const key = order.phone;
@@ -88,10 +91,16 @@ export async function getAdminCustomersData() {
       customer.lastOrder = order.createdAt.toISOString();
     }
 
-    const addressParts = [order.governorate, order.city, order.address, order.building || ""].filter(Boolean);
+    const addressParts = [
+      order.governorate,
+      order.city,
+      order.address,
+      order.building || "",
+    ].filter(Boolean);
     customer.addresses.add(addressParts.join(" - "));
 
-    customer.paymentMap[order.paymentMethod] = (customer.paymentMap[order.paymentMethod] || 0) + 1;
+    customer.paymentMap[order.paymentMethod] =
+      (customer.paymentMap[order.paymentMethod] || 0) + 1;
 
     if (order.notes?.trim()) {
       customer.notes.push(order.notes.trim());
@@ -116,7 +125,9 @@ export async function getAdminCustomersData() {
   }
 
   const customers = Array.from(map.values()).map((customer) => {
-    const preferredPayment = Object.entries(customer.paymentMap).sort((a, b) => b[1] - a[1])[0]?.[0] || "-";
+    const preferredPayment =
+      Object.entries(customer.paymentMap).sort((a, b) => b[1] - a[1])[0]?.[0] ||
+      "-";
 
     return {
       name: customer.name,
@@ -125,7 +136,9 @@ export async function getAdminCustomersData() {
       orders: customer.orders,
       totalSpent: customer.totalSpent,
       lastOrder: customer.lastOrder,
-      averageOrderValue: customer.orders ? customer.totalSpent / customer.orders : 0,
+      averageOrderValue: customer.orders
+        ? customer.totalSpent / customer.orders
+        : 0,
       preferredPayment,
       sizesOrdered: Object.entries(customer.sizes)
         .map(([size, qty]) => `${size} (${qty})`)

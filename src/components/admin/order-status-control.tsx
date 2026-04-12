@@ -64,7 +64,9 @@ export function OrderStatusControl({ orderId, currentStatus }: Props) {
               setNotice("Saved");
               router.refresh();
             } catch (error) {
-              setNotice(error instanceof Error ? error.message : "Failed to update");
+              setNotice(
+                error instanceof Error ? error.message : "Failed to update",
+              );
             }
           });
         }}
@@ -73,7 +75,9 @@ export function OrderStatusControl({ orderId, currentStatus }: Props) {
         {pending ? "Saving..." : "Save"}
       </button>
 
-      {notice ? <span className="text-[11px] text-[#F0EDE8]/60">{notice}</span> : null}
+      {notice ? (
+        <span className="text-[11px] text-[#F0EDE8]/60">{notice}</span>
+      ) : null}
     </div>
   );
 }

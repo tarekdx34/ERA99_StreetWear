@@ -108,15 +108,24 @@ export function AdminProductsTable({ products }: Props) {
           {products.map((item) => {
             const row = rows[item.id];
             return (
-              <tr key={item.id} className="border-t border-[#F0EDE8]/10 align-top text-[#F0EDE8]/88">
+              <tr
+                key={item.id}
+                className="border-t border-[#F0EDE8]/10 align-top text-[#F0EDE8]/88"
+              >
                 <td className="py-3 pr-3">
-                  <p className="font-medium">{item.name} - {item.color}</p>
+                  <p className="font-medium">
+                    {item.name} - {item.color}
+                  </p>
                 </td>
-                <td className="py-3 pr-3 text-xs text-[#F0EDE8]/60">{item.slug}</td>
+                <td className="py-3 pr-3 text-xs text-[#F0EDE8]/60">
+                  {item.slug}
+                </td>
                 <td className="py-3 pr-3">
                   <input
                     value={row?.price || ""}
-                    onChange={(event) => setRow(item.id, { price: event.target.value, notice: "" })}
+                    onChange={(event) =>
+                      setRow(item.id, { price: event.target.value, notice: "" })
+                    }
                     className="w-28 border border-[#F0EDE8]/20 bg-[#0E0E0E] px-2 py-1"
                     inputMode="numeric"
                   />
@@ -126,7 +135,12 @@ export function AdminProductsTable({ products }: Props) {
                     <input
                       type="checkbox"
                       checked={!row?.hidden}
-                      onChange={(event) => setRow(item.id, { hidden: !event.target.checked, notice: "" })}
+                      onChange={(event) =>
+                        setRow(item.id, {
+                          hidden: !event.target.checked,
+                          notice: "",
+                        })
+                      }
                     />
                     {row?.hidden ? "Hidden" : "Visible"}
                   </label>
@@ -166,7 +180,11 @@ export function AdminProductsTable({ products }: Props) {
                     >
                       {pending ? "Saving..." : "Save"}
                     </button>
-                    {row?.notice ? <span className="text-[11px] text-[#F0EDE8]/60">{row.notice}</span> : null}
+                    {row?.notice ? (
+                      <span className="text-[11px] text-[#F0EDE8]/60">
+                        {row.notice}
+                      </span>
+                    ) : null}
                   </div>
                 </td>
               </tr>

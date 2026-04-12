@@ -7,7 +7,8 @@ import { sendWhatsAppMessage } from "@/lib/whatsapp";
 
 async function ensureAdmin() {
   const session = await getServerSession(authOptions);
-  if (!session?.user) return { ok: false as const, status: 401, message: "Unauthorized" };
+  if (!session?.user)
+    return { ok: false as const, status: 401, message: "Unauthorized" };
 
   const currentVersion = await getSessionVersion();
   const sessionVersion = String((session.user as any).sessionVersion || "0");
@@ -20,12 +21,16 @@ async function ensureAdmin() {
 
 export async function POST() {
   const auth = await ensureAdmin();
-  if (!auth.ok) return NextResponse.json({ message: auth.message }, { status: auth.status });
+  if (!auth.ok)
+    return NextResponse.json(
+      { message: auth.message },
+      { status: auth.status },
+    );
 
   const settings = await getAdminSettings();
 
   await sendWhatsAppMessage(
-    `QUTB Admin test notification - ${new Date().toISOString()}`,
+    `6 STREET Admin test notification - ${new Date().toISOString()}`,
     {
       accountSid: settings.twilioAccountSid,
       authToken: settings.twilioAuthToken,

@@ -43,7 +43,9 @@ export default function AdminLoginPage() {
       }
 
       if (data.requiresSetup) {
-        router.push(`/admin/setup-2fa?challenge=${encodeURIComponent(data.challengeToken)}`);
+        router.push(
+          `/admin/setup-2fa?challenge=${encodeURIComponent(data.challengeToken)}`,
+        );
         return;
       }
 
@@ -62,7 +64,7 @@ export default function AdminLoginPage() {
     setError("");
     setLoading(true);
 
-    const result = await signIn("credentials", {
+    const result = await signIn("admin-credentials", {
       challengeToken,
       code,
       redirect: false,
@@ -82,9 +84,11 @@ export default function AdminLoginPage() {
   return (
     <main className="min-h-screen bg-[#080808] text-[#F0EDE8]">
       <div className="mx-auto flex min-h-screen w-full max-w-md flex-col items-center justify-center px-6">
-        <p className="font-blackletter text-6xl leading-none">QUTB</p>
+        <p className="font-blackletter display-logo text-6xl leading-none">
+          6 STREET
+        </p>
         <p className="mt-3 text-[12px] font-medium uppercase tracking-[0.3em] text-[#F0EDE8]/55">
-          99 — ADMIN
+          6 STREET — ADMIN
         </p>
 
         <h1 className="mt-12 text-sm uppercase tracking-[0.2em] text-[#F0EDE8]/65">
@@ -172,7 +176,10 @@ export default function AdminLoginPage() {
           Internal access only.
         </p>
 
-        <Link href="/" className="mt-3 text-[11px] text-[#F0EDE8]/45 hover:text-[#F0EDE8]/80">
+        <Link
+          href="/"
+          className="mt-3 text-[11px] text-[#F0EDE8]/45 hover:text-[#F0EDE8]/80"
+        >
           Back to storefront
         </Link>
       </div>

@@ -1,9 +1,11 @@
 "use client";
 
-import { FormEvent, useMemo, useState } from "react";
+import { FormEvent, useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { useCart } from "@/contexts/cart-context";
+import { useAnalytics } from "@/hooks/useAnalytics";
+import { useMetaPixel } from "@/hooks/useMetaPixel";
 import { egyptGovernorates } from "@/lib/governorates";
 import { formatEGP, isEgyptPhone } from "@/lib/utils";
 import { CardIcon, CashIcon, LockIcon } from "@/components/icons";
@@ -25,6 +27,8 @@ const baseDelivery = 75;
 export default function CheckoutPage() {
   const { items, subtotal, clear } = useCart();
   const router = useRouter();
+  const { trackEvent } = useAnalytics();
+  const { track } = useMetaPixel();
 
   const [form, setForm] = useState<FormState>({
     customerName: "",
@@ -49,6 +53,51 @@ export default function CheckoutPage() {
     typeof window !== "undefined" &&
     new URLSearchParams(window.location.search).get("error") ===
       "payment_failed";
+
+  useEffect(() => {
+    trackEvent("begin_checkout", {
+      value: subtotal,
+      currency: "EGP",
+      num_items: items.reduce((sum, item) => sum + item.qty, 0),
+    });
+    track("InitiateCheckout", {
+      value: subtotal,
+      num_items: items.reduce((sum, item) => sum + item.qty, 0),
+      currency: "EGP",
+    });
+  }, []);
+
+  useEffect(() => {
+    const prefill = async () => {
+      try {
+        const res = await fetch("/api/account/addresses", { cache: "no-store" });
+        if (!res.ok) return;
+        const data = await res.json();
+        const list = Array.isArray(data.addresses) ? data.addresses : [];
+        const defaultAddress = list.find((address: any) => address.isDefault);
+        if (!defaultAddress) return;
+
+        setForm((prev) => {
+          if (prev.address || prev.city || prev.governorate || prev.phone || prev.customerName) {
+            return prev;
+          }
+          return {
+            ...prev,
+            customerName: `${defaultAddress.firstName} ${defaultAddress.lastName}`.trim(),
+            phone: defaultAddress.phone || "",
+            governorate: defaultAddress.governorate || "",
+            city: defaultAddress.city || "",
+            address: defaultAddress.street || "",
+            building: defaultAddress.building || "",
+          };
+        });
+      } catch {
+        // Ignore prefill failures for guests.
+      }
+    };
+
+    prefill();
+  }, []);
 
   const setField = <K extends keyof FormState>(
     field: K,
@@ -93,6 +142,53 @@ export default function CheckoutPage() {
         });
         if (!res.ok) throw new Error("Failed to create order");
         const data = (await res.json()) as { orderId: number };
+
+        try {
+          const addressesRes = await fetch("/api/account/addresses", {
+            cache: "no-store",
+          });
+          if (addressesRes.ok) {
+            const addressesData = await addressesRes.json();
+            const list = Array.isArray(addressesData.addresses)
+              ? addressesData.addresses
+              : [];
+            const exists = list.some(
+              (address: any) =>
+                String(address.governorate || "").toLowerCase() ===
+                  form.governorate.toLowerCase() &&
+                String(address.city || "").toLowerCase() ===
+                  form.city.toLowerCase() &&
+                String(address.street || "").toLowerCase() ===
+                  form.address.toLowerCase(),
+            );
+
+            if (!exists) {
+              const save = window.confirm(
+                "Save this address to your account?",
+              );
+              if (save) {
+                const [firstName, ...rest] = form.customerName.trim().split(" ");
+                const lastName = rest.join(" ");
+                await fetch("/api/account/addresses", {
+                  method: "POST",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify({
+                    firstName: firstName || "Customer",
+                    lastName: lastName || "",
+                    phone: form.phone,
+                    governorate: form.governorate,
+                    city: form.city,
+                    street: form.address,
+                    building: form.building,
+                  }),
+                });
+              }
+            }
+          }
+        } catch {
+          // Ignore optional saved-address prompt failures.
+        }
+
         clear();
         router.push(`/order-confirmation/${data.orderId}`);
         return;
@@ -178,7 +274,16 @@ export default function CheckoutPage() {
                 <select
                   className={`${inputBase} ${errors.governorate ? "border-[#8B0000]" : ""}`}
                   value={form.governorate}
-                  onChange={(e) => setField("governorate", e.target.value)}
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    setField("governorate", value);
+                    if (value) {
+                      trackEvent("add_shipping_info", {
+                        shipping_tier: value === "Alexandria" ? "Alexandria" : "Standard",
+                        value: total,
+                      });
+                    }
+                  }}
                 >
                   <option value="">Governorate</option>
                   {egyptGovernorates.map((gov) => (
@@ -270,7 +375,11 @@ export default function CheckoutPage() {
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <button
                 type="button"
-                onClick={() => setPaymentMethod("COD")}
+                onClick={() => {
+                  setPaymentMethod("COD");
+                  trackEvent("add_payment_info", { payment_type: "COD" });
+                  track("AddPaymentInfo", { payment_type: "COD" });
+                }}
                 className={`border p-4 text-left ${paymentMethod === "COD" ? "border-[#8B0000] bg-[#8B0000]/10" : "border-[#F0EDE8]/20 bg-[#111111]"}`}
               >
                 <div className="mb-2 flex items-center gap-2">
@@ -285,7 +394,11 @@ export default function CheckoutPage() {
               </button>
               <button
                 type="button"
-                onClick={() => setPaymentMethod("ONLINE")}
+                onClick={() => {
+                  setPaymentMethod("ONLINE");
+                  trackEvent("add_payment_info", { payment_type: "Online" });
+                  track("AddPaymentInfo", { payment_type: "Online" });
+                }}
                 className={`border p-4 text-left ${paymentMethod === "ONLINE" ? "border-[#8B0000] bg-[#8B0000]/10" : "border-[#F0EDE8]/20 bg-[#111111]"}`}
               >
                 <div className="mb-2 flex items-center gap-2">

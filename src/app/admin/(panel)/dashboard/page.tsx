@@ -1,6 +1,9 @@
 import Link from "next/link";
 import { prisma } from "@/lib/prisma";
-import { getAdminCatalogCardProducts, getAdminCatalogProducts } from "@/lib/catalog";
+import {
+  getAdminCatalogCardProducts,
+  getAdminCatalogProducts,
+} from "@/lib/catalog";
 import { getAdminSettings } from "@/lib/admin-settings";
 import { getRecentLoginAttempts } from "@/lib/admin-security";
 import { AdminDashboardLive } from "@/components/admin/admin-dashboard-live";
@@ -144,11 +147,16 @@ export default async function AdminDashboardPage() {
     getAdminSettings(),
   ]);
 
-  const lowStockCount = catalogCards.filter((item) => item.totalStock > 0 && item.totalStock < 10).length;
-  const outOfStockCount = catalogCards.filter((item) => item.active && item.totalStock === 0).length;
-  const paymentFailureRate24h = failedPayments24h + paidOrders24h > 0
-    ? (failedPayments24h / (failedPayments24h + paidOrders24h)) * 100
-    : 0;
+  const lowStockCount = catalogCards.filter(
+    (item) => item.totalStock > 0 && item.totalStock < 10,
+  ).length;
+  const outOfStockCount = catalogCards.filter(
+    (item) => item.active && item.totalStock === 0,
+  ).length;
+  const paymentFailureRate24h =
+    failedPayments24h + paidOrders24h > 0
+      ? (failedPayments24h / (failedPayments24h + paidOrders24h)) * 100
+      : 0;
 
   const orderEvents = recentOrders.map((order) => ({
     id: `order-${order.id}`,
@@ -178,7 +186,10 @@ export default async function AdminDashboardPage() {
   }));
 
   const inventoryEvents = [...catalogProducts]
-    .sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime())
+    .sort(
+      (a, b) =>
+        new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime(),
+    )
     .slice(0, 6)
     .map((product) => ({
       id: `inventory-${product.id}-${product.updatedAt}`,
@@ -189,7 +200,12 @@ export default async function AdminDashboardPage() {
       href: `/admin/products/${product.id}/edit`,
     }));
 
-  const activityFeed = [...orderEvents, ...paymentEvents, ...securityEvents, ...inventoryEvents]
+  const activityFeed = [
+    ...orderEvents,
+    ...paymentEvents,
+    ...securityEvents,
+    ...inventoryEvents,
+  ]
     .sort((a, b) => b.at.getTime() - a.at.getTime())
     .slice(0, 14)
     .map((item) => ({
@@ -209,9 +225,11 @@ export default async function AdminDashboardPage() {
       value: `${paymentFailureRate24h.toFixed(1)}%`,
       detail: `${failedPayments24h} failures out of ${failedPayments24h + paidOrders24h} completed payment attempts.`,
       severity:
-        paymentFailureRate24h >= adminSettings.dashboardPaymentFailureCriticalRate
+        paymentFailureRate24h >=
+        adminSettings.dashboardPaymentFailureCriticalRate
           ? "critical"
-          : paymentFailureRate24h >= adminSettings.dashboardPaymentFailureWarningRate
+          : paymentFailureRate24h >=
+              adminSettings.dashboardPaymentFailureWarningRate
             ? "warning"
             : "info",
       href: "/admin/orders?status=payment_failed",
@@ -222,9 +240,11 @@ export default async function AdminDashboardPage() {
       value: `${stalePendingConfirmation}`,
       detail: "Orders pending for more than 2 hours.",
       severity:
-        stalePendingConfirmation >= adminSettings.dashboardStaleConfirmationCriticalCount
+        stalePendingConfirmation >=
+        adminSettings.dashboardStaleConfirmationCriticalCount
           ? "critical"
-          : stalePendingConfirmation >= adminSettings.dashboardStaleConfirmationWarningCount
+          : stalePendingConfirmation >=
+              adminSettings.dashboardStaleConfirmationWarningCount
             ? "warning"
             : "info",
       href: "/admin/orders?status=pending_confirmation",
@@ -234,7 +254,12 @@ export default async function AdminDashboardPage() {
       label: "Stock Risk",
       value: `${outOfStockCount} out / ${lowStockCount} low`,
       detail: "Active products that need replenishment.",
-      severity: outOfStockCount >= 3 || lowStockCount >= 10 ? "critical" : outOfStockCount >= 1 || lowStockCount >= 5 ? "warning" : "info",
+      severity:
+        outOfStockCount >= 3 || lowStockCount >= 10
+          ? "critical"
+          : outOfStockCount >= 1 || lowStockCount >= 5
+            ? "warning"
+            : "info",
       href: "/admin/products",
     },
     {
@@ -256,7 +281,8 @@ export default async function AdminDashboardPage() {
     {
       id: "r1",
       title: `Clear COD backlog (${agingCodQueue})`,
-      description: "Auto-confirm or manually review COD orders waiting over 30 minutes.",
+      description:
+        "Auto-confirm or manually review COD orders waiting over 30 minutes.",
       href: "/admin/orders?status=pending_confirmation",
       actionLabel: "Open queue",
       active: agingCodQueue > 0,
@@ -264,7 +290,8 @@ export default async function AdminDashboardPage() {
     {
       id: "r2",
       title: "Investigate failed payments",
-      description: "Check gateway/provider issues and retry outreach for failed payment orders.",
+      description:
+        "Check gateway/provider issues and retry outreach for failed payment orders.",
       href: "/admin/orders?status=payment_failed",
       actionLabel: "Review failures",
       active: failedPayments24h > 0,
@@ -272,7 +299,8 @@ export default async function AdminDashboardPage() {
     {
       id: "r3",
       title: "Replenish low-stock products",
-      description: "Prioritize active items that can block conversion during checkout.",
+      description:
+        "Prioritize active items that can block conversion during checkout.",
       href: "/admin/products",
       actionLabel: "Manage inventory",
       active: outOfStockCount > 0 || lowStockCount > 0,
@@ -280,7 +308,8 @@ export default async function AdminDashboardPage() {
     {
       id: "r4",
       title: "Review security activity",
-      description: "Inspect unusual admin login failures and rotate credentials if needed.",
+      description:
+        "Inspect unusual admin login failures and rotate credentials if needed.",
       href: "/admin/settings",
       actionLabel: "Open security settings",
       active: loginFailures24h >= 3,
@@ -302,38 +331,58 @@ export default async function AdminDashboardPage() {
 
       <div className="mt-6 grid gap-3 md:grid-cols-2 xl:grid-cols-4">
         <div className="border border-[#F0EDE8]/12 bg-[#121212] p-4">
-          <p className="text-[11px] uppercase tracking-[0.18em] text-[#F0EDE8]/55">TOTAL ORDERS</p>
+          <p className="text-[11px] uppercase tracking-[0.18em] text-[#F0EDE8]/55">
+            TOTAL ORDERS
+          </p>
           <p className="mt-3 text-3xl font-semibold">{totalOrders}</p>
         </div>
         <div className="border border-[#8B0000]/45 bg-[#8B0000]/10 p-4">
-          <p className="text-[11px] uppercase tracking-[0.18em] text-[#F0EDE8]/55">PENDING CONFIRMATION</p>
+          <p className="text-[11px] uppercase tracking-[0.18em] text-[#F0EDE8]/55">
+            PENDING CONFIRMATION
+          </p>
           <p className="mt-3 text-3xl font-semibold">{pendingConfirmation}</p>
         </div>
         <div className="border border-[#F0EDE8]/12 bg-[#121212] p-4">
-          <p className="text-[11px] uppercase tracking-[0.18em] text-[#F0EDE8]/55">PENDING PAYMENT</p>
+          <p className="text-[11px] uppercase tracking-[0.18em] text-[#F0EDE8]/55">
+            PENDING PAYMENT
+          </p>
           <p className="mt-3 text-3xl font-semibold">{pendingPayment}</p>
         </div>
         <div className="border border-[#F0EDE8]/12 bg-[#121212] p-4">
-          <p className="text-[11px] uppercase tracking-[0.18em] text-[#F0EDE8]/55">TODAY PAID REVENUE</p>
-          <p className="mt-3 text-3xl font-semibold">{formatCurrency(todayRevenue._sum.total || 0)}</p>
+          <p className="text-[11px] uppercase tracking-[0.18em] text-[#F0EDE8]/55">
+            TODAY PAID REVENUE
+          </p>
+          <p className="mt-3 text-3xl font-semibold">
+            {formatCurrency(todayRevenue._sum.total || 0)}
+          </p>
         </div>
       </div>
 
       <div className="mt-3 grid gap-3 md:grid-cols-2 xl:grid-cols-4">
         <div className="border border-[#F0EDE8]/12 bg-[#121212] p-4">
-          <p className="text-[11px] uppercase tracking-[0.18em] text-[#F0EDE8]/55">TODAY ORDERS</p>
+          <p className="text-[11px] uppercase tracking-[0.18em] text-[#F0EDE8]/55">
+            TODAY ORDERS
+          </p>
           <p className="mt-3 text-2xl font-semibold">{totalOrdersToday}</p>
         </div>
         <div className="border border-[#F0EDE8]/12 bg-[#121212] p-4">
-          <p className="text-[11px] uppercase tracking-[0.18em] text-[#F0EDE8]/55">WEEK ORDERS</p>
+          <p className="text-[11px] uppercase tracking-[0.18em] text-[#F0EDE8]/55">
+            WEEK ORDERS
+          </p>
           <p className="mt-3 text-2xl font-semibold">{totalOrdersThisWeek}</p>
         </div>
         <div className="border border-[#F0EDE8]/12 bg-[#121212] p-4">
-          <p className="text-[11px] uppercase tracking-[0.18em] text-[#F0EDE8]/55">WEEK REVENUE</p>
-          <p className="mt-3 text-2xl font-semibold">{formatCurrency(weekRevenue._sum.total || 0)}</p>
+          <p className="text-[11px] uppercase tracking-[0.18em] text-[#F0EDE8]/55">
+            WEEK REVENUE
+          </p>
+          <p className="mt-3 text-2xl font-semibold">
+            {formatCurrency(weekRevenue._sum.total || 0)}
+          </p>
         </div>
         <div className="border border-[#F0EDE8]/12 bg-[#121212] p-4">
-          <p className="text-[11px] uppercase tracking-[0.18em] text-[#F0EDE8]/55">FAILED PAYMENTS</p>
+          <p className="text-[11px] uppercase tracking-[0.18em] text-[#F0EDE8]/55">
+            FAILED PAYMENTS
+          </p>
           <p className="mt-3 text-2xl font-semibold">{failedPayments}</p>
         </div>
       </div>
@@ -346,11 +395,16 @@ export default async function AdminDashboardPage() {
         highValuePendingCount={pendingHighValueCount}
       />
 
-      <AdminDashboardInsights alerts={[...alertRules]} recommendations={recommendations} />
+      <AdminDashboardInsights
+        alerts={[...alertRules]}
+        recommendations={recommendations}
+      />
 
       <div className="mt-8 border border-[#F0EDE8]/12 bg-[#111111] p-4">
         <div className="flex items-center justify-between">
-          <h2 className="text-xs uppercase tracking-[0.22em] text-[#F0EDE8]/75">Recent Orders</h2>
+          <h2 className="text-xs uppercase tracking-[0.22em] text-[#F0EDE8]/75">
+            Recent Orders
+          </h2>
           <Link
             href="/admin/orders"
             className="text-xs uppercase tracking-[0.18em] text-[#F0EDE8]/70 transition-colors hover:text-[#F0EDE8]"
@@ -373,12 +427,17 @@ export default async function AdminDashboardPage() {
             </thead>
             <tbody>
               {recentOrders.map((order) => (
-                <tr key={order.id} className="border-t border-[#F0EDE8]/10 text-[#F0EDE8]/88">
+                <tr
+                  key={order.id}
+                  className="border-t border-[#F0EDE8]/10 text-[#F0EDE8]/88"
+                >
                   <td className="py-3 pr-3 font-medium">{order.orderNumber}</td>
                   <td className="py-3 pr-3">{order.customerName}</td>
                   <td className="py-3 pr-3">{formatCurrency(order.total)}</td>
                   <td className="py-3 pr-3">{order.paymentMethod}</td>
-                  <td className="py-3 pr-3 uppercase tracking-[0.08em] text-[#F0EDE8]/70">{order.orderStatus.replaceAll("_", " ")}</td>
+                  <td className="py-3 pr-3 uppercase tracking-[0.08em] text-[#F0EDE8]/70">
+                    {order.orderStatus.replaceAll("_", " ")}
+                  </td>
                   <td className="py-3 text-[#F0EDE8]/55">
                     {order.createdAt.toLocaleString("en-GB", {
                       day: "2-digit",

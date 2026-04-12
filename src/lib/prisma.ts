@@ -7,12 +7,9 @@ const globalForPrisma = globalThis as unknown as {
 export function isDatabaseConfigured() {
   const url = process.env.DATABASE_URL?.trim() ?? "";
   const hasPlaceholderCreds =
-    /:\/\/USER:PASSWORD@/i.test(url) ||
-    /:\/\/postgres:PASSWORD@/i.test(url);
+    /:\/\/USER:PASSWORD@/i.test(url) || /:\/\/postgres:PASSWORD@/i.test(url);
 
-  return Boolean(
-    url.length > 0 && !hasPlaceholderCreds,
-  );
+  return Boolean(url.length > 0 && !hasPlaceholderCreds);
 }
 
 export const prisma =

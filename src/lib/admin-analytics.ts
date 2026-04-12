@@ -37,7 +37,11 @@ function addMonths(date: Date, months: number) {
 }
 
 function isSameDay(a: Date, b: Date) {
-  return a.getFullYear() === b.getFullYear() && a.getMonth() === b.getMonth() && a.getDate() === b.getDate();
+  return (
+    a.getFullYear() === b.getFullYear() &&
+    a.getMonth() === b.getMonth() &&
+    a.getDate() === b.getDate()
+  );
 }
 
 function percentChange(current: number, previous: number) {
@@ -107,7 +111,10 @@ export async function getAdminAnalyticsData() {
     orderBy: { createdAt: "asc" },
   })) as OrderLite[];
 
-  const totalRevenueAllTime = allOrders.reduce((sum, order) => sum + order.total, 0);
+  const totalRevenueAllTime = allOrders.reduce(
+    (sum, order) => sum + order.total,
+    0,
+  );
   const revenueThisMonth = allOrders
     .filter((order) => order.createdAt >= monthStart)
     .reduce((sum, order) => sum + order.total, 0);
@@ -116,10 +123,15 @@ export async function getAdminAnalyticsData() {
     .reduce((sum, order) => sum + order.total, 0);
 
   const revenueLastMonth = allOrders
-    .filter((order) => order.createdAt >= lastMonthStart && order.createdAt < monthStart)
+    .filter(
+      (order) =>
+        order.createdAt >= lastMonthStart && order.createdAt < monthStart,
+    )
     .reduce((sum, order) => sum + order.total, 0);
 
-  const avgOrderValue = allOrders.length ? totalRevenueAllTime / allOrders.length : 0;
+  const avgOrderValue = allOrders.length
+    ? totalRevenueAllTime / allOrders.length
+    : 0;
 
   const codRevenue = allOrders
     .filter((order) => order.paymentMethod === "COD")
@@ -129,9 +141,15 @@ export async function getAdminAnalyticsData() {
     .reduce((sum, order) => sum + order.total, 0);
 
   const totalOrdersAllTime = allOrders.length;
-  const totalOrdersThisMonth = allOrders.filter((order) => order.createdAt >= monthStart).length;
-  const totalOrdersThisWeek = allOrders.filter((order) => order.createdAt >= weekStart).length;
-  const totalOrdersToday = allOrders.filter((order) => isSameDay(order.createdAt, now)).length;
+  const totalOrdersThisMonth = allOrders.filter(
+    (order) => order.createdAt >= monthStart,
+  ).length;
+  const totalOrdersThisWeek = allOrders.filter(
+    (order) => order.createdAt >= weekStart,
+  ).length;
+  const totalOrdersToday = allOrders.filter((order) =>
+    isSameDay(order.createdAt, now),
+  ).length;
 
   const statusMap: Record<string, number> = {};
   for (const order of allOrders) {
@@ -164,17 +182,20 @@ export async function getAdminAnalyticsData() {
     }
   }
 
-  const dailyRevenue = Object.entries(dailyRevenue90Map).map(([date, revenue]) => ({
-    date,
-    label: date.slice(5),
-    revenue,
-  }));
+  const dailyRevenue = Object.entries(dailyRevenue90Map).map(
+    ([date, revenue]) => ({
+      date,
+      label: date.slice(5),
+      revenue,
+    }),
+  );
 
   const productMap: Record<string, ProductRollup> = {};
   const sizeMap: Record<string, number> = {};
   const customerSpendMap: Record<string, { name: string; spend: number }> = {};
   const governorateMap: Record<string, number> = {};
-  const governoratePaymentMap: Record<string, { cod: number; online: number }> = {};
+  const governoratePaymentMap: Record<string, { cod: number; online: number }> =
+    {};
 
   const customerOrderCount: Record<string, number> = {};
   const customerFirstOrderDate: Record<string, Date> = {};
@@ -186,8 +207,12 @@ export async function getAdminAnalyticsData() {
       spend: (customerSpendMap[customerKey]?.spend || 0) + order.total,
     };
 
-    customerOrderCount[customerKey] = (customerOrderCount[customerKey] || 0) + 1;
-    if (!customerFirstOrderDate[customerKey] || customerFirstOrderDate[customerKey] > order.createdAt) {
+    customerOrderCount[customerKey] =
+      (customerOrderCount[customerKey] || 0) + 1;
+    if (
+      !customerFirstOrderDate[customerKey] ||
+      customerFirstOrderDate[customerKey] > order.createdAt
+    ) {
       customerFirstOrderDate[customerKey] = order.createdAt;
     }
 
@@ -212,7 +237,9 @@ export async function getAdminAnalyticsData() {
     }
 
     for (const item of parseItems(order.items)) {
-      const productId = String(item?.productId || item?.slug || item?.name || "unknown");
+      const productId = String(
+        item?.productId || item?.slug || item?.name || "unknown",
+      );
       const name = String(item?.name || item?.slug || "Unknown Product");
       const qty = Number(item?.qty || 0);
       const unitPrice = Number(item?.unitPrice || 0);
@@ -227,7 +254,9 @@ export async function getAdminAnalyticsData() {
     }
   }
 
-  const productRows = Object.values(productMap).sort((a, b) => b.units - a.units);
+  const productRows = Object.values(productMap).sort(
+    (a, b) => b.units - a.units,
+  );
   const bestSelling = productRows.slice(0, 8);
   const worstPerforming = [...productRows].reverse().slice(0, 8);
 
@@ -236,14 +265,25 @@ export async function getAdminAnalyticsData() {
     .sort((a, b) => b.units - a.units);
 
   const catalogCards = await getAdminCatalogCardProducts();
-  const lowStockAlerts = catalogCards.filter((item) => item.totalStock > 0 && item.totalStock < 10);
-  const outOfStock = catalogCards.filter((item) => item.totalStock <= 0 && item.active);
+  const lowStockAlerts = catalogCards.filter(
+    (item) => item.totalStock > 0 && item.totalStock < 10,
+  );
+  const outOfStock = catalogCards.filter(
+    (item) => item.totalStock <= 0 && item.active,
+  );
 
-  const estimatedLostRevenue = outOfStock.reduce((sum, item) => sum + item.price * 5, 0);
+  const estimatedLostRevenue = outOfStock.reduce(
+    (sum, item) => sum + item.price * 5,
+    0,
+  );
 
   const uniqueCustomers = Object.keys(customerOrderCount).length;
-  const repeatCustomers = Object.values(customerOrderCount).filter((count) => count > 1).length;
-  const repeatCustomerRate = uniqueCustomers ? (repeatCustomers / uniqueCustomers) * 100 : 0;
+  const repeatCustomers = Object.values(customerOrderCount).filter(
+    (count) => count > 1,
+  ).length;
+  const repeatCustomerRate = uniqueCustomers
+    ? (repeatCustomers / uniqueCustomers) * 100
+    : 0;
 
   const newCustomersThisMonth = Object.values(customerFirstOrderDate).filter(
     (date) => date >= monthStart && date < nextMonthStart,
@@ -259,23 +299,30 @@ export async function getAdminAnalyticsData() {
     .sort((a, b) => b.spend - a.spend)
     .slice(0, 10);
 
-  const ordersByGovernorate = ["Alexandria", "Cairo", "Giza", "Other"].map((name) => ({
-    governorate: name,
-    orders: governorateMap[name] || 0,
-  }));
+  const ordersByGovernorate = ["Alexandria", "Cairo", "Giza", "Other"].map(
+    (name) => ({
+      governorate: name,
+      orders: governorateMap[name] || 0,
+    }),
+  );
 
-  const preferenceByGovernorate = ["Alexandria", "Cairo", "Giza", "Other"].map((name) => ({
-    governorate: name,
-    cod: governoratePaymentMap[name]?.cod || 0,
-    online: governoratePaymentMap[name]?.online || 0,
-  }));
+  const preferenceByGovernorate = ["Alexandria", "Cairo", "Giza", "Other"].map(
+    (name) => ({
+      governorate: name,
+      cod: governoratePaymentMap[name]?.cod || 0,
+      online: governoratePaymentMap[name]?.online || 0,
+    }),
+  );
 
   return {
     revenue: {
       totalAllTime: totalRevenueAllTime,
       totalThisMonth: revenueThisMonth,
       totalThisWeek: revenueThisWeek,
-      monthVsLastMonthPercent: percentChange(revenueThisMonth, revenueLastMonth),
+      monthVsLastMonthPercent: percentChange(
+        revenueThisMonth,
+        revenueLastMonth,
+      ),
       averageOrderValue: avgOrderValue,
       byPaymentMethod: {
         cod: codRevenue,
@@ -288,9 +335,16 @@ export async function getAdminAnalyticsData() {
       totalThisMonth: totalOrdersThisMonth,
       totalThisWeek: totalOrdersThisWeek,
       totalToday: totalOrdersToday,
-      statusBreakdown: Object.entries(statusMap).map(([status, count]) => ({ status, count })),
-      cancellationRate: totalOrdersAllTime ? (cancelledCount / totalOrdersAllTime) * 100 : 0,
-      returnRate: totalOrdersAllTime ? (returnCount / totalOrdersAllTime) * 100 : 0,
+      statusBreakdown: Object.entries(statusMap).map(([status, count]) => ({
+        status,
+        count,
+      })),
+      cancellationRate: totalOrdersAllTime
+        ? (cancelledCount / totalOrdersAllTime) * 100
+        : 0,
+      returnRate: totalOrdersAllTime
+        ? (returnCount / totalOrdersAllTime) * 100
+        : 0,
       peakHours: Array.from({ length: 24 }, (_, hour) => ({
         hour: `${hour.toString().padStart(2, "0")}:00`,
         orders: hourlyMap[hour] || 0,

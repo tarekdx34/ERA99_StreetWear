@@ -7,6 +7,7 @@
   --color-ash: #f0ede8;
   --color-blood: #8b0000;
   --color-concrete: #6b7280;
+  --font-display: var(--font-big-shoulders);
 }
 
 @theme inline {
@@ -17,7 +18,7 @@
   --color-blood: var(--color-blood);
   --color-concrete: var(--color-concrete);
   --font-sans: var(--font-space-grotesk);
-  --font-blackletter: var(--font-unifraktur);
+  --font-blackletter: var(--font-display);
   --font-sekuya: var(--font-space-grotesk);
 }
 
@@ -33,7 +34,30 @@ body {
 }
 
 .font-blackletter {
-  font-family: var(--font-unifraktur), serif;
+  font-family: var(--font-display), sans-serif;
+  letter-spacing: 0.015em;
+}
+
+.display-logo {
+  letter-spacing: 0.05em;
+}
+
+.display-hero {
+  letter-spacing: -0.01em;
+}
+
+@media (min-width: 768px) {
+  .font-blackletter {
+    letter-spacing: 0.005em;
+  }
+
+  .display-logo {
+    letter-spacing: 0.035em;
+  }
+
+  .display-hero {
+    letter-spacing: -0.02em;
+  }
 }
 
 input,

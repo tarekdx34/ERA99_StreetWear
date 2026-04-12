@@ -14,7 +14,8 @@ const quickSchema = z.object({
 
 async function ensureAdmin() {
   const session = await getServerSession(authOptions);
-  if (!session?.user) return { ok: false as const, status: 401, message: "Unauthorized" };
+  if (!session?.user)
+    return { ok: false as const, status: 401, message: "Unauthorized" };
 
   const currentVersion = await getSessionVersion();
   const sessionVersion = String((session.user as any).sessionVersion || "0");
@@ -31,7 +32,10 @@ export async function PATCH(
 ) {
   const auth = await ensureAdmin();
   if (!auth.ok) {
-    return NextResponse.json({ message: auth.message }, { status: auth.status });
+    return NextResponse.json(
+      { message: auth.message },
+      { status: auth.status },
+    );
   }
 
   try {
@@ -39,13 +43,22 @@ export async function PATCH(
     const payload = quickSchema.parse(await req.json());
     const updated = await quickUpdateCatalogProduct(id, payload);
     if (!updated) {
-      return NextResponse.json({ message: "Product not found" }, { status: 404 });
+      return NextResponse.json(
+        { message: "Product not found" },
+        { status: 404 },
+      );
     }
     return NextResponse.json(updated);
   } catch (error) {
     if (error instanceof z.ZodError) {
-      return NextResponse.json({ message: "Invalid quick update payload" }, { status: 400 });
+      return NextResponse.json(
+        { message: "Invalid quick update payload" },
+        { status: 400 },
+      );
     }
-    return NextResponse.json({ message: "Failed quick update" }, { status: 500 });
+    return NextResponse.json(
+      { message: "Failed quick update" },
+      { status: 500 },
+    );
   }
 }

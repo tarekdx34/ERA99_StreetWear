@@ -31,8 +31,12 @@ export function AdminActivityFeed({ items }: Props) {
   return (
     <section className="mt-8 border border-[#F0EDE8]/12 bg-[#111111] p-4">
       <div className="flex items-center justify-between">
-        <h2 className="text-xs uppercase tracking-[0.22em] text-[#F0EDE8]/75">Activity Feed</h2>
-        <p className="text-[11px] uppercase tracking-[0.14em] text-[#F0EDE8]/50">Latest events</p>
+        <h2 className="text-xs uppercase tracking-[0.22em] text-[#F0EDE8]/75">
+          Activity Feed
+        </h2>
+        <p className="text-[11px] uppercase tracking-[0.14em] text-[#F0EDE8]/50">
+          Latest events
+        </p>
       </div>
 
       <div className="mt-3 space-y-2">
@@ -44,11 +48,17 @@ export function AdminActivityFeed({ items }: Props) {
               <div className={`border p-3 ${typeClassMap[item.type]}`}>
                 <div className="flex items-start justify-between gap-3">
                   <div>
-                    <p className="text-[10px] uppercase tracking-[0.18em] text-[#F0EDE8]/55">{typeLabelMap[item.type]}</p>
+                    <p className="text-[10px] uppercase tracking-[0.18em] text-[#F0EDE8]/55">
+                      {typeLabelMap[item.type]}
+                    </p>
                     <p className="mt-1 text-sm text-[#F0EDE8]">{item.title}</p>
-                    <p className="mt-1 text-xs text-[#F0EDE8]/60">{item.subtitle}</p>
+                    <p className="mt-1 text-xs text-[#F0EDE8]/60">
+                      {item.subtitle}
+                    </p>
                   </div>
-                  <p className="whitespace-nowrap text-[11px] text-[#F0EDE8]/45">{item.at}</p>
+                  <p className="whitespace-nowrap text-[11px] text-[#F0EDE8]/45">
+                    {item.at}
+                  </p>
                 </div>
               </div>
             );
@@ -56,7 +66,11 @@ export function AdminActivityFeed({ items }: Props) {
             if (!item.href) return <div key={item.id}>{body}</div>;
 
             return (
-              <Link key={item.id} href={item.href} className="block transition-opacity hover:opacity-90">
+              <Link
+                key={item.id}
+                href={item.href}
+                className="block transition-opacity hover:opacity-90"
+              >
                 {body}
               </Link>
             );
