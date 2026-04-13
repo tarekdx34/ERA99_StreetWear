@@ -23,11 +23,16 @@ export default async function AdminPanelLayout({
     redirect("/admin/login?expired=1");
   }
 
-  const pendingOrdersCount = await prisma.order.count({
-    where: {
-      orderStatus: { in: ["pending_confirmation", "pending_payment"] },
-    },
-  });
+  let pendingOrdersCount = 0;
+  try {
+    pendingOrdersCount = await prisma.order.count({
+      where: {
+        orderStatus: { in: ["pending_confirmation", "pending_payment"] },
+      },
+    });
+  } catch {
+    pendingOrdersCount = 0;
+  }
 
   return (
     <AdminShell

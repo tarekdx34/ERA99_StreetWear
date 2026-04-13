@@ -4,7 +4,7 @@ import {
   getAdminCatalogCardProducts,
   getAdminCatalogProducts,
 } from "@/lib/catalog";
-import { getAdminSettings } from "@/lib/admin-settings";
+import { defaultSettings, getAdminSettings } from "@/lib/admin-settings";
 import { getRecentLoginAttempts } from "@/lib/admin-security";
 import { AdminDashboardLive } from "@/components/admin/admin-dashboard-live";
 import { AdminActivityFeed } from "@/components/admin/admin-activity-feed";
@@ -28,124 +28,181 @@ export default async function AdminDashboardPage() {
   const sixHoursAgo = new Date(Date.now() - 6 * 60 * 60 * 1000);
   const thirtyMinutesAgo = new Date(Date.now() - 30 * 60 * 1000);
 
-  const [
-    totalOrders,
-    totalOrdersThisWeek,
-    totalOrdersToday,
-    pendingConfirmation,
-    pendingPayment,
-    failedPayments,
-    todayRevenue,
-    weekRevenue,
-    pendingHighValueCount,
-    stalePendingConfirmation,
-    stalePendingPayment,
-    agingCodQueue,
-    recentOrders,
-    recentPaymentEvents,
-    recentLoginAttempts,
-    failedPayments24h,
-    paidOrders24h,
-    loginFailures24h,
-    catalogCards,
-    catalogProducts,
-    adminSettings,
-  ] = await Promise.all([
-    prisma.order.count(),
-    prisma.order.count({ where: { createdAt: { gte: weekStart } } }),
-    prisma.order.count({ where: { createdAt: { gte: todayStart } } }),
-    prisma.order.count({ where: { orderStatus: "pending_confirmation" } }),
-    prisma.order.count({ where: { orderStatus: "pending_payment" } }),
-    prisma.order.count({ where: { orderStatus: "payment_failed" } }),
-    prisma.order.aggregate({
-      _sum: { total: true },
-      where: {
-        orderStatus: "paid",
-        createdAt: { gte: todayStart },
-      },
-    }),
-    prisma.order.aggregate({
-      _sum: { total: true },
-      where: {
-        orderStatus: "paid",
-        createdAt: { gte: weekStart },
-      },
-    }),
-    prisma.order.count({
-      where: {
-        orderStatus: "pending_confirmation",
-        total: { gte: 2000 },
-      },
-    }),
-    prisma.order.count({
-      where: {
-        orderStatus: "pending_confirmation",
-        createdAt: { lt: twoHoursAgo },
-      },
-    }),
-    prisma.order.count({
-      where: {
-        orderStatus: "pending_payment",
-        createdAt: { lt: sixHoursAgo },
-      },
-    }),
-    prisma.order.count({
-      where: {
-        orderStatus: "pending_confirmation",
-        paymentMethod: "cod",
-        createdAt: { lt: thirtyMinutesAgo },
-      },
-    }),
-    prisma.order.findMany({
-      take: 8,
-      orderBy: { createdAt: "desc" },
-      select: {
-        id: true,
-        orderNumber: true,
-        customerName: true,
-        total: true,
-        paymentMethod: true,
-        orderStatus: true,
-        createdAt: true,
-      },
-    }),
-    prisma.order.findMany({
-      take: 8,
-      where: {
-        orderStatus: { in: ["paid", "payment_failed"] },
-      },
-      orderBy: { updatedAt: "desc" },
-      select: {
-        id: true,
-        orderNumber: true,
-        orderStatus: true,
-        total: true,
-        updatedAt: true,
-      },
-    }),
-    getRecentLoginAttempts(8),
-    prisma.order.count({
-      where: {
-        orderStatus: "payment_failed",
-        createdAt: { gte: dayAgo },
-      },
-    }),
-    prisma.order.count({
-      where: {
-        orderStatus: "paid",
-        createdAt: { gte: dayAgo },
-      },
-    }),
-    prisma.loginAttempt.count({
-      where: {
-        success: false,
-        createdAt: { gte: dayAgo },
-      },
-    }),
-    getAdminCatalogCardProducts(),
-    getAdminCatalogProducts(),
-    getAdminSettings(),
-  ]);
+  const safe = async <T,>(query: () => Promise<T>, fallback: T) => {
+    try {
+      return await query();
+    } catch {
+      return fallback;
+    }
+  };
+
+  const totalOrders = await safe(() => prisma.order.count(), 0);
+  const totalOrdersThisWeek = await safe(
+    () => prisma.order.count({ where: { createdAt: { gte: weekStart } } }),
+    0,
+  );
+  const totalOrdersToday = await safe(
+    () => prisma.order.count({ where: { createdAt: { gte: todayStart } } }),
+    0,
+  );
+  const pendingConfirmation = await safe(
+    () => prisma.order.count({ where: { orderStatus: "pending_confirmation" } }),
+    0,
+  );
+  const pendingPayment = await safe(
+    () => prisma.order.count({ where: { orderStatus: "pending_payment" } }),
+    0,
+  );
+  const failedPayments = await safe(
+    () => prisma.order.count({ where: { orderStatus: "payment_failed" } }),
+    0,
+  );
+  const todayRevenue = await safe(
+    () =>
+      prisma.order.aggregate({
+        _sum: { total: true },
+        where: {
+          orderStatus: "paid",
+          createdAt: { gte: todayStart },
+        },
+      }),
+    { _sum: { total: 0 } },
+  );
+  const weekRevenue = await safe(
+    () =>
+      prisma.order.aggregate({
+        _sum: { total: true },
+        where: {
+          orderStatus: "paid",
+          createdAt: { gte: weekStart },
+        },
+      }),
+    { _sum: { total: 0 } },
+  );
+  const pendingHighValueCount = await safe(
+    () =>
+      prisma.order.count({
+        where: {
+          orderStatus: "pending_confirmation",
+          total: { gte: 2000 },
+        },
+      }),
+    0,
+  );
+  const stalePendingConfirmation = await safe(
+    () =>
+      prisma.order.count({
+        where: {
+          orderStatus: "pending_confirmation",
+          createdAt: { lt: twoHoursAgo },
+        },
+      }),
+    0,
+  );
+  const stalePendingPayment = await safe(
+    () =>
+      prisma.order.count({
+        where: {
+          orderStatus: "pending_payment",
+          createdAt: { lt: sixHoursAgo },
+        },
+      }),
+    0,
+  );
+  const agingCodQueue = await safe(
+    () =>
+      prisma.order.count({
+        where: {
+          orderStatus: "pending_confirmation",
+          paymentMethod: "cod",
+          createdAt: { lt: thirtyMinutesAgo },
+        },
+      }),
+    0,
+  );
+  const recentOrders = await safe(
+    () =>
+      prisma.order.findMany({
+        take: 8,
+        orderBy: { createdAt: "desc" },
+        select: {
+          id: true,
+          orderNumber: true,
+          customerName: true,
+          total: true,
+          paymentMethod: true,
+          orderStatus: true,
+          createdAt: true,
+        },
+      }),
+    [] as Array<{
+      id: number;
+      orderNumber: string;
+      customerName: string;
+      total: number;
+      paymentMethod: string;
+      orderStatus: string;
+      createdAt: Date;
+    }>,
+  );
+  const recentPaymentEvents = await safe(
+    () =>
+      prisma.order.findMany({
+        take: 8,
+        where: {
+          orderStatus: { in: ["paid", "payment_failed"] },
+        },
+        orderBy: { updatedAt: "desc" },
+        select: {
+          id: true,
+          orderNumber: true,
+          orderStatus: true,
+          total: true,
+          updatedAt: true,
+        },
+      }),
+    [] as Array<{
+      id: number;
+      orderNumber: string;
+      orderStatus: string;
+      total: number;
+      updatedAt: Date;
+    }>,
+  );
+  const recentLoginAttempts = await safe(() => getRecentLoginAttempts(8), []);
+  const failedPayments24h = await safe(
+    () =>
+      prisma.order.count({
+        where: {
+          orderStatus: "payment_failed",
+          createdAt: { gte: dayAgo },
+        },
+      }),
+    0,
+  );
+  const paidOrders24h = await safe(
+    () =>
+      prisma.order.count({
+        where: {
+          orderStatus: "paid",
+          createdAt: { gte: dayAgo },
+        },
+      }),
+    0,
+  );
+  const loginFailures24h = await safe(
+    () =>
+      prisma.loginAttempt.count({
+        where: {
+          success: false,
+          createdAt: { gte: dayAgo },
+        },
+      }),
+    0,
+  );
+  const catalogCards = await safe(() => getAdminCatalogCardProducts(), []);
+  const catalogProducts = await safe(() => getAdminCatalogProducts(), []);
+  const adminSettings = await safe(() => getAdminSettings(), defaultSettings);
 
   const lowStockCount = catalogCards.filter(
     (item) => item.totalStock > 0 && item.totalStock < 10,
