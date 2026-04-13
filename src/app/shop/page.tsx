@@ -39,15 +39,15 @@ export async function generateMetadata({
   const search = params.search;
 
   const title = search
-    ? `"${search}" - ERA 99`
+    ? `"${search}" - QUTB`
     : collection && collection !== "all"
-      ? `${collection} - ERA 99`
-      : "Shop - ERA 99";
+      ? `${collection} - QUTB`
+      : "Shop - QUTB";
 
   return {
     title,
     description:
-      "ERA 99 — Alexandria streetwear. Heavyweight boxy fit t-shirts from Alexandria, Egypt.",
+      "QUTB. Not a brand. A position. 220 GSM heavyweight boxy essentials built in Alexandria, Egypt.",
     openGraph: {
       title,
       images: ["/og-shop.jpg"],

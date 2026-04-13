@@ -42,6 +42,11 @@ body {
   letter-spacing: -1px;
 }
 
+.font-anton {
+  font-family: var(--font-anton), sans-serif;
+  font-weight: 400;
+}
+
 .display-hero {
   font-family: var(--font-display), sans-serif;
   letter-spacing: -2px !important;

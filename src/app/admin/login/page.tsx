@@ -84,11 +84,11 @@ export default function AdminLoginPage() {
   return (
     <main className="min-h-screen bg-[#080808] text-[#F0EDE8]">
       <div className="mx-auto flex min-h-screen w-full max-w-md flex-col items-center justify-center px-6">
-        <p className="font-blackletter display-logo text-6xl leading-none">
-          ERA 99
+        <p className="font-anton text-6xl leading-none tracking-[16px] text-[#ede9e0]">
+          QUTB
         </p>
-        <p className="mt-3 text-[12px] font-medium uppercase tracking-[0.3em] text-[#F0EDE8]/55">
-          ERA 99 — ADMIN
+        <p className="mt-3 text-[12px] font-medium uppercase tracking-[0.3em] text-[#555555]">
+          QUTB — ADMIN
         </p>
 
         <h1 className="mt-12 text-sm uppercase tracking-[0.2em] text-[#F0EDE8]/65">

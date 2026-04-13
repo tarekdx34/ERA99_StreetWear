@@ -19,9 +19,9 @@ export const sizes = ["S", "M", "L", "XL", "XXL"];
 
 export const products: Product[] = [
   {
-    id: "era99-white-boxy",
-    slug: "era99-boxy-tee-white",
-    name: "ERA 99 Boxy Tee",
+    id: "qutb-white-boxy",
+    slug: "qutb-boxy-tee-white",
+    name: "QUTB Boxy Tee",
     color: "White",
     price: 450,
     images: [
@@ -31,16 +31,16 @@ export const products: Product[] = [
       "/images/11.jpeg",
     ],
     description: {
-      fabric: "220 GSM. Boxy. Built in Alexandria. This is the era.",
-      fit: "220 GSM. Boxy. Built in Alexandria. This is the era.",
-      care: "220 GSM. Boxy. Built in Alexandria. This is the era.",
+      fabric: "220 GSM. Boxy. Built in Alexandria. This is QUTB.",
+      fit: "220 GSM. Boxy. Built in Alexandria. This is QUTB.",
+      care: "220 GSM. Boxy. Built in Alexandria. This is QUTB.",
     },
     stockBySize: { S: true, M: true, L: true, XL: true, XXL: false },
   },
   {
-    id: "era99-black-boxy",
-    slug: "era99-boxy-tee-black",
-    name: "ERA 99 Boxy Tee",
+    id: "qutb-black-boxy",
+    slug: "qutb-boxy-tee-black",
+    name: "QUTB Boxy Tee",
     color: "Black",
     price: 450,
     images: [
@@ -50,16 +50,16 @@ export const products: Product[] = [
       "/images/7.jpeg",
     ],
     description: {
-      fabric: "220 GSM. Boxy. Built in Alexandria. This is the era.",
-      fit: "220 GSM. Boxy. Built in Alexandria. This is the era.",
-      care: "220 GSM. Boxy. Built in Alexandria. This is the era.",
+      fabric: "220 GSM. Boxy. Built in Alexandria. This is QUTB.",
+      fit: "220 GSM. Boxy. Built in Alexandria. This is QUTB.",
+      care: "220 GSM. Boxy. Built in Alexandria. This is QUTB.",
     },
     stockBySize: { S: false, M: true, L: true, XL: true, XXL: true },
   },
   {
-    id: "era99-gray-boxy",
-    slug: "era99-boxy-tee-gray",
-    name: "ERA 99 Boxy Tee",
+    id: "qutb-gray-boxy",
+    slug: "qutb-boxy-tee-gray",
+    name: "QUTB Boxy Tee",
     color: "Gray",
     price: 450,
     images: [
@@ -69,16 +69,16 @@ export const products: Product[] = [
       "/images/2.jpeg",
     ],
     description: {
-      fabric: "220 GSM. Boxy. Built in Alexandria. This is the era.",
-      fit: "220 GSM. Boxy. Built in Alexandria. This is the era.",
-      care: "220 GSM. Boxy. Built in Alexandria. This is the era.",
+      fabric: "220 GSM. Boxy. Built in Alexandria. This is QUTB.",
+      fit: "220 GSM. Boxy. Built in Alexandria. This is QUTB.",
+      care: "220 GSM. Boxy. Built in Alexandria. This is QUTB.",
     },
     stockBySize: { S: true, M: true, L: false, XL: true, XXL: true },
   },
   {
-    id: "era99-raw-white",
-    slug: "era99-raw-tee-white",
-    name: "ERA 99 Raw Tee",
+    id: "qutb-raw-white",
+    slug: "qutb-raw-tee-white",
+    name: "QUTB Raw Tee",
     color: "White",
     price: 520,
     images: [
@@ -88,9 +88,9 @@ export const products: Product[] = [
       "/images/2.jpeg",
     ],
     description: {
-      fabric: "220 GSM. Boxy. Built in Alexandria. This is the era.",
-      fit: "220 GSM. Boxy. Built in Alexandria. This is the era.",
-      care: "220 GSM. Boxy. Built in Alexandria. This is the era.",
+      fabric: "220 GSM. Boxy. Built in Alexandria. This is QUTB.",
+      fit: "220 GSM. Boxy. Built in Alexandria. This is QUTB.",
+      care: "220 GSM. Boxy. Built in Alexandria. This is QUTB.",
     },
     stockBySize: { S: true, M: true, L: true, XL: false, XXL: false },
   },

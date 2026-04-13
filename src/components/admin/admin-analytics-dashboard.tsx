@@ -21,7 +21,7 @@ type Props = {
   data: any;
 };
 
-const PRIMARY = "#8B0000";
+const PRIMARY = "#F0EDE8";
 const OFFWHITE = "#F0EDE8";
 
 function formatEGP(value: number) {

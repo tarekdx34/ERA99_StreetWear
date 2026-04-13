@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Space_Grotesk, Barlow_Condensed } from "next/font/google";
+import { Space_Grotesk, Barlow_Condensed, Anton } from "next/font/google";
 import { headers } from "next/headers";
 import "./globals.css";
 import { Providers } from "@/components/providers";
@@ -17,10 +17,16 @@ const barlowCondensed = Barlow_Condensed({
   subsets: ["latin"],
 });
 
+const anton = Anton({
+  variable: "--font-anton",
+  weight: "400",
+  subsets: ["latin"],
+});
+
 export const metadata: Metadata = {
-  title: "ERA 99 Ordering",
+  title: "QUTB — Heavyweight Streetwear from Alexandria, Egypt",
   description:
-    "ERA 99 — Alexandria streetwear. Heavyweight boxy fit t-shirts from Alexandria, Egypt.",
+    "QUTB. Not a brand. A position. 220 GSM heavyweight boxy essentials built in Alexandria, Egypt. ERA 99 — Drop 001.",
 };
 
 export default async function RootLayout({
@@ -40,7 +46,7 @@ export default async function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${spaceGrotesk.variable} ${barlowCondensed.variable} h-full antialiased`}
+      className={`${spaceGrotesk.variable} ${barlowCondensed.variable} ${anton.variable} h-full antialiased`}
     >
       <body
         suppressHydrationWarning
@@ -57,11 +63,11 @@ export default async function RootLayout({
           {showMaintenance ? (
             <main className="min-h-screen bg-[#080808] px-6 py-24 text-[#F0EDE8]">
               <div className="mx-auto max-w-2xl border border-[#F0EDE8]/15 bg-[#111111] p-8 text-center">
-                <p className="font-blackletter display-logo text-6xl leading-none">
-                  ERA 99
+                <p className="font-anton text-6xl leading-none tracking-[16px] text-[#ede9e0]">
+                  QUTB
                 </p>
-                <p className="mt-2 text-xs uppercase tracking-[0.28em] text-[#F0EDE8]/55">
-                  99
+                <p className="mt-2 text-xs uppercase tracking-[0.28em] text-[#555555]">
+                  THE AXIS
                 </p>
                 <h1 className="mt-8 text-xl uppercase tracking-[0.2em]">
                   Coming Soon

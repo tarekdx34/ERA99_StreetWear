@@ -110,16 +110,27 @@ export function AdminOrdersTable({ orders }: Props) {
     }).format(value);
 
   const parseItems = (items: unknown) => {
-    if (!Array.isArray(items)) return [] as Array<{ name: string; size: string; qty: number; unitPrice: number }>;
+    if (!Array.isArray(items)) {
+      return [] as Array<{
+        name: string;
+        color: string;
+        size: string;
+        qty: number;
+        unitPrice: number;
+        slug: string;
+      }>;
+    }
 
     return items
       .map((item) => {
         const row = item as any;
         return {
           name: String(row?.name || "Item"),
+          color: String(row?.color || "-"),
           size: String(row?.size || "-"),
           qty: Number(row?.qty || row?.quantity || 1),
           unitPrice: Number(row?.unitPrice || row?.price || 0),
+          slug: String(row?.slug || "-"),
         };
       })
       .filter((item) => item.name);
@@ -134,8 +145,10 @@ export function AdminOrdersTable({ orders }: Props) {
             (item) => `
               <tr>
                 <td>${escapeHtml(item.name)}</td>
+                <td>${escapeHtml(item.color)}</td>
                 <td>${escapeHtml(item.size)}</td>
                 <td>${item.qty}</td>
+                <td>${escapeHtml(item.slug)}</td>
                 <td>${escapeHtml(formatCurrency(item.unitPrice))}</td>
                 <td>${escapeHtml(formatCurrency(item.unitPrice * item.qty))}</td>
               </tr>`,
@@ -157,14 +170,16 @@ export function AdminOrdersTable({ orders }: Props) {
               <thead>
                 <tr>
                   <th>Item</th>
+                  <th>Color</th>
                   <th>Size</th>
                   <th>Qty</th>
+                  <th>Slug</th>
                   <th>Unit Price</th>
                   <th>Line Total</th>
                 </tr>
               </thead>
               <tbody>
-                ${rows || '<tr><td colspan="5">No items</td></tr>'}
+                ${rows || '<tr><td colspan="7">No items</td></tr>'}
               </tbody>
             </table>
 
@@ -191,7 +206,7 @@ export function AdminOrdersTable({ orders }: Props) {
             h1 { margin: 0 0 12px; font-size: 22px; }
             p { margin: 4px 0; font-size: 13px; }
             table { width: 100%; border-collapse: collapse; margin-top: 12px; }
-            th, td { border: 1px solid #ddd; padding: 8px; font-size: 12px; text-align: left; }
+            th, td { border: 1px solid #ddd; padding: 8px; font-size: 12px; text-align: left; vertical-align: top; }
             th { background: #f2f2f2; }
             .totals { margin-top: 12px; }
             @media print {
@@ -215,6 +230,19 @@ export function AdminOrdersTable({ orders }: Props) {
     setPrinting(true);
     setNotice(null);
 
+    // Open immediately from user click to avoid pop-up blockers on async flows.
+    const printWindow = window.open("", "_blank", "noopener,noreferrer");
+    if (!printWindow) {
+      setPrinting(false);
+      setNotice("Pop-up blocked. Please allow pop-ups and try again.");
+      return;
+    }
+
+    printWindow.document.write(
+      "<html><head><title>Preparing print...</title></head><body style='font-family:Arial,sans-serif;padding:20px'>Preparing order print...</body></html>",
+    );
+    printWindow.document.close();
+
     try {
       const res = await fetch("/api/admin/orders/print", {
         method: "POST",
@@ -230,12 +258,8 @@ export function AdminOrdersTable({ orders }: Props) {
       const payload = await res.json();
       const printableOrders = Array.isArray(payload?.orders) ? payload.orders : [];
       if (!printableOrders.length) {
+        printWindow.close();
         throw new Error("No printable orders found");
-      }
-
-      const printWindow = window.open("", "_blank", "noopener,noreferrer");
-      if (!printWindow) {
-        throw new Error("Pop-up blocked. Please allow pop-ups and try again.");
       }
 
       printWindow.document.open();
@@ -245,6 +269,7 @@ export function AdminOrdersTable({ orders }: Props) {
       printWindow.print();
       setNotice(`Prepared ${printableOrders.length} order(s) for printing`);
     } catch (error) {
+      printWindow.close();
       setNotice(error instanceof Error ? error.message : "Print failed");
     } finally {
       setPrinting(false);

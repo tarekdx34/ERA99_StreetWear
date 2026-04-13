@@ -8,7 +8,7 @@ import type { Product } from "@/lib/products";
 import Link from "next/link";
 
 const tickerText =
-  "ERA 99 — 99 — ALEXANDRIA — THE AXIS — FREE DELIVERY IN ALEX — ERA 99 — NINETY NINE — EVERYTHING REVOLVES — ERA 99";
+  "QUTB — ERA 99 — DROP 001 — ALEXANDRIA";
 
 const heroImage = "/images/1.jpeg";
 
@@ -30,7 +30,7 @@ const instagramTiles = [
 function Logo({ className = "" }) {
   return (
     <span className={className}>
-      <span className="font-blackletter display-logo">ERA 99</span>
+      <span className="font-anton tracking-[16px] text-[#ede9e0]">QUTB</span>
     </span>
   );
 }
@@ -72,13 +72,13 @@ function NavBar() {
           <Logo />
         </a>
         <div className="hidden items-center gap-8 text-xs uppercase tracking-[0.15em] text-ash md:flex">
-          <a href="#drop" className="hover:text-[#8B0000]">
+          <a href="#drop" className="hover:text-ash/70">
             SHOP
           </a>
-          <a href="#statement" className="hover:text-[#8B0000]">
+          <a href="#statement" className="hover:text-ash/70">
             STORY
           </a>
-          <a href="#footer" className="hover:text-[#8B0000]">
+          <a href="#footer" className="hover:text-ash/70">
             ALEX
           </a>
         </div>
@@ -106,7 +106,7 @@ function HeroBanner() {
     <section className="relative h-screen w-screen overflow-hidden">
       <img
         src={heroImage}
-        alt="ERA 99 campaign"
+        alt="QUTB campaign"
         className="h-full w-full object-cover"
       />
       <div className="absolute inset-0 bg-gradient-to-b from-black/30 to-black/60" />
@@ -116,15 +116,15 @@ function HeroBanner() {
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1.1, ease: "easeOut" }}
-            className="display-hero text-[72px] leading-none text-ash drop-shadow-[0_4px_18px_rgba(0,0,0,0.8)] md:text-[120px]"
+            className="font-anton text-[72px] leading-none tracking-[16px] text-[#ede9e0] drop-shadow-[0_4px_18px_rgba(0,0,0,0.8)] md:text-[120px]"
           >
             <Logo className="inline-flex items-end gap-1" />
           </motion.h1>
           <p className="mt-3 text-[12px] font-medium uppercase tracking-[0.4em] text-ash/65 md:text-[13px]">
-            99
+            Everything revolves. We are the point it revolves around.
           </p>
           <p className="mt-5 text-[13px] uppercase tracking-[0.3em] text-ash/95 md:text-[16px]">
-            99 — ALEXANDRIA
+            ERA 99 — DROP 001 — ALEXANDRIA
           </p>
           <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
             <motion.a
@@ -171,7 +171,7 @@ function ThreeColumnBanners() {
             </h3>
             <a
               href="#drop"
-              className="mt-3 text-xs uppercase tracking-[0.2em] text-ash hover:text-[#8B0000]"
+              className="mt-3 text-xs uppercase tracking-[0.2em] text-ash hover:text-ash/70"
             >
               SHOP NOW →
             </a>
@@ -203,7 +203,6 @@ function ProductCard({ product }: { product: Product }) {
 
   const handleAddToCart = () => {
     if (!selectedSize) {
-      // Show size selection required notice
       alert("Please select a size");
       return;
     }
@@ -305,11 +304,11 @@ function ProductGrid({ products }: { products: Product[] }) {
   return (
     <section id="drop" className="bg-ink px-6 py-20 md:px-10">
       <div className="mx-auto max-w-7xl">
-        <h2 className="font-sans text-5xl font-medium uppercase tracking-[0.08em] text-ash md:text-6xl">
-          99 — THE FIRST DROP
+        <h2 className="font-anton text-5xl tracking-[16px] text-ash md:text-6xl">
+          QUTB
         </h2>
         <p className="mt-2 text-xs uppercase tracking-[0.24em] text-ash/55">
-          99 — DROP 001
+          ERA 99 — DROP 001
         </p>
         <div className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-4">
           {products.slice(0, 4).map((product) => (
@@ -328,16 +327,16 @@ function BrandStatement() {
       className="relative w-full overflow-hidden bg-ink px-6 py-24 md:px-10"
     >
       <div className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-[20vw] leading-none text-ash/[0.06] md:left-10">
-        
+        Q
       </div>
       <div className="mx-auto grid max-w-7xl grid-cols-1 gap-10 md:grid-cols-2">
         <div />
         <div className="relative z-10 flex flex-col justify-center">
-          <p className="text-xs uppercase tracking-[0.22em] text-ash/50">
-            WHO WE ARE
+          <p className="text-xs uppercase tracking-[0.22em] text-[#555555]">
+            NOT A BRAND. A POSITION.
           </p>
           <h3 className="mt-5 max-w-2xl text-3xl leading-[1.3] text-ash md:text-[32px]">
-            We are the axis. The fixed point. Everything revolves - we stay
+            We are the axis. The fixed point. Everything revolves — we stay
             still.
           </h3>
           <p className="mt-5 max-w-xl text-base text-ash/60">
@@ -396,10 +395,10 @@ function UrgencyStrip() {
   const format = (value: number) => String(value).padStart(2, "0");
 
   return (
-    <section className="w-full bg-[#8B0000] px-6 py-6 text-ash md:px-10">
+    <section className="w-full bg-[#111111] border-y border-[#1a1a1a] px-6 py-6 text-ash md:px-10">
       <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 md:flex-row">
         <p className="text-center text-xs uppercase tracking-[0.2em] md:text-left">
-          99 — DROP 001 — LIMITED QUANTITIES — ORDER NOW
+          ERA 99 — DROP 001 — LIMITED QUANTITIES — ORDER NOW
         </p>
         <div className="flex items-center gap-2 text-xs uppercase tracking-[0.15em]">
           <div className="border border-ash/40 bg-black/20 px-2 py-1">
@@ -427,8 +426,8 @@ function InstagramStrip() {
   return (
     <section className="bg-ink px-6 py-20 md:px-10">
       <div className="mx-auto max-w-7xl">
-        <h2 className="font-blackletter display-hero text-5xl text-ash md:text-6xl">
-          @ERA99CO
+        <h2 className="font-anton text-5xl tracking-[16px] text-ash md:text-6xl">
+          @QUTBCO
         </h2>
         <div className="mt-8 grid grid-cols-1 gap-3 md:grid-cols-3 xl:grid-cols-6">
           {instagramTiles.map((image, index) => (
@@ -473,16 +472,16 @@ function Footer() {
           <div className="text-[34px] text-ash">
             <Logo />
           </div>
-          <p className="mt-3 text-xs font-medium uppercase tracking-[0.3em] text-ash/60">
-            99
+          <p className="mt-3 text-xs font-medium uppercase tracking-[0.3em] text-[#555555]">
+            THE AXIS
           </p>
-          <p className="mt-1 text-[12px] font-medium uppercase tracking-[0.4em] text-ash/55">
-            NINETY NINE
+          <p className="mt-1 text-[12px] font-medium uppercase tracking-[0.4em] text-[#555555]">
+            QUTB
           </p>
           <p className="mt-3 text-xs uppercase tracking-[0.16em] text-ash/65">
             Alexandria, Egypt
           </p>
-          <p className="mt-2 text-sm text-ash/55">ERA 99</p>
+          <p className="mt-2 text-sm text-[#555555]">QUTB · Alexandria, Egypt · The axis holds.</p>
         </div>
 
         <div className="flex flex-col gap-3 text-xs uppercase tracking-[0.16em] text-ash/70 md:items-center">
@@ -521,7 +520,7 @@ function Footer() {
         </div>
       </div>
       <p className="mt-12 text-center text-[10px] uppercase tracking-[0.15em] text-ash/45">
-        © 2025 ERA 99 — All rights reserved
+        © 2025 QUTB — All rights reserved
       </p>
     </footer>
   );
@@ -530,7 +529,6 @@ function Footer() {
 export function SixStreetLanding({ products }: { products: Product[] }) {
   return (
     <div className="bg-ink text-ash">
-      {/* AnnouncementStrip and Nav are provided by SiteChrome in layout */}
       <main>
         <HeroBanner />
         <ThreeColumnBanners />

@@ -686,7 +686,7 @@ export function ShopClient({ data }: { data: ShopDataResult }) {
                             ) : null}
 
                             {!product.soldOut && product.lowStock ? (
-                              <span className="absolute left-2 top-9 bg-[#080808] px-2 py-1 text-[10px] uppercase tracking-[0.15em] text-[#8B0000]">
+                              <span className="absolute left-2 top-9 bg-[#080808] px-2 py-1 text-[10px] uppercase tracking-[0.15em] text-[#555555]">
                                 ALMOST GONE
                               </span>
                             ) : null}
@@ -701,7 +701,7 @@ export function ShopClient({ data }: { data: ShopDataResult }) {
                               {product.compareAtPrice ? (
                                 <>
                                   <span className="mr-2 text-[#F0EDE8]/45 line-through">{formatEGP(product.compareAtPrice)}</span>
-                                  <span className="text-[#8B0000]">{formatEGP(product.price)}</span>
+                                  <span className="text-[#F0EDE8]">{formatEGP(product.price)}</span>
                                 </>
                               ) : (
                                 formatEGP(product.price)
@@ -1002,8 +1002,8 @@ export function ShopClient({ data }: { data: ShopDataResult }) {
                       )}
                     </p>
 
-                    <p className="mt-3 inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.2em] text-[#8B0000]">
-                      <span className="inline-block h-2 w-2 animate-pulse bg-[#8B0000]" />
+                    <p className="mt-3 inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.2em] text-[#555555]">
+                      <span className="inline-block h-2 w-2 animate-pulse bg-[#555555]" />
                       99 - LIMITED
                     </p>
 
@@ -1317,7 +1317,7 @@ function FilterPanel({
       </section>
 
       {clearVisible ? (
-        <button onClick={onClear} className="text-[11px] uppercase tracking-[0.25em] text-[#8B0000]">
+        <button onClick={onClear} className="text-[11px] uppercase tracking-[0.25em] text-[#555555]">
           CLEAR ALL
         </button>
       ) : null}

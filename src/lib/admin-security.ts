@@ -172,7 +172,7 @@ export async function validatePrimaryCredentials(input: {
     };
   }
 
-  const expectedUsername = process.env.ADMIN_USERNAME || "sixstreet_admin";
+  const expectedUsername = process.env.ADMIN_USERNAME || "qutb_admin";
   const storedHash = await getSetting(ADMIN_PASSWORD_HASH_KEY);
   const hashFromB64 = process.env.ADMIN_PASSWORD_HASH_B64?.trim()
     ? Buffer.from(process.env.ADMIN_PASSWORD_HASH_B64, "base64").toString(
@@ -344,11 +344,11 @@ export function verifyTotpCode(code: string, secret: string) {
 }
 
 export function buildOtpAuthUri(secret: string) {
-  const username = process.env.ADMIN_USERNAME || "sixstreet_admin";
+  const username = process.env.ADMIN_USERNAME || "qutb_admin";
   return generateURI({
     strategy: "totp",
     label: username,
-    issuer: "ERA 99 Admin",
+    issuer: "QUTB Admin",
     secret,
     digits: 6,
     period: 30,

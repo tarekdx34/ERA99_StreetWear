@@ -82,11 +82,11 @@ export default function Setup2FAClient() {
   return (
     <main className="min-h-screen bg-[#080808] px-6 py-16 text-[#F0EDE8]">
       <div className="mx-auto w-full max-w-lg">
-        <p className="text-center font-blackletter display-logo text-6xl leading-none">
-          ERA 99
+        <p className="text-center font-anton text-6xl leading-none tracking-[16px] text-[#ede9e0]">
+          QUTB
         </p>
-        <p className="mt-3 text-center text-[12px] font-medium uppercase tracking-[0.3em] text-[#F0EDE8]/55">
-          ERA 99 — ADMIN
+        <p className="mt-3 text-center text-[12px] font-medium uppercase tracking-[0.3em] text-[#555555]">
+          QUTB — ADMIN
         </p>
 
         <h1 className="mt-10 text-center text-sm uppercase tracking-[0.2em] text-[#F0EDE8]/70">

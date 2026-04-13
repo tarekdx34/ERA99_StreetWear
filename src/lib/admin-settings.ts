@@ -41,10 +41,10 @@ export type AdminSettingsModel = {
 const SETTINGS_KEY = "admin_settings_v1";
 
 export const defaultSettings: AdminSettingsModel = {
-  storeName: "ERA 99 99",
+  storeName: "QUTB",
   adminWhatsappNumber: process.env.ADMIN_WHATSAPP_TO || "",
   notificationEmail: "",
-  orderNumberPrefix: "99",
+  orderNumberPrefix: "QTB",
   currency: "EGP",
   cloudinaryUrl: process.env.CLOUDINARY_URL || "",
   twilioAccountSid: process.env.TWILIO_ACCOUNT_SID || "",
@@ -75,7 +75,7 @@ export const defaultSettings: AdminSettingsModel = {
 
   showAnnouncementStrip: true,
   announcementStripText:
-    "ERA 99 — 99 — ALEXANDRIA — THE AXIS — FREE DELIVERY IN ALEX — ERA 99 — NINETY NINE — EVERYTHING REVOLVES — ERA 99",
+    "QUTB — ERA 99 — DROP 001 — ALEXANDRIA",
   maintenanceMode: false,
 };
 

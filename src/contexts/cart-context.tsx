@@ -30,8 +30,8 @@ type CartContextValue = {
   clear: () => void;
 };
 
-const STORAGE_KEY = "6street-cart-v1";
-const NEW_STORAGE_KEY = "sixstreet_cart";
+const STORAGE_KEY = "qutb-cart-v1";
+const NEW_STORAGE_KEY = "qutb_cart";
 
 type PersistedGuestCart = {
   id: string;

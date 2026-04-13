@@ -13,12 +13,12 @@ import { CartIcon, SearchIcon } from "@/components/icons";
 import { CartDrawer } from "@/components/cart-drawer";
 
 const defaultStripText =
-  "ERA 99 — 99 — ALEXANDRIA — THE AXIS — FREE DELIVERY IN ALEX — ERA 99 — NINETY NINE — EVERYTHING REVOLVES — ERA 99";
+  "QUTB — ERA 99 — DROP 001 — ALEXANDRIA";
 
 function Logo() {
   return (
     <span className="inline-flex items-end text-[34px] leading-none text-ash">
-      <span className="font-blackletter display-logo">ERA 99</span>
+      <span className="font-anton tracking-[16px] text-[#ede9e0]">QUTB</span>
     </span>
   );
 }
@@ -198,7 +198,7 @@ export function SiteChrome({
             >
               <CartIcon />
               {count > 0 ? (
-                <span className="absolute -right-2 -top-2 inline-flex min-h-5 min-w-5 items-center justify-center bg-[#8B0000] px-1 text-[10px]">
+                <span className="absolute -right-2 -top-2 inline-flex min-h-5 min-w-5 items-center justify-center bg-[#1A1A1A] px-1 text-[10px] text-[#F0EDE8]">
                   {count}
                 </span>
               ) : null}

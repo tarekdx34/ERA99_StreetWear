@@ -51,21 +51,20 @@ export async function sendVerificationEmail(params: {
   const greetingName = params.firstName?.trim() || "there";
 
   await client.emails.send({
-    from: "ERA 99 <noreply@era99.co>",
+    from: "QUTB <noreply@qutb.co>",
     to: [params.email],
-    subject: "Verify your ERA 99 account",
+    subject: "Verify your QUTB account",
     html: `
       <div style="font-family: Arial, sans-serif; line-height: 1.5; color: #111;">
         <p>Hi ${greetingName},</p>
-        <p>Welcome to ERA 99. Please verify your email to start shopping.</p>
+        <p>Welcome to QUTB. Please verify your email to start shopping.</p>
         <p>
           <a href="${verificationUrl}" style="display:inline-block;padding:10px 16px;background:#111;color:#fff;text-decoration:none;">
             Verify email
           </a>
         </p>
         <p>This link expires in 24 hours.</p>
-        <p style="margin-top: 30px; font-size: 12px; color: #666;">ERA 99 &middot; Alexandria, Egypt &middot; The axis holds.</p>
-        <p style="margin-top: 30px; font-size: 12px; color: #666;">ERA 99 &middot; Alexandria, Egypt &middot; The axis holds.</p>
+        <p style="margin-top: 30px; font-size: 12px; color: #666;">QUTB &middot; Alexandria, Egypt &middot; The axis holds.</p>
       </div>
     `,
   });
@@ -101,21 +100,20 @@ export async function sendPasswordResetEmail(params: {
   const greetingName = params.firstName?.trim() || "there";
 
   await client.emails.send({
-    from: "ERA 99 <noreply@era99.co>",
+    from: "QUTB <noreply@qutb.co>",
     to: [params.email],
-    subject: "Reset your ERA 99 password",
+    subject: "Reset your QUTB password",
     html: `
       <div style="font-family: Arial, sans-serif; line-height: 1.5; color: #111;">
         <p>Hi ${greetingName},</p>
-        <p>We received a request to reset your ERA 99 account password.</p>
+        <p>We received a request to reset your QUTB account password.</p>
         <p>
           <a href="${resetUrl}" style="display:inline-block;padding:10px 16px;background:#111;color:#fff;text-decoration:none;">
             Reset password
           </a>
         </p>
         <p>This link expires in 1 hour.</p>
-        <p style="margin-top: 30px; font-size: 12px; color: #666;">ERA 99 &middot; Alexandria, Egypt &middot; The axis holds.</p>
-        <p style="margin-top: 30px; font-size: 12px; color: #666;">ERA 99 &middot; Alexandria, Egypt &middot; The axis holds.</p>
+        <p style="margin-top: 30px; font-size: 12px; color: #666;">QUTB &middot; Alexandria, Egypt &middot; The axis holds.</p>
       </div>
     `,
   });

@@ -108,7 +108,7 @@ export function AdminProductForm({
     const res = await fetch("/api/admin/products/cloudinary-sign", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ folder: "6street-products" }),
+      body: JSON.stringify({ folder: "qutb-products" }),
     });
     if (!res.ok) {
       const body = await res.json().catch(() => ({}));

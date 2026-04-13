@@ -118,7 +118,7 @@ function seedFromStaticProducts(): CatalogProduct[] {
       active: true,
       featured: index < 4,
       newArrival: index < 2,
-      metaTitle: `${item.name} ${item.color} | ERA 99 99`,
+      metaTitle: `${item.name} ${item.color} | QUTB`,
       metaDescription: item.description.fit,
       mainImageAlt: `${item.name} ${item.color}`,
       colorVariants: [

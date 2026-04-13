@@ -48,7 +48,7 @@ export async function POST(req: Request) {
     );
   }
 
-  const folder = parsedBody.data.folder || "6street-products";
+  const folder = parsedBody.data.folder || "qutb-products";
   const timestamp = Math.floor(Date.now() / 1000);
   const paramsToSign = `folder=${folder}&timestamp=${timestamp}`;
   const signature = crypto

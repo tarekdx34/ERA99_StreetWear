@@ -37,7 +37,7 @@ function buildMessage(payload: WhatsAppOrderPayload) {
     .join("\n");
 
   return [
-    `🖤 NEW ERA 99 ORDER #ERA-${String(payload.id).padStart(5, "0")}`,
+    `🖤 NEW QUTB ORDER #QTB-${String(payload.id).padStart(5, "0")}`,
     "───────────────",
     payload.customerName,
     payload.phone,
@@ -52,7 +52,7 @@ function buildMessage(payload: WhatsAppOrderPayload) {
     `PAYMENT: ${payload.paymentMethod === "COD" ? "Cash on Delivery" : "Online Payment"}`,
     `NOTES: ${payload.notes || "-"}`,
     "───────────────",
-    `View order: era99.co/admin/orders/${payload.id}`,
+    `View order: qutb.co/admin/orders/${payload.id}`,
   ].join("\n");
 }
 

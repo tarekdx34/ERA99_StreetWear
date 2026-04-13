@@ -28,7 +28,7 @@ type ConsentContextValue = ConsentState & {
   }) => void;
 };
 
-const CONSENT_COOKIE_NAME = "sixstreet_consent";
+const CONSENT_COOKIE_NAME = "qutb_consent";
 
 const defaultConsent: ConsentState = {
   essential: true,

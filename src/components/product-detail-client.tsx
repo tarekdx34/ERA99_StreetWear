@@ -476,9 +476,9 @@ export function ProductDetailClient({
             )}
           </p>
 
-          <div className="mt-4 flex items-center gap-2 text-xs uppercase tracking-[0.16em] text-[#8B0000]">
+          <div className="mt-4 flex items-center gap-2 text-xs uppercase tracking-[0.16em] text-[#555555]">
             <motion.span
-              className="h-2 w-2 bg-[#8B0000]"
+              className="h-2 w-2 bg-[#555555]"
               animate={{ opacity: [0.4, 1, 0.4] }}
               transition={{
                 duration: 1.4,
@@ -486,7 +486,7 @@ export function ProductDetailClient({
                 ease: "easeInOut",
               }}
             />
-            99 — LIMITED
+            ERA 99 — DROP 001 — LIMITED
           </div>
 
           <div className="my-6 border-b-[0.5px] border-[#F0EDE8]/15" />
@@ -515,7 +515,7 @@ export function ProductDetailClient({
               })}
             </div>
             {!selectedSize ? (
-              <p className="mt-2 text-xs text-[#8B0000]">
+              <p className="mt-2 text-xs text-[#c0392b]">
                 Please select a size.
               </p>
             ) : null}
