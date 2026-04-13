@@ -103,7 +103,7 @@ export function SiteChrome({
       <header
         className={`${positionClass} left-0 ${stripHeightClass} z-50 w-full border-b border-ash/20 bg-[#080808]/80 backdrop-blur-sm`}
       >
-        <div className="mx-auto grid h-16 w-full max-w-7xl grid-cols-[1fr_auto_1fr] items-center px-6 md:px-10">
+        <div className="mx-auto grid h-16 w-full max-w-7xl grid-cols-[auto_1fr_auto] items-center pl-4 pr-2 md:grid-cols-[1fr_auto_1fr] md:px-10">
           <Link href="/" className="justify-self-start">
             <Logo />
           </Link>
@@ -127,7 +127,7 @@ export function SiteChrome({
               ALEX
             </Link>
           </nav>
-          <div className="flex items-center justify-self-end gap-2 text-ash">
+          <div className="ml-auto flex items-center justify-self-end gap-1 text-ash md:gap-2">
             {user ? (
               <div className="relative">
                 <button
@@ -173,7 +173,7 @@ export function SiteChrome({
             ) : (
               <Link
                 href="/auth/login"
-                className="px-2 text-[11px] uppercase tracking-[0.18em] text-[#F0EDE8]/85"
+                className="px-1 text-[11px] uppercase tracking-[0.18em] text-[#F0EDE8]/85 md:px-2"
               >
                 Sign In
               </Link>

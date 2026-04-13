@@ -469,14 +469,14 @@ export function ProductDetailClient({
             </span>
             <div className="inline-flex items-center border border-[#F0EDE8]/30">
               <button
-                className="h-11 w-11 border-r border-[#F0EDE8]/30"
+                className="grid h-11 w-11 place-items-center border-r border-[#F0EDE8]/30"
                 onClick={() => setQty((q) => Math.max(1, q - 1))}
               >
                 <MinusIcon />
               </button>
               <span className="w-12 text-center text-sm">{qty}</span>
               <button
-                className="h-11 w-11 border-l border-[#F0EDE8]/30"
+                className="grid h-11 w-11 place-items-center border-l border-[#F0EDE8]/30"
                 onClick={() => setQty((q) => q + 1)}
               >
                 <PlusIcon />
