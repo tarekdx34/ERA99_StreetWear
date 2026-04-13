@@ -104,7 +104,7 @@ export default function ResetPasswordPage() {
       <div className="mx-auto flex min-h-screen w-full max-w-md flex-col justify-center px-6">
         <div className="border border-[0.5px] border-[#F0EDE8]/25 bg-[#111111] p-6">
           <div className="text-center">
-            <p className="font-blackletter text-5xl leading-none">6 STREET</p>
+            <p className="font-blackletter text-5xl leading-none">ERA 99</p>
             <p className="mt-2 text-[11px] uppercase tracking-[0.3em] text-[#F0EDE8]/55">
               99 - ALEXANDRIA
             </p>

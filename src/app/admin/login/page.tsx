@@ -85,10 +85,10 @@ export default function AdminLoginPage() {
     <main className="min-h-screen bg-[#080808] text-[#F0EDE8]">
       <div className="mx-auto flex min-h-screen w-full max-w-md flex-col items-center justify-center px-6">
         <p className="font-blackletter display-logo text-6xl leading-none">
-          6 STREET
+          ERA 99
         </p>
         <p className="mt-3 text-[12px] font-medium uppercase tracking-[0.3em] text-[#F0EDE8]/55">
-          6 STREET — ADMIN
+          ERA 99 — ADMIN
         </p>
 
         <h1 className="mt-12 text-sm uppercase tracking-[0.2em] text-[#F0EDE8]/65">

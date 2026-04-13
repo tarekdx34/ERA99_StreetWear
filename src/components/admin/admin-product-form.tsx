@@ -67,6 +67,7 @@ export function AdminProductForm({
   const [productionCost, setProductionCost] = useState("");
   const [toast, setToast] = useState("");
   const [seoOpen, setSeoOpen] = useState(false);
+  const [deletingImageKey, setDeletingImageKey] = useState("");
   const [cloudinarySettings, setCloudinarySettings] = useState<{
     cloudName: string;
     apiKey: string;
@@ -133,7 +134,9 @@ export function AdminProductForm({
   const uploadToCloudinary = async (files: File[]) => {
     let cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
     let preset = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET;
-    let signedConfig: Awaited<ReturnType<typeof getCloudinarySignedConfig>> | null = null;
+    let signedConfig: Awaited<
+      ReturnType<typeof getCloudinarySignedConfig>
+    > | null = null;
 
     if (!cloudName || !preset) {
       signedConfig = await getCloudinarySignedConfig();
@@ -273,6 +276,62 @@ export function AdminProductForm({
       setToast("Images uploaded");
     } catch (error) {
       setToast(error instanceof Error ? error.message : "Image upload failed");
+    }
+  };
+
+  const moveVariantImage = (variantIndex: number, from: number, to: number) => {
+    updateVariant(variantIndex, (variant) => {
+      if (
+        from < 0 ||
+        to < 0 ||
+        from >= variant.images.length ||
+        to >= variant.images.length ||
+        from === to
+      ) {
+        return variant;
+      }
+
+      const nextImages = [...variant.images];
+      const [moved] = nextImages.splice(from, 1);
+      nextImages.splice(to, 0, moved);
+      return { ...variant, images: nextImages };
+    });
+  };
+
+  const deleteCloudinaryImage = async (imageUrl: string) => {
+    const res = await fetch("/api/admin/products/cloudinary-delete", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ imageUrl }),
+    });
+
+    if (!res.ok) {
+      const body = await res.json().catch(() => ({}));
+      throw new Error(
+        body?.message || "Failed to delete image from Cloudinary",
+      );
+    }
+  };
+
+  const handleDeleteImage = async (
+    variantIndex: number,
+    imageIndex: number,
+    imageUrl: string,
+  ) => {
+    const imageKey = `${variantIndex}-${imageIndex}-${imageUrl}`;
+    setDeletingImageKey(imageKey);
+
+    try {
+      await deleteCloudinaryImage(imageUrl);
+      updateVariant(variantIndex, (variant) => ({
+        ...variant,
+        images: variant.images.filter((_, idx) => idx !== imageIndex),
+      }));
+      setToast("Image deleted");
+    } catch (error) {
+      setToast(error instanceof Error ? error.message : "Image delete failed");
+    } finally {
+      setDeletingImageKey("");
     }
   };
 
@@ -420,6 +479,10 @@ export function AdminProductForm({
                   />
                 </label>
 
+                <p className="mt-2 text-[11px] uppercase tracking-[0.12em] text-[#F0EDE8]/45">
+                  Reorder images by drag/drop or using arrows.
+                </p>
+
                 <div className="mt-3 grid grid-cols-4 gap-2">
                   {variant.images.map((image, imageIndex) => (
                     <div
@@ -439,12 +502,7 @@ export function AdminProductForm({
                           event.dataTransfer.getData("text/plain"),
                         );
                         if (Number.isNaN(from) || from === imageIndex) return;
-                        updateVariant(variantIndex, (v) => {
-                          const copy = [...v.images];
-                          const [moved] = copy.splice(from, 1);
-                          copy.splice(imageIndex, 0, moved);
-                          return { ...v, images: copy };
-                        });
+                        moveVariantImage(variantIndex, from, imageIndex);
                       }}
                     >
                       <img
@@ -452,20 +510,52 @@ export function AdminProductForm({
                         alt="Product"
                         className="h-16 w-full object-cover"
                       />
-                      <button
-                        type="button"
-                        onClick={() =>
-                          updateVariant(variantIndex, (v) => ({
-                            ...v,
-                            images: v.images.filter(
-                              (_, idx) => idx !== imageIndex,
-                            ),
-                          }))
-                        }
-                        className="mt-1 w-full border border-[#F0EDE8]/20 px-1 py-1 text-[10px] uppercase"
-                      >
-                        Delete
-                      </button>
+                      <div className="mt-1 grid grid-cols-3 gap-1">
+                        <button
+                          type="button"
+                          disabled={imageIndex === 0}
+                          onClick={() =>
+                            moveVariantImage(
+                              variantIndex,
+                              imageIndex,
+                              imageIndex - 1,
+                            )
+                          }
+                          className="w-full border border-[#F0EDE8]/20 px-1 py-1 text-[10px] uppercase disabled:opacity-30"
+                        >
+                          ↑
+                        </button>
+                        <button
+                          type="button"
+                          disabled={imageIndex === variant.images.length - 1}
+                          onClick={() =>
+                            moveVariantImage(
+                              variantIndex,
+                              imageIndex,
+                              imageIndex + 1,
+                            )
+                          }
+                          className="w-full border border-[#F0EDE8]/20 px-1 py-1 text-[10px] uppercase disabled:opacity-30"
+                        >
+                          ↓
+                        </button>
+                        <button
+                          type="button"
+                          disabled={
+                            deletingImageKey ===
+                            `${variantIndex}-${imageIndex}-${image}`
+                          }
+                          onClick={() =>
+                            handleDeleteImage(variantIndex, imageIndex, image)
+                          }
+                          className="w-full border border-[#F0EDE8]/20 px-1 py-1 text-[10px] uppercase disabled:opacity-40"
+                        >
+                          {deletingImageKey ===
+                          `${variantIndex}-${imageIndex}-${image}`
+                            ? "..."
+                            : "Del"}
+                        </button>
+                      </div>
                     </div>
                   ))}
                 </div>

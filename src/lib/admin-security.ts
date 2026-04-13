@@ -348,7 +348,7 @@ export function buildOtpAuthUri(secret: string) {
   return generateURI({
     strategy: "totp",
     label: username,
-    issuer: "6 STREET Admin",
+    issuer: "ERA 99 Admin",
     secret,
     digits: 6,
     period: 30,

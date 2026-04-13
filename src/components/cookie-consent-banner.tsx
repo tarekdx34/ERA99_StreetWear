@@ -39,7 +39,7 @@ export function CookieConsentBanner() {
           >
             <div className="mx-auto flex w-full max-w-7xl flex-col gap-4 md:flex-row md:items-center md:justify-between">
               <p className="text-sm text-[#F0EDE8]/85">
-                6 STREET uses cookies to personalise your experience and measure our marketing.
+                ERA 99 uses cookies to personalise your experience and measure our marketing.
               </p>
               <div className="flex gap-3">
                 <button

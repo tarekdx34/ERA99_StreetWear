@@ -13,12 +13,12 @@ import { CartIcon, SearchIcon } from "@/components/icons";
 import { CartDrawer } from "@/components/cart-drawer";
 
 const defaultStripText =
-  "6 STREET — 99 — ALEXANDRIA — THE AXIS — FREE DELIVERY IN ALEX — 6 STREET — NINETY NINE — EVERYTHING REVOLVES — 6 STREET";
+  "ERA 99 — 99 — ALEXANDRIA — THE AXIS — FREE DELIVERY IN ALEX — ERA 99 — NINETY NINE — EVERYTHING REVOLVES — ERA 99";
 
 function Logo() {
   return (
     <span className="inline-flex items-end text-[34px] leading-none text-ash">
-      <span className="font-blackletter display-logo">6 STREET</span>
+      <span className="font-blackletter display-logo">ERA 99</span>
     </span>
   );
 }
@@ -41,10 +41,18 @@ export function SiteChrome({
   const { openPreferences } = useConsent();
   const { trackEvent } = useAnalytics();
   const { track } = useMetaPixel();
+
+  const isAbsoluteNav =
+    pathname?.startsWith("/shop") ||
+    pathname?.startsWith("/product") ||
+    pathname?.startsWith("/checkout");
+
+  const positionClass = isAbsoluteNav ? "absolute" : "fixed";
   const stripHeightClass = showAnnouncementStrip ? "top-8" : "top-0";
-  const [user, setUser] = useState<{ firstName?: string; role?: string } | null>(
-    null,
-  );
+  const [user, setUser] = useState<{
+    firstName?: string;
+    role?: string;
+  } | null>(null);
   const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
@@ -77,7 +85,9 @@ export function SiteChrome({
   return (
     <>
       {showAnnouncementStrip ? (
-        <div className="fixed left-0 top-0 z-50 h-8 w-full overflow-hidden border-b border-[#F0EDE8]/15 bg-[#080808]">
+        <div
+          className={`${positionClass} left-0 top-0 z-50 h-8 w-full overflow-hidden border-b border-[#F0EDE8]/15 bg-[#080808]`}
+        >
           <motion.div
             className="flex h-full min-w-max items-center gap-14 px-6 text-[10px] uppercase tracking-[0.2em] text-[#F0EDE8]"
             animate={{ x: ["0%", "-50%"] }}
@@ -91,7 +101,7 @@ export function SiteChrome({
       ) : null}
 
       <header
-        className={`fixed left-0 ${stripHeightClass} z-50 w-full border-b border-ash/20 bg-transparent`}
+        className={`${positionClass} left-0 ${stripHeightClass} z-50 w-full border-b border-ash/20 bg-[#080808]/80 backdrop-blur-sm`}
       >
         <div className="mx-auto grid h-16 w-full max-w-7xl grid-cols-[1fr_auto_1fr] items-center px-6 md:px-10">
           <Link href="/" className="justify-self-start">
@@ -133,10 +143,18 @@ export function SiteChrome({
                     animate={{ opacity: 1, y: 0 }}
                     className="absolute right-0 top-10 w-40 border border-[#F0EDE8]/20 bg-[#111111] p-2 text-[11px] uppercase tracking-[0.15em]"
                   >
-                    <Link href="/account" className="block px-2 py-2 hover:bg-[#1A1A1A]" onClick={() => setMenuOpen(false)}>
+                    <Link
+                      href="/account"
+                      className="block px-2 py-2 hover:bg-[#1A1A1A]"
+                      onClick={() => setMenuOpen(false)}
+                    >
                       My Orders
                     </Link>
-                    <Link href="/account" className="block px-2 py-2 hover:bg-[#1A1A1A]" onClick={() => setMenuOpen(false)}>
+                    <Link
+                      href="/account"
+                      className="block px-2 py-2 hover:bg-[#1A1A1A]"
+                      onClick={() => setMenuOpen(false)}
+                    >
                       Account
                     </Link>
                     <button
@@ -153,7 +171,10 @@ export function SiteChrome({
                 ) : null}
               </div>
             ) : (
-              <Link href="/auth/login" className="px-2 text-[11px] uppercase tracking-[0.18em] text-[#F0EDE8]/85">
+              <Link
+                href="/auth/login"
+                className="px-2 text-[11px] uppercase tracking-[0.18em] text-[#F0EDE8]/85"
+              >
                 Sign In
               </Link>
             )}
@@ -164,7 +185,7 @@ export function SiteChrome({
                 if (!term || !term.trim()) return;
                 trackEvent("search", { search_term: term.trim() });
                 track("Search", { search_string: term.trim() });
-                window.location.href = `/?q=${encodeURIComponent(term.trim())}`;
+                window.location.href = `/shop?search=${encodeURIComponent(term.trim())}`;
               }}
               className="grid h-10 w-10 place-items-center border border-ash/35 hover:border-ash"
             >

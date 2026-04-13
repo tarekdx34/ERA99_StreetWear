@@ -7,7 +7,7 @@
   --color-ash: #f0ede8;
   --color-blood: #8b0000;
   --color-concrete: #6b7280;
-  --font-display: var(--font-big-shoulders);
+  --font-display: var(--font-barlow);
 }
 
 @theme inline {
@@ -35,15 +35,20 @@ body {
 
 .font-blackletter {
   font-family: var(--font-display), sans-serif;
-  letter-spacing: 0.015em;
+  letter-spacing: -1px; /* Global default for big text */
 }
 
 .display-logo {
-  letter-spacing: 0.05em;
+  letter-spacing: -1px;
 }
 
 .display-hero {
-  letter-spacing: -0.01em;
+  font-family: var(--font-display), sans-serif;
+  letter-spacing: -2px !important;
+  text-transform: uppercase !important;
+  font-weight: 900 !important;
+  line-height: 0.85 !important;
+  color: #fff !important;
 }
 
 @media (min-width: 768px) {

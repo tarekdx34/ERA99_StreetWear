@@ -83,10 +83,10 @@ export default function Setup2FAClient() {
     <main className="min-h-screen bg-[#080808] px-6 py-16 text-[#F0EDE8]">
       <div className="mx-auto w-full max-w-lg">
         <p className="text-center font-blackletter display-logo text-6xl leading-none">
-          6 STREET
+          ERA 99
         </p>
         <p className="mt-3 text-center text-[12px] font-medium uppercase tracking-[0.3em] text-[#F0EDE8]/55">
-          6 STREET — ADMIN
+          ERA 99 — ADMIN
         </p>
 
         <h1 className="mt-10 text-center text-sm uppercase tracking-[0.2em] text-[#F0EDE8]/70">

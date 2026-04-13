@@ -161,7 +161,7 @@ export function ShopClient({ data }: { data: ShopDataResult }) {
   useEffect(() => {
     trackEvent("page_view", {
       page_path: `${pathname}?${searchParams.toString()}`,
-      page_title: "Shop - 6 STREET",
+      page_title: "Shop - ERA 99",
     });
   }, [trackEvent, pathname, searchParams]);
 

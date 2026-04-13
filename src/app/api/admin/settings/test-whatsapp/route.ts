@@ -30,7 +30,7 @@ export async function POST() {
   const settings = await getAdminSettings();
 
   await sendWhatsAppMessage(
-    `6 STREET Admin test notification - ${new Date().toISOString()}`,
+    `ERA 99 Admin test notification - ${new Date().toISOString()}`,
     {
       accountSid: settings.twilioAccountSid,
       authToken: settings.twilioAuthToken,

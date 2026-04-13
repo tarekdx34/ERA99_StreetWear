@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Archivo_Black, Space_Grotesk } from "next/font/google";
+import { Space_Grotesk, Barlow_Condensed } from "next/font/google";
 import { headers } from "next/headers";
 import "./globals.css";
 import { Providers } from "@/components/providers";
@@ -11,15 +11,16 @@ const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
 });
 
-const bigShoulders = Archivo_Black({
-  variable: "--font-big-shoulders",
-  weight: "400",
+const barlowCondensed = Barlow_Condensed({
+  variable: "--font-barlow",
+  weight: "900",
   subsets: ["latin"],
 });
 
 export const metadata: Metadata = {
-  title: "6 STREET Ordering",
-  description: "6 STREET 99 — Alexandria streetwear",
+  title: "ERA 99 Ordering",
+  description:
+    "ERA 99 — Alexandria streetwear. Heavyweight boxy fit t-shirts from Alexandria, Egypt.",
 };
 
 export default async function RootLayout({
@@ -39,7 +40,7 @@ export default async function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${spaceGrotesk.variable} ${bigShoulders.variable} h-full antialiased`}
+      className={`${spaceGrotesk.variable} ${barlowCondensed.variable} h-full antialiased`}
     >
       <body
         suppressHydrationWarning
@@ -57,7 +58,7 @@ export default async function RootLayout({
             <main className="min-h-screen bg-[#080808] px-6 py-24 text-[#F0EDE8]">
               <div className="mx-auto max-w-2xl border border-[#F0EDE8]/15 bg-[#111111] p-8 text-center">
                 <p className="font-blackletter display-logo text-6xl leading-none">
-                  6 STREET
+                  ERA 99
                 </p>
                 <p className="mt-2 text-xs uppercase tracking-[0.28em] text-[#F0EDE8]/55">
                   99

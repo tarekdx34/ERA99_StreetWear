@@ -41,7 +41,7 @@ export type AdminSettingsModel = {
 const SETTINGS_KEY = "admin_settings_v1";
 
 export const defaultSettings: AdminSettingsModel = {
-  storeName: "6 STREET 99",
+  storeName: "ERA 99 99",
   adminWhatsappNumber: process.env.ADMIN_WHATSAPP_TO || "",
   notificationEmail: "",
   orderNumberPrefix: "99",
@@ -75,7 +75,7 @@ export const defaultSettings: AdminSettingsModel = {
 
   showAnnouncementStrip: true,
   announcementStripText:
-    "6 STREET — 99 — ALEXANDRIA — THE AXIS — FREE DELIVERY IN ALEX — 6 STREET — NINETY NINE — EVERYTHING REVOLVES — 6 STREET",
+    "ERA 99 — 99 — ALEXANDRIA — THE AXIS — FREE DELIVERY IN ALEX — ERA 99 — NINETY NINE — EVERYTHING REVOLVES — ERA 99",
   maintenanceMode: false,
 };
 

@@ -31,20 +31,23 @@ function toSingleSearchParams(input: {
   return out;
 }
 
-export async function generateMetadata({ searchParams }: PageProps): Promise<Metadata> {
+export async function generateMetadata({
+  searchParams,
+}: PageProps): Promise<Metadata> {
   const params = toSingleSearchParams(await searchParams);
   const collection = params.collection;
   const search = params.search;
 
   const title = search
-    ? `"${search}" - 6 STREET`
+    ? `"${search}" - ERA 99`
     : collection && collection !== "all"
-      ? `${collection} - 6 STREET`
-      : "Shop - 6 STREET";
+      ? `${collection} - ERA 99`
+      : "Shop - ERA 99";
 
   return {
     title,
-    description: "Heavyweight boxy fit t-shirts from Alexandria, Egypt.",
+    description:
+      "ERA 99 — Alexandria streetwear. Heavyweight boxy fit t-shirts from Alexandria, Egypt.",
     openGraph: {
       title,
       images: ["/og-shop.jpg"],

@@ -147,7 +147,11 @@ function PhotoViewerModal({
   }, [activeIndex, totalImages, onChangeIndex]);
 
   const goPrev = () => {
-    const { activeIndex: idx, totalImages: count, onChangeIndex: change } = navRef.current;
+    const {
+      activeIndex: idx,
+      totalImages: count,
+      onChangeIndex: change,
+    } = navRef.current;
     if (count <= 1) return;
     const nextIndex = (idx - 1 + count) % count;
     change(nextIndex);
@@ -155,7 +159,11 @@ function PhotoViewerModal({
   };
 
   const goNext = () => {
-    const { activeIndex: idx, totalImages: count, onChangeIndex: change } = navRef.current;
+    const {
+      activeIndex: idx,
+      totalImages: count,
+      onChangeIndex: change,
+    } = navRef.current;
     if (count <= 1) return;
     const nextIndex = (idx + 1) % count;
     change(nextIndex);
@@ -254,11 +262,13 @@ function PhotoViewerModal({
               <img
                 src={activeImage}
                 alt={alt}
-                className="max-h-[78vh] w-full object-contain"
+                className="max-h-[90vh] w-full object-contain"
                 style={{
                   transform: zoomActive ? "scale(2)" : "scale(1)",
                   transformOrigin: `${zoomX}% ${zoomY}%`,
-                  transition: zoomActive ? "transform 40ms linear" : "transform 220ms ease-out",
+                  transition: zoomActive
+                    ? "transform 40ms linear"
+                    : "transform 220ms ease-out",
                 }}
               />
             </div>
@@ -354,7 +364,7 @@ export function ProductDetailClient({
               <img
                 src={mainImage}
                 alt={product.name}
-                className="h-[68vh] w-full object-cover"
+                className="w-full h-auto min-h-[75vh] object-cover cursor-zoom-in"
                 onClick={() => setOpenPhotoViewer(true)}
               />
             </div>
@@ -497,7 +507,8 @@ export function ProductDetailClient({
               Free Alex Delivery
             </div>
             <div className="flex items-center gap-2 border border-[#F0EDE8]/12 px-3 py-2">
-              <ShieldIcon />6 STREET 99
+              <ShieldIcon />
+              ERA 99 99
             </div>
             <div className="flex items-center gap-2 border border-[#F0EDE8]/12 px-3 py-2">
               <WeightIcon />

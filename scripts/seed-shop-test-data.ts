@@ -54,7 +54,7 @@ function makeProduct(input: {
     active: true,
     featured: Boolean(input.featured),
     newArrival: Boolean(input.newArrival),
-    metaTitle: `${input.name} | 6 STREET`,
+    metaTitle: `${input.name} | ERA 99`,
     metaDescription: input.shortDescription,
     mainImageAlt: input.name,
     colorVariants: [

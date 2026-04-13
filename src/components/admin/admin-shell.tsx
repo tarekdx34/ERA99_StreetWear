@@ -82,7 +82,7 @@ export function AdminShell({
       <aside className="fixed left-0 top-0 z-40 h-screen w-[240px] border-r border-[#F0EDE8]/10 bg-[#0D0D0D]">
         <div className="px-5 pb-4 pt-6">
           <p className="font-blackletter display-logo text-4xl leading-none">
-            6 STREET
+            ERA 99
           </p>
           <p className="mt-2 text-[11px] font-medium uppercase tracking-[0.3em] text-[#F0EDE8]/55">
             99 ADMIN

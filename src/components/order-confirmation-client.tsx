@@ -89,7 +89,7 @@ export function OrderConfirmationClient(props: Props) {
         <h1 className="mt-6 font-blackletter display-hero text-5xl md:text-[64px]">
           ORDER RECEIVED
         </h1>
-        <p className="mt-2 text-xl text-[#F0EDE8]/50">٦ ستريت</p>
+        <p className="mt-2 text-xl text-[#F0EDE8]/50"></p>
         <p className="mt-4 text-sm uppercase tracking-[0.2em]">
           #{props.orderNumber}
         </p>

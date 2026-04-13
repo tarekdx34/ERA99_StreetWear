@@ -8,7 +8,7 @@ import type { Product } from "@/lib/products";
 import Link from "next/link";
 
 const tickerText =
-  "6 STREET — 99 — ALEXANDRIA — THE AXIS — FREE DELIVERY IN ALEX — 6 STREET — NINETY NINE — EVERYTHING REVOLVES — 6 STREET";
+  "ERA 99 — 99 — ALEXANDRIA — THE AXIS — FREE DELIVERY IN ALEX — ERA 99 — NINETY NINE — EVERYTHING REVOLVES — ERA 99";
 
 const heroImage = "/images/1.jpeg";
 
@@ -30,7 +30,7 @@ const instagramTiles = [
 function Logo({ className = "" }) {
   return (
     <span className={className}>
-      <span className="font-blackletter display-logo">6 STREET</span>
+      <span className="font-blackletter display-logo">ERA 99</span>
     </span>
   );
 }
@@ -106,7 +106,7 @@ function HeroBanner() {
     <section className="relative h-screen w-screen overflow-hidden">
       <img
         src={heroImage}
-        alt="6 STREET campaign"
+        alt="ERA 99 campaign"
         className="h-full w-full object-cover"
       />
       <div className="absolute inset-0 bg-gradient-to-b from-black/30 to-black/60" />
@@ -328,7 +328,7 @@ function BrandStatement() {
       className="relative w-full overflow-hidden bg-ink px-6 py-24 md:px-10"
     >
       <div className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-[20vw] leading-none text-ash/[0.06] md:left-10">
-        قطب
+        
       </div>
       <div className="mx-auto grid max-w-7xl grid-cols-1 gap-10 md:grid-cols-2">
         <div />
@@ -428,7 +428,7 @@ function InstagramStrip() {
     <section className="bg-ink px-6 py-20 md:px-10">
       <div className="mx-auto max-w-7xl">
         <h2 className="font-blackletter display-hero text-5xl text-ash md:text-6xl">
-          @6STREETCO
+          @ERA99CO
         </h2>
         <div className="mt-8 grid grid-cols-1 gap-3 md:grid-cols-3 xl:grid-cols-6">
           {instagramTiles.map((image, index) => (
@@ -482,7 +482,7 @@ function Footer() {
           <p className="mt-3 text-xs uppercase tracking-[0.16em] text-ash/65">
             Alexandria, Egypt
           </p>
-          <p className="mt-2 text-sm text-ash/55">6 STREET</p>
+          <p className="mt-2 text-sm text-ash/55">ERA 99</p>
         </div>
 
         <div className="flex flex-col gap-3 text-xs uppercase tracking-[0.16em] text-ash/70 md:items-center">
@@ -521,7 +521,7 @@ function Footer() {
         </div>
       </div>
       <p className="mt-12 text-center text-[10px] uppercase tracking-[0.15em] text-ash/45">
-        © 2025 6 STREET — All rights reserved
+        © 2025 ERA 99 — All rights reserved
       </p>
     </footer>
   );

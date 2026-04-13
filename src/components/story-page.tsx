@@ -24,7 +24,7 @@ const timelineEvents = [
   },
   {
     label: "THE NAME",
-    body: "After months of searching for a name that felt like a statement, we arrive at 6 STREET. The axis. The fixed point. The thing that doesn't move while everything else spins. It was always the right word.",
+    body: "After months of searching for a name that felt like a statement, we arrive at ERA 99. The axis. The fixed point. The thing that doesn't move while everything else spins. It was always the right word.",
   },
   {
     label: "THE FABRIC",
@@ -83,7 +83,7 @@ export function StoryPage() {
                 ease: "easeOut",
               }}
             >
-              6 STREET
+              ERA 99
             </motion.div>
           </motion.div>
         ) : null}
@@ -107,7 +107,7 @@ export function StoryPage() {
             {...reveal}
             className="max-w-[800px] text-[32px] leading-[1.1] md:text-[52px]"
           >
-            Everything revolves. We stay still.
+            This is the era.
           </motion.h1>
 
           <motion.p
@@ -115,7 +115,7 @@ export function StoryPage() {
             transition={{ duration: 0.7, ease: "easeOut", delay: 0.15 }}
             className="mt-8 text-[13px] uppercase tracking-[0.3em] text-[#F0EDE8]/65"
           >
-            6 STREET — ALEXANDRIA
+            ERA 99 — ALEXANDRIA
           </motion.p>
 
           <AnimatePresence>
@@ -142,7 +142,7 @@ export function StoryPage() {
 
         <section className="relative overflow-hidden px-6 py-24 md:px-10 md:py-32">
           <div className="pointer-events-none absolute left-4 top-8 text-[18vw] leading-none text-[#F0EDE8]/[0.04] md:left-10">
-            قطب
+            
           </div>
           <div className="mx-auto grid max-w-7xl grid-cols-1 gap-10 md:grid-cols-[1fr_1.2fr] md:gap-14">
             <div />
@@ -155,7 +155,7 @@ export function StoryPage() {
                 transition={{ duration: 0.7, ease: "easeOut", delay: 0.1 }}
                 className="mt-6 font-blackletter display-hero text-[56px] leading-none text-[#F0EDE8]"
               >
-                We are 6 STREET.
+                We are ERA 99.
               </motion.h2>
 
               <motion.p
@@ -163,8 +163,8 @@ export function StoryPage() {
                 transition={{ duration: 0.7, ease: "easeOut", delay: 0.2 }}
                 className="mt-10 text-[18px] leading-[1.8] text-[rgba(240,237,232,0.85)]"
               >
-                6 STREET is not a trend. It is not a drop. It is not a brand
-                built for the algorithm or the approval of strangers. 6 STREET
+                ERA 99 is not a trend. It is not a drop. It is not a brand
+                built for the algorithm or the approval of strangers. ERA 99
                 is a fixed point in a world that never stops spinning — the axis
                 that everything else revolves around.
               </motion.p>
@@ -219,12 +219,7 @@ export function StoryPage() {
                 transition={{ duration: 0.7, ease: "easeOut", delay: 0.2 }}
                 className="mt-10 text-[18px] leading-[1.8] text-[rgba(240,237,232,0.85)]"
               >
-                6 STREET started with a conversation between a father and his
-                son. One who had spent over fifteen years inside Egyptian
-                factories — managing production, building relationships,
-                understanding fabric from the thread up. One who saw what that
-                knowledge could become if it was pointed at something of our
-                own.
+                ERA 99 began with a conversation. A father. 15 years in Egyptian factories. A son. One question: why not ours? This is the era.
               </motion.p>
               <motion.p
                 {...reveal}
@@ -302,8 +297,7 @@ export function StoryPage() {
                   We did not choose Alexandria. We are Alexandria. The way the
                   sea hits the corniche at 2am, the way the old walls peel and
                   hold their ground, the way this city survives everything
-                  without making a sound about it — that is the identity of 6
-                  STREET.
+                  without making a sound about it — that is the identity of ERA 99.
                 </p>
               </motion.div>
 
@@ -312,12 +306,7 @@ export function StoryPage() {
                 transition={{ duration: 0.7, ease: "easeOut", delay: 0.4 }}
                 className="text-[17px] leading-[1.85] text-[rgba(240,237,232,0.85)]"
               >
-                <p>
-                  The word قطب — axis, pole, fixed center — was not chosen by
-                  accident. In Sufism, the Qutb is the highest spiritual axis
-                  around which all existence turns, invisible and essential. In
-                  physics, it is the pole that orients everything else.
-                </p>
+                
                 <p className="mt-8">
                   Alexandria is our axis. The fixed point. The place we come
                   from and the place everything in this brand points back to.
@@ -434,7 +423,7 @@ export function StoryPage() {
               transition={{ duration: 0.7, ease: "easeOut", delay: 0.3 }}
               className="mt-6 text-[13px] italic text-[#F0EDE8]/65"
             >
-              — 6 STREET, Alexandria
+              — ERA 99, Alexandria
             </motion.p>
           </div>
         </section>
@@ -445,14 +434,14 @@ export function StoryPage() {
               {...reveal}
               className="font-blackletter display-hero text-[64px] leading-none text-[#F0EDE8]"
             >
-              6 STREET
+              ERA 99
             </motion.h2>
             <motion.p
               {...reveal}
               transition={{ duration: 0.7, ease: "easeOut", delay: 0.1 }}
               className="mt-4 text-[20px] text-[#F0EDE8]/65"
             >
-              ٦ ستريت
+              
             </motion.p>
             <motion.p
               {...reveal}

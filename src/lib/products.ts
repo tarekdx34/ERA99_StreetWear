@@ -19,9 +19,9 @@ export const sizes = ["S", "M", "L", "XL", "XXL"];
 
 export const products: Product[] = [
   {
-    id: "6street-white-boxy",
-    slug: "6street-boxy-tee-white",
-    name: "6 STREET Boxy Tee",
+    id: "era99-white-boxy",
+    slug: "era99-boxy-tee-white",
+    name: "ERA 99 Boxy Tee",
     color: "White",
     price: 450,
     images: [
@@ -31,17 +31,16 @@ export const products: Product[] = [
       "/images/11.jpeg",
     ],
     description: {
-      fabric:
-        "220GSM heavyweight cotton jersey with enzyme wash for a broken-in feel.",
-      fit: "Cropped oversized boxy silhouette with dropped shoulders and reinforced neck rib.",
-      care: "Wash cold inside-out, no tumble dry, hang in shade, cool iron on reverse only.",
+      fabric: "220 GSM. Boxy. Built in Alexandria. This is the era.",
+      fit: "220 GSM. Boxy. Built in Alexandria. This is the era.",
+      care: "220 GSM. Boxy. Built in Alexandria. This is the era.",
     },
     stockBySize: { S: true, M: true, L: true, XL: true, XXL: false },
   },
   {
-    id: "6street-black-boxy",
-    slug: "6street-boxy-tee-black",
-    name: "6 STREET Boxy Tee",
+    id: "era99-black-boxy",
+    slug: "era99-boxy-tee-black",
+    name: "ERA 99 Boxy Tee",
     color: "Black",
     price: 450,
     images: [
@@ -51,17 +50,16 @@ export const products: Product[] = [
       "/images/7.jpeg",
     ],
     description: {
-      fabric:
-        "220GSM heavyweight combed cotton, low-shine finish, structured drape.",
-      fit: "Wide body, cropped length, clean shoulder seam for sharp silhouette.",
-      care: "Machine wash cold with dark colors, dry flat, avoid bleach.",
+      fabric: "220 GSM. Boxy. Built in Alexandria. This is the era.",
+      fit: "220 GSM. Boxy. Built in Alexandria. This is the era.",
+      care: "220 GSM. Boxy. Built in Alexandria. This is the era.",
     },
     stockBySize: { S: false, M: true, L: true, XL: true, XXL: true },
   },
   {
-    id: "6street-gray-boxy",
-    slug: "6street-boxy-tee-gray",
-    name: "6 STREET Boxy Tee",
+    id: "era99-gray-boxy",
+    slug: "era99-boxy-tee-gray",
+    name: "ERA 99 Boxy Tee",
     color: "Gray",
     price: 450,
     images: [
@@ -71,16 +69,16 @@ export const products: Product[] = [
       "/images/2.jpeg",
     ],
     description: {
-      fabric: "220GSM garment-dyed cotton with soft structured handfeel.",
-      fit: "Oversized chest and sleeve block with cropped hemline.",
-      care: "Cold wash, no direct sun drying, iron low heat.",
+      fabric: "220 GSM. Boxy. Built in Alexandria. This is the era.",
+      fit: "220 GSM. Boxy. Built in Alexandria. This is the era.",
+      care: "220 GSM. Boxy. Built in Alexandria. This is the era.",
     },
     stockBySize: { S: true, M: true, L: false, XL: true, XXL: true },
   },
   {
-    id: "6street-raw-white",
-    slug: "6street-raw-tee-white",
-    name: "6 STREET Raw Tee",
+    id: "era99-raw-white",
+    slug: "era99-raw-tee-white",
+    name: "ERA 99 Raw Tee",
     color: "White",
     price: 520,
     images: [
@@ -90,9 +88,9 @@ export const products: Product[] = [
       "/images/2.jpeg",
     ],
     description: {
-      fabric: "Dense loopback cotton knit with raw finish details.",
-      fit: "Relaxed body with slightly shorter torso for layered looks.",
-      care: "Hand wash preferred, reshape while damp, line dry.",
+      fabric: "220 GSM. Boxy. Built in Alexandria. This is the era.",
+      fit: "220 GSM. Boxy. Built in Alexandria. This is the era.",
+      care: "220 GSM. Boxy. Built in Alexandria. This is the era.",
     },
     stockBySize: { S: true, M: true, L: true, XL: false, XXL: false },
   },
