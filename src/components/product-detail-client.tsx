@@ -128,6 +128,8 @@ function PhotoViewerModal({
   const [zoomActive, setZoomActive] = useState(false);
   const [zoomX, setZoomX] = useState(50);
   const [zoomY, setZoomY] = useState(50);
+  const touchStartXRef = useRef<number | null>(null);
+  const touchStartYRef = useRef<number | null>(null);
   const navRef = useRef({
     activeIndex: 0,
     totalImages: 0,
@@ -228,6 +230,28 @@ function PhotoViewerModal({
 
             <div
               className="relative overflow-hidden border border-[#F0EDE8]/15"
+              onTouchStart={(event) => {
+                const touch = event.touches[0];
+                touchStartXRef.current = touch.clientX;
+                touchStartYRef.current = touch.clientY;
+              }}
+              onTouchEnd={(event) => {
+                const startX = touchStartXRef.current;
+                const startY = touchStartYRef.current;
+                if (startX === null || startY === null) return;
+
+                const touch = event.changedTouches[0];
+                const deltaX = touch.clientX - startX;
+                const deltaY = touch.clientY - startY;
+
+                if (Math.abs(deltaX) > 35 && Math.abs(deltaY) < 35) {
+                  if (deltaX < 0) goNext();
+                  else goPrev();
+                }
+
+                touchStartXRef.current = null;
+                touchStartYRef.current = null;
+              }}
               onMouseMove={(event) => {
                 const rect = event.currentTarget.getBoundingClientRect();
                 const x = ((event.clientX - rect.left) / rect.width) * 100;
@@ -292,6 +316,9 @@ export function ProductDetailClient({
   const [openGuide, setOpenGuide] = useState(false);
   const [openPhotoViewer, setOpenPhotoViewer] = useState(false);
   const [fly, setFly] = useState(false);
+  const imageTouchStartXRef = useRef<number | null>(null);
+  const imageTouchStartYRef = useRef<number | null>(null);
+  const imageSwipeTriggeredRef = useRef(false);
   const { addItem, openCart } = useCart();
   const router = useRouter();
   const { trackEvent } = useAnalytics();
@@ -355,6 +382,14 @@ export function ProductDetailClient({
     router.push("/checkout?mode=buynow");
   };
 
+  const switchMainImageByStep = (step: number) => {
+    if (!product.images.length) return;
+    const currentIndex = Math.max(0, product.images.indexOf(mainImage));
+    const nextIndex =
+      (currentIndex + step + product.images.length) % product.images.length;
+    setMainImage(product.images[nextIndex]);
+  };
+
   return (
     <main className="bg-[#080808] px-6 pb-20 pt-28 md:px-10">
       <div className="mx-auto grid max-w-7xl grid-cols-1 gap-10 lg:grid-cols-[60%_40%]">
@@ -365,7 +400,36 @@ export function ProductDetailClient({
                 src={mainImage}
                 alt={product.name}
                 className="w-full h-auto min-h-[75vh] object-cover cursor-zoom-in"
-                onClick={() => setOpenPhotoViewer(true)}
+                onTouchStart={(event) => {
+                  const touch = event.touches[0];
+                  imageTouchStartXRef.current = touch.clientX;
+                  imageTouchStartYRef.current = touch.clientY;
+                  imageSwipeTriggeredRef.current = false;
+                }}
+                onTouchEnd={(event) => {
+                  const startX = imageTouchStartXRef.current;
+                  const startY = imageTouchStartYRef.current;
+                  if (startX === null || startY === null) return;
+
+                  const touch = event.changedTouches[0];
+                  const deltaX = touch.clientX - startX;
+                  const deltaY = touch.clientY - startY;
+
+                  if (Math.abs(deltaX) > 35 && Math.abs(deltaY) < 35) {
+                    imageSwipeTriggeredRef.current = true;
+                    switchMainImageByStep(deltaX < 0 ? 1 : -1);
+                  }
+
+                  imageTouchStartXRef.current = null;
+                  imageTouchStartYRef.current = null;
+                }}
+                onClick={() => {
+                  if (imageSwipeTriggeredRef.current) {
+                    imageSwipeTriggeredRef.current = false;
+                    return;
+                  }
+                  setOpenPhotoViewer(true);
+                }}
               />
             </div>
             <button

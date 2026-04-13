@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
 import { Search, X, ChevronDown, ChevronLeft, ChevronRight, Minus, Plus } from "lucide-react";
-import { useCallback, useEffect, useMemo, useRef, useState, useTransition } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState, useTransition, type TouchEvent } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useCart } from "@/contexts/cart-context";
 import { useAnalytics } from "@/hooks/useAnalytics";
@@ -95,6 +95,15 @@ function findVariantForSize(product: ShopProduct, wantedSize: string) {
   return null;
 }
 
+function cardImagesForProduct(product: ShopProduct) {
+  const images =
+    product.images && product.images.length > 0
+      ? product.images
+      : [product.primaryImage, product.secondaryImage].filter(Boolean);
+
+  return images.length > 0 ? images : [product.primaryImage];
+}
+
 function ProductSkeletonGrid() {
   return (
     <div className="grid grid-cols-2 gap-[1px] bg-[#F0EDE8]/20 md:grid-cols-4">
@@ -142,10 +151,24 @@ export function ShopClient({ data }: { data: ShopDataResult }) {
   const [sortOpen, setSortOpen] = useState(false);
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
   const [hoveredCard, setHoveredCard] = useState<string | null>(null);
+  const [cardImageIndexes, setCardImageIndexes] = useState<Record<string, number>>({});
   const [addedKey, setAddedKey] = useState<string | null>(null);
   const [quickViewProductId, setQuickViewProductId] = useState<string | null>(null);
   const [quickViewImageIndex, setQuickViewImageIndex] = useState(0);
   const [sizeGuideOpen, setSizeGuideOpen] = useState(false);
+
+  const cardTouchStateRef = useRef<
+    Record<
+      string,
+      {
+        startX: number;
+        startY: number;
+        longPressTriggered: boolean;
+        swiped: boolean;
+        timer: number | null;
+      }
+    >
+  >({});
 
   const [priceMin, setPriceMin] = useState(data.query.minPrice);
   const [priceMax, setPriceMax] = useState(data.query.maxPrice);
@@ -376,6 +399,82 @@ export function ShopClient({ data }: { data: ShopDataResult }) {
   const showingStart = data.total === 0 ? 0 : (data.page - 1) * data.perPage + 1;
   const showingEnd = Math.min(data.total, data.page * data.perPage);
 
+  const updateCardImageByStep = (product: ShopProduct, step: number) => {
+    const images = cardImagesForProduct(product);
+    if (images.length <= 1) return;
+
+    setCardImageIndexes((prev) => {
+      const currentIndex = prev[product.id] ?? 0;
+      const nextIndex = (currentIndex + step + images.length) % images.length;
+      return { ...prev, [product.id]: nextIndex };
+    });
+  };
+
+  const handleCardTouchStart = (product: ShopProduct, event: TouchEvent) => {
+    if (window.innerWidth >= 768) return;
+
+    const touch = event.touches[0];
+    const state = {
+      startX: touch.clientX,
+      startY: touch.clientY,
+      longPressTriggered: false,
+      swiped: false,
+      timer: null as number | null,
+    };
+
+    state.timer = window.setTimeout(() => {
+      state.longPressTriggered = true;
+      setQuickViewProductId(product.id);
+      setQuickViewImageIndex(0);
+      trackEvent("view_item", { name: product.name, price: product.price, id: product.id });
+    }, 500);
+
+    cardTouchStateRef.current[product.id] = state;
+  };
+
+  const handleCardTouchMove = (productId: string, event: TouchEvent) => {
+    const state = cardTouchStateRef.current[productId];
+    if (!state) return;
+
+    const touch = event.touches[0];
+    const deltaX = Math.abs(touch.clientX - state.startX);
+    const deltaY = Math.abs(touch.clientY - state.startY);
+    if (deltaX > 10 || deltaY > 10) {
+      if (state.timer) {
+        window.clearTimeout(state.timer);
+        state.timer = null;
+      }
+    }
+  };
+
+  const handleCardTouchEnd = (product: ShopProduct, event: TouchEvent) => {
+    const state = cardTouchStateRef.current[product.id];
+    if (!state) return;
+
+    if (state.timer) {
+      window.clearTimeout(state.timer);
+      state.timer = null;
+    }
+
+    const touch = event.changedTouches[0];
+    const deltaX = touch.clientX - state.startX;
+    const deltaY = touch.clientY - state.startY;
+
+    if (!state.longPressTriggered && Math.abs(deltaX) > 35 && Math.abs(deltaY) < 30) {
+      state.swiped = true;
+      updateCardImageByStep(product, deltaX < 0 ? 1 : -1);
+    }
+  };
+
+  const handleCardTouchCancel = (productId: string) => {
+    const state = cardTouchStateRef.current[productId];
+    if (!state) return;
+    if (state.timer) {
+      window.clearTimeout(state.timer);
+      state.timer = null;
+    }
+  };
+
   return (
     <main className="min-h-screen bg-[#080808] px-4 pb-24 pt-24 text-[#F0EDE8] md:px-8 md:pt-28">
       <style jsx global>{`
@@ -523,6 +622,12 @@ export function ShopClient({ data }: { data: ShopDataResult }) {
                   const sizeOptions = extractSizeOptions(product);
                   const inStockSizes = sizeOptions.filter((size) => size.active && size.stock > 0);
                   const singleQuickAdd = inStockSizes.length === 1;
+                  const cardImages = cardImagesForProduct(product);
+                  const hoveredImageIndex = Math.min(1, cardImages.length - 1);
+                  const activeImageIndex =
+                    hoveredCard === product.id
+                      ? hoveredImageIndex
+                      : Math.min(cardImageIndexes[product.id] ?? 0, cardImages.length - 1);
 
                   return (
                     <motion.article
@@ -539,32 +644,33 @@ export function ShopClient({ data }: { data: ShopDataResult }) {
                         <Link
                           href={`/product/${product.slug}`}
                           className={`${INTERACTION_LAYERS.navigationZone} block`}
-                          onClick={() =>
+                          onClick={(event) => {
+                            const state = cardTouchStateRef.current[product.id];
+                            if (state?.longPressTriggered || state?.swiped) {
+                              event.preventDefault();
+                              state.longPressTriggered = false;
+                              state.swiped = false;
+                              return;
+                            }
+
                             trackEvent("select_item", {
                               name: product.name,
                               price: product.price,
                               collection: product.collection,
-                            })
-                          }
+                            });
+                          }}
+                          onTouchStart={(event) => handleCardTouchStart(product, event)}
+                          onTouchMove={(event) => handleCardTouchMove(product.id, event)}
+                          onTouchEnd={(event) => handleCardTouchEnd(product, event)}
+                          onTouchCancel={() => handleCardTouchCancel(product.id)}
                         >
                           <div className="relative aspect-[3/4] overflow-hidden">
                             <Image
-                              src={product.primaryImage}
+                              src={cardImages[activeImageIndex] || product.primaryImage}
                               alt={product.name}
                               fill
                               sizes="(max-width: 768px) 50vw, 25vw"
-                              className={`object-cover transition-opacity duration-400 ease-out ${
-                                hoveredCard === product.id ? "opacity-0" : "opacity-100"
-                              }`}
-                            />
-                            <Image
-                              src={product.secondaryImage}
-                              alt={`${product.name} secondary`}
-                              fill
-                              sizes="(max-width: 768px) 50vw, 25vw"
-                              className={`object-cover transition-opacity duration-400 ease-out ${
-                                hoveredCard === product.id ? "opacity-100" : "opacity-0"
-                              }`}
+                              className="object-cover transition-opacity duration-300 ease-out"
                             />
 
                             {product.newArrival ? (
