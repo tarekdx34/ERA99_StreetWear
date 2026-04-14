@@ -3,7 +3,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth-options";
 import { getSessionVersion } from "@/lib/admin-security";
 import { getAdminSettings } from "@/lib/admin-settings";
-import { sendWhatsAppMessage } from "@/lib/whatsapp";
+import { sendTelegramMessage } from "@/lib/telegram";
 
 async function ensureAdmin() {
   const session = await getServerSession(authOptions);
@@ -29,13 +29,11 @@ export async function POST() {
 
   const settings = await getAdminSettings();
 
-  await sendWhatsAppMessage(
-    `ERA 99 Admin test notification - ${new Date().toISOString()}`,
+  await sendTelegramMessage(
+    `🖤 ERA 99 Admin test notification - ${new Date().toISOString()}`,
     {
-      accountSid: settings.twilioAccountSid,
-      authToken: settings.twilioAuthToken,
-      from: settings.twilioWhatsappFrom,
-      to: settings.adminWhatsappNumber,
+      botToken: settings.telegramBotToken,
+      chatId: settings.telegramChatId,
     },
   );
 

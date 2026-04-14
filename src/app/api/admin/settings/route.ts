@@ -7,14 +7,13 @@ import { getAdminSettings, saveAdminSettings } from "@/lib/admin-settings";
 
 const settingsSchema = z.object({
   storeName: z.string().min(1),
-  adminWhatsappNumber: z.string(),
+  adminTelegramChatId: z.string(),
   notificationEmail: z.string(),
   orderNumberPrefix: z.string().min(1),
   currency: z.literal("EGP"),
   cloudinaryUrl: z.string(),
-  twilioAccountSid: z.string(),
-  twilioAuthToken: z.string(),
-  twilioWhatsappFrom: z.string(),
+  telegramBotToken: z.string(),
+  telegramChatId: z.string(),
 
   freeDeliveryGovernorate: z.string().min(1),
   deliveryFees: z.array(
@@ -22,11 +21,11 @@ const settingsSchema = z.object({
   ),
   minimumOrderForFreeDelivery: z.number().nonnegative(),
 
-  whatsappNotificationsEnabled: z.boolean(),
+  telegramNotificationsEnabled: z.boolean(),
   browserNotificationsEnabled: z.boolean(),
   newOrderSoundEnabled: z.boolean(),
   lowStockAlertThreshold: z.number().int().positive(),
-  lowStockWhatsappAlertEnabled: z.boolean(),
+  lowStockTelegramAlertEnabled: z.boolean(),
   dashboardPaymentFailureWarningRate: z.number().positive(),
   dashboardPaymentFailureCriticalRate: z.number().positive(),
   dashboardStaleConfirmationWarningCount: z.number().int().positive(),

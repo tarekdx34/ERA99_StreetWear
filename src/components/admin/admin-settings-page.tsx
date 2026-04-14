@@ -9,24 +9,23 @@ type DeliveryFeeRow = {
 
 type SettingsModel = {
   storeName: string;
-  adminWhatsappNumber: string;
+  adminTelegramChatId: string;
   notificationEmail: string;
   orderNumberPrefix: string;
   currency: "EGP";
   cloudinaryUrl: string;
-  twilioAccountSid: string;
-  twilioAuthToken: string;
-  twilioWhatsappFrom: string;
+  telegramBotToken: string;
+  telegramChatId: string;
 
   freeDeliveryGovernorate: string;
   deliveryFees: DeliveryFeeRow[];
   minimumOrderForFreeDelivery: number;
 
-  whatsappNotificationsEnabled: boolean;
+  telegramNotificationsEnabled: boolean;
   browserNotificationsEnabled: boolean;
   newOrderSoundEnabled: boolean;
   lowStockAlertThreshold: number;
-  lowStockWhatsappAlertEnabled: boolean;
+  lowStockTelegramAlertEnabled: boolean;
 
   dashboardPaymentFailureWarningRate: number;
   dashboardPaymentFailureCriticalRate: number;
@@ -42,24 +41,23 @@ type SettingsModel = {
 
 const EMPTY_SETTINGS: SettingsModel = {
   storeName: "",
-  adminWhatsappNumber: "",
+  adminTelegramChatId: "",
   notificationEmail: "",
   orderNumberPrefix: "99",
   currency: "EGP",
   cloudinaryUrl: "",
-  twilioAccountSid: "",
-  twilioAuthToken: "",
-  twilioWhatsappFrom: "",
+  telegramBotToken: "",
+  telegramChatId: "",
 
   freeDeliveryGovernorate: "Alexandria",
   deliveryFees: [],
   minimumOrderForFreeDelivery: 0,
 
-  whatsappNotificationsEnabled: true,
+  telegramNotificationsEnabled: true,
   browserNotificationsEnabled: true,
   newOrderSoundEnabled: true,
   lowStockAlertThreshold: 10,
-  lowStockWhatsappAlertEnabled: true,
+  lowStockTelegramAlertEnabled: true,
 
   dashboardPaymentFailureWarningRate: 10,
   dashboardPaymentFailureCriticalRate: 18,
@@ -158,17 +156,17 @@ export function AdminSettingsPage() {
     });
   };
 
-  const testWhatsapp = () => {
+  const testTelegram = () => {
     startTransition(async () => {
-      const res = await fetch("/api/admin/settings/test-whatsapp", {
+      const res = await fetch("/api/admin/settings/test-telegram", {
         method: "POST",
       });
       if (!res.ok) {
         const body = await res.json().catch(() => ({}));
-        setNotice(body?.message || "Failed to send test WhatsApp");
+        setNotice(body?.message || "Failed to send test Telegram message");
         return;
       }
-      setNotice("Test WhatsApp sent.");
+      setNotice("Test Telegram message sent.");
     });
   };
 
@@ -322,9 +320,9 @@ export function AdminSettingsPage() {
             className="border border-[#F0EDE8]/20 bg-[#0E0E0E] px-3 py-2"
           />
           <input
-            value={settings.adminWhatsappNumber}
-            onChange={(e) => setField("adminWhatsappNumber", e.target.value)}
-            placeholder="Admin WhatsApp number"
+            value={settings.adminTelegramChatId}
+            onChange={(e) => setField("adminTelegramChatId", e.target.value)}
+            placeholder="Telegram Chat ID"
             className="border border-[#F0EDE8]/20 bg-[#0E0E0E] px-3 py-2"
           />
           <input
@@ -358,21 +356,15 @@ export function AdminSettingsPage() {
             autoComplete="off"
           />
           <input
-            value={settings.twilioAccountSid}
-            onChange={(e) => setField("twilioAccountSid", e.target.value)}
-            placeholder="Twilio account SID"
+            value={settings.telegramBotToken}
+            onChange={(e) => setField("telegramBotToken", e.target.value)}
+            placeholder="Telegram Bot Token"
             className="border border-[#F0EDE8]/20 bg-[#0E0E0E] px-3 py-2"
           />
           <input
-            value={settings.twilioAuthToken}
-            onChange={(e) => setField("twilioAuthToken", e.target.value)}
-            placeholder="Twilio auth token"
-            className="border border-[#F0EDE8]/20 bg-[#0E0E0E] px-3 py-2"
-          />
-          <input
-            value={settings.twilioWhatsappFrom}
-            onChange={(e) => setField("twilioWhatsappFrom", e.target.value)}
-            placeholder="Twilio WhatsApp from (whatsapp:+...)"
+            value={settings.telegramChatId}
+            onChange={(e) => setField("telegramChatId", e.target.value)}
+            placeholder="Telegram Chat ID (for notifications)"
             className="border border-[#F0EDE8]/20 bg-[#0E0E0E] px-3 py-2 md:col-span-2"
           />
         </div>
@@ -453,12 +445,12 @@ export function AdminSettingsPage() {
         </h2>
         <div className="mt-3 grid gap-2 text-sm">
           <label className="flex items-center justify-between">
-            <span>WhatsApp notifications</span>
+            <span>Telegram notifications</span>
             <input
               type="checkbox"
-              checked={settings.whatsappNotificationsEnabled}
+              checked={settings.telegramNotificationsEnabled}
               onChange={(e) =>
-                setField("whatsappNotificationsEnabled", e.target.checked)
+                setField("telegramNotificationsEnabled", e.target.checked)
               }
             />
           </label>
@@ -483,12 +475,12 @@ export function AdminSettingsPage() {
             />
           </label>
           <label className="flex items-center justify-between">
-            <span>Low stock WhatsApp alert</span>
+            <span>Low stock Telegram alert</span>
             <input
               type="checkbox"
-              checked={settings.lowStockWhatsappAlertEnabled}
+              checked={settings.lowStockTelegramAlertEnabled}
               onChange={(e) =>
-                setField("lowStockWhatsappAlertEnabled", e.target.checked)
+                setField("lowStockTelegramAlertEnabled", e.target.checked)
               }
             />
           </label>
@@ -506,10 +498,10 @@ export function AdminSettingsPage() {
         </div>
         <button
           type="button"
-          onClick={testWhatsapp}
+          onClick={testTelegram}
           className="mt-3 border border-[#F0EDE8]/20 px-3 py-2 text-xs uppercase tracking-[0.14em]"
         >
-          Send Test WhatsApp
+          Send Test Telegram
         </button>
       </section>
 

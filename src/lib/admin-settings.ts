@@ -7,24 +7,23 @@ export type DeliveryFeeRow = {
 
 export type AdminSettingsModel = {
   storeName: string;
-  adminWhatsappNumber: string;
+  adminTelegramChatId: string;
   notificationEmail: string;
   orderNumberPrefix: string;
   currency: "EGP";
   cloudinaryUrl: string;
-  twilioAccountSid: string;
-  twilioAuthToken: string;
-  twilioWhatsappFrom: string;
+  telegramBotToken: string;
+  telegramChatId: string;
 
   freeDeliveryGovernorate: string;
   deliveryFees: DeliveryFeeRow[];
   minimumOrderForFreeDelivery: number;
 
-  whatsappNotificationsEnabled: boolean;
+  telegramNotificationsEnabled: boolean;
   browserNotificationsEnabled: boolean;
   newOrderSoundEnabled: boolean;
   lowStockAlertThreshold: number;
-  lowStockWhatsappAlertEnabled: boolean;
+  lowStockTelegramAlertEnabled: boolean;
 
   dashboardPaymentFailureWarningRate: number;
   dashboardPaymentFailureCriticalRate: number;
@@ -42,14 +41,13 @@ const SETTINGS_KEY = "admin_settings_v1";
 
 export const defaultSettings: AdminSettingsModel = {
   storeName: "QUTB",
-  adminWhatsappNumber: process.env.ADMIN_WHATSAPP_TO || "",
+  adminTelegramChatId: process.env.TELEGRAM_CHAT_ID || "",
   notificationEmail: "",
   orderNumberPrefix: "QTB",
   currency: "EGP",
   cloudinaryUrl: process.env.CLOUDINARY_URL || "",
-  twilioAccountSid: process.env.TWILIO_ACCOUNT_SID || "",
-  twilioAuthToken: process.env.TWILIO_AUTH_TOKEN || "",
-  twilioWhatsappFrom: process.env.TWILIO_WHATSAPP_FROM || "",
+  telegramBotToken: process.env.TELEGRAM_BOT_TOKEN || "",
+  telegramChatId: process.env.TELEGRAM_CHAT_ID || "",
 
   freeDeliveryGovernorate: "Alexandria",
   deliveryFees: [
@@ -60,11 +58,11 @@ export const defaultSettings: AdminSettingsModel = {
   ],
   minimumOrderForFreeDelivery: 0,
 
-  whatsappNotificationsEnabled: true,
+  telegramNotificationsEnabled: true,
   browserNotificationsEnabled: true,
   newOrderSoundEnabled: true,
   lowStockAlertThreshold: 10,
-  lowStockWhatsappAlertEnabled: true,
+  lowStockTelegramAlertEnabled: true,
 
   dashboardPaymentFailureWarningRate: 10,
   dashboardPaymentFailureCriticalRate: 18,

@@ -9,6 +9,7 @@ import { useMetaPixel } from "@/hooks/useMetaPixel";
 import { egyptGovernorates } from "@/lib/governorates";
 import { formatEGP, isEgyptPhone } from "@/lib/utils";
 import { CardIcon, CashIcon, LockIcon } from "@/components/icons";
+import { csrfFetch } from "@/hooks/use-csrf";
 
 type FormState = {
   customerName: string;
@@ -135,7 +136,7 @@ export default function CheckoutPage() {
 
     try {
       if (paymentMethod === "COD") {
-        const res = await fetch("/api/orders", {
+        const res = await csrfFetch("/api/orders", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(payload),
@@ -169,7 +170,7 @@ export default function CheckoutPage() {
               if (save) {
                 const [firstName, ...rest] = form.customerName.trim().split(" ");
                 const lastName = rest.join(" ");
-                await fetch("/api/account/addresses", {
+                await csrfFetch("/api/account/addresses", {
                   method: "POST",
                   headers: { "Content-Type": "application/json" },
                   body: JSON.stringify({

@@ -3,7 +3,7 @@ import { z } from "zod";
 import { isDatabaseConfigured, prisma } from "@/lib/prisma";
 import { orderNumberFromIdWithPrefix } from "@/lib/utils";
 import { getAdminSettings } from "@/lib/admin-settings";
-import { sendAdminWhatsApp } from "@/lib/whatsapp";
+import { sendAdminTelegramNotification } from "@/lib/telegram";
 import { getShopperSessionUserId } from "@/lib/shopper-auth";
 import { requireCsrf } from "@/lib/csrf-middleware";
 
@@ -97,8 +97,8 @@ export async function POST(req: NextRequest) {
       },
     });
 
-    if (adminSettings.whatsappNotificationsEnabled) {
-      await sendAdminWhatsApp(
+    if (adminSettings.telegramNotificationsEnabled) {
+      await sendAdminTelegramNotification(
         {
           id: updated.id,
           orderNumber: updated.orderNumber,
@@ -120,12 +120,11 @@ export async function POST(req: NextRequest) {
           deliveryFee: updated.deliveryFee,
           total: updated.total,
           paymentMethod: updated.paymentMethod,
+          createdAt: updated.createdAt?.toISOString(),
         },
         {
-          accountSid: adminSettings.twilioAccountSid,
-          authToken: adminSettings.twilioAuthToken,
-          from: adminSettings.twilioWhatsappFrom,
-          to: adminSettings.adminWhatsappNumber,
+          botToken: adminSettings.telegramBotToken,
+          chatId: adminSettings.telegramChatId,
         },
       );
     }
