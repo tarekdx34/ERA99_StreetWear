@@ -71,12 +71,12 @@ export function AdminAnalyticsDashboard({ data }: Props) {
   );
 
   return (
-    <section className="space-y-8">
+    <section className="space-y-6 md:space-y-8">
       <div>
-        <h2 className="font-blackletter text-5xl">ANALYTICS</h2>
+        <h2 className="font-blackletter text-4xl md:text-5xl">ANALYTICS</h2>
       </div>
 
-      <section className="space-y-4">
+      <section className="space-y-3 md:space-y-4">
         <h3 className="text-xs uppercase tracking-[0.2em] text-[#F0EDE8]/65">
           Revenue
         </h3>
@@ -125,7 +125,7 @@ export function AdminAnalyticsDashboard({ data }: Props) {
                 ))}
               </div>
             </div>
-            <div className="h-[280px]">
+            <div className="h-[240px] md:h-[280px]">
               <ResponsiveContainer width="100%" height="100%">
                 <LineChart data={revenueSeries}>
                   <CartesianGrid stroke="#2b2b2b" vertical={false} />
@@ -211,7 +211,7 @@ export function AdminAnalyticsDashboard({ data }: Props) {
             <p className="text-xs uppercase tracking-[0.16em] text-[#F0EDE8]/65">
               Order Status Breakdown
             </p>
-            <div className="h-[260px]">
+            <div className="h-[220px] md:h-[260px]">
               <ResponsiveContainer width="100%" height="100%">
                 <PieChart>
                   <Pie
@@ -246,7 +246,7 @@ export function AdminAnalyticsDashboard({ data }: Props) {
             <p className="text-xs uppercase tracking-[0.16em] text-[#F0EDE8]/65">
               Peak Ordering Hours
             </p>
-            <div className="h-[260px]">
+            <div className="h-[220px] md:h-[260px]">
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={data.orders.peakHours}>
                   <CartesianGrid stroke="#2b2b2b" vertical={false} />
@@ -277,7 +277,7 @@ export function AdminAnalyticsDashboard({ data }: Props) {
             <p className="text-xs uppercase tracking-[0.16em] text-[#F0EDE8]/65">
               Peak Ordering Days
             </p>
-            <div className="h-[260px]">
+            <div className="h-[220px] md:h-[260px]">
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={data.orders.peakDays}>
                   <CartesianGrid stroke="#2b2b2b" vertical={false} />
@@ -356,7 +356,7 @@ export function AdminAnalyticsDashboard({ data }: Props) {
             <p className="text-xs uppercase tracking-[0.16em] text-[#F0EDE8]/65">
               Size Distribution
             </p>
-            <div className="h-[260px]">
+            <div className="h-[220px] md:h-[260px]">
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={data.products.sizeDistribution}>
                   <CartesianGrid stroke="#2b2b2b" vertical={false} />
@@ -479,7 +479,7 @@ export function AdminAnalyticsDashboard({ data }: Props) {
             <p className="text-xs uppercase tracking-[0.16em] text-[#F0EDE8]/65">
               Orders by Governorate
             </p>
-            <div className="h-[260px]">
+            <div className="h-[220px] md:h-[260px]">
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={data.customers.ordersByGovernorate}>
                   <CartesianGrid stroke="#2b2b2b" vertical={false} />
@@ -509,7 +509,7 @@ export function AdminAnalyticsDashboard({ data }: Props) {
             <p className="text-xs uppercase tracking-[0.16em] text-[#F0EDE8]/65">
               COD vs Online by Governorate
             </p>
-            <div className="h-[260px]">
+            <div className="h-[220px] md:h-[260px]">
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={data.customers.preferenceByGovernorate}>
                   <CartesianGrid stroke="#2b2b2b" vertical={false} />

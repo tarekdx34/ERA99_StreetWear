@@ -54,7 +54,7 @@ export function AdminMarketingDashboard({ data }: Props) {
   return (
     <section className="space-y-8">
       <div className="flex items-center justify-between">
-        <h2 className="font-blackletter text-5xl">MARKETING</h2>
+        <h2 className="font-blackletter text-4xl md:text-5xl">MARKETING</h2>
         <div className="flex gap-2">
           {(["overview", "sources", "pages"] as const).map((t) => (
             <button

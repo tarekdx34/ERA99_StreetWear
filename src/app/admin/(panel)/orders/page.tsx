@@ -125,12 +125,12 @@ export default async function AdminOrdersPage({
       <p className="text-[12px] uppercase tracking-[0.28em] text-[#F0EDE8]/55">
         99 - ORDERS
       </p>
-      <h1 className="mt-4 font-blackletter text-5xl">Orders</h1>
-      <p className="mt-4 text-sm text-[#F0EDE8]/70">
+      <h1 className="mt-2 font-blackletter text-4xl md:text-5xl">Orders</h1>
+      <p className="mt-3 text-sm text-[#F0EDE8]/70">
         Search, filter, and process order flow with inline status updates.
       </p>
 
-      <form className="mt-6 grid gap-3 border border-[#F0EDE8]/12 bg-[#111111] p-3 md:grid-cols-[minmax(260px,1fr)_220px_170px_170px_auto]">
+      <form className="mt-4 grid gap-3 border border-[#F0EDE8]/12 bg-[#111111] p-3 md:mt-6 md:grid-cols-[minmax(260px,1fr)_220px_170px_170px_auto]">
         <input
           name="q"
           defaultValue={query}

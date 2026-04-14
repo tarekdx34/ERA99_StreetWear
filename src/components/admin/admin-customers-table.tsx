@@ -125,7 +125,7 @@ export function AdminCustomersTable({ customers }: Props) {
   return (
     <section className="space-y-4">
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <h2 className="font-blackletter text-5xl">CUSTOMERS</h2>
+        <h2 className="font-blackletter text-4xl md:text-5xl">CUSTOMERS</h2>
         <button
           type="button"
           onClick={exportCsv}
@@ -143,7 +143,7 @@ export function AdminCustomersTable({ customers }: Props) {
       />
 
       <div className="overflow-x-auto border border-[#F0EDE8]/15 bg-[#111111] p-3">
-        <table className="min-w-[1100px] text-left text-sm">
+        <table className="min-w-full text-left text-sm md:min-w-[1100px]">
           <thead className="text-[11px] uppercase tracking-[0.16em] text-[#F0EDE8]/55">
             <tr>
               <th className="py-2 pr-3">

@@ -11,6 +11,7 @@ async function fetchCsrfToken(): Promise<string> {
   if (!res.ok) throw new Error("Failed to fetch CSRF token");
   const data = await res.json();
   cachedToken = data.csrfToken;
+  if (!cachedToken) throw new Error("CSRF token is null");
   return cachedToken;
 }
 

@@ -1,6 +1,6 @@
 import { createHash } from "crypto";
 
-type MetaEventName =
+export type MetaEventName =
   | "PageView"
   | "ViewContent"
   | "AddToCart"

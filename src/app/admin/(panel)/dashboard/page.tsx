@@ -381,12 +381,12 @@ export default async function AdminDashboardPage() {
       <p className="text-[12px] uppercase tracking-[0.28em] text-[#F0EDE8]/55">
         99 - OPERATIONS
       </p>
-      <h1 className="mt-4 font-blackletter text-5xl">Dashboard</h1>
-      <p className="mt-4 text-sm text-[#F0EDE8]/70">
+      <h1 className="mt-2 font-blackletter text-4xl md:text-5xl">Dashboard</h1>
+      <p className="mt-3 text-sm text-[#F0EDE8]/70">
         Live snapshot of order flow and revenue so you can triage quickly.
       </p>
 
-      <div className="mt-6 grid gap-3 md:grid-cols-2 xl:grid-cols-4">
+      <div className="mt-4 grid gap-3 md:mt-6 md:grid-cols-2 xl:grid-cols-4">
         <div className="border border-[#F0EDE8]/12 bg-[#121212] p-4">
           <p className="text-[11px] uppercase tracking-[0.18em] text-[#F0EDE8]/55">
             TOTAL ORDERS

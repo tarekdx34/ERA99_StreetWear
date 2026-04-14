@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
-import { sendMetaEvents } from "@/lib/meta-capi";
+import { sendMetaEvents, type MetaEventName } from "@/lib/meta-capi";
 import { prisma } from "@/lib/prisma";
 
 const schema = z.object({
@@ -31,7 +31,10 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
     const parsed = schema.parse(body);
 
-    const result = await sendMetaEvents(parsed.events);
+    const result = await sendMetaEvents(parsed.events.map((e) => ({
+      ...e,
+      eventName: e.eventName as MetaEventName,
+    })));
 
     // Log events to database for admin dashboard
     for (const event of parsed.events) {

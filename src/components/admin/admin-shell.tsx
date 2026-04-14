@@ -9,6 +9,7 @@ import {
   Box,
   ChartColumn,
   Grid2x2,
+  Menu,
   Receipt,
   Settings,
   Users,
@@ -61,6 +62,7 @@ export function AdminShell({
   const router = useRouter();
   const [clock, setClock] = useState("");
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const tick = () => {
@@ -87,9 +89,9 @@ export function AdminShell({
     return found?.label || "ADMIN";
   }, [pathname]);
 
-  return (
-    <div className="min-h-screen bg-[#080808] text-[#F0EDE8]">
-      <aside className="fixed left-0 top-0 z-40 h-screen w-[240px] border-r border-[#F0EDE8]/10 bg-[#0D0D0D]">
+  const renderSidebarContent = () => {
+    return (
+      <>
         <div className="px-5 pb-4 pt-6">
           <p className="font-anton text-4xl leading-none tracking-[16px] text-[#ede9e0]">
             QUTB
@@ -111,6 +113,7 @@ export function AdminShell({
               <div key={item.href}>
                 <Link
                   href={item.href}
+                  onClick={() => setMobileMenuOpen(false)}
                   className={`mb-1 flex items-center gap-3 border-l-2 px-3 py-3 text-xs font-medium uppercase tracking-[0.16em] transition-colors duration-200 ${
                     active
                       ? "border-l-[#F0EDE8] bg-[#1A1A1A] text-[#F0EDE8]"
@@ -134,6 +137,7 @@ export function AdminShell({
                         <Link
                           key={child.href}
                           href={child.href}
+                          onClick={() => setMobileMenuOpen(false)}
                           className={`mb-1 block border-l-2 px-3 py-2 text-[10px] font-medium uppercase tracking-[0.14em] transition-colors duration-200 ${
                             childActive
                               ? "border-l-[#F0EDE8] bg-[#1A1A1A] text-[#F0EDE8]"
@@ -165,16 +169,54 @@ export function AdminShell({
             SIGN OUT
           </button>
         </div>
+      </>
+    );
+  };
+
+  return (
+    <div className="min-h-screen bg-[#080808] text-[#F0EDE8]">
+      {/* Desktop Sidebar - hidden on mobile */}
+      <aside className="fixed left-0 top-0 z-40 hidden h-screen w-[240px] border-r border-[#F0EDE8]/10 bg-[#0D0D0D] md:block">
+        {renderSidebarContent()}
       </aside>
 
-      <div className="ml-[240px] min-h-screen">
-        <header className="sticky top-0 z-30 flex h-16 min-h-16 items-center justify-between border-b border-[#F0EDE8]/10 bg-[#080808] px-6">
-          <h1 className="text-sm font-medium uppercase tracking-[0.24em] text-[#F0EDE8]/85">
-            {pageTitle}
-          </h1>
+      {/* Mobile Sidebar Overlay */}
+      {mobileMenuOpen && (
+        <>
+          <div
+            className="fixed inset-0 z-40 bg-black/50 md:hidden"
+            onClick={() => setMobileMenuOpen(false)}
+          />
+          <aside className="fixed left-0 top-0 z-50 h-screen w-[240px] border-r border-[#F0EDE8]/10 bg-[#0D0D0D] md:hidden">
+            <button
+              onClick={() => setMobileMenuOpen(false)}
+              className="absolute right-2 top-4 grid h-8 w-8 place-items-center border border-[#F0EDE8]/20"
+              aria-label="Close menu"
+            >
+              <X size={14} />
+            </button>
+            {renderSidebarContent()}
+          </aside>
+        </>
+      )}
 
-          <div className="flex items-center gap-4">
-            <p className="text-[12px] uppercase tracking-[0.18em] text-[#F0EDE8]/55">
+      <div className="ml-0 min-h-screen md:ml-[240px]">
+        <header className="sticky top-0 z-30 flex h-16 min-h-16 items-center justify-between border-b border-[#F0EDE8]/10 bg-[#080808] px-4 md:px-6">
+          <div className="flex items-center gap-3">
+            <button
+              onClick={() => setMobileMenuOpen(true)}
+              className="grid h-9 w-9 place-items-center border border-[#F0EDE8]/20 md:hidden"
+              aria-label="Open menu"
+            >
+              <Menu size={16} />
+            </button>
+            <h1 className="text-sm font-medium uppercase tracking-[0.24em] text-[#F0EDE8]/85">
+              {pageTitle}
+            </h1>
+          </div>
+
+          <div className="flex items-center gap-2 md:gap-4">
+            <p className="hidden text-[12px] uppercase tracking-[0.18em] text-[#F0EDE8]/55 sm:block">
               {clock}
             </p>
             <button
@@ -192,7 +234,7 @@ export function AdminShell({
           </div>
         </header>
 
-        <main className="p-6">{children}</main>
+        <main className="p-3 md:p-6">{children}</main>
       </div>
 
       {drawerOpen ? (
@@ -202,7 +244,7 @@ export function AdminShell({
             onClick={() => setDrawerOpen(false)}
             aria-label="Close notifications"
           />
-          <aside className="fixed right-0 top-0 z-50 h-screen w-full max-w-[420px] border-l border-[#F0EDE8]/10 bg-[#0D0D0D] p-5">
+          <aside className="fixed right-0 top-0 z-50 h-screen w-full max-w-[420px] border-l border-[#F0EDE8]/10 bg-[#0D0D0D] p-4 md:p-5">
             <div className="flex items-center justify-between border-b border-[#F0EDE8]/10 pb-3">
               <h2 className="text-xs uppercase tracking-[0.2em]">
                 NOTIFICATIONS

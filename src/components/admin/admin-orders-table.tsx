@@ -215,7 +215,7 @@ export function AdminOrdersTable({ orders }: Props) {
       </div>
 
       <div className="mt-3 overflow-x-auto border border-[#F0EDE8]/12 bg-[#111111] p-3">
-        <table className="min-w-[1220px] text-left text-sm">
+        <table className="min-w-full text-left text-sm md:min-w-[1220px]">
           <thead className="text-[11px] uppercase tracking-[0.18em] text-[#F0EDE8]/50">
             <tr>
               <th className="py-2 pr-3">Sel</th>

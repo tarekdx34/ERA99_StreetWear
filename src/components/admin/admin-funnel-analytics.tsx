@@ -38,7 +38,7 @@ export function AdminFunnelAnalytics({ data }: Props) {
   return (
     <section className="space-y-8">
       <div>
-        <h2 className="font-blackletter text-5xl">FUNNEL ANALYTICS</h2>
+        <h2 className="font-blackletter text-4xl md:text-5xl">FUNNEL ANALYTICS</h2>
       </div>
 
       <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-4">

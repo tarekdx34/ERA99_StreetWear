@@ -308,7 +308,7 @@ export function AdminSettingsPage() {
 
   return (
     <section className="space-y-6">
-      <h1 className="font-blackletter text-5xl">SETTINGS</h1>
+      <h1 className="font-blackletter text-4xl md:text-5xl">SETTINGS</h1>
 
       <section className="border border-[#F0EDE8]/12 bg-[#111111] p-4">
         <h2 className="text-xs uppercase tracking-[0.2em] text-[#F0EDE8]/65">

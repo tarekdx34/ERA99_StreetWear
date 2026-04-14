@@ -46,7 +46,7 @@ export default async function AdminNewProductPage() {
         <p className="text-[12px] uppercase tracking-[0.28em] text-[#F0EDE8]/55">
           99 - PRODUCTS
         </p>
-        <h1 className="mt-3 font-blackletter text-5xl">New Product</h1>
+        <h1 className="mt-3 font-blackletter text-4xl md:text-5xl">New Product</h1>
       </div>
 
       <AdminProductForm
