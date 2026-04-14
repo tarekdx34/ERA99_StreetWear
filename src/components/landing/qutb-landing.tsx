@@ -305,12 +305,22 @@ function ProductGrid({ products }: { products: Product[] }) {
   return (
     <section id="drop" className="bg-ink px-6 py-20 md:px-10">
       <div className="mx-auto max-w-7xl">
-        <h2 className="font-anton text-5xl tracking-[16px] text-ash md:text-6xl">
-          QUTB
-        </h2>
-        <p className="mt-2 text-xs uppercase tracking-[0.24em] text-ash/55">
-          ERA 99 — DROP 001
-        </p>
+        <div className="flex flex-col items-start justify-between gap-6 md:flex-row md:items-end">
+          <div>
+            <h2 className="font-anton text-5xl tracking-[16px] text-ash md:text-6xl">
+              QUTB
+            </h2>
+            <p className="mt-2 text-xs uppercase tracking-[0.24em] text-ash/55">
+              ERA 99 — DROP 001
+            </p>
+          </div>
+          <Link
+            href="/shop"
+            className="inline-flex items-center gap-2 border border-ash bg-ash px-8 py-3 text-xs font-medium uppercase tracking-[0.16em] text-black transition-all duration-300 hover:bg-transparent hover:text-ash"
+          >
+            ENTER SHOP
+          </Link>
+        </div>
         <div className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-4">
           {products.slice(0, 4).map((product) => (
             <ProductCard key={product.id} product={product} />

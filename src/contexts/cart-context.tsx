@@ -3,6 +3,7 @@
 import { createContext, useContext, useEffect, useMemo, useRef, useState } from "react";
 import { useAnalytics } from "@/hooks/useAnalytics";
 import { useMetaPixel } from "@/hooks/useMetaPixel";
+import { getSessionCookieName } from "@/lib/session-cookie";
 
 export type CartItem = {
   id?: string;
@@ -51,6 +52,12 @@ function makeGuestCartId() {
   return `${Date.now()}-${Math.random().toString(16).slice(2)}`;
 }
 
+function getCookie(name: string): string | null {
+  if (typeof document === "undefined") return null;
+  const match = document.cookie.match(new RegExp(`(^| )${name}=([^;]+)`));
+  return match?.[2] || null;
+}
+
 function normalizeIncoming(item: Partial<CartItem> & Pick<CartItem, "productId" | "name" | "color" | "size" | "qty" | "image">): CartItem {
   const variantId = item.variantId || item.size;
   const unitPrice = Number(item.unitPrice ?? 0);
@@ -92,7 +99,14 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   const { track } = useMetaPixel();
 
   const hydrateFromServer = async () => {
-    const res = await fetch("/api/cart", { cache: "no-store" });
+    const sessionId = getCookie(getSessionCookieName());
+    const headers: Record<string, string> = { "Content-Type": "application/json" };
+    if (sessionId) headers["x-session-id"] = sessionId;
+
+    const res = await fetch("/api/cart", {
+      cache: "no-store",
+      headers,
+    });
     if (!res.ok) throw new Error("SYNC_FAILED");
     const data = await res.json();
     setItems((data.items || []).map(mapServerItem));
@@ -146,9 +160,13 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         }
 
         if (guestItems.length > 0) {
+          const sessionId = getCookie(getSessionCookieName());
+          const mergeHeaders: Record<string, string> = { "Content-Type": "application/json" };
+          if (sessionId) mergeHeaders["x-session-id"] = sessionId;
+
           const mergeRes = await fetch("/api/cart/merge", {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
+            headers: mergeHeaders,
             body: JSON.stringify({
               items: guestItems.map((item) => ({
                 productId: item.productId,
@@ -220,9 +238,13 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     });
 
     if (isShopperLoggedIn) {
+      const sessionId = getCookie(getSessionCookieName());
+      const headers: Record<string, string> = { "Content-Type": "application/json" };
+      if (sessionId) headers["x-session-id"] = sessionId;
+
       void fetch("/api/cart/items", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers,
         body: JSON.stringify({
           productId: normalizedIncoming.productId,
           variantId: normalizedIncoming.variantId,
@@ -266,8 +288,13 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 
     const removedItem = removed as CartItem | null;
     if (isShopperLoggedIn && removedItem && removedItem.id) {
+      const sessionId = getCookie(getSessionCookieName());
+      const headers: Record<string, string> = {};
+      if (sessionId) headers["x-session-id"] = sessionId;
+
       void fetch(`/api/cart/items/${removedItem.id}`, {
         method: "DELETE",
+        headers,
       })
         .then(async (res) => {
           if (!res.ok) throw new Error("SYNC_FAILED");
@@ -302,9 +329,13 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 
     const targetItem = target as CartItem | null;
     if (isShopperLoggedIn && targetItem && targetItem.id) {
+      const sessionId = getCookie(getSessionCookieName());
+      const headers: Record<string, string> = { "Content-Type": "application/json" };
+      if (sessionId) headers["x-session-id"] = sessionId;
+
       void fetch(`/api/cart/items/${targetItem.id}`, {
         method: "PUT",
-        headers: { "Content-Type": "application/json" },
+        headers,
         body: JSON.stringify({ qty }),
       })
         .then(async (res) => {
@@ -321,7 +352,11 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     setItems([]);
 
     if (isShopperLoggedIn) {
-      void fetch("/api/cart", { method: "DELETE" })
+      const sessionId = getCookie(getSessionCookieName());
+      const headers: Record<string, string> = {};
+      if (sessionId) headers["x-session-id"] = sessionId;
+
+      void fetch("/api/cart", { method: "DELETE", headers })
         .then(async (res) => {
           if (!res.ok) throw new Error("SYNC_FAILED");
           setItems([]);

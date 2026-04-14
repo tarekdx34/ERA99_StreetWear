@@ -1,6 +1,7 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { clearCart, getHydratedCart } from "@/lib/cart-service";
 import { getShopperSessionUserId } from "@/lib/shopper-auth";
+import { requireCsrf } from "@/lib/csrf-middleware";
 
 export async function GET() {
   const userId = await getShopperSessionUserId();
@@ -12,7 +13,10 @@ export async function GET() {
   return NextResponse.json({ items });
 }
 
-export async function DELETE() {
+export async function DELETE(request: NextRequest) {
+  const csrfError = await requireCsrf(request);
+  if (csrfError) return csrfError;
+
   const userId = await getShopperSessionUserId();
   if (!userId) {
     return NextResponse.json({ message: "Unauthorized" }, { status: 401 });

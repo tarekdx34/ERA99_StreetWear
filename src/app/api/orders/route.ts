@@ -1,10 +1,11 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { isDatabaseConfigured, prisma } from "@/lib/prisma";
 import { orderNumberFromIdWithPrefix } from "@/lib/utils";
 import { getAdminSettings } from "@/lib/admin-settings";
 import { sendAdminWhatsApp } from "@/lib/whatsapp";
 import { getShopperSessionUserId } from "@/lib/shopper-auth";
+import { requireCsrf } from "@/lib/csrf-middleware";
 
 const itemSchema = z.object({
   productId: z.string(),
@@ -32,7 +33,10 @@ const orderSchema = z.object({
   paymentMethod: z.enum(["COD", "ONLINE"]),
 });
 
-export async function POST(req: Request) {
+export async function POST(req: NextRequest) {
+  const csrfError = await requireCsrf(req);
+  if (csrfError) return csrfError;
+
   try {
     if (!isDatabaseConfigured()) {
       return NextResponse.json(

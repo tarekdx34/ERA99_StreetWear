@@ -1,7 +1,8 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { mergeGuestCart } from "@/lib/cart-service";
 import { getShopperSessionUserId } from "@/lib/shopper-auth";
+import { requireCsrf } from "@/lib/csrf-middleware";
 
 const schema = z.object({
   items: z
@@ -19,7 +20,10 @@ const schema = z.object({
     .default([]),
 });
 
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
+  const csrfError = await requireCsrf(request);
+  if (csrfError) return csrfError;
+
   const userId = await getShopperSessionUserId();
   if (!userId) {
     return NextResponse.json({ message: "Unauthorized" }, { status: 401 });

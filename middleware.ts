@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { getToken } from "next-auth/jwt";
+import { generateSessionId, getSessionCookieName, getSessionCookieMaxAge } from "@/lib/session-cookie";
+import { extractAttributionFromUrl, getAttributionCookieName, getAttributionMaxAge, hasAttribution } from "@/lib/attribution";
 
 const ALLOWLIST = [
   "/admin/login",
@@ -22,12 +24,48 @@ export async function middleware(request: NextRequest) {
     nextRequestHeaders.set("x-admin-area", "1");
   }
 
+  const response = NextResponse.next({ request: { headers: nextRequestHeaders } });
+
+  // Set session ID cookie for guest cart persistence
+  const sessionCookieName = getSessionCookieName();
+  const existingSessionId = request.cookies.get(sessionCookieName)?.value;
+
+  if (!existingSessionId) {
+    const isProduction = process.env.NODE_ENV === "production";
+    const newSessionId = generateSessionId();
+    response.cookies.set(sessionCookieName, newSessionId, {
+      httpOnly: true,
+      secure: isProduction,
+      sameSite: "lax",
+      path: "/",
+      maxAge: getSessionCookieMaxAge(),
+    });
+  }
+
+  // Capture UTM attribution on first visit
+  const attributionCookieName = getAttributionCookieName();
+  const existingAttribution = request.cookies.get(attributionCookieName)?.value;
+
+  if (!existingAttribution) {
+    const attribution = extractAttributionFromUrl(request.url);
+    if (hasAttribution(attribution)) {
+      const isProduction = process.env.NODE_ENV === "production";
+      response.cookies.set(attributionCookieName, encodeURIComponent(JSON.stringify(attribution)), {
+        httpOnly: true,
+        secure: isProduction,
+        sameSite: "lax",
+        path: "/",
+        maxAge: getAttributionMaxAge(),
+      });
+    }
+  }
+
   if (!isAdminArea && !isAdminApi) {
-    return NextResponse.next({ request: { headers: nextRequestHeaders } });
+    return response;
   }
 
   if (isAllowed) {
-    return NextResponse.next({ request: { headers: nextRequestHeaders } });
+    return response;
   }
 
   const token = await getToken({
@@ -35,7 +73,7 @@ export async function middleware(request: NextRequest) {
     secret: process.env.NEXTAUTH_SECRET,
   });
   if (token) {
-    return NextResponse.next({ request: { headers: nextRequestHeaders } });
+    return response;
   }
 
   if (pathname.startsWith("/api/admin")) {

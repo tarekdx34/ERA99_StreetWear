@@ -1,7 +1,8 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { prisma } from "@/lib/prisma";
 import { getShopperSessionUserId } from "@/lib/shopper-auth";
+import { requireCsrf } from "@/lib/csrf-middleware";
 
 const schema = z.object({
   label: z.string().trim().max(40).optional(),
@@ -16,9 +17,12 @@ const schema = z.object({
 });
 
 export async function PATCH(
-  request: Request,
+  request: NextRequest,
   context: { params: Promise<{ id: string }> },
 ) {
+  const csrfError = await requireCsrf(request);
+  if (csrfError) return csrfError;
+
   const userId = await getShopperSessionUserId();
   if (!userId) {
     return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
@@ -69,9 +73,12 @@ export async function PATCH(
 }
 
 export async function DELETE(
-  _: Request,
+  request: NextRequest,
   context: { params: Promise<{ id: string }> },
 ) {
+  const csrfError = await requireCsrf(request);
+  if (csrfError) return csrfError;
+
   const userId = await getShopperSessionUserId();
   if (!userId) {
     return NextResponse.json({ message: "Unauthorized" }, { status: 401 });

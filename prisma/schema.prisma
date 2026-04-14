@@ -138,20 +138,37 @@ model PasswordResetToken {
 }
 
 model AnalyticsEvent {
-  id        Int      @id @default(autoincrement())
-  event     String
-  userId    String?
-  sessionId String?
-  productId Int?
-  orderId   Int?
-  page      String?
-  value     Float?
-  data      Json?
-  ip        String?
-  createdAt DateTime @default(now())
+  id           Int       @id @default(autoincrement())
+  event        String
+  userId       String?
+  sessionId    String?
+  productId    Int?
+  orderId      Int?
+  page         String?
+  value        Float?
+  data         Json?
+  attribution  Json?
+  productIds   String[]
+  ip           String?
+  createdAt    DateTime  @default(now())
 
   @@index([event, createdAt])
   @@index([userId, createdAt])
   @@index([orderId])
   @@index([productId])
+}
+
+model MarketingEvent {
+  id        Int      @id @default(autoincrement())
+  eventId   String   @unique
+  eventName String
+  eventData Json?
+  sentAt    DateTime
+  success   Boolean
+  statusCode Int?
+  response  Json?
+  createdAt DateTime @default(now())
+
+  @@index([eventName, createdAt])
+  @@index([success, createdAt])
 }

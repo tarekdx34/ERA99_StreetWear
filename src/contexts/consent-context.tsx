@@ -73,7 +73,10 @@ function writeConsentCookie(consent: ConsentState) {
   const expires = new Date();
   expires.setDate(expires.getDate() + 365);
 
-  document.cookie = `${CONSENT_COOKIE_NAME}=${encodeURIComponent(JSON.stringify(consent))}; expires=${expires.toUTCString()}; path=/; SameSite=Lax`;
+  const isProduction = process.env.NODE_ENV === "production";
+  const secureFlag = isProduction ? "; Secure" : "";
+
+  document.cookie = `${CONSENT_COOKIE_NAME}=${encodeURIComponent(JSON.stringify(consent))}; expires=${expires.toUTCString()}; path=/; SameSite=Lax${secureFlag}`;
 }
 
 export function ConsentProvider({ children }: { children: React.ReactNode }) {

@@ -1,8 +1,9 @@
 import { compare, hash } from "bcryptjs";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { prisma } from "@/lib/prisma";
 import { getShopperSessionUserId } from "@/lib/shopper-auth";
+import { requireCsrf } from "@/lib/csrf-middleware";
 
 const patchSchema = z.object({
   firstName: z.string().trim().min(1).max(60).optional(),
@@ -37,7 +38,10 @@ export async function GET() {
   return NextResponse.json({ user });
 }
 
-export async function PATCH(request: Request) {
+export async function PATCH(request: NextRequest) {
+  const csrfError = await requireCsrf(request);
+  if (csrfError) return csrfError;
+
   const userId = await getShopperSessionUserId();
   if (!userId) {
     return NextResponse.json({ message: "Unauthorized" }, { status: 401 });

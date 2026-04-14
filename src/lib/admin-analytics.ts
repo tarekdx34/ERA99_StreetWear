@@ -314,6 +314,37 @@ export async function getAdminAnalyticsData() {
     }),
   );
 
+  // Marketing events data
+  const allEvents = await prisma.analyticsEvent.findMany({
+    orderBy: { createdAt: "asc" },
+  });
+  const recentEvents = allEvents.filter((e) => e.createdAt >= ninetyDaysStart);
+
+  const eventBreakdown: Record<string, number> = {};
+  const dailyEventsMap: Record<string, number> = {};
+  for (let i = 0; i < 90; i += 1) {
+    const d = addDays(ninetyDaysStart, i);
+    dailyEventsMap[dayKey(d)] = 0;
+  }
+  for (const event of recentEvents) {
+    eventBreakdown[event.event] = (eventBreakdown[event.event] || 0) + 1;
+    const key = dayKey(event.createdAt);
+    if (dailyEventsMap[key] !== undefined) {
+      dailyEventsMap[key] += 1;
+    }
+  }
+
+  const dailyEvents = Object.entries(dailyEventsMap).map(([date, count]) => ({
+    date,
+    label: date.slice(5),
+    count,
+  }));
+
+  const marketingEvents = await prisma.marketingEvent.findMany({
+    orderBy: { sentAt: "desc" },
+    take: 50,
+  });
+
   return {
     revenue: {
       totalAllTime: totalRevenueAllTime,
@@ -377,6 +408,20 @@ export async function getAdminAnalyticsData() {
       topCustomersBySpend,
       ordersByGovernorate,
       preferenceByGovernorate,
+    },
+    marketing: {
+      totalEvents: allEvents.length,
+      recentEvents: recentEvents.length,
+      eventBreakdown: Object.entries(eventBreakdown)
+        .sort(([, a], [, b]) => b - a)
+        .map(([event, count]) => ({ event, count })),
+      dailyEvents,
+      recentMarketingEvents: marketingEvents.map((e) => ({
+        id: e.id,
+        eventName: e.eventName,
+        sentAt: e.sentAt.toISOString(),
+        success: e.success,
+      })),
     },
   };
 }

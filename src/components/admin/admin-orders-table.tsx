@@ -94,20 +94,15 @@ export function AdminOrdersTable({ orders }: Props) {
     });
   };
 
-  const escapeHtml = (value: string) =>
-    value
+  const escapeHtml = (value: string | null | undefined) => {
+    const str = String(value ?? "");
+    return str
       .replaceAll("&", "&amp;")
       .replaceAll("<", "&lt;")
       .replaceAll(">", "&gt;")
       .replaceAll('"', "&quot;")
       .replaceAll("'", "&#39;");
-
-  const formatCurrency = (value: number) =>
-    new Intl.NumberFormat("en-EG", {
-      style: "currency",
-      currency: "EGP",
-      maximumFractionDigits: 0,
-    }).format(value);
+  };
 
   const parseItems = (items: unknown) => {
     if (!Array.isArray(items)) {
@@ -125,103 +120,18 @@ export function AdminOrdersTable({ orders }: Props) {
       .map((item) => {
         const row = item as any;
         return {
-          name: String(row?.name || "Item"),
-          color: String(row?.color || "-"),
-          size: String(row?.size || "-"),
-          qty: Number(row?.qty || row?.quantity || 1),
-          unitPrice: Number(row?.unitPrice || row?.price || 0),
-          slug: String(row?.slug || "-"),
+          name: String(row?.name ?? "Item"),
+          color: String(row?.color ?? "-"),
+          size: String(row?.size ?? "-"),
+          qty: Number(row?.qty ?? row?.quantity ?? 1),
+          unitPrice: Number(row?.unitPrice ?? row?.price ?? 0),
+          slug: String(row?.slug ?? "-"),
         };
       })
-      .filter((item) => item.name);
+      .filter((item) => item && item.name);
   };
 
-  const buildPrintHtml = (printOrders: any[]) => {
-    const sections = printOrders
-      .map((order) => {
-        const items = parseItems(order.items);
-        const rows = items
-          .map(
-            (item) => `
-              <tr>
-                <td>${escapeHtml(item.name)}</td>
-                <td>${escapeHtml(item.color)}</td>
-                <td>${escapeHtml(item.size)}</td>
-                <td>${item.qty}</td>
-                <td>${escapeHtml(item.slug)}</td>
-                <td>${escapeHtml(formatCurrency(item.unitPrice))}</td>
-                <td>${escapeHtml(formatCurrency(item.unitPrice * item.qty))}</td>
-              </tr>`,
-          )
-          .join("");
-
-        return `
-          <section class="print-order">
-            <h1>Order ${escapeHtml(order.orderNumber)}</h1>
-            <p><strong>Created:</strong> ${new Date(order.createdAt).toLocaleString("en-GB")}</p>
-            <p><strong>Customer:</strong> ${escapeHtml(order.customerName)}</p>
-            <p><strong>Phone:</strong> ${escapeHtml(order.phone)}</p>
-            <p><strong>Address:</strong> ${escapeHtml(order.governorate)}, ${escapeHtml(order.city)}, ${escapeHtml(order.address)}${order.building ? `, ${escapeHtml(order.building)}` : ""}</p>
-            <p><strong>Payment:</strong> ${escapeHtml(order.paymentMethod)} (${escapeHtml(order.paymentStatus)})</p>
-            <p><strong>Status:</strong> ${escapeHtml(order.orderStatus)}</p>
-            ${order.notes ? `<p><strong>Notes:</strong> ${escapeHtml(String(order.notes))}</p>` : ""}
-
-            <table>
-              <thead>
-                <tr>
-                  <th>Item</th>
-                  <th>Color</th>
-                  <th>Size</th>
-                  <th>Qty</th>
-                  <th>Slug</th>
-                  <th>Unit Price</th>
-                  <th>Line Total</th>
-                </tr>
-              </thead>
-              <tbody>
-                ${rows || '<tr><td colspan="7">No items</td></tr>'}
-              </tbody>
-            </table>
-
-            <div class="totals">
-              <p><strong>Subtotal:</strong> ${escapeHtml(formatCurrency(Number(order.subtotal || 0)))}</p>
-              <p><strong>Delivery:</strong> ${escapeHtml(formatCurrency(Number(order.deliveryFee || 0)))}</p>
-              <p><strong>Total:</strong> ${escapeHtml(formatCurrency(Number(order.total || 0)))}</p>
-            </div>
-          </section>
-        `;
-      })
-      .join("");
-
-    return `
-      <!doctype html>
-      <html>
-        <head>
-          <meta charset="utf-8" />
-          <title>Order Print</title>
-          <style>
-            body { font-family: Arial, sans-serif; padding: 20px; color: #111; }
-            .print-order { page-break-after: always; margin-bottom: 30px; }
-            .print-order:last-child { page-break-after: auto; }
-            h1 { margin: 0 0 12px; font-size: 22px; }
-            p { margin: 4px 0; font-size: 13px; }
-            table { width: 100%; border-collapse: collapse; margin-top: 12px; }
-            th, td { border: 1px solid #ddd; padding: 8px; font-size: 12px; text-align: left; vertical-align: top; }
-            th { background: #f2f2f2; }
-            .totals { margin-top: 12px; }
-            @media print {
-              body { padding: 0; }
-            }
-          </style>
-        </head>
-        <body>
-          ${sections}
-        </body>
-      </html>
-    `;
-  };
-
-  const printOrders = async (ids: number[]) => {
+  const openPrintWindow = async (ids: number[]) => {
     if (!ids.length) {
       setNotice("Select at least one order to print");
       return;
@@ -230,47 +140,23 @@ export function AdminOrdersTable({ orders }: Props) {
     setPrinting(true);
     setNotice(null);
 
-    // Open immediately from user click to avoid pop-up blockers on async flows.
-    const printWindow = window.open("", "_blank", "noopener,noreferrer");
-    if (!printWindow) {
-      setPrinting(false);
-      setNotice("Pop-up blocked. Please allow pop-ups and try again.");
-      return;
-    }
-
-    printWindow.document.write(
-      "<html><head><title>Preparing print...</title></head><body style='font-family:Arial,sans-serif;padding:20px'>Preparing order print...</body></html>",
-    );
-    printWindow.document.close();
-
     try {
-      const res = await fetch("/api/admin/orders/print", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ orderIds: ids }),
-      });
+      // Open print page in new window
+      const idsParam = ids.join(",");
+      const printUrl = `/admin/print-orders?ids=${idsParam}`;
+      const printWindow = window.open(printUrl, "_blank", "noopener,noreferrer,width=900,height=700");
 
-      if (!res.ok) {
-        const body = await res.json().catch(() => ({}));
-        throw new Error(body?.message || "Unable to load order print data");
+      if (!printWindow) {
+        setNotice("Pop-up blocked. Please allow pop-ups for this site.");
+        setPrinting(false);
+        return;
       }
 
-      const payload = await res.json();
-      const printableOrders = Array.isArray(payload?.orders) ? payload.orders : [];
-      if (!printableOrders.length) {
-        printWindow.close();
-        throw new Error("No printable orders found");
-      }
-
-      printWindow.document.open();
-      printWindow.document.write(buildPrintHtml(printableOrders));
-      printWindow.document.close();
-      printWindow.focus();
-      printWindow.print();
-      setNotice(`Prepared ${printableOrders.length} order(s) for printing`);
+      setNotice(`Opened ${ids.length} order(s) for printing — select "Save as PDF" in the print dialog`);
     } catch (error) {
-      printWindow.close();
-      setNotice(error instanceof Error ? error.message : "Print failed");
+      const message = error instanceof Error ? error.message : "Unknown error";
+      setNotice(`Print failed: ${message}`);
+      console.error("Print error:", error);
     } finally {
       setPrinting(false);
     }
@@ -315,10 +201,10 @@ export function AdminOrdersTable({ orders }: Props) {
         <button
           type="button"
           disabled={printing || selectedIds.length === 0}
-          onClick={() => printOrders(selectedIds)}
+          onClick={() => openPrintWindow(selectedIds)}
           className="border border-[#F0EDE8]/25 px-4 py-2 text-xs uppercase tracking-[0.16em] hover:border-[#F0EDE8]/45 disabled:cursor-not-allowed disabled:opacity-40"
         >
-          {printing ? "Preparing print..." : `Print selected (${selectedIds.length})`}
+          {printing ? "Opening..." : `Print / PDF (${selectedIds.length})`}
         </button>
 
         {notice ? (
@@ -380,10 +266,10 @@ export function AdminOrdersTable({ orders }: Props) {
                   <td className="py-3 pr-3">
                     <button
                       type="button"
-                      onClick={() => printOrders([order.id])}
+                      onClick={() => openPrintWindow([order.id])}
                       className="border border-[#F0EDE8]/20 px-2 py-1 text-[10px] uppercase tracking-[0.14em] hover:border-[#F0EDE8]/45"
                     >
-                      Print Order
+                      Print / PDF
                     </button>
                   </td>
                   <td className="py-3 text-[#F0EDE8]/55">

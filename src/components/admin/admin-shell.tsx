@@ -13,6 +13,9 @@ import {
   Settings,
   Users,
   X,
+  TrendingUp,
+  Target,
+  ShoppingCart,
 } from "lucide-react";
 
 type AdminNotification = {
@@ -36,6 +39,13 @@ const links = [
   { label: "ORDERS", href: "/admin/orders", icon: Receipt, hasPending: true },
   { label: "PRODUCTS", href: "/admin/products", icon: Box },
   { label: "ANALYTICS", href: "/admin/analytics", icon: ChartColumn },
+  { label: "MARKETING", href: "/admin/marketing", icon: TrendingUp,
+    children: [
+      { label: "OVERVIEW", href: "/admin/marketing" },
+      { label: "FUNNEL", href: "/admin/marketing/funnel" },
+      { label: "ADS", href: "/admin/marketing/ads" },
+    ]
+  },
   { label: "CUSTOMERS", href: "/admin/customers", icon: Users },
   { label: "SETTINGS", href: "/admin/settings", icon: Settings },
 ];
@@ -94,25 +104,49 @@ export function AdminShell({
             const Icon = item.icon;
             const active =
               pathname === item.href || pathname.startsWith(`${item.href}/`);
+            const hasChildren = (item as any).children?.length > 0;
+            const childLinks = (item as any).children || [];
 
             return (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={`mb-1 flex items-center gap-3 border-l-2 px-3 py-3 text-xs font-medium uppercase tracking-[0.16em] transition-colors duration-200 ${
-                  active
-                    ? "border-l-[#F0EDE8] bg-[#1A1A1A] text-[#F0EDE8]"
-                    : "border-l-transparent text-[#F0EDE8]/70 hover:bg-[#1A1A1A] hover:text-[#F0EDE8]"
-                }`}
-              >
-                <Icon size={16} />
-                <span>{item.label}</span>
-                {item.hasPending && pendingOrdersCount > 0 ? (
-                  <span className="ml-auto min-w-5 bg-[#F0EDE8] px-1 py-[2px] text-center text-[10px] leading-none text-[#080808]">
-                    {pendingOrdersCount}
-                  </span>
-                ) : null}
-              </Link>
+              <div key={item.href}>
+                <Link
+                  href={item.href}
+                  className={`mb-1 flex items-center gap-3 border-l-2 px-3 py-3 text-xs font-medium uppercase tracking-[0.16em] transition-colors duration-200 ${
+                    active
+                      ? "border-l-[#F0EDE8] bg-[#1A1A1A] text-[#F0EDE8]"
+                      : "border-l-transparent text-[#F0EDE8]/70 hover:bg-[#1A1A1A] hover:text-[#F0EDE8]"
+                  }`}
+                >
+                  <Icon size={16} />
+                  <span>{item.label}</span>
+                  {item.hasPending && pendingOrdersCount > 0 ? (
+                    <span className="ml-auto min-w-5 bg-[#F0EDE8] px-1 py-[2px] text-center text-[10px] leading-none text-[#080808]">
+                      {pendingOrdersCount}
+                    </span>
+                  ) : null}
+                </Link>
+                {hasChildren && active && (
+                  <div className="ml-6">
+                    {childLinks.map((child: any) => {
+                      const childActive =
+                        pathname === child.href || pathname.startsWith(`${child.href}/`);
+                      return (
+                        <Link
+                          key={child.href}
+                          href={child.href}
+                          className={`mb-1 block border-l-2 px-3 py-2 text-[10px] font-medium uppercase tracking-[0.14em] transition-colors duration-200 ${
+                            childActive
+                              ? "border-l-[#F0EDE8] bg-[#1A1A1A] text-[#F0EDE8]"
+                              : "border-l-transparent text-[#F0EDE8]/50 hover:text-[#F0EDE8]"
+                          }`}
+                        >
+                          {child.label}
+                        </Link>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
             );
           })}
         </nav>
