@@ -1,7 +1,3 @@
 export async function POST() {
   return Response.json({ received: true }, { status: 200 });
 }
-
-export async function GET() {
-  return Response.json({ received: true }, { status: 200 });
-}

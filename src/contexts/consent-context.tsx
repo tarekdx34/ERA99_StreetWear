@@ -19,6 +19,7 @@ export type ConsentState = {
 type ConsentContextValue = ConsentState & {
   decided: boolean;
   openPreferences: () => void;
+  resetConsentDecision: () => void;
   closePreferences: () => void;
   preferencesOpen: boolean;
   acceptAll: () => void;
@@ -79,6 +80,11 @@ function writeConsentCookie(consent: ConsentState) {
   document.cookie = `${CONSENT_COOKIE_NAME}=${encodeURIComponent(JSON.stringify(consent))}; expires=${expires.toUTCString()}; path=/; SameSite=Lax${secureFlag}`;
 }
 
+function clearConsentCookie() {
+  if (typeof document === "undefined") return;
+  document.cookie = `${CONSENT_COOKIE_NAME}=; max-age=0; path=/; SameSite=Lax`;
+}
+
 export function ConsentProvider({ children }: { children: React.ReactNode }) {
   const [consent, setConsent] = useState<ConsentState>(defaultConsent);
   const [decided, setDecided] = useState(false);
@@ -123,12 +129,20 @@ export function ConsentProvider({ children }: { children: React.ReactNode }) {
     setPreferencesOpen(false);
   };
 
+  const resetConsentDecision = () => {
+    clearConsentCookie();
+    setConsent(defaultConsent);
+    setDecided(false);
+    setPreferencesOpen(false);
+  };
+
   const value = useMemo<ConsentContextValue>(
     () => ({
       ...consent,
       decided,
       preferencesOpen,
       openPreferences: () => setPreferencesOpen(true),
+      resetConsentDecision,
       closePreferences: () => setPreferencesOpen(false),
       acceptAll,
       savePreferences,

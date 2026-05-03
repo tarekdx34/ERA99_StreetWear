@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { FormEvent, useMemo, useState } from "react";
 import { useAnalytics } from "@/hooks/useAnalytics";
 import { useMetaPixel } from "@/hooks/useMetaPixel";
@@ -36,6 +36,7 @@ function emailLooksValid(email: string) {
 
 export default function RegisterPage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const { trackEvent } = useAnalytics();
   const { track } = useMetaPixel();
   const [form, setForm] = useState<FormState>({
@@ -144,7 +145,17 @@ export default function RegisterPage() {
       trackEvent("sign_up", { method: "email" });
       track("CompleteRegistration", { method: "email" });
 
-      router.push("/auth/login?message=account-created");
+      const next = new URLSearchParams();
+      next.set("next", "/account");
+      if (searchParams.get("claimOrder")) {
+        next.set("claimOrder", searchParams.get("claimOrder")!);
+      }
+      if (searchParams.get("claimOrderToken")) {
+        next.set("claimOrderToken", searchParams.get("claimOrderToken")!);
+      }
+      next.set("message", "account-created");
+
+      router.push(`/auth/login?${next.toString()}`);
     } catch {
       setErrors((prev) => ({
         ...prev,

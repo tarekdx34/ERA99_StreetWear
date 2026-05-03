@@ -1,10 +1,11 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import {
   createPasswordResetToken,
   sendPasswordResetEmail,
 } from "@/lib/auth-email";
 import { prisma } from "@/lib/prisma";
+import { enforceRateLimit } from "@/lib/rate-limit";
 
 const schema = z.object({
   email: z.string().trim().toLowerCase().email(),
@@ -14,7 +15,14 @@ const GENERIC_RESPONSE = {
   message: "If an account exists for this email, a reset link has been sent.",
 };
 
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
+  const rateLimitError = enforceRateLimit(request, {
+    keyPrefix: "auth-forgot-password",
+    limit: 6,
+    windowMs: 10 * 60 * 1000,
+  });
+  if (rateLimitError) return rateLimitError;
+
   try {
     const json = await request.json();
     const { email } = schema.parse(json);

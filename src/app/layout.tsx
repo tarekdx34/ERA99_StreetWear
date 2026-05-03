@@ -1,27 +1,9 @@
 import type { Metadata } from "next";
-import { Space_Grotesk, Barlow_Condensed, Anton } from "next/font/google";
 import { headers } from "next/headers";
 import "./globals.css";
 import { Providers } from "@/components/providers";
 import { SiteChrome } from "@/components/site-chrome";
 import { getPublicStorefrontSettings } from "@/lib/admin-settings";
-
-const spaceGrotesk = Space_Grotesk({
-  variable: "--font-space-grotesk",
-  subsets: ["latin"],
-});
-
-const barlowCondensed = Barlow_Condensed({
-  variable: "--font-barlow",
-  weight: "900",
-  subsets: ["latin"],
-});
-
-const anton = Anton({
-  variable: "--font-anton",
-  weight: "400",
-  subsets: ["latin"],
-});
 
 export const metadata: Metadata = {
   title: "QUTB — Heavyweight Streetwear from Alexandria, Egypt",
@@ -46,7 +28,7 @@ export default async function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${spaceGrotesk.variable} ${barlowCondensed.variable} ${anton.variable} h-full antialiased`}
+      className="h-full antialiased"
     >
       <body
         suppressHydrationWarning

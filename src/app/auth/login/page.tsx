@@ -84,7 +84,19 @@ export default function LoginPage() {
 
       trackEvent("login", { method: "email" });
 
-      router.push(redirectTo);
+      // Build redirect URL with claimOrder if present
+      const redirectUrl = new URL(redirectTo, window.location.origin);
+      if (searchParams.get("claimOrder")) {
+        redirectUrl.searchParams.set("claimOrder", searchParams.get("claimOrder")!);
+      }
+      if (searchParams.get("claimOrderToken")) {
+        redirectUrl.searchParams.set(
+          "claimOrderToken",
+          searchParams.get("claimOrderToken")!,
+        );
+      }
+
+      router.push(redirectUrl.pathname + redirectUrl.search);
       router.refresh();
     } catch {
       setError("Unable to sign in right now.");

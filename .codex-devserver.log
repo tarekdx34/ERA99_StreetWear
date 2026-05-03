@@ -1,0 +1,22 @@
+
+> qutb@0.1.0 dev
+> next dev -p 3018
+
+▲ Next.js 16.2.3 (Turbopack)
+- Local:         http://localhost:3018
+- Network:       http://169.254.107.7:3018
+- Environments: .env
+✓ Ready in 588ms
+
+ GET /track-order 200 in 3.3s (next.js: 182ms, application-code: 3.1s)
+ GET /checkout 200 in 3.4s (next.js: 27ms, application-code: 3.4s)
+ GET /product/qutb-boxy-tee-white 404 in 3.3s (next.js: 588ms, application-code: 2.7s)
+ GET /shop 200 in 3.7s (next.js: 70ms, application-code: 3.6s)
+ GET /nope 404 in 3.5s (next.js: 51ms, application-code: 3.4s)
+ GET / 200 in 4.2s (next.js: 269ms, application-code: 4.0s)
+ GET /shop 200 in 327ms (next.js: 3ms, application-code: 324ms)
+ GET /product/era-99-stamp-tee-003-brown 200 in 624ms (next.js: 5ms, application-code: 619ms)
+ GET /product/era-99-stamp-tee-003-brown 200 in 673ms (next.js: 4ms, application-code: 669ms)
+ GET /product/era-99-stamp-tee-003-brown 200 in 732ms (next.js: 10ms, application-code: 722ms)
+✓ Compiled in 596ms
+[?25h

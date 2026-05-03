@@ -476,3 +476,91 @@ export async function getCatalogProductByIdRaw(
   const list = await getAdminCatalogProducts();
   return list.find((item) => item.id === id);
 }
+
+type InventoryOrderItem = {
+  productId: string;
+  size: string;
+  qty: number;
+  color?: string | null;
+};
+
+type InventoryAction = "reserve" | "release";
+
+function pickVariantForInventory(
+  product: CatalogProduct,
+  size: string,
+  color?: string | null,
+) {
+  const normalizedSize = size.trim().toUpperCase();
+  const targetColor = color?.trim().toLowerCase();
+  if (targetColor) {
+    const byColor = product.colorVariants.find((variant) => {
+      if (variant.colorName.trim().toLowerCase() !== targetColor) return false;
+      return Boolean(variant.sizes[normalizedSize]?.active);
+    });
+    if (byColor) return byColor;
+  }
+
+  return (
+    product.colorVariants.find((variant) =>
+      Boolean(variant.sizes[normalizedSize]?.active),
+    ) || null
+  );
+}
+
+async function mutateInventoryForOrder(
+  action: InventoryAction,
+  orderItems: InventoryOrderItem[],
+) {
+  if (orderItems.length === 0) return;
+
+  const products = await getAdminCatalogProducts();
+  const nextProducts = products.map((product) => ({
+    ...product,
+    colorVariants: product.colorVariants.map((variant) => ({
+      ...variant,
+      sizes: { ...variant.sizes },
+    })),
+  }));
+
+  for (const item of orderItems) {
+    const product = nextProducts.find(
+      (entry) => entry.id === item.productId && entry.active,
+    );
+    if (!product) {
+      throw new Error(`Product unavailable: ${item.productId}`);
+    }
+
+    const variant = pickVariantForInventory(product, item.size, item.color);
+    if (!variant) {
+      throw new Error(`Variant unavailable: ${item.productId} ${item.size}`);
+    }
+
+    const sizeKey = item.size.trim().toUpperCase() as CatalogSize;
+    const slot = variant.sizes[sizeKey];
+    const qty = Math.max(0, Math.floor(item.qty || 0));
+    if (!slot?.active || qty <= 0) {
+      throw new Error(`Invalid stock mutation for ${item.productId} ${item.size}`);
+    }
+
+    if (action === "reserve") {
+      if (slot.stock < qty) {
+        throw new Error(`Out of stock for ${item.productId} ${item.size}`);
+      }
+      slot.stock -= qty;
+      continue;
+    }
+
+    slot.stock += qty;
+  }
+
+  await saveCatalogProductsRaw(nextProducts);
+}
+
+export async function reserveInventoryForOrder(orderItems: InventoryOrderItem[]) {
+  await mutateInventoryForOrder("reserve", orderItems);
+}
+
+export async function releaseInventoryForOrder(orderItems: InventoryOrderItem[]) {
+  await mutateInventoryForOrder("release", orderItems);
+}

@@ -1,8 +1,13 @@
 import { hash } from "bcryptjs";
 import { Prisma } from "@prisma/client";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { prisma } from "@/lib/prisma";
+import { enforceRateLimit } from "@/lib/rate-limit";
+import {
+  createEmailVerificationToken,
+  sendVerificationEmail,
+} from "@/lib/auth-email";
 
 const schema = z
   .object({
@@ -19,7 +24,14 @@ const schema = z
 
 const PASSWORD_SALT_ROUNDS = 12;
 
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
+  const rateLimitError = enforceRateLimit(request, {
+    keyPrefix: "auth-register",
+    limit: 6,
+    windowMs: 10 * 60 * 1000,
+  });
+  if (rateLimitError) return rateLimitError;
+
   try {
     const json = await request.json();
     const payload = schema.parse(json);
@@ -43,7 +55,7 @@ export async function POST(request: Request) {
         firstName: payload.firstName,
         lastName: payload.lastName,
         email: payload.email,
-        emailVerified: true,
+        emailVerified: false,
         passwordHash,
       },
       select: {
@@ -51,6 +63,13 @@ export async function POST(request: Request) {
         email: true,
         firstName: true,
       },
+    });
+
+    const verification = await createEmailVerificationToken(user.id);
+    await sendVerificationEmail({
+      email: user.email,
+      firstName: user.firstName,
+      token: verification.token,
     });
 
     return NextResponse.json({ ok: true }, { status: 201 });

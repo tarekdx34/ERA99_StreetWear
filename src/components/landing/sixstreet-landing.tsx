@@ -4,6 +4,7 @@ import { Search, ShoppingBag, Camera } from "lucide-react";
 import { motion } from "framer-motion";
 import { useEffect, useMemo, useState } from "react";
 import { useCart } from "@/contexts/cart-context";
+import { useConsent } from "@/contexts/consent-context";
 import type { Product } from "@/lib/products";
 import Link from "next/link";
 
@@ -465,6 +466,8 @@ function InstagramStrip() {
 }
 
 function Footer() {
+  const { resetConsentDecision } = useConsent();
+
   return (
     <footer id="footer" className="bg-ink px-6 pb-8 pt-16 md:px-10">
       <div className="mx-auto grid max-w-7xl grid-cols-1 gap-10 border-t border-ash/20 pt-12 md:grid-cols-3">
@@ -497,6 +500,13 @@ function Footer() {
           <a href="#" className="hover:text-ash">
             SIZE GUIDE
           </a>
+          <button
+            type="button"
+            onClick={resetConsentDecision}
+            className="text-left hover:text-ash md:text-center"
+          >
+            COOKIE PREFERENCES
+          </button>
         </div>
 
         <div>

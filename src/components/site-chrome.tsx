@@ -31,14 +31,8 @@ export function SiteChrome({
   announcementText?: string;
 }) {
   const pathname = usePathname();
-  const isAdminRoute = pathname?.startsWith("/admin");
-
-  if (isAdminRoute) {
-    return null;
-  }
-
   const { count, openCart } = useCart();
-  const { openPreferences } = useConsent();
+  const { resetConsentDecision } = useConsent();
   const { trackEvent } = useAnalytics();
   const { track } = useMetaPixel();
 
@@ -81,6 +75,12 @@ export function SiteChrome({
     const first = user?.firstName?.trim() || "U";
     return first.slice(0, 1).toUpperCase();
   }, [user?.firstName]);
+
+  const isAdminRoute = pathname?.startsWith("/admin");
+
+  if (isAdminRoute) {
+    return null;
+  }
 
   return (
     <>
@@ -144,7 +144,7 @@ export function SiteChrome({
                     className="absolute right-0 top-10 w-40 border border-[#F0EDE8]/20 bg-[#111111] p-2 text-[11px] uppercase tracking-[0.15em]"
                   >
                     <Link
-                      href="/account"
+                      href="/account/orders"
                       className="block px-2 py-2 hover:bg-[#1A1A1A]"
                       onClick={() => setMenuOpen(false)}
                     >
@@ -211,7 +211,7 @@ export function SiteChrome({
 
       <button
         type="button"
-        onClick={openPreferences}
+        onClick={resetConsentDecision}
         className="fixed bottom-3 left-3 z-[95] text-[10px] uppercase tracking-[0.16em] text-[#F0EDE8]/65 underline hover:text-[#F0EDE8]"
       >
         Cookie Preferences

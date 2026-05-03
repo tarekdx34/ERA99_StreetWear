@@ -17,6 +17,7 @@ type OrderItem = {
 
 type Props = {
   orderId: number;
+  claimToken?: string;
   orderNumber: string;
   paymentStatus: string;
   paymentMethod: string;
@@ -24,12 +25,17 @@ type Props = {
   address: string;
   city: string;
   governorate: string;
+  isLoggedIn: boolean;
   items: OrderItem[];
 };
 
 export function OrderConfirmationClient(props: Props) {
   const { trackEvent } = useAnalytics();
   const { track } = useMetaPixel();
+  const encodedClaimToken = props.claimToken
+    ? encodeURIComponent(props.claimToken)
+    : "";
+  const supportWhatsapp = process.env.NEXT_PUBLIC_SUPPORT_WHATSAPP;
 
   useEffect(() => {
     const eventItems = props.items.map((item) => ({
@@ -51,10 +57,9 @@ export function OrderConfirmationClient(props: Props) {
       currency: "EGP",
       order_id: props.orderNumber,
     });
-  }, []);
+  }, [props.items, props.orderNumber, props.total, track, trackEvent]);
 
-  const paid =
-    props.paymentStatus === "paid" || props.paymentMethod === "ONLINE";
+  const paid = props.paymentStatus === "paid";
 
   return (
     <main className="min-h-screen bg-[#080808] px-6 pb-16 pt-28 md:px-10">
@@ -110,6 +115,9 @@ export function OrderConfirmationClient(props: Props) {
             <p>
               {props.address}, {props.city}, {props.governorate}
             </p>
+            <p className="mt-1 text-[11px] uppercase tracking-[0.14em] text-[#F0EDE8]/55">
+              Payment: Cash on Delivery
+            </p>
             <p className="mt-1 text-lg font-bold text-[#F0EDE8]">
               Total: {formatEGP(props.total)}
             </p>
@@ -122,29 +130,58 @@ export function OrderConfirmationClient(props: Props) {
             : "Our team will call you within 24 hours to confirm your order before shipping."}
         </p>
 
-        <div className="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-2">
-          <button
-            disabled
-            className="border border-[#F0EDE8]/25 px-4 py-3 text-xs uppercase tracking-[0.14em] opacity-50"
-          >
-            TRACK ORDER (COMING SOON)
-          </button>
+        {!props.isLoggedIn ? (
+          <section className="mt-8 border border-[#F0EDE8]/18 bg-[#111111] p-6 text-left">
+            <h2 className="text-xs uppercase tracking-[0.16em] text-[#F0EDE8]/65">
+              TRACK YOUR ORDER
+            </h2>
+            <p className="mt-2 text-sm text-[#F0EDE8]/60">
+              Create an account to track this order, view your order history, and get faster checkout on future orders.
+            </p>
+
+            <div className="mt-4 flex flex-col gap-2 sm:flex-row">
+              <a
+                href={`/auth/register?next=/account&claimOrder=${props.orderId}&claimOrderToken=${encodedClaimToken}`}
+                className="flex-1 border border-[#F0EDE8] bg-[#F0EDE8] px-4 py-3 text-center text-xs font-bold uppercase tracking-[0.14em] text-black"
+              >
+                CREATE ACCOUNT
+              </a>
+              <a
+                href={`/auth/login?next=/account&claimOrder=${props.orderId}&claimOrderToken=${encodedClaimToken}`}
+                className="flex-1 border border-[#F0EDE8]/25 px-4 py-3 text-center text-xs uppercase tracking-[0.14em] hover:border-[#F0EDE8]"
+              >
+                LOGIN
+              </a>
+            </div>
+
+            <p className="mt-3 text-xs text-[#F0EDE8]/45">
+              Or track as guest:{" "}
+              <a href="/track-order" className="text-[#F0EDE8] underline">
+                Track Order
+              </a>
+            </p>
+          </section>
+        ) : null}
+
+        <div className="mt-6">
           <Link
             href="/shop"
-            className="bg-[#F0EDE8] px-4 py-3 text-center text-xs font-bold uppercase tracking-[0.14em] text-black"
+            className="inline-block border border-[#F0EDE8]/25 px-6 py-3 text-xs uppercase tracking-[0.14em] hover:border-[#F0EDE8]"
           >
-            CONTINUE SHOPPING →
+            CONTINUE SHOPPING
           </Link>
         </div>
 
-        <a
-          href="https://wa.me/201000000000"
-          target="_blank"
-          rel="noreferrer"
-          className="mt-8 inline-block text-sm hover:underline"
-        >
-          Questions? WhatsApp us directly →
-        </a>
+        {supportWhatsapp ? (
+          <a
+            href={`https://wa.me/${supportWhatsapp}`}
+            target="_blank"
+            rel="noreferrer"
+            className="mt-8 inline-block text-sm hover:underline"
+          >
+            Questions? WhatsApp us directly →
+          </a>
+        ) : null}
       </div>
     </main>
   );

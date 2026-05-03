@@ -31,34 +31,34 @@ function buildOrderMessage(payload: TelegramOrderPayload) {
   const itemLines = payload.items
     .map(
       (item) =>
-        `• ${item.name} — ${item.color} — ${item.size} — x${item.qty} — ${(item.unitPrice * item.qty).toLocaleString()} EGP`,
+        `• ${item.name} — ${item.size} — x${item.qty} — ${(item.unitPrice * item.qty).toLocaleString()} EGP`,
     )
     .join("\n");
 
-  const orderTime = payload.createdAt
-    ? new Date(payload.createdAt).toLocaleString("en-GB", {
-        timeZone: "Africa/Cairo",
-      })
-    : new Date().toLocaleString("en-GB", { timeZone: "Africa/Cairo" });
+  const adminBaseUrl = (
+    process.env.NEXT_PUBLIC_ADMIN_URL ||
+    process.env.NEXT_PUBLIC_BASE_URL ||
+    process.env.NEXTAUTH_URL ||
+    "https://qutb.co"
+  ).replace(/\/$/, "");
 
   return [
-    `🖤 <b>NEW QUTB ORDER #${payload.orderNumber}</b>`,
-    `🕐 <b>Time:</b> ${orderTime}`,
+    `🖤 NEW QUTB ORDER #${payload.orderNumber}`,
     "───────────────",
-    `👤 <b>Customer:</b> ${payload.customerName}`,
-    `📞 <b>Phone:</b> ${payload.phone}`,
-    `📍 <b>Address:</b> ${payload.address}${payload.building ? `, ${payload.building}` : ""}, ${payload.city}, ${payload.governorate}`,
+    payload.customerName,
+    payload.phone,
+    `${payload.address}${payload.building ? `, ${payload.building}` : ""}, ${payload.city}, ${payload.governorate}`,
     "───────────────",
-    `📦 <b>ITEMS:</b>`,
+    "ITEMS:",
     itemLines,
     "───────────────",
-    `💰 <b>SUBTOTAL:</b> ${payload.subtotal.toLocaleString()} EGP`,
-    `🚚 <b>DELIVERY:</b> ${payload.deliveryFee === 0 ? "FREE (Alexandria)" : `${payload.deliveryFee.toLocaleString()} EGP`}`,
-    `💵 <b>TOTAL:</b> ${payload.total.toLocaleString()} EGP`,
-    `💳 <b>PAYMENT:</b> ${payload.paymentMethod === "COD" ? "Cash on Delivery" : "Online Payment"}`,
-    `📝 <b>NOTES:</b> ${payload.notes || "-"}`,
+    `SUBTOTAL: ${payload.subtotal.toLocaleString()} EGP`,
+    `DELIVERY: ${payload.deliveryFee === 0 ? "FREE" : `${payload.deliveryFee.toLocaleString()} EGP`}`,
+    `TOTAL: ${payload.total.toLocaleString()} EGP`,
+    "PAYMENT: Cash on Delivery",
+    `NOTES: ${payload.notes?.trim() || "None"}`,
     "───────────────",
-    `🔗 <b>View order:</b> qutb.co/admin/orders/${payload.id}`,
+    `View: ${adminBaseUrl}/admin/orders/${payload.id}`,
   ].join("\n");
 }
 
@@ -84,7 +84,6 @@ export async function sendTelegramMessage(
     body: JSON.stringify({
       chat_id: chatId,
       text: message,
-      parse_mode: "HTML",
     }),
   });
 

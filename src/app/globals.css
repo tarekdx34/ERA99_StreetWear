@@ -7,6 +7,11 @@
   --color-ash: #f0ede8;
   --color-blood: #8b0000;
   --color-concrete: #6b7280;
+  --font-space-grotesk: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  --font-barlow: "Arial Narrow", "Impact", "Franklin Gothic Medium", "Segoe UI",
+    sans-serif;
+  --font-anton: "Impact", "Arial Narrow", "Haettenschweiler", "Segoe UI",
+    sans-serif;
   --font-display: var(--font-barlow);
 }
 

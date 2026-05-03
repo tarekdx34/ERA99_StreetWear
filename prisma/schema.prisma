@@ -23,7 +23,7 @@ model Order {
   subtotal      Float
   deliveryFee   Float
   total         Float
-  paymentMethod String
+  paymentMethod String   @default("COD")
   paymentStatus String   @default("pending")
   orderStatus   String   @default("pending_confirmation")
   paymobOrderId String?

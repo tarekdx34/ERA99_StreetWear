@@ -133,7 +133,7 @@ export function AdminProductForm({
 
   const uploadToCloudinary = async (files: File[]) => {
     let cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
-    let preset = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET;
+    const preset = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET;
     let signedConfig: Awaited<
       ReturnType<typeof getCloudinarySignedConfig>
     > | null = null;

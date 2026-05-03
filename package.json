@@ -6,7 +6,8 @@
     "dev": "next dev -p 3018",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "test": "vitest run"
   },
   "dependencies": {
     "@next/third-parties": "^16.2.3",
@@ -41,6 +42,7 @@
     "playwright-core": "^1.59.1",
     "prisma": "^6.15.0",
     "tailwindcss": "^4",
-    "typescript": "^5"
+    "typescript": "^5",
+    "vitest": "^3.2.4"
   }
 }

@@ -1,9 +1,10 @@
 "use client";
 
-import { FormEvent, useEffect, useMemo, useState } from "react";
+import { FormEvent, useEffect, useMemo, useRef, useState } from "react";
 import { signOut } from "next-auth/react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { formatEGP } from "@/lib/utils";
+import { csrfFetch } from "@/hooks/use-csrf";
 
 type Profile = {
   id: string;
@@ -38,11 +39,14 @@ type Order = {
 
 export function AccountPageClient() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const ordersSectionRef = useRef<HTMLDivElement>(null);
   const [profile, setProfile] = useState<Profile | null>(null);
   const [orders, setOrders] = useState<Order[]>([]);
   const [addresses, setAddresses] = useState<Address[]>([]);
   const [loading, setLoading] = useState(true);
   const [message, setMessage] = useState("");
+  const hasClaimedOrder = useRef(false);
 
   const [nameForm, setNameForm] = useState({ firstName: "", lastName: "" });
   const [passwordForm, setPasswordForm] = useState({
@@ -108,12 +112,49 @@ export function AccountPageClient() {
   };
 
   useEffect(() => {
-    refreshAll().finally(() => setLoading(false));
+    const load = async () => {
+      await refreshAll();
+      setLoading(false);
+
+      // Check if we need to claim an order
+      const claimOrderId = searchParams.get("claimOrder");
+      const claimOrderToken = searchParams.get("claimOrderToken");
+      if (claimOrderId && !hasClaimedOrder.current) {
+        hasClaimedOrder.current = true;
+        try {
+          const res = await csrfFetch("/api/account/claim-order", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              orderId: parseInt(claimOrderId, 10),
+              token: claimOrderToken || "",
+            }),
+          });
+          const data = await res.json();
+
+          if (res.ok) {
+            setMessage(data.message || "Order linked to your account.");
+            // Refresh orders after claiming
+            await refreshAll();
+            // Scroll to orders section
+            setTimeout(() => {
+              ordersSectionRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+            }, 300);
+          } else {
+            setMessage(data.message || "Failed to link order.");
+          }
+        } catch {
+          setMessage("Unable to link order right now.");
+        }
+      }
+    };
+
+    load();
   }, []);
 
   const saveName = async (event: FormEvent) => {
     event.preventDefault();
-    const res = await fetch("/api/account/profile", {
+    const res = await csrfFetch("/api/account/profile", {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(nameForm),
@@ -135,7 +176,7 @@ export function AccountPageClient() {
       return;
     }
 
-    const res = await fetch("/api/account/profile", {
+    const res = await csrfFetch("/api/account/profile", {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -155,7 +196,7 @@ export function AccountPageClient() {
 
   const changeEmail = async (event: FormEvent) => {
     event.preventDefault();
-    const res = await fetch("/api/account/profile", {
+    const res = await csrfFetch("/api/account/profile", {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -173,7 +214,7 @@ export function AccountPageClient() {
 
   const addAddress = async (event: FormEvent) => {
     event.preventDefault();
-    const res = await fetch("/api/account/addresses", {
+    const res = await csrfFetch("/api/account/addresses", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(addressForm),
@@ -199,7 +240,7 @@ export function AccountPageClient() {
   };
 
   const setDefaultAddress = async (id: string) => {
-    const res = await fetch(`/api/account/addresses/${id}`, {
+    const res = await csrfFetch(`/api/account/addresses/${id}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ isDefault: true }),
@@ -218,7 +259,7 @@ export function AccountPageClient() {
     const confirmed = window.confirm("Delete this address?");
     if (!confirmed) return;
 
-    const res = await fetch(`/api/account/addresses/${id}`, { method: "DELETE" });
+    const res = await csrfFetch(`/api/account/addresses/${id}`, { method: "DELETE" });
     const data = await res.json().catch(() => ({}));
     if (!res.ok) {
       setMessage(data.message || "Unable to delete address.");
@@ -230,7 +271,7 @@ export function AccountPageClient() {
   };
 
   const reorder = async (orderId: number) => {
-    const res = await fetch("/api/account/reorder", {
+    const res = await csrfFetch("/api/account/reorder", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ orderId }),
@@ -252,7 +293,7 @@ export function AccountPageClient() {
     );
     if (!confirmed) return;
 
-    const res = await fetch("/api/account/delete", {
+    const res = await csrfFetch("/api/account/delete", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ password: deletePassword }),
@@ -309,7 +350,7 @@ export function AccountPageClient() {
           </form>
         </section>
 
-        <section className="border border-[#F0EDE8]/15 bg-[#111111] p-5">
+        <section className="border border-[#F0EDE8]/15 bg-[#111111] p-5" ref={ordersSectionRef}>
           <h2 className="text-xs uppercase tracking-[0.18em] text-[#F0EDE8]/65">Order History</h2>
           <div className="mt-4 space-y-3">
             {orders.length === 0 ? <p className="text-sm text-[#F0EDE8]/60">No orders yet.</p> : null}
