@@ -9,8 +9,31 @@ export const metadata: Metadata = {
   title: "QUTB — Heavyweight Streetwear from Alexandria, Egypt",
   description:
     "QUTB. Not a brand. A position. 220 GSM heavyweight boxy essentials built in Alexandria, Egypt. ERA 99 — Drop 001.",
+  metadataBase: new URL("https://qutb.studio"),
+  openGraph: {
+    title: "QUTB — Heavyweight Streetwear from Alexandria, Egypt",
+    description:
+      "QUTB. Not a brand. A position. 220 GSM heavyweight boxy essentials built in Alexandria, Egypt.",
+    url: "https://qutb.studio",
+    siteName: "QUTB",
+    images: [
+      {
+        url: "/og-image.jpg",
+        width: 1200,
+        height: 630,
+        alt: "QUTB — Heavyweight Streetwear from Alexandria, Egypt",
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "QUTB — Heavyweight Streetwear from Alexandria, Egypt",
+    description: "QUTB. Not a brand. A position.",
+    images: ["/og-image.jpg"],
+  },
 };
-
 export default async function RootLayout({
   children,
 }: Readonly<{
@@ -25,11 +48,7 @@ export default async function RootLayout({
     publicSettings.maintenanceMode && !isAdminArea && !isApiRoute;
 
   return (
-    <html
-      lang="en"
-      suppressHydrationWarning
-      className="h-full antialiased"
-    >
+    <html lang="en" suppressHydrationWarning className="h-full antialiased">
       <body
         suppressHydrationWarning
         className="min-h-full bg-[#080808] text-[#F0EDE8]"
