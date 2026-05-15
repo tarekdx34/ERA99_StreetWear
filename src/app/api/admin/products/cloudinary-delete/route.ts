@@ -1,30 +1,15 @@
 import crypto from "crypto";
 import { NextResponse } from "next/server";
-import { getServerSession } from "next-auth";
+
 import { z } from "zod";
-import { authOptions } from "@/lib/auth-options";
-import { getSessionVersion } from "@/lib/admin-security";
+
+import { requireAdminRole } from "@/lib/admin-security";
 import { getAdminSettings } from "@/lib/admin-settings";
 import { parseCloudinaryUrl } from "@/lib/utils";
 
 const bodySchema = z.object({
   imageUrl: z.string().url(),
 });
-
-async function ensureAdmin() {
-  const session = await getServerSession(authOptions);
-  if (!session?.user) {
-    return { ok: false as const, status: 401, message: "Unauthorized" };
-  }
-
-  const currentVersion = await getSessionVersion();
-  const sessionVersion = String((session.user as any).sessionVersion || "0");
-  if (sessionVersion !== currentVersion) {
-    return { ok: false as const, status: 401, message: "Session expired" };
-  }
-
-  return { ok: true as const };
-}
 
 function cloudinaryPublicIdFromUrl(imageUrl: string, cloudName: string) {
   try {
@@ -52,7 +37,7 @@ function cloudinaryPublicIdFromUrl(imageUrl: string, cloudName: string) {
 }
 
 export async function POST(req: Request) {
-  const auth = await ensureAdmin();
+  const auth = await requireAdminRole();
   if (!auth.ok) {
     return NextResponse.json(
       { message: auth.message },

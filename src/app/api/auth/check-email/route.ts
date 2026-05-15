@@ -8,7 +8,7 @@ const schema = z.object({
 });
 
 export async function POST(request: NextRequest) {
-  const rateLimitError = enforceRateLimit(request, {
+  const rateLimitError = await enforceRateLimit(request, {
     keyPrefix: "auth-check-email",
     limit: 20,
     windowMs: 10 * 60 * 1000,

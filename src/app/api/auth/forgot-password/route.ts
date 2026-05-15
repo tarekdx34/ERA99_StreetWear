@@ -16,7 +16,7 @@ const GENERIC_RESPONSE = {
 };
 
 export async function POST(request: NextRequest) {
-  const rateLimitError = enforceRateLimit(request, {
+  const rateLimitError = await enforceRateLimit(request, {
     keyPrefix: "auth-forgot-password",
     limit: 6,
     windowMs: 10 * 60 * 1000,

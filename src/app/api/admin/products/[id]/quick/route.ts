@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server";
-import { getServerSession } from "next-auth";
+
 import { z } from "zod";
-import { authOptions } from "@/lib/auth-options";
-import { getSessionVersion } from "@/lib/admin-security";
+
+import { requireAdminRole } from "@/lib/admin-security";
 import { quickUpdateCatalogProduct } from "@/lib/catalog";
 
 const quickSchema = z.object({
@@ -12,25 +12,11 @@ const quickSchema = z.object({
   totalStock: z.number().int().nonnegative().optional(),
 });
 
-async function ensureAdmin() {
-  const session = await getServerSession(authOptions);
-  if (!session?.user)
-    return { ok: false as const, status: 401, message: "Unauthorized" };
-
-  const currentVersion = await getSessionVersion();
-  const sessionVersion = String((session.user as any).sessionVersion || "0");
-  if (sessionVersion !== currentVersion) {
-    return { ok: false as const, status: 401, message: "Session expired" };
-  }
-
-  return { ok: true as const };
-}
-
 export async function PATCH(
   req: Request,
   { params }: { params: Promise<{ id: string }> },
 ) {
-  const auth = await ensureAdmin();
+  const auth = await requireAdminRole();
   if (!auth.ok) {
     return NextResponse.json(
       { message: auth.message },

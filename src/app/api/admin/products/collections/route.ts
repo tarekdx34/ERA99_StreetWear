@@ -1,30 +1,16 @@
 import { NextResponse } from "next/server";
-import { getServerSession } from "next-auth";
+
 import { z } from "zod";
-import { authOptions } from "@/lib/auth-options";
-import { getSessionVersion } from "@/lib/admin-security";
+
+import { requireAdminRole } from "@/lib/admin-security";
 import { addCatalogCollection, getCatalogCollections } from "@/lib/catalog";
 
 const payloadSchema = z.object({
   name: z.string().min(1),
 });
 
-async function ensureAdmin() {
-  const session = await getServerSession(authOptions);
-  if (!session?.user)
-    return { ok: false as const, status: 401, message: "Unauthorized" };
-
-  const currentVersion = await getSessionVersion();
-  const sessionVersion = String((session.user as any).sessionVersion || "0");
-  if (sessionVersion !== currentVersion) {
-    return { ok: false as const, status: 401, message: "Session expired" };
-  }
-
-  return { ok: true as const };
-}
-
 export async function GET() {
-  const auth = await ensureAdmin();
+  const auth = await requireAdminRole();
   if (!auth.ok) {
     return NextResponse.json(
       { message: auth.message },
@@ -37,7 +23,7 @@ export async function GET() {
 }
 
 export async function POST(req: Request) {
-  const auth = await ensureAdmin();
+  const auth = await requireAdminRole();
   if (!auth.ok) {
     return NextResponse.json(
       { message: auth.message },

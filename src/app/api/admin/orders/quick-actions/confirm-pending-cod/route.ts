@@ -1,19 +1,11 @@
 import { NextResponse } from "next/server";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/auth-options";
-import { getSessionVersion } from "@/lib/admin-security";
+import { requireAdminRole } from "@/lib/admin-security";
 import { prisma } from "@/lib/prisma";
 
 export async function POST() {
-  const session = await getServerSession(authOptions);
-  if (!session?.user) {
-    return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
-  }
-
-  const currentVersion = await getSessionVersion();
-  const sessionVersion = String((session.user as any).sessionVersion || "0");
-  if (sessionVersion !== currentVersion) {
-    return NextResponse.json({ message: "Session expired" }, { status: 401 });
+  const auth = await requireAdminRole();
+  if (!auth.ok) {
+    return NextResponse.json({ message: auth.message }, { status: auth.status });
   }
 
   const cutoff = new Date(Date.now() - 15 * 60 * 1000);

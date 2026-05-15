@@ -15,7 +15,7 @@ export async function POST(req: NextRequest) {
   const csrfError = await requireCsrf(req);
   if (csrfError) return csrfError;
 
-  const rateLimitError = enforceRateLimit(req, {
+  const rateLimitError = await enforceRateLimit(req, {
     keyPrefix: "claim-order",
     limit: 6,
     windowMs: 10 * 60 * 1000,

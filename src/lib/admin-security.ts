@@ -2,6 +2,8 @@ import bcrypt from "bcryptjs";
 import { generateSecret, generateURI, verify } from "otplib";
 import { prisma } from "@/lib/prisma";
 import crypto from "crypto";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth-options";
 
 const FAILED_WINDOW_MINUTES = 15;
 const LOCKOUT_MINUTES = 30;
@@ -484,4 +486,23 @@ export async function getActiveSessionsSnapshot() {
   }
 
   return Array.from(byIp.values());
+}
+
+export async function requireAdminRole() {
+  const session = await getServerSession(authOptions);
+  if (!session?.user) {
+    return { ok: false as const, status: 401, message: "Unauthorized" };
+  }
+
+  if ((session.user as any).role !== "admin") {
+    return { ok: false as const, status: 403, message: "Forbidden: Admin role required" };
+  }
+
+  const currentVersion = await getSessionVersion();
+  const sessionVersion = String((session.user as any).sessionVersion || "0");
+  if (sessionVersion !== currentVersion) {
+    return { ok: false as const, status: 401, message: "Session expired" };
+  }
+
+  return { ok: true as const, session };
 }

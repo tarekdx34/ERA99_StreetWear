@@ -31,7 +31,7 @@ export function AccountOrdersClient() {
   const [loading, setLoading] = useState(true);
   const [message, setMessage] = useState("");
   const [claimOrderId, setClaimOrderId] = useState<number | null>(null);
-  const [claimPhone, setClaimPhone] = useState("");
+  const [claimToken, setClaimToken] = useState("");
   const [showClaimForm, setShowClaimForm] = useState(false);
 
   const refreshOrders = async () => {
@@ -50,7 +50,7 @@ export function AccountOrdersClient() {
   }, []);
 
   const reorder = async (orderId: number) => {
-    const res = await fetch("/api/account/reorder", {
+    const res = await csrfFetch("/api/account/reorder", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ orderId }),
@@ -66,14 +66,14 @@ export function AccountOrdersClient() {
   };
 
   const claimOrder = async () => {
-    if (!claimOrderId || !claimPhone) return;
+    if (!claimOrderId || !claimToken.trim()) return;
 
     setMessage("");
     try {
       const res = await csrfFetch("/api/account/claim-order", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ orderId: claimOrderId, phone: claimPhone }),
+        body: JSON.stringify({ orderId: claimOrderId, token: claimToken.trim() }),
       });
 
       const data = await res.json();
@@ -86,7 +86,7 @@ export function AccountOrdersClient() {
       setMessage("Order linked to your account.");
       setShowClaimForm(false);
       setClaimOrderId(null);
-      setClaimPhone("");
+      setClaimToken("");
       await refreshOrders();
     } catch {
       setMessage("Unable to claim order right now.");
@@ -131,14 +131,14 @@ export function AccountOrdersClient() {
             <h2 className="text-xs uppercase tracking-[0.16em] text-[#F0EDE8]/65">
               LINK A GUEST ORDER
             </h2>
-            <p className="mt-2 text-sm text-[#F0EDE8]/60">
-              Enter the order number and phone number used when placing the order.
-            </p>
+             <p className="mt-2 text-sm text-[#F0EDE8]/60">
+               Enter the order ID and claim token from your order confirmation.
+             </p>
 
             <div className="mt-4 space-y-3">
               <input
                 className={inputBase}
-                placeholder="Order number (e.g., QTB-00001)"
+                placeholder="Order ID (numeric)"
                 type="number"
                 value={claimOrderId || ""}
                 onChange={(e) =>
@@ -147,14 +147,14 @@ export function AccountOrdersClient() {
               />
               <input
                 className={inputBase}
-                placeholder="Phone number"
-                value={claimPhone}
-                onChange={(e) => setClaimPhone(e.target.value.replace(/\D/g, "").slice(0, 11))}
+                placeholder="Claim token"
+                value={claimToken}
+                onChange={(e) => setClaimToken(e.target.value)}
               />
               <div className="flex gap-2">
                 <button
                   onClick={claimOrder}
-                  disabled={!claimOrderId || !claimPhone}
+                  disabled={!claimOrderId || !claimToken.trim()}
                   className="flex-1 border border-[#F0EDE8] bg-[#F0EDE8] px-4 py-3 text-xs font-bold uppercase tracking-[0.14em] text-black disabled:opacity-40"
                 >
                   LINK ORDER
@@ -163,7 +163,7 @@ export function AccountOrdersClient() {
                   onClick={() => {
                     setShowClaimForm(false);
                     setClaimOrderId(null);
-                    setClaimPhone("");
+                    setClaimToken("");
                   }}
                   className="border border-[#F0EDE8]/25 px-4 py-3 text-xs uppercase tracking-[0.14em]"
                 >

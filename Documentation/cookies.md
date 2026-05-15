@@ -20,7 +20,7 @@
    - Give it a name (e.g., "QUTB Pixel")
 
    ***
-   3. NEXT_PUBLIC_GA_ID (Google Analytics 4 Measurement ID)
+   3. NEXT_PUBLIC_GA_MEASUREMENT_ID (Google Analytics 4 Measurement ID)
 
    1. Go to [Google Analytics](https://analytics.google.com/)
    1. Select your QUTB property

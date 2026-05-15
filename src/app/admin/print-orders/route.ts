@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+import { requireAdminRole } from "@/lib/admin-security";
 
 function formatCurrency(value: number) {
   return new Intl.NumberFormat("en-EG", {
@@ -33,6 +34,11 @@ function parseItems(items: unknown) {
 }
 
 export async function GET(request: NextRequest) {
+  const auth = await requireAdminRole();
+  if (!auth.ok) {
+    return NextResponse.json({ message: auth.message }, { status: auth.status });
+  }
+
   const idsStr = request.nextUrl.searchParams.get("ids");
   if (!idsStr) {
     return NextResponse.json({ error: "Missing ids parameter" }, { status: 400 });

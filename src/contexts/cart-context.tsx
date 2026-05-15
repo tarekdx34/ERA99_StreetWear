@@ -3,6 +3,7 @@
 import { createContext, useContext, useEffect, useMemo, useRef, useState } from "react";
 import { useAnalytics } from "@/hooks/useAnalytics";
 import { useMetaPixel } from "@/hooks/useMetaPixel";
+import { csrfFetch } from "@/hooks/use-csrf";
 import { getSessionCookieName } from "@/lib/session-cookie";
 
 export type CartItem = {
@@ -164,7 +165,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
           const mergeHeaders: Record<string, string> = { "Content-Type": "application/json" };
           if (sessionId) mergeHeaders["x-session-id"] = sessionId;
 
-          const mergeRes = await fetch("/api/cart/merge", {
+          const mergeRes = await csrfFetch("/api/cart/merge", {
             method: "POST",
             headers: mergeHeaders,
             body: JSON.stringify({
@@ -242,7 +243,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       const headers: Record<string, string> = { "Content-Type": "application/json" };
       if (sessionId) headers["x-session-id"] = sessionId;
 
-      void fetch("/api/cart/items", {
+      void csrfFetch("/api/cart/items", {
         method: "POST",
         headers,
         body: JSON.stringify({
@@ -292,7 +293,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       const headers: Record<string, string> = {};
       if (sessionId) headers["x-session-id"] = sessionId;
 
-      void fetch(`/api/cart/items/${removedItem.id}`, {
+      void csrfFetch(`/api/cart/items/${removedItem.id}`, {
         method: "DELETE",
         headers,
       })
@@ -333,7 +334,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       const headers: Record<string, string> = { "Content-Type": "application/json" };
       if (sessionId) headers["x-session-id"] = sessionId;
 
-      void fetch(`/api/cart/items/${targetItem.id}`, {
+      void csrfFetch(`/api/cart/items/${targetItem.id}`, {
         method: "PUT",
         headers,
         body: JSON.stringify({ qty }),
@@ -356,7 +357,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       const headers: Record<string, string> = {};
       if (sessionId) headers["x-session-id"] = sessionId;
 
-      void fetch("/api/cart", { method: "DELETE", headers })
+      void csrfFetch("/api/cart", { method: "DELETE", headers })
         .then(async (res) => {
           if (!res.ok) throw new Error("SYNC_FAILED");
           setItems([]);

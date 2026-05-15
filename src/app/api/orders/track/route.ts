@@ -9,7 +9,7 @@ const trackSchema = z.object({
 });
 
 export async function POST(req: NextRequest) {
-  const rateLimitError = enforceRateLimit(req, {
+  const rateLimitError = await enforceRateLimit(req, {
     keyPrefix: "orders-track",
     limit: 8,
     windowMs: 10 * 60 * 1000,

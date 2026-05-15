@@ -25,7 +25,7 @@ const schema = z
 const PASSWORD_SALT_ROUNDS = 12;
 
 export async function POST(request: NextRequest) {
-  const rateLimitError = enforceRateLimit(request, {
+  const rateLimitError = await enforceRateLimit(request, {
     keyPrefix: "auth-register",
     limit: 6,
     windowMs: 10 * 60 * 1000,

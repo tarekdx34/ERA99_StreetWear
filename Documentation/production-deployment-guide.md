@@ -26,21 +26,15 @@ Your app uses Prisma with PostgreSQL. You need a managed database for production
 - **Action:** Add and verify your actual domain name (e.g., `era99.com`) via DNS records.
 - **Save:** Generate a new API Key for production (`RESEND_API_KEY`).
 
-### 4. Payments (Paymob)
+### 4. Payments (Paymob) — Optional
 
-- **Action:** Log into your Paymob Dashboard.
-- **Action:** Request production activation if you are currently using test credentials.
-- **Save:**
-  - `PAYMOB_API_KEY`
-  - `PAYMOB_HMAC` (HMAC Secret for verifying webhooks)
-  - `PAYMOB_INTEGRATION_ID` (For Card Payments)
-  - `PAYMOB_WALLET_INTEGRATION_ID` (For Mobile Wallets, if applicable)
-  - `PAYMOB_IFRAME_ID`
+Online payments are currently disabled in the app (checkout is COD-only).  
+Only configure Paymob if you intentionally re-enable online payments.
 
 ### 5. Analytics (Optional but Recommended)
 
 - **Save:** `NEXT_PUBLIC_META_PIXEL_ID` (From Meta Business Manager).
-- **Save:** `NEXT_PUBLIC_GA_ID` (From Google Analytics).
+- **Save:** `NEXT_PUBLIC_GA_MEASUREMENT_ID` (From Google Analytics).
 
 ---
 
@@ -60,7 +54,7 @@ NEXTAUTH_SECRET="your_generated_random_string"
 # Emails
 RESEND_API_KEY="re_abc123..."
 
-# Paymob
+# Paymob (optional, only if online payments are re-enabled)
 PAYMOB_API_KEY="zx..."
 PAYMOB_HMAC="YOUR_HMAC_SECRET"
 PAYMOB_INTEGRATION_ID="123456"
@@ -68,7 +62,7 @@ PAYMOB_IFRAME_ID="7890"
 
 # Analytics
 NEXT_PUBLIC_META_PIXEL_ID="your_pixel_id"
-NEXT_PUBLIC_GA_ID="G-XXXXXXXXXX"
+NEXT_PUBLIC_GA_MEASUREMENT_ID="G-XXXXXXXXXX"
 ```
 
 ---
@@ -101,13 +95,13 @@ You need to push your Prisma text schema to the live PostgreSQL database.
 - Run: `npx prisma db push`
 - _(Important: revert your local `.env` back to your local database after doing this)._
 
-### 2. Set Up Webhooks (Paymob)
+### 2. Set Up Webhooks (Paymob, optional)
 
-Paymob needs to know where to send payment confirmations.
+Only required when online payments are enabled.
 
 - Go to the Paymob Dashboard > Integrations.
 - Edit your Card/Wallet integrations.
-- Set the **Transaction Processed Callback / Webhook URL** to: `https://www.era99.com/api/paymob/webhook` (Replace with your actual Vercel/live domain).
+- Set the **Transaction Processed Callback / Webhook URL** to: `https://www.era99.com/api/paymob/callback` (Replace with your actual Vercel/live domain).
 
 ---
 
@@ -135,5 +129,5 @@ Before announcing the launch, perform a real test:
 - [ ] Create a test customer account.
 - [ ] Verify you receive the "Welcome/Verify Email" from Resend.
 - [ ] Add an item to the cart.
-- [ ] Proceed to checkout and complete a live payment (or use a test card if Paymob is still in test mode).
-- [ ] Check the Admin Dashboard to ensure the order appears and is marked as "Paid".
+- [ ] Proceed to checkout with Cash on Delivery.
+- [ ] Check the Admin Dashboard to ensure the order appears with status `pending_confirmation`.

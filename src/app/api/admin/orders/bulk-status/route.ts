@@ -1,8 +1,7 @@
 import { NextResponse } from "next/server";
-import { getServerSession } from "next-auth";
 import { z } from "zod";
-import { authOptions } from "@/lib/auth-options";
-import { getSessionVersion } from "@/lib/admin-security";
+import { requireAdminRole } from "@/lib/admin-security";
+import { releaseInventoryForOrder, toInventoryOrderItems } from "@/lib/catalog";
 import { prisma } from "@/lib/prisma";
 
 const bulkSchema = z.object({
@@ -20,15 +19,9 @@ const bulkSchema = z.object({
 });
 
 export async function PATCH(req: Request) {
-  const session = await getServerSession(authOptions);
-  if (!session?.user) {
-    return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
-  }
-
-  const currentVersion = await getSessionVersion();
-  const sessionVersion = String((session.user as any).sessionVersion || "0");
-  if (sessionVersion !== currentVersion) {
-    return NextResponse.json({ message: "Session expired" }, { status: 401 });
+  const auth = await requireAdminRole();
+  if (!auth.ok) {
+    return NextResponse.json({ message: auth.message }, { status: auth.status });
   }
 
   try {
@@ -36,6 +29,25 @@ export async function PATCH(req: Request) {
     const parsed = bulkSchema.parse(body);
     const nextPaymentStatus =
       parsed.orderStatus === "delivered" ? "paid" : undefined;
+    const movingToReleasedState =
+      parsed.orderStatus === "cancelled" || parsed.orderStatus === "payment_failed";
+
+    if (movingToReleasedState) {
+      const releasableOrders = await prisma.order.findMany({
+        where: {
+          id: { in: parsed.orderIds },
+          orderStatus: { notIn: ["cancelled", "payment_failed"] },
+        },
+        select: {
+          id: true,
+          items: true,
+        },
+      });
+
+      for (const order of releasableOrders) {
+        await releaseInventoryForOrder(toInventoryOrderItems(order.items));
+      }
+    }
 
     const updated = await prisma.order.updateMany({
       where: { id: { in: parsed.orderIds } },

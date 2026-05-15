@@ -38,6 +38,7 @@ export type AdminSettingsModel = {
 };
 
 const SETTINGS_KEY = "admin_settings_v1";
+const SECRET_MASK = "********";
 
 export const defaultSettings: AdminSettingsModel = {
   storeName: "QUTB",
@@ -174,7 +175,22 @@ export async function getAdminSettings() {
 
 export async function saveAdminSettings(input: Partial<AdminSettingsModel>) {
   const current = await getAdminSettings();
-  const next = sanitize({ ...current, ...input });
+  const next = sanitize({
+    ...current,
+    ...input,
+    cloudinaryUrl:
+      input.cloudinaryUrl === undefined
+        ? current.cloudinaryUrl
+        : input.cloudinaryUrl === SECRET_MASK
+          ? current.cloudinaryUrl
+          : String(input.cloudinaryUrl).trim(),
+    telegramBotToken:
+      input.telegramBotToken === undefined
+        ? current.telegramBotToken
+        : input.telegramBotToken === SECRET_MASK
+          ? current.telegramBotToken
+          : String(input.telegramBotToken).trim(),
+  });
 
   await prisma.setting.upsert({
     where: { key: SETTINGS_KEY },
@@ -183,6 +199,14 @@ export async function saveAdminSettings(input: Partial<AdminSettingsModel>) {
   });
 
   return next;
+}
+
+export function toSafeAdminSettings(settings: AdminSettingsModel) {
+  return {
+    ...settings,
+    cloudinaryUrl: settings.cloudinaryUrl ? SECRET_MASK : "",
+    telegramBotToken: settings.telegramBotToken ? SECRET_MASK : "",
+  };
 }
 
 export async function getPublicStorefrontSettings() {

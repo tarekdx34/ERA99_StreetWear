@@ -72,7 +72,25 @@ export async function middleware(request: NextRequest) {
     req: request,
     secret: process.env.NEXTAUTH_SECRET,
   });
+
   if (token) {
+    const tokenRole =
+      typeof token === "object" && token && "role" in token
+        ? (token as Record<string, unknown>).role
+        : null;
+
+    if (isAdminArea || isAdminApi) {
+      if (tokenRole === "admin") {
+        return response;
+      } else {
+        if (isAdminApi) {
+          return NextResponse.json({ message: "Unauthorized" }, { status: 403 });
+        }
+        const redirectUrl = new URL("/admin/login", request.url);
+        redirectUrl.searchParams.set("next", pathname);
+        return NextResponse.redirect(redirectUrl);
+      }
+    }
     return response;
   }
 

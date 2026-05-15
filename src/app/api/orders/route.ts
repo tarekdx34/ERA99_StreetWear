@@ -40,7 +40,7 @@ export async function POST(req: NextRequest) {
   const csrfError = await requireCsrf(req);
   if (csrfError) return csrfError;
 
-  const rateLimitError = enforceRateLimit(req, {
+  const rateLimitError = await enforceRateLimit(req, {
     keyPrefix: "orders-create",
     limit: 10,
     windowMs: 10 * 60 * 1000,
@@ -71,6 +71,7 @@ export async function POST(req: NextRequest) {
           qty: item.qty,
           color: item.color,
         })),
+        tx,
       );
 
       return tx.order.create({

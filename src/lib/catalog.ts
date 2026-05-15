@@ -4,6 +4,7 @@ import { isDatabaseConfigured, prisma } from "@/lib/prisma";
 
 const CATALOG_PRODUCTS_KEY = "catalog_products_v3";
 const CATALOG_COLLECTIONS_KEY = "catalog_collections_v1";
+type CatalogDbClient = Pick<typeof prisma, "setting">;
 
 export type CatalogSize = (typeof sizes)[number];
 export type FitType = "Boxy" | "Oversized" | "Regular";
@@ -136,17 +137,17 @@ function seedFromStaticProducts(): CatalogProduct[] {
   });
 }
 
-async function getCatalogProductsRaw(): Promise<CatalogProduct[]> {
+async function getCatalogProductsRaw(db: CatalogDbClient = prisma): Promise<CatalogProduct[]> {
   if (!isDatabaseConfigured()) return seedFromStaticProducts();
 
-  const setting = await prisma.setting.findUnique({
+  const setting = await db.setting.findUnique({
     where: { key: CATALOG_PRODUCTS_KEY },
     select: { value: true },
   });
 
   if (!setting?.value) {
     const seeded = seedFromStaticProducts();
-    await prisma.setting.upsert({
+    await db.setting.upsert({
       where: { key: CATALOG_PRODUCTS_KEY },
       create: { key: CATALOG_PRODUCTS_KEY, value: JSON.stringify(seeded) },
       update: { value: JSON.stringify(seeded) },
@@ -159,9 +160,12 @@ async function getCatalogProductsRaw(): Promise<CatalogProduct[]> {
   return seedFromStaticProducts();
 }
 
-async function saveCatalogProductsRaw(items: CatalogProduct[]) {
+async function saveCatalogProductsRaw(
+  items: CatalogProduct[],
+  db: CatalogDbClient = prisma,
+) {
   if (!isDatabaseConfigured()) return;
-  await prisma.setting.upsert({
+  await db.setting.upsert({
     where: { key: CATALOG_PRODUCTS_KEY },
     create: { key: CATALOG_PRODUCTS_KEY, value: JSON.stringify(items) },
     update: { value: JSON.stringify(items) },
@@ -251,8 +255,10 @@ export async function addCatalogCollection(name: string): Promise<string[]> {
   return next;
 }
 
-export async function getAdminCatalogProducts(): Promise<CatalogProduct[]> {
-  return getCatalogProductsRaw();
+export async function getAdminCatalogProducts(
+  db: CatalogDbClient = prisma,
+): Promise<CatalogProduct[]> {
+  return getCatalogProductsRaw(db);
 }
 
 export async function getAdminCatalogCardProducts(): Promise<
@@ -477,7 +483,7 @@ export async function getCatalogProductByIdRaw(
   return list.find((item) => item.id === id);
 }
 
-type InventoryOrderItem = {
+export type InventoryOrderItem = {
   productId: string;
   size: string;
   qty: number;
@@ -511,10 +517,11 @@ function pickVariantForInventory(
 async function mutateInventoryForOrder(
   action: InventoryAction,
   orderItems: InventoryOrderItem[],
+  db: CatalogDbClient = prisma,
 ) {
   if (orderItems.length === 0) return;
 
-  const products = await getAdminCatalogProducts();
+  const products = await getAdminCatalogProducts(db);
   const nextProducts = products.map((product) => ({
     ...product,
     colorVariants: product.colorVariants.map((variant) => ({
@@ -554,13 +561,39 @@ async function mutateInventoryForOrder(
     slot.stock += qty;
   }
 
-  await saveCatalogProductsRaw(nextProducts);
+  await saveCatalogProductsRaw(nextProducts, db);
 }
 
-export async function reserveInventoryForOrder(orderItems: InventoryOrderItem[]) {
-  await mutateInventoryForOrder("reserve", orderItems);
+export function toInventoryOrderItems(orderItems: unknown): InventoryOrderItem[] {
+  if (!Array.isArray(orderItems)) return [];
+  return orderItems
+    .map((rawItem) => {
+      const item =
+        rawItem && typeof rawItem === "object"
+          ? (rawItem as Record<string, unknown>)
+          : {};
+      return {
+        productId: String(item.productId || "").trim(),
+        size: String(item.size || "").trim(),
+        qty: Math.max(0, Math.floor(Number(item.qty || 0))),
+        color: typeof item.color === "string" ? String(item.color).trim() : undefined,
+      };
+    })
+    .filter(
+      (item) => item.productId.length > 0 && item.size.length > 0 && item.qty > 0,
+    );
 }
 
-export async function releaseInventoryForOrder(orderItems: InventoryOrderItem[]) {
-  await mutateInventoryForOrder("release", orderItems);
+export async function reserveInventoryForOrder(
+  orderItems: InventoryOrderItem[],
+  db?: CatalogDbClient,
+) {
+  await mutateInventoryForOrder("reserve", orderItems, db);
+}
+
+export async function releaseInventoryForOrder(
+  orderItems: InventoryOrderItem[],
+  db?: CatalogDbClient,
+) {
+  await mutateInventoryForOrder("release", orderItems, db);
 }
