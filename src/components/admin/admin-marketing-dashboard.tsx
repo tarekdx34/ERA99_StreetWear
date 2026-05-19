@@ -17,7 +17,7 @@ import {
 
 type Props = { data: any };
 
-const PRIMARY = "#F0EDE8";
+const PRIMARY = "#EDE9E0";
 
 function formatEGP(value: number) {
   return new Intl.NumberFormat("en-EG", {
@@ -29,15 +29,15 @@ function formatEGP(value: number) {
 
 function MetricCard({ label, value, hint }: { label: string; value: string; hint?: string }) {
   return (
-    <article className="border border-[#F0EDE8]/15 bg-[#111111] p-4">
-      <p className="text-[11px] uppercase tracking-[0.18em] text-[#F0EDE8]/55">{label}</p>
-      <p className="mt-2 text-2xl font-semibold text-[#F0EDE8]">{value}</p>
-      {hint && <p className="mt-2 text-xs uppercase tracking-[0.12em] text-[#F0EDE8]/55">{hint}</p>}
+    <article className="border border-[#EDE9E0]/15 bg-[#080808] p-4">
+      <p className="text-[11px] uppercase tracking-[0.18em] text-[#EDE9E0]/55">{label}</p>
+      <p className="mt-2 text-2xl font-medium text-[#EDE9E0]">{value}</p>
+      {hint && <p className="mt-2 text-xs uppercase tracking-[0.12em] text-[#EDE9E0]/55">{hint}</p>}
     </article>
   );
 }
 
-const COLORS = [PRIMARY, "#3A1111", "#513030", "#7A5050", "#2b2b2b", "#444444", "#666666", "#888888"];
+const COLORS = [PRIMARY, "#8B0000", "#555555", "#555555", "#555555", "#555555", "#555555", "#555555"];
 
 export function AdminMarketingDashboard({ data }: Props) {
   const [tab, setTab] = useState<"overview" | "sources" | "pages">("overview");
@@ -61,7 +61,7 @@ export function AdminMarketingDashboard({ data }: Props) {
               key={t}
               onClick={() => setTab(t)}
               className={`border px-3 py-2 text-[11px] uppercase tracking-[0.14em] ${
-                tab === t ? "border-[#F0EDE8]/50 text-[#F0EDE8]" : "border-[#F0EDE8]/20 text-[#F0EDE8]/55"
+                tab === t ? "border-[#EDE9E0]/50 text-[#EDE9E0]" : "border-[#EDE9E0]/20 text-[#EDE9E0]/55"
               }`}
             >
               {t}
@@ -80,32 +80,32 @@ export function AdminMarketingDashboard({ data }: Props) {
           </div>
 
           <div className="grid gap-4 xl:grid-cols-2">
-            <article className="border border-[#F0EDE8]/15 bg-[#111111] p-4">
-              <p className="text-xs uppercase tracking-[0.16em] text-[#F0EDE8]/65">Event Breakdown (30 Days)</p>
-              <div className="mt-4 h-[280px]">
-                <ResponsiveContainer width="100%" height="100%">
+            <article className="min-w-0 border border-[#EDE9E0]/15 bg-[#080808] p-4">
+              <p className="text-xs uppercase tracking-[0.16em] text-[#EDE9E0]/65">Event Breakdown (30 Days)</p>
+              <div className="mt-4 h-[280px] min-w-0">
+                <ResponsiveContainer width="100%" height={280} minWidth={0}>
                   <BarChart data={data.events.recentBreakdown}>
-                    <CartesianGrid stroke="#2b2b2b" vertical={false} />
+                    <CartesianGrid stroke="#555555" vertical={false} />
                     <XAxis dataKey="event" stroke={PRIMARY} tick={{ fill: PRIMARY, fontSize: 9 }} angle={-30} textAnchor="end" height={80} />
                     <YAxis stroke={PRIMARY} tick={{ fill: PRIMARY, fontSize: 10 }} />
-                    <Tooltip contentStyle={{ background: "#0d0d0d", border: "1px solid #2a2a2a", color: PRIMARY }} />
+                    <Tooltip contentStyle={{ background: "#080808", border: "1px solid #555555", color: PRIMARY }} />
                     <Bar dataKey="count" fill={PRIMARY} />
                   </BarChart>
                 </ResponsiveContainer>
               </div>
             </article>
 
-            <article className="border border-[#F0EDE8]/15 bg-[#111111] p-4">
-              <p className="text-xs uppercase tracking-[0.16em] text-[#F0EDE8]/65">Traffic Sources</p>
-              <div className="mt-4 h-[280px]">
-                <ResponsiveContainer width="100%" height="100%">
+            <article className="min-w-0 border border-[#EDE9E0]/15 bg-[#080808] p-4">
+              <p className="text-xs uppercase tracking-[0.16em] text-[#EDE9E0]/65">Traffic Sources</p>
+              <div className="mt-4 h-[280px] min-w-0">
+                <ResponsiveContainer width="100%" height={280} minWidth={0}>
                   <PieChart>
                     <Pie data={sourcePieData} dataKey="count" nameKey="source" outerRadius={90} innerRadius={55}>
                       {sourcePieData.map((_: any, i: number) => (
                         <Cell key={i} fill={COLORS[i % COLORS.length]} />
                       ))}
                     </Pie>
-                    <Tooltip contentStyle={{ background: "#0d0d0d", border: "1px solid #2a2a2a", color: PRIMARY }} />
+                    <Tooltip contentStyle={{ background: "#080808", border: "1px solid #555555", color: PRIMARY }} />
                     <Legend wrapperStyle={{ color: PRIMARY, fontSize: 11 }} />
                   </PieChart>
                 </ResponsiveContainer>
@@ -113,17 +113,17 @@ export function AdminMarketingDashboard({ data }: Props) {
             </article>
           </div>
 
-          <article className="border border-[#F0EDE8]/15 bg-[#111111] p-4">
-            <p className="text-xs uppercase tracking-[0.16em] text-[#F0EDE8]/65">Meta CAPI Events</p>
+          <article className="min-w-0 border border-[#EDE9E0]/15 bg-[#080808] p-4">
+            <p className="text-xs uppercase tracking-[0.16em] text-[#EDE9E0]/65">Meta CAPI Events</p>
             <div className="mt-3 space-y-2 text-sm">
               {data.meta.breakdown.map((item: any) => (
-                <div key={item.event} className="flex items-center justify-between border-b border-[#F0EDE8]/10 pb-2">
-                  <span className="uppercase tracking-[0.12em] text-[#F0EDE8]/65">{item.event}</span>
+                <div key={item.event} className="flex items-center justify-between border-b border-[#EDE9E0]/10 pb-2">
+                  <span className="uppercase tracking-[0.12em] text-[#EDE9E0]/65">{item.event}</span>
                   <span>{item.count}</span>
                 </div>
               ))}
               <div className="flex items-center justify-between pt-2">
-                <span className="uppercase tracking-[0.12em] text-[#F0EDE8]/65">Success Rate</span>
+                <span className="uppercase tracking-[0.12em] text-[#EDE9E0]/65">Success Rate</span>
                 <span>{data.meta.successCount} / {data.meta.total} ({data.meta.total > 0 ? ((data.meta.successCount / data.meta.total) * 100).toFixed(1) : 0}%)</span>
               </div>
             </div>
@@ -133,12 +133,12 @@ export function AdminMarketingDashboard({ data }: Props) {
 
       {tab === "sources" && (
         <>
-          <article className="border border-[#F0EDE8]/15 bg-[#111111] p-4">
-            <p className="text-xs uppercase tracking-[0.16em] text-[#F0EDE8]/65">Traffic Sources</p>
+          <article className="border border-[#EDE9E0]/15 bg-[#080808] p-4">
+            <p className="text-xs uppercase tracking-[0.16em] text-[#EDE9E0]/65">Traffic Sources</p>
             <div className="mt-3 space-y-2 text-sm">
               {data.attribution.sources.map((s: any) => (
-                <div key={s.source} className="flex items-center justify-between border-b border-[#F0EDE8]/10 pb-2">
-                  <span className="uppercase tracking-[0.12em] text-[#F0EDE8]/65">{s.source}</span>
+                <div key={s.source} className="flex items-center justify-between border-b border-[#EDE9E0]/10 pb-2">
+                  <span className="uppercase tracking-[0.12em] text-[#EDE9E0]/65">{s.source}</span>
                   <span>{s.count} events</span>
                 </div>
               ))}
@@ -146,12 +146,12 @@ export function AdminMarketingDashboard({ data }: Props) {
           </article>
 
           {data.attribution.campaigns.length > 0 && (
-            <article className="border border-[#F0EDE8]/15 bg-[#111111] p-4">
-              <p className="text-xs uppercase tracking-[0.16em] text-[#F0EDE8]/65">Campaigns</p>
+            <article className="border border-[#EDE9E0]/15 bg-[#080808] p-4">
+              <p className="text-xs uppercase tracking-[0.16em] text-[#EDE9E0]/65">Campaigns</p>
               <div className="mt-3 space-y-2 text-sm">
                 {data.attribution.campaigns.map((c: any) => (
-                  <div key={c.campaign} className="flex items-center justify-between border-b border-[#F0EDE8]/10 pb-2">
-                    <span className="uppercase tracking-[0.12em] text-[#F0EDE8]/65">{c.campaign}</span>
+                  <div key={c.campaign} className="flex items-center justify-between border-b border-[#EDE9E0]/10 pb-2">
+                    <span className="uppercase tracking-[0.12em] text-[#EDE9E0]/65">{c.campaign}</span>
                     <span>{c.count} events</span>
                   </div>
                 ))}
@@ -163,24 +163,24 @@ export function AdminMarketingDashboard({ data }: Props) {
 
       {tab === "pages" && (
         <>
-          <article className="border border-[#F0EDE8]/15 bg-[#111111] p-4">
-            <p className="text-xs uppercase tracking-[0.16em] text-[#F0EDE8]/65">Top Pages</p>
+          <article className="min-w-0 border border-[#EDE9E0]/15 bg-[#080808] p-4">
+            <p className="text-xs uppercase tracking-[0.16em] text-[#EDE9E0]/65">Top Pages</p>
             <div className="mt-3 space-y-2 text-sm">
               {data.pages.topPages.map((p: any, i: number) => (
-                <div key={i} className="flex items-center justify-between border-b border-[#F0EDE8]/10 pb-2">
-                  <span className="uppercase tracking-[0.12em] text-[#F0EDE8]/65">{p.page}</span>
+                <div key={i} className="flex items-center justify-between border-b border-[#EDE9E0]/10 pb-2">
+                  <span className="uppercase tracking-[0.12em] text-[#EDE9E0]/65">{p.page}</span>
                   <span>{p.views} views</span>
                 </div>
               ))}
             </div>
           </article>
 
-          <article className="border border-[#F0EDE8]/15 bg-[#111111] p-4">
-            <p className="text-xs uppercase tracking-[0.16em] text-[#F0EDE8]/65">Top Search Terms</p>
+          <article className="min-w-0 border border-[#EDE9E0]/15 bg-[#080808] p-4">
+            <p className="text-xs uppercase tracking-[0.16em] text-[#EDE9E0]/65">Top Search Terms</p>
             <div className="mt-3 space-y-2 text-sm">
               {data.pages.topSearchTerms.map((s: any, i: number) => (
-                <div key={i} className="flex items-center justify-between border-b border-[#F0EDE8]/10 pb-2">
-                  <span className="uppercase tracking-[0.12em] text-[#F0EDE8]/65">{s.term}</span>
+                <div key={i} className="flex items-center justify-between border-b border-[#EDE9E0]/10 pb-2">
+                  <span className="uppercase tracking-[0.12em] text-[#EDE9E0]/65">{s.term}</span>
                   <span>{s.count} searches</span>
                 </div>
               ))}

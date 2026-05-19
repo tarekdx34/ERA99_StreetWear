@@ -52,6 +52,16 @@ model Setting {
   value String
 }
 
+model EarlyAccessSubscriber {
+  id         Int      @id @default(autoincrement())
+  email      String   @unique
+  signedUpAt DateTime @default(now()) @map("signed_up_at")
+  source     String   @default("early-access")
+  converted  Boolean  @default(false)
+
+  @@map("early_access_subscribers")
+}
+
 model User {
   id                      String                   @id @default(cuid())
   firstName               String?

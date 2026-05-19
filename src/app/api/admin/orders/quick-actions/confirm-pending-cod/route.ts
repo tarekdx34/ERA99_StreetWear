@@ -18,6 +18,7 @@ export async function POST() {
     },
     data: {
       orderStatus: "preparing",
+      paymentStatus: "pending",
     },
   });
 

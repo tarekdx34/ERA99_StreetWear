@@ -1,1 +1,962 @@
-⚠ metadataBase property in metadata export is not set for resolving social open graph or twitter images, using "http://localhost:3018". See https://nextjs.org/docs/app/api-reference/functions/generate-metadata#metadatabase
+Unable to read setting early_access_active Error [PrismaClientKnownRequestError]: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$middleware$5d$__$28$ecmascript$29$__["prisma"].setting.findUnique()` invocation in
+D:\Brand\Frontend\qutb-ordering\.next\dev\server\chunks\[root-of-the-server]__0~u90y9._.js:289:156
+
+  286 if (!(0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$middleware$5d$__$28$ecmascript$29$__["isDatabaseConfigured"])()) return fallback;
+  287 let row = null;
+  288 try {
+→ 289     row = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$middleware$5d$__$28$ecmascript$29$__["prisma"].setting.findUnique(
+Can't reach database server at `db.prisma.io:5432`
+
+Please make sure your database server is running at `db.prisma.io:5432`.
+    at <unknown> (src\lib\early-access.ts:48:32)
+    at async getBooleanSetting (src\lib\early-access.ts:48:11)
+    at async releaseEarlyAccessIfExpired (src\lib\early-access.ts:108:39)
+    at async isEarlyAccessActive (src\lib\early-access.ts:134:7)
+    at async proxy (proxy.ts:88:8)
+  46 |   let row: { value: string } | null = null;
+  47 |   try {
+> 48 |     row = await prisma.setting.findUnique({
+     |                                ^
+  49 |       where: { key },
+  50 |       select: { value: true },
+  51 |     }); {
+  code: 'P1001',
+  meta: { modelName: 'Setting', database_location: 'db.prisma.io:5432' },
+  clientVersion: '6.15.0'
+}
+Unable to read setting early_access_drop_at Error [PrismaClientKnownRequestError]: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$middleware$5d$__$28$ecmascript$29$__["prisma"].setting.findUnique()` invocation in
+D:\Brand\Frontend\qutb-ordering\.next\dev\server\chunks\[root-of-the-server]__0~u90y9._.js:325:156
+
+  322 if (!(0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$middleware$5d$__$28$ecmascript$29$__["isDatabaseConfigured"])()) return fallback;
+  323 let row = null;
+  324 try {
+→ 325     row = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$middleware$5d$__$28$ecmascript$29$__["prisma"].setting.findUnique(
+Can't reach database server at `db.prisma.io:5432`
+
+Please make sure your database server is running at `db.prisma.io:5432`.
+    at <unknown> (src\lib\early-access.ts:77:32)
+    at async getStringSetting (src\lib\early-access.ts:77:11)
+    at async releaseEarlyAccessIfExpired (src\lib\early-access.ts:108:39)
+    at async isEarlyAccessActive (src\lib\early-access.ts:134:7)
+    at async proxy (proxy.ts:88:8)
+  75 |   let row: { value: string } | null = null;
+  76 |   try {
+> 77 |     row = await prisma.setting.findUnique({
+     |                                ^
+  78 |       where: { key },
+  79 |       select: { value: true },
+  80 |     }); {
+  code: 'P1001',
+  meta: { modelName: 'Setting', database_location: 'db.prisma.io:5432' },
+  clientVersion: '6.15.0'
+}
+[browser] A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+https://react.dev/link/hydration-mismatch
+
+  ...
+    <RootLayout>
+      <html lang="en" suppressHydrationWarning={true} className="h-full ant...">
+        <head>
+        ...
+          <ConsentProvider>
+            <CartProvider>
+              <OuterLayoutRouter>
+              <RouteTracking>
+              <GoogleAnalyticsGate>
+              <MetaPixel>
+              <CookieConsentBanner>
+                <AnimatePresence>
+                  <PresenceChild isPresent={true} initial={undefined} custom={undefined} presenceAffectsLayout={true} ...>
+                    <PopChild pop={false} isPresent={true} anchorX="left" anchorY="top" root={undefined}>
+                      <PopChildMeasure isPresent={true} childRef={{current:null}} sizeRef={{...}} pop={false}>
+                        <motion.div initial={{y:120,opacity:0}} animate={{y:0,opacity:1}} exit={{y:120,opacity:0}} ...>
+                          <div
++                           className="fixed bottom-0 left-0 z-[120] w-full border-t border-[rgba(240,237,232,0.15)] b..."
+-                           className="fixed bottom-0 left-0 z-[120] w-full border-t border-[rgba(240,237,232,0.12)] b..."
+                            style={{opacity:0,transform:"translateY..."}}
+                            ref={function useMotionRef.useCallback}
+                          >
+                            <div
++                             className="mx-auto flex w-full max-w-7xl flex-col gap-4 md:flex-row md:items-center md:j..."
+-                             className="mx-auto flex w-full max-w-7xl flex-col gap-3 md:flex-row md:items-center md:j..."
+                            >
+                              <p
++                               className="text-sm text-[#EDE9E0]/85"
+-                               className="text-xs text-[#EDE9E0]/72 md:text-sm"
+                              >
++                               QUTB uses cookies to personalise your experience and measure our marketing.
+                              <div className="flex gap-3">
+                                <button
+                                  onClick={function acceptAll}
++                                 className="h-11 border border-[#EDE9E0] bg-[#EDE9E0] px-5 text-xs uppercase tracking..."
+-                                 className="h-9 border border-[#EDE9E0] bg-[#EDE9E0] px-4 text-[11px] uppercase track..."
+                                >
++                                 Accept all
+                                <button
+                                  onClick={function ConsentProvider.useMemo[value]}
++                                 className="h-11 border border-[#EDE9E0]/40 px-5 text-xs uppercase tracking-[0.18em] ..."
+-                                 className="h-9 border border-[#EDE9E0]/35 px-4 text-[11px] uppercase tracking-[0.16e..."
+                                >
++                                 Manage preferences
+                ...
+ 
+[browser] Uncaught Error: Hydration failed because the server rendered text didn't match the client. As a result this tree will be regenerated on the client. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+https://react.dev/link/hydration-mismatch
+
+  ...
+    <LoadingBoundary name="early-access/" loading={null}>
+      <HTTPAccessFallbackBoundary notFound={undefined} forbidden={undefined} unauthorized={undefined}>
+        <RedirectBoundary>
+          <RedirectErrorBoundary router={{...}}>
+            <InnerLayoutRouter url="/early-access" tree={[...]} params={{}} cacheNode={{rsc:{...}, ...}} ...>
+              <SegmentViewNode type="page" pagePath="early-acce...">
+                <SegmentTrieNode>
+                <EarlyAccessPage>
+                  <main className="relative g...">
+                    <img>
+                    <div>
+                    <section className="relative z...">
+                      <p>
+                      <h1>
+                      <p>
+                      <div className="mx-auto mt...">
+                        <EarlyAccessCountdown deadline="2026-05-22...">
+                          <div aria-live="polite">
+                            <div className="grid grid-...">
+                              <div>
+                              <div>
+                              <div>
+                              <div className="border-y b...">
+                                <p
+                                  className="font-anton text-[clamp(32px,12vw,82px)] leading-none tracking-[0.06em] te..."
+                                >
++                                 44
+-                                 45
+                                ...
+                      ...
+              ...
+            ...
+
+    at <unknown> (https://react.dev/link/hydration-mismatch)
+    at p (<anonymous>)
+    at <unknown> (src/app/early-access/early-access-countdown.tsx:78:13)
+    at Array.map (<anonymous>)
+    at EarlyAccessCountdown (src/app/early-access/early-access-countdown.tsx:76:11)
+    at EarlyAccessPage (src\app\early-access\page.tsx:49:11)
+  76 |         ].map(([label, value]) => (
+  77 |           <div key={label} className="border-y border-[#EDE9E0]/20 py-3">
+> 78 |             <p className="font-anton text-[clamp(32px,12vw,82px)] leading-none tracking-[0...
+     |             ^
+  79 |               {formatPart(Number(value))}
+  80 |             </p>
+  81 |             <p className="mt-2 text-[9px] uppercase tracking-[0.24em] text-[#EDE9E0]/55 sm...
+Unable to read admin settings Error [PrismaClientKnownRequestError]: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].setting.findUnique()` invocation in
+D:\Brand\Frontend\qutb-ordering\.next\dev\server\chunks\ssr\[root-of-the-server]__0pyb.5k._.js:221:156
+
+  218 async function getAdminSettings() {
+  219     let row = null;
+  220     try {
+→ 221         row = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].setting.findUnique(
+Can't reach database server at `db.prisma.io:5432`
+
+Please make sure your database server is running at `db.prisma.io:5432`.
+    at <unknown> (src\lib\admin-settings.ts:157:32)
+    at async getAdminSettings (src\lib\admin-settings.ts:157:11)
+    at async getPublicStorefrontSettings (src\lib\admin-settings.ts:223:16)
+    at async RootLayout (src\app\layout.tsx:79:46)
+  155 |   let row: { value: string } | null = null;
+  156 |   try {
+> 157 |     row = await prisma.setting.findUnique({
+      |                                ^
+  158 |       where: { key: SETTINGS_KEY },
+  159 |       select: { value: true },
+  160 |     }); {
+  code: 'P1001',
+  meta: { modelName: 'Setting', database_location: 'db.prisma.io:5432' },
+  clientVersion: '6.15.0'
+}
+Unable to read setting early_access_active Error [PrismaClientKnownRequestError]: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].setting.findUnique()` invocation in
+D:\Brand\Frontend\qutb-ordering\.next\dev\server\chunks\ssr\[root-of-the-server]__0pyb.5k._.js:367:156
+
+  364 if (!(0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["isDatabaseConfigured"])()) return fallback;
+  365 let row = null;
+  366 try {
+→ 367     row = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].setting.findUnique(
+Can't reach database server at `db.prisma.io:5432`
+
+Please make sure your database server is running at `db.prisma.io:5432`.
+    at <unknown> (src\lib\early-access.ts:48:32)
+    at async getBooleanSetting (src\lib\early-access.ts:48:11)
+    at async releaseEarlyAccessIfExpired (src\lib\early-access.ts:108:39)
+    at async getEarlyAccessState (src\lib\early-access.ts:160:20)
+    at async RootLayout (src\app\layout.tsx:79:46)
+  46 |   let row: { value: string } | null = null;
+  47 |   try {
+> 48 |     row = await prisma.setting.findUnique({
+     |                                ^
+  49 |       where: { key },
+  50 |       select: { value: true },
+  51 |     }); {
+  code: 'P1001',
+  meta: { modelName: 'Setting', database_location: 'db.prisma.io:5432' },
+  clientVersion: '6.15.0'
+}
+Unable to read setting early_access_drop_at Error [PrismaClientKnownRequestError]: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].setting.findUnique()` invocation in
+D:\Brand\Frontend\qutb-ordering\.next\dev\server\chunks\ssr\[root-of-the-server]__0pyb.5k._.js:403:156
+
+  400 if (!(0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["isDatabaseConfigured"])()) return fallback;
+  401 let row = null;
+  402 try {
+→ 403     row = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].setting.findUnique(
+Can't reach database server at `db.prisma.io:5432`
+
+Please make sure your database server is running at `db.prisma.io:5432`.
+    at <unknown> (src\lib\early-access.ts:77:32)
+    at async getStringSetting (src\lib\early-access.ts:77:11)
+    at async releaseEarlyAccessIfExpired (src\lib\early-access.ts:108:39)
+    at async getEarlyAccessState (src\lib\early-access.ts:160:20)
+    at async RootLayout (src\app\layout.tsx:79:46)
+  75 |   let row: { value: string } | null = null;
+  76 |   try {
+> 77 |     row = await prisma.setting.findUnique({
+     |                                ^
+  78 |       where: { key },
+  79 |       select: { value: true },
+  80 |     }); {
+  code: 'P1001',
+  meta: { modelName: 'Setting', database_location: 'db.prisma.io:5432' },
+  clientVersion: '6.15.0'
+}
+Unable to read admin settings Error [PrismaClientKnownRequestError]: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].setting.findUnique()` invocation in
+D:\Brand\Frontend\qutb-ordering\.next\dev\server\chunks\ssr\[root-of-the-server]__0pyb.5k._.js:221:156
+
+  218 async function getAdminSettings() {
+  219     let row = null;
+  220     try {
+→ 221         row = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].setting.findUnique(
+Can't reach database server at `db.prisma.io:5432`
+
+Please make sure your database server is running at `db.prisma.io:5432`.
+    at <unknown> (src\lib\admin-settings.ts:157:32)
+    at async getAdminSettings (src\lib\admin-settings.ts:157:11)
+    at async getPublicStorefrontSettings (src\lib\admin-settings.ts:223:16)
+    at async RootLayout (src\app\layout.tsx:79:46)
+  155 |   let row: { value: string } | null = null;
+  156 |   try {
+> 157 |     row = await prisma.setting.findUnique({
+      |                                ^
+  158 |       where: { key: SETTINGS_KEY },
+  159 |       select: { value: true },
+  160 |     }); {
+  code: 'P1001',
+  meta: { modelName: 'Setting', database_location: 'db.prisma.io:5432' },
+  clientVersion: '6.15.0'
+}
+Unable to read setting early_access_active Error [PrismaClientKnownRequestError]: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].setting.findUnique()` invocation in
+D:\Brand\Frontend\qutb-ordering\.next\dev\server\chunks\ssr\[root-of-the-server]__0pyb.5k._.js:367:156
+
+  364 if (!(0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["isDatabaseConfigured"])()) return fallback;
+  365 let row = null;
+  366 try {
+→ 367     row = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].setting.findUnique(
+Can't reach database server at `db.prisma.io:5432`
+
+Please make sure your database server is running at `db.prisma.io:5432`.
+    at <unknown> (src\lib\early-access.ts:48:32)
+    at async getBooleanSetting (src\lib\early-access.ts:48:11)
+    at async releaseEarlyAccessIfExpired (src\lib\early-access.ts:108:39)
+    at async getEarlyAccessState (src\lib\early-access.ts:160:20)
+    at async RootLayout (src\app\layout.tsx:79:46)
+  46 |   let row: { value: string } | null = null;
+  47 |   try {
+> 48 |     row = await prisma.setting.findUnique({
+     |                                ^
+  49 |       where: { key },
+  50 |       select: { value: true },
+  51 |     }); {
+  code: 'P1001',
+  meta: { modelName: 'Setting', database_location: 'db.prisma.io:5432' },
+  clientVersion: '6.15.0'
+}
+Unable to read setting early_access_drop_at Error [PrismaClientKnownRequestError]: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].setting.findUnique()` invocation in
+D:\Brand\Frontend\qutb-ordering\.next\dev\server\chunks\ssr\[root-of-the-server]__0pyb.5k._.js:403:156
+
+  400 if (!(0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["isDatabaseConfigured"])()) return fallback;
+  401 let row = null;
+  402 try {
+→ 403     row = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].setting.findUnique(
+Can't reach database server at `db.prisma.io:5432`
+
+Please make sure your database server is running at `db.prisma.io:5432`.
+    at <unknown> (src\lib\early-access.ts:77:32)
+    at async getStringSetting (src\lib\early-access.ts:77:11)
+    at async releaseEarlyAccessIfExpired (src\lib\early-access.ts:108:39)
+    at async getEarlyAccessState (src\lib\early-access.ts:160:20)
+    at async RootLayout (src\app\layout.tsx:79:46)
+  75 |   let row: { value: string } | null = null;
+  76 |   try {
+> 77 |     row = await prisma.setting.findUnique({
+     |                                ^
+  78 |       where: { key },
+  79 |       select: { value: true },
+  80 |     }); {
+  code: 'P1001',
+  meta: { modelName: 'Setting', database_location: 'db.prisma.io:5432' },
+  clientVersion: '6.15.0'
+}
+Unable to read setting early_access_active Error [PrismaClientKnownRequestError]: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].setting.findUnique()` invocation in
+D:\Brand\Frontend\qutb-ordering\.next\dev\server\chunks\ssr\[root-of-the-server]__0pyb.5k._.js:367:156
+
+  364 if (!(0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["isDatabaseConfigured"])()) return fallback;
+  365 let row = null;
+  366 try {
+→ 367     row = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].setting.findUnique(
+Can't reach database server at `db.prisma.io:5432`
+
+Please make sure your database server is running at `db.prisma.io:5432`.
+    at <unknown> (src\lib\early-access.ts:48:32)
+    at async getBooleanSetting (src\lib\early-access.ts:48:11)
+    at async releaseEarlyAccessIfExpired (src\lib\early-access.ts:108:39)
+    at async getEarlyAccessState (src\lib\early-access.ts:160:20)
+    at async EarlyAccessPage (src\app\early-access\page.tsx:39:17)
+  46 |   let row: { value: string } | null = null;
+  47 |   try {
+> 48 |     row = await prisma.setting.findUnique({
+     |                                ^
+  49 |       where: { key },
+  50 |       select: { value: true },
+  51 |     }); {
+  code: 'P1001',
+  meta: { modelName: 'Setting', database_location: 'db.prisma.io:5432' },
+  clientVersion: '6.15.0'
+}
+Unable to read setting early_access_drop_at Error [PrismaClientKnownRequestError]: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].setting.findUnique()` invocation in
+D:\Brand\Frontend\qutb-ordering\.next\dev\server\chunks\ssr\[root-of-the-server]__0pyb.5k._.js:403:156
+
+  400 if (!(0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["isDatabaseConfigured"])()) return fallback;
+  401 let row = null;
+  402 try {
+→ 403     row = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].setting.findUnique(
+Can't reach database server at `db.prisma.io:5432`
+
+Please make sure your database server is running at `db.prisma.io:5432`.
+    at <unknown> (src\lib\early-access.ts:77:32)
+    at async getStringSetting (src\lib\early-access.ts:77:11)
+    at async releaseEarlyAccessIfExpired (src\lib\early-access.ts:108:39)
+    at async getEarlyAccessState (src\lib\early-access.ts:160:20)
+    at async EarlyAccessPage (src\app\early-access\page.tsx:39:17)
+  75 |   let row: { value: string } | null = null;
+  76 |   try {
+> 77 |     row = await prisma.setting.findUnique({
+     |                                ^
+  78 |       where: { key },
+  79 |       select: { value: true },
+  80 |     }); {
+  code: 'P1001',
+  meta: { modelName: 'Setting', database_location: 'db.prisma.io:5432' },
+  clientVersion: '6.15.0'
+}
+Unable to read setting early_access_active Error [PrismaClientKnownRequestError]: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].setting.findUnique()` invocation in
+D:\Brand\Frontend\qutb-ordering\.next\dev\server\chunks\ssr\[root-of-the-server]__0pyb.5k._.js:367:156
+
+  364 if (!(0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["isDatabaseConfigured"])()) return fallback;
+  365 let row = null;
+  366 try {
+→ 367     row = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].setting.findUnique(
+Can't reach database server at `db.prisma.io:5432`
+
+Please make sure your database server is running at `db.prisma.io:5432`.
+    at <unknown> (src\lib\early-access.ts:48:32)
+    at async getBooleanSetting (src\lib\early-access.ts:48:11)
+    at async releaseEarlyAccessIfExpired (src\lib\early-access.ts:108:39)
+    at async getEarlyAccessState (src\lib\early-access.ts:160:20)
+    at async EarlyAccessPage (src\app\early-access\page.tsx:39:17)
+  46 |   let row: { value: string } | null = null;
+  47 |   try {
+> 48 |     row = await prisma.setting.findUnique({
+     |                                ^
+  49 |       where: { key },
+  50 |       select: { value: true },
+  51 |     }); {
+  code: 'P1001',
+  meta: { modelName: 'Setting', database_location: 'db.prisma.io:5432' },
+  clientVersion: '6.15.0'
+}
+Unable to read setting early_access_drop_at Error [PrismaClientKnownRequestError]: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].setting.findUnique()` invocation in
+D:\Brand\Frontend\qutb-ordering\.next\dev\server\chunks\ssr\[root-of-the-server]__0pyb.5k._.js:403:156
+
+  400 if (!(0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["isDatabaseConfigured"])()) return fallback;
+  401 let row = null;
+  402 try {
+→ 403     row = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].setting.findUnique(
+Can't reach database server at `db.prisma.io:5432`
+
+Please make sure your database server is running at `db.prisma.io:5432`.
+    at <unknown> (src\lib\early-access.ts:77:32)
+    at async getStringSetting (src\lib\early-access.ts:77:11)
+    at async releaseEarlyAccessIfExpired (src\lib\early-access.ts:108:39)
+    at async getEarlyAccessState (src\lib\early-access.ts:160:20)
+    at async EarlyAccessPage (src\app\early-access\page.tsx:39:17)
+  75 |   let row: { value: string } | null = null;
+  76 |   try {
+> 77 |     row = await prisma.setting.findUnique({
+     |                                ^
+  78 |       where: { key },
+  79 |       select: { value: true },
+  80 |     }); {
+  code: 'P1001',
+  meta: { modelName: 'Setting', database_location: 'db.prisma.io:5432' },
+  clientVersion: '6.15.0'
+}
+Unable to read admin settings Error [PrismaClientKnownRequestError]: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].setting.findUnique()` invocation in
+D:\Brand\Frontend\qutb-ordering\.next\dev\server\chunks\ssr\[root-of-the-server]__0pyb.5k._.js:221:156
+
+  218 async function getAdminSettings() {
+  219     let row = null;
+  220     try {
+→ 221         row = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].setting.findUnique(
+Can't reach database server at `db.prisma.io:5432`
+
+Please make sure your database server is running at `db.prisma.io:5432`.
+    at <unknown> (src\lib\admin-settings.ts:157:32)
+    at async getAdminSettings (src\lib\admin-settings.ts:157:11)
+    at async getPublicStorefrontSettings (src\lib\admin-settings.ts:223:16)
+    at async RootLayout (src\app\layout.tsx:79:46)
+  155 |   let row: { value: string } | null = null;
+  156 |   try {
+> 157 |     row = await prisma.setting.findUnique({
+      |                                ^
+  158 |       where: { key: SETTINGS_KEY },
+  159 |       select: { value: true },
+  160 |     }); {
+  code: 'P1001',
+  meta: { modelName: 'Setting', database_location: 'db.prisma.io:5432' },
+  clientVersion: '6.15.0'
+}
+Unable to read setting early_access_active Error [PrismaClientKnownRequestError]: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].setting.findUnique()` invocation in
+D:\Brand\Frontend\qutb-ordering\.next\dev\server\chunks\ssr\[root-of-the-server]__0pyb.5k._.js:367:156
+
+  364 if (!(0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["isDatabaseConfigured"])()) return fallback;
+  365 let row = null;
+  366 try {
+→ 367     row = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].setting.findUnique(
+Can't reach database server at `db.prisma.io:5432`
+
+Please make sure your database server is running at `db.prisma.io:5432`.
+    at <unknown> (src\lib\early-access.ts:48:32)
+    at async getBooleanSetting (src\lib\early-access.ts:48:11)
+    at async releaseEarlyAccessIfExpired (src\lib\early-access.ts:108:39)
+    at async getEarlyAccessState (src\lib\early-access.ts:160:20)
+    at async RootLayout (src\app\layout.tsx:79:46)
+  46 |   let row: { value: string } | null = null;
+  47 |   try {
+> 48 |     row = await prisma.setting.findUnique({
+     |                                ^
+  49 |       where: { key },
+  50 |       select: { value: true },
+  51 |     }); {
+  code: 'P1001',
+  meta: { modelName: 'Setting', database_location: 'db.prisma.io:5432' },
+  clientVersion: '6.15.0'
+}
+Unable to read setting early_access_drop_at Error [PrismaClientKnownRequestError]: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].setting.findUnique()` invocation in
+D:\Brand\Frontend\qutb-ordering\.next\dev\server\chunks\ssr\[root-of-the-server]__0pyb.5k._.js:403:156
+
+  400 if (!(0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["isDatabaseConfigured"])()) return fallback;
+  401 let row = null;
+  402 try {
+→ 403     row = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].setting.findUnique(
+Can't reach database server at `db.prisma.io:5432`
+
+Please make sure your database server is running at `db.prisma.io:5432`.
+    at <unknown> (src\lib\early-access.ts:77:32)
+    at async getStringSetting (src\lib\early-access.ts:77:11)
+    at async releaseEarlyAccessIfExpired (src\lib\early-access.ts:108:39)
+    at async getEarlyAccessState (src\lib\early-access.ts:160:20)
+    at async RootLayout (src\app\layout.tsx:79:46)
+  75 |   let row: { value: string } | null = null;
+  76 |   try {
+> 77 |     row = await prisma.setting.findUnique({
+     |                                ^
+  78 |       where: { key },
+  79 |       select: { value: true },
+  80 |     }); {
+  code: 'P1001',
+  meta: { modelName: 'Setting', database_location: 'db.prisma.io:5432' },
+  clientVersion: '6.15.0'
+}
+⨯ Error [PrismaClientKnownRequestError]: 
+Invalid `{imported module ./src/lib/prisma.ts}["prisma"].setting.findUnique()` invocation in
+D:\Brand\Frontend\qutb-ordering\.next\dev\server\chunks\ssr\[root-of-the-server]__0o525gz._.js:679:147
+
+  676     }
+  677 }
+  678 async function getSetting(key) {
+→ 679     return {imported module ./src/lib/prisma.ts}["prisma"].setting.findUnique(
+Can't reach database server at `db.prisma.io:5432`
+
+Please make sure your database server is running at `db.prisma.io:5432`.
+    at <unknown> (src\lib\admin-security.ts:287:25)
+    at async getSessionVersion (src\lib\admin-security.ts:362:19)
+    at async requireAdminRole (src\lib\admin-security.ts:506:26)
+    at async AdminPanelLayout (src\app\admin\(panel)\layout.tsx:11:16)
+  285 |
+  286 | async function getSetting(key: string) {
+> 287 |   return prisma.setting.findUnique({ where: { key } });
+      |                         ^
+  288 | }
+  289 |
+  290 | async function upsertSetting(key: string, value: string) { {
+  code: 'P1001',
+  meta: { modelName: 'Setting', database_location: 'db.prisma.io:5432' },
+  clientVersion: '6.15.0',
+  digest: '1139505176'
+}
+[browser] A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+https://react.dev/link/hydration-mismatch
+
+  ...
+    <RootLayout>
+      <html lang="en" suppressHydrationWarning={true} className="h-full ant...">
+        <head>
+        ...
+          <ConsentProvider>
+            <CartProvider>
+              <OuterLayoutRouter>
+              <RouteTracking>
+              <GoogleAnalyticsGate>
+              <MetaPixel>
+              <CookieConsentBanner>
+                <AnimatePresence>
+                  <PresenceChild isPresent={true} initial={undefined} custom={undefined} presenceAffectsLayout={true} ...>
+                    <PopChild pop={false} isPresent={true} anchorX="left" anchorY="top" root={undefined}>
+                      <PopChildMeasure isPresent={true} childRef={{current:null}} sizeRef={{...}} pop={false}>
+                        <motion.div initial={{y:120,opacity:0}} animate={{y:0,opacity:1}} exit={{y:120,opacity:0}} ...>
+                          <div
++                           className="fixed bottom-0 left-0 z-[120] w-full border-t border-[rgba(240,237,232,0.15)] b..."
+-                           className="fixed bottom-0 left-0 z-[120] w-full border-t border-[rgba(240,237,232,0.12)] b..."
+                            style={{opacity:0,transform:"translateY..."}}
+                            ref={function useMotionRef.useCallback}
+                          >
+                            <div
++                             className="mx-auto flex w-full max-w-7xl flex-col gap-4 md:flex-row md:items-center md:j..."
+-                             className="mx-auto flex w-full max-w-7xl flex-col gap-3 md:flex-row md:items-center md:j..."
+                            >
+                              <p
++                               className="text-sm text-[#EDE9E0]/85"
+-                               className="text-xs text-[#EDE9E0]/72 md:text-sm"
+                              >
++                               QUTB uses cookies to personalise your experience and measure our marketing.
+                              <div className="flex gap-3">
+                                <button
+                                  onClick={function acceptAll}
++                                 className="h-11 border border-[#EDE9E0] bg-[#EDE9E0] px-5 text-xs uppercase tracking..."
+-                                 className="h-9 border border-[#EDE9E0] bg-[#EDE9E0] px-4 text-[11px] uppercase track..."
+                                >
++                                 Accept all
+                                <button
+                                  onClick={function ConsentProvider.useMemo[value]}
++                                 className="h-11 border border-[#EDE9E0]/40 px-5 text-xs uppercase tracking-[0.18em] ..."
+-                                 className="h-9 border border-[#EDE9E0]/35 px-4 text-[11px] uppercase tracking-[0.16e..."
+                                >
++                                 Manage preferences
+                ...
+ 
+[browser] Uncaught Error: Hydration failed because the server rendered HTML didn't match the client. As a result this tree will be regenerated on the client. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+https://react.dev/link/hydration-mismatch
+
+  ...
+    <RenderFromTemplateContext>
+      <ScrollAndMaybeFocusHandler cacheNode={{rsc:{...}, ...}}>
+        <InnerScrollAndFocusHandlerOld focusAndScrollRef={{scrollRef:null, ...}} cacheNode={{rsc:{...}, ...}}>
+          <ErrorBoundary errorComponent={undefined} errorStyles={undefined} errorScripts={undefined}>
+            <LoadingBoundary name="early-access/" loading={null}>
+              <HTTPAccessFallbackBoundary notFound={undefined} forbidden={undefined} unauthorized={undefined}>
+                <RedirectBoundary>
+                  <RedirectErrorBoundary router={{...}}>
+                    <InnerLayoutRouter url="/admin/ear..." tree={[...]} params={{}} cacheNode={{rsc:{...}, ...}} ...>
+                      <SegmentViewNode type="page" pagePath="admin/(pan...">
+                        <SegmentTrieNode>
+                        <AdminEarlyAccessPage>
+                          <AdminEarlyAccessClient>
+                            <section>
+                              <p>
+                              <h1>
+                              <p>
+                              <section>
+                              <section
++                               className="mt-8 border border-[#EDE9E0]/15 bg-[#080808] p-4"
+-                               className="mt-4 border border-[#EDE9E0]/15 bg-[#080808] p-4"
+                              >
+                                <div
++                                 className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between"
+-                                 className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between"
+                                >
+                                  <div>
++                                   <p
++                                     className="font-anton text-4xl uppercase leading-none tracking-[12px] md:text-5x..."
++                                   >
+-                                   <div className="flex items-center gap-3">
+                                    ...
+                                  ...
+                                ...
+                      ...
+                    ...
+          ...
+
+    at <unknown> (https://react.dev/link/hydration-mismatch)
+    at <unknown> (chrome-extension://cldmemdnllncchfahbcnjijheaolemfk/assets/js/ff-content.js:13:96352)
+    at d (chrome-extension://cldmemdnllncchfahbcnjijheaolemfk/assets/js/ff-content.js:13:96462)
+    at f (chrome-extension://cldmemdnllncchfahbcnjijheaolemfk/assets/js/ff-content.js:13:96563)
+    at p (<anonymous>)
+    at AdminEarlyAccessClient (src/components/admin/admin-early-access-client.tsx:139:22)
+    at AdminEarlyAccessPage (src\app\admin\(panel)\early-access\page.tsx:4:10)
+  137 |           onToggle={() => updateFlags({ earlyAccessActive: !earlyAccessActive })}
+  138 |           liveCopy="Customers are redirected to /early-access until this is turned off."
+> 139 |           hiddenCopy="/early-access redirects to the homepage."
+      |                      ^
+  140 |         />
+  141 |         <FlagPanel
+  142 |           label="DROP MODE"
+[browser] Uncaught PrismaClientKnownRequestError: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].setting.findUnique()` invocation in
+D:\Brand\Frontend\qutb-ordering\.next\dev\server\chunks\ssr\[root-of-the-server]__0o525gz._.js:679:147
+
+  676     }
+  677 }
+  678 async function getSetting(key) {
+→ 679     return __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].setting.findUnique(
+Can't reach database server at `db.prisma.io:5432`
+
+Please make sure your database server is running at `db.prisma.io:5432`.
+    at <unknown> (src\lib\admin-security.ts:287:25)
+    at getSessionVersion (src\lib\admin-security.ts:362:19)
+    at requireAdminRole (src\lib\admin-security.ts:506:26)
+    at AdminPanelLayout (src\app\admin\(panel)\layout.tsx:11:16)
+  285 |
+  286 | async function getSetting(key: string) {
+> 287 |   return prisma.setting.findUnique({ where: { key } });
+      |                         ^
+  288 | }
+  289 |
+  290 | async function upsertSetting(key: string, value: string) {
+[browser] Uncaught Error: Hydration failed because the server rendered HTML didn't match the client. As a result this tree will be regenerated on the client. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+https://react.dev/link/hydration-mismatch
+
+  ...
+    <RenderFromTemplateContext>
+      <ScrollAndMaybeFocusHandler cacheNode={{rsc:{...}, ...}}>
+        <InnerScrollAndFocusHandlerOld focusAndScrollRef={{scrollRef:null, ...}} cacheNode={{rsc:{...}, ...}}>
+          <ErrorBoundary errorComponent={undefined} errorStyles={undefined} errorScripts={undefined}>
+            <LoadingBoundary name="early-access/" loading={null}>
+              <HTTPAccessFallbackBoundary notFound={undefined} forbidden={undefined} unauthorized={undefined}>
+                <RedirectBoundary>
+                  <RedirectErrorBoundary router={{...}}>
+                    <InnerLayoutRouter url="/admin/ear..." tree={[...]} params={{}} cacheNode={{rsc:{...}, ...}} ...>
+                      <SegmentViewNode type="page" pagePath="admin/(pan...">
+                        <SegmentTrieNode>
+                        <AdminEarlyAccessPage>
+                          <AdminEarlyAccessClient>
+                            <section>
+                              <p>
+                              <h1>
+                              <p>
+                              <section>
+                              <section
++                               className="mt-8 border border-[#EDE9E0]/15 bg-[#080808] p-4"
+-                               className="mt-4 border border-[#EDE9E0]/15 bg-[#080808] p-4"
+                              >
+                                <div
++                                 className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between"
+-                                 className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between"
+                                >
+                                  <div>
++                                   <p
++                                     className="font-anton text-4xl uppercase leading-none tracking-[12px] md:text-5x..."
++                                   >
+-                                   <div className="flex items-center gap-3">
+                                    ...
+                                  ...
+                                ...
+                      ...
+                    ...
+          ...
+
+    at <unknown> (https://react.dev/link/hydration-mismatch)
+    at p (<anonymous>)
+    at AdminEarlyAccessClient (src/components/admin/admin-early-access-client.tsx:139:22)
+    at AdminEarlyAccessPage (src\app\admin\(panel)\early-access\page.tsx:4:10)
+  137 |           onToggle={() => updateFlags({ earlyAccessActive: !earlyAccessActive })}
+  138 |           liveCopy="Customers are redirected to /early-access until this is turned off."
+> 139 |           hiddenCopy="/early-access redirects to the homepage."
+      |                      ^
+  140 |         />
+  141 |         <FlagPanel
+  142 |           label="DROP MODE"
+Unable to read admin settings Error [PrismaClientKnownRequestError]: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].setting.findUnique()` invocation in
+D:\Brand\Frontend\qutb-ordering\.next\dev\server\chunks\ssr\[root-of-the-server]__0pyb.5k._.js:221:156
+
+  218 async function getAdminSettings() {
+  219     let row = null;
+  220     try {
+→ 221         row = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].setting.findUnique(
+Can't reach database server at `db.prisma.io:5432`
+
+Please make sure your database server is running at `db.prisma.io:5432`.
+    at <unknown> (src\lib\admin-settings.ts:157:32)
+    at async getAdminSettings (src\lib\admin-settings.ts:157:11)
+    at async getPublicStorefrontSettings (src\lib\admin-settings.ts:223:16)
+    at async RootLayout (src\app\layout.tsx:79:46)
+  155 |   let row: { value: string } | null = null;
+  156 |   try {
+> 157 |     row = await prisma.setting.findUnique({
+      |                                ^
+  158 |       where: { key: SETTINGS_KEY },
+  159 |       select: { value: true },
+  160 |     }); {
+  code: 'P1001',
+  meta: { modelName: 'Setting', database_location: 'db.prisma.io:5432' },
+  clientVersion: '6.15.0'
+}
+Unable to read setting early_access_active Error [PrismaClientKnownRequestError]: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].setting.findUnique()` invocation in
+D:\Brand\Frontend\qutb-ordering\.next\dev\server\chunks\ssr\[root-of-the-server]__0pyb.5k._.js:367:156
+
+  364 if (!(0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["isDatabaseConfigured"])()) return fallback;
+  365 let row = null;
+  366 try {
+→ 367     row = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].setting.findUnique(
+Can't reach database server at `db.prisma.io:5432`
+
+Please make sure your database server is running at `db.prisma.io:5432`.
+    at <unknown> (src\lib\early-access.ts:48:32)
+    at async getBooleanSetting (src\lib\early-access.ts:48:11)
+    at async releaseEarlyAccessIfExpired (src\lib\early-access.ts:108:39)
+    at async getEarlyAccessState (src\lib\early-access.ts:160:20)
+    at async RootLayout (src\app\layout.tsx:79:46)
+  46 |   let row: { value: string } | null = null;
+  47 |   try {
+> 48 |     row = await prisma.setting.findUnique({
+     |                                ^
+  49 |       where: { key },
+  50 |       select: { value: true },
+  51 |     }); {
+  code: 'P1001',
+  meta: { modelName: 'Setting', database_location: 'db.prisma.io:5432' },
+  clientVersion: '6.15.0'
+}
+Unable to read setting early_access_drop_at Error [PrismaClientKnownRequestError]: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].setting.findUnique()` invocation in
+D:\Brand\Frontend\qutb-ordering\.next\dev\server\chunks\ssr\[root-of-the-server]__0pyb.5k._.js:403:156
+
+  400 if (!(0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["isDatabaseConfigured"])()) return fallback;
+  401 let row = null;
+  402 try {
+→ 403     row = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].setting.findUnique(
+Can't reach database server at `db.prisma.io:5432`
+
+Please make sure your database server is running at `db.prisma.io:5432`.
+    at <unknown> (src\lib\early-access.ts:77:32)
+    at async getStringSetting (src\lib\early-access.ts:77:11)
+    at async releaseEarlyAccessIfExpired (src\lib\early-access.ts:108:39)
+    at async getEarlyAccessState (src\lib\early-access.ts:160:20)
+    at async RootLayout (src\app\layout.tsx:79:46)
+  75 |   let row: { value: string } | null = null;
+  76 |   try {
+> 77 |     row = await prisma.setting.findUnique({
+     |                                ^
+  78 |       where: { key },
+  79 |       select: { value: true },
+  80 |     }); {
+  code: 'P1001',
+  meta: { modelName: 'Setting', database_location: 'db.prisma.io:5432' },
+  clientVersion: '6.15.0'
+}
+⨯ Error [PrismaClientKnownRequestError]: 
+Invalid `{imported module ./src/lib/prisma.ts}["prisma"].setting.findUnique()` invocation in
+D:\Brand\Frontend\qutb-ordering\.next\dev\server\chunks\ssr\[root-of-the-server]__0o525gz._.js:679:147
+
+  676     }
+  677 }
+  678 async function getSetting(key) {
+→ 679     return {imported module ./src/lib/prisma.ts}["prisma"].setting.findUnique(
+Can't reach database server at `db.prisma.io:5432`
+
+Please make sure your database server is running at `db.prisma.io:5432`.
+    at <unknown> (src\lib\admin-security.ts:287:25)
+    at async getSessionVersion (src\lib\admin-security.ts:362:19)
+    at async requireAdminRole (src\lib\admin-security.ts:506:26)
+    at async AdminPanelLayout (src\app\admin\(panel)\layout.tsx:11:16)
+  285 |
+  286 | async function getSetting(key: string) {
+> 287 |   return prisma.setting.findUnique({ where: { key } });
+      |                         ^
+  288 | }
+  289 |
+  290 | async function upsertSetting(key: string, value: string) { {
+  code: 'P1001',
+  meta: { modelName: 'Setting', database_location: 'db.prisma.io:5432' },
+  clientVersion: '6.15.0',
+  digest: '1139505176'
+}
+Unable to read setting early_access_active Error [PrismaClientKnownRequestError]: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].setting.findUnique()` invocation in
+D:\Brand\Frontend\qutb-ordering\.next\dev\server\chunks\ssr\[root-of-the-server]__0pyb.5k._.js:367:156
+
+  364 if (!(0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["isDatabaseConfigured"])()) return fallback;
+  365 let row = null;
+  366 try {
+→ 367     row = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].setting.findUnique(
+Can't reach database server at `db.prisma.io:5432`
+
+Please make sure your database server is running at `db.prisma.io:5432`.
+    at <unknown> (src\lib\early-access.ts:48:32)
+    at async getBooleanSetting (src\lib\early-access.ts:48:11)
+    at async getEarlyAccessState (src\lib\early-access.ts:162:5)
+    at async RootLayout (src\app\layout.tsx:79:46)
+  46 |   let row: { value: string } | null = null;
+  47 |   try {
+> 48 |     row = await prisma.setting.findUnique({
+     |                                ^
+  49 |       where: { key },
+  50 |       select: { value: true },
+  51 |     }); {
+  code: 'P1001',
+  meta: { modelName: 'Setting', database_location: 'db.prisma.io:5432' },
+  clientVersion: '6.15.0'
+}
+Unable to read setting drop_mode_active Error [PrismaClientKnownRequestError]: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].setting.findUnique()` invocation in
+D:\Brand\Frontend\qutb-ordering\.next\dev\server\chunks\ssr\[root-of-the-server]__0pyb.5k._.js:367:156
+
+  364 if (!(0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["isDatabaseConfigured"])()) return fallback;
+  365 let row = null;
+  366 try {
+→ 367     row = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].setting.findUnique(
+Can't reach database server at `db.prisma.io:5432`
+
+Please make sure your database server is running at `db.prisma.io:5432`.
+    at <unknown> (src\lib\early-access.ts:48:32)
+    at async getBooleanSetting (src\lib\early-access.ts:48:11)
+    at async getEarlyAccessState (src\lib\early-access.ts:162:5)
+    at async RootLayout (src\app\layout.tsx:79:46)
+  46 |   let row: { value: string } | null = null;
+  47 |   try {
+> 48 |     row = await prisma.setting.findUnique({
+     |                                ^
+  49 |       where: { key },
+  50 |       select: { value: true },
+  51 |     }); {
+  code: 'P1001',
+  meta: { modelName: 'Setting', database_location: 'db.prisma.io:5432' },
+  clientVersion: '6.15.0'
+}
+Unable to read setting early_access_drop_at Error [PrismaClientKnownRequestError]: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].setting.findUnique()` invocation in
+D:\Brand\Frontend\qutb-ordering\.next\dev\server\chunks\ssr\[root-of-the-server]__0pyb.5k._.js:403:156
+
+  400 if (!(0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["isDatabaseConfigured"])()) return fallback;
+  401 let row = null;
+  402 try {
+→ 403     row = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].setting.findUnique(
+Can't reach database server at `db.prisma.io:5432`
+
+Please make sure your database server is running at `db.prisma.io:5432`.
+    at <unknown> (src\lib\early-access.ts:77:32)
+    at async getStringSetting (src\lib\early-access.ts:77:11)
+    at async getEarlyAccessState (src\lib\early-access.ts:162:5)
+    at async RootLayout (src\app\layout.tsx:79:46)
+  75 |   let row: { value: string } | null = null;
+  76 |   try {
+> 77 |     row = await prisma.setting.findUnique({
+     |                                ^
+  78 |       where: { key },
+  79 |       select: { value: true },
+  80 |     }); {
+  code: 'P1001',
+  meta: { modelName: 'Setting', database_location: 'db.prisma.io:5432' },
+  clientVersion: '6.15.0'
+}
+[browser] Uncaught PrismaClientKnownRequestError: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].setting.findUnique()` invocation in
+D:\Brand\Frontend\qutb-ordering\.next\dev\server\chunks\ssr\[root-of-the-server]__0o525gz._.js:679:147
+
+  676     }
+  677 }
+  678 async function getSetting(key) {
+→ 679     return __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].setting.findUnique(
+Can't reach database server at `db.prisma.io:5432`
+
+Please make sure your database server is running at `db.prisma.io:5432`.
+    at <unknown> (src\lib\admin-security.ts:287:25)
+    at getSessionVersion (src\lib\admin-security.ts:362:19)
+    at requireAdminRole (src\lib\admin-security.ts:506:26)
+    at AdminPanelLayout (src\app\admin\(panel)\layout.tsx:11:16)
+  285 |
+  286 | async function getSetting(key: string) {
+> 287 |   return prisma.setting.findUnique({ where: { key } });
+      |                         ^
+  288 | }
+  289 |
+  290 | async function upsertSetting(key: string, value: string) {

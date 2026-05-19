@@ -70,24 +70,24 @@ export async function GET(request: NextRequest) {
   <title>QUTB Orders — Print</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: 'Segoe UI', Tahoma, Arial, sans-serif; padding: 20px; color: #111; }
+    body { font-family: 'Segoe UI', Tahoma, Arial, sans-serif; padding: 20px; color: #080808; }
     .order-page { page-break-after: always; margin-bottom: 30px; max-width: 700px; margin-left: auto; margin-right: auto; }
     .order-page:last-child { page-break-after: auto; }
-    h1 { font-size: 20px; margin-bottom: 8px; padding-bottom: 6px; border-bottom: 2px solid #333; }
-    h2 { font-size: 13px; margin: 14px 0 6px; color: #555; text-transform: uppercase; letter-spacing: 0.05em; }
+    h1 { font-size: 20px; margin-bottom: 8px; padding-bottom: 6px; border-bottom: 2px solid #555555; }
+    h2 { font-size: 13px; margin: 14px 0 6px; color: #555555; text-transform: uppercase; letter-spacing: 0.05em; }
     p { font-size: 12px; margin: 3px 0; line-height: 1.5; }
-    .label { font-weight: bold; color: #666; display: inline-block; width: 110px; }
+    .label { font-weight: bold; color: #555555; display: inline-block; width: 110px; }
     .address { margin: 6px 0 12px; line-height: 1.6; font-size: 12px; }
     table { width: 100%; border-collapse: collapse; margin-top: 8px; }
-    th { background: #f0f0f0; font-size: 10px; text-transform: uppercase; padding: 6px 4px; text-align: left; border-bottom: 2px solid #ccc; }
-    td { font-size: 11px; padding: 6px 4px; border-bottom: 1px solid #eee; vertical-align: top; }
-    .totals { margin-top: 12px; padding-top: 8px; border-top: 1px solid #ccc; }
+    th { background: #EDE9E0; font-size: 10px; text-transform: uppercase; padding: 6px 4px; text-align: left; border-bottom: 2px solid #555555; }
+    td { font-size: 11px; padding: 6px 4px; border-bottom: 1px solid #EDE9E0; vertical-align: top; }
+    .totals { margin-top: 12px; padding-top: 8px; border-top: 1px solid #555555; }
     .totals-row { display: flex; justify-content: flex-end; gap: 20px; margin: 4px 0; font-size: 12px; }
-    .totals-label { width: 90px; text-align: right; color: #666; }
+    .totals-label { width: 90px; text-align: right; color: #555555; }
     .totals-value { width: 110px; text-align: right; }
-    .grand-total { font-size: 14px; font-weight: bold; margin-top: 6px; padding-top: 6px; border-top: 2px solid #999; }
-    .notes-box { background: #f9f9f9; padding: 8px; margin-top: 8px; border-radius: 3px; font-size: 11px; }
-    .footer { text-align: center; font-size: 9px; color: #999; margin-top: 20px; padding-top: 8px; border-top: 1px solid #ddd; }
+    .grand-total { font-size: 14px; font-weight: bold; margin-top: 6px; padding-top: 6px; border-top: 2px solid #555555; }
+    .notes-box { background: #EDE9E0; padding: 8px; margin-top: 8px; border-radius: 3px; font-size: 11px; }
+    .footer { text-align: center; font-size: 9px; color: #555555; margin-top: 20px; padding-top: 8px; border-top: 1px solid #555555; }
     @media print {
       body { padding: 0; }
       .no-print { display: none; }
@@ -95,8 +95,8 @@ export async function GET(request: NextRequest) {
   </style>
 </head>
 <body>
-  <div class="no-print" style="text-align: center; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid #ddd;">
-    <p style="font-size: 12px; color: #666;">
+  <div class="no-print" style="text-align: center; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid #555555;">
+    <p style="font-size: 12px; color: #555555;">
       Press <strong>Ctrl+P</strong> (or <strong>Cmd+P</strong> on Mac) and select <strong>"Save as PDF"</strong> as the destination.
     </p>
   </div>
@@ -156,7 +156,7 @@ export async function GET(request: NextRequest) {
         `).join("")}
       </tbody>
     </table>
-    ` : `<p style="font-size: 11px; color: #999;">No items in this order</p>`}
+    ` : `<p style="font-size: 11px; color: #555555;">No items in this order</p>`}
 
     <div class="totals">
       <div class="totals-row">

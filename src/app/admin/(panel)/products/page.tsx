@@ -11,13 +11,13 @@ export default async function AdminProductsPage() {
         <h1 className="font-blackletter text-4xl md:text-5xl">PRODUCTS</h1>
         <Link
           href="/admin/products/new"
-          className="border border-[#F0EDE8]/25 px-4 py-2 text-xs uppercase tracking-[0.2em] text-[#F0EDE8]/85 hover:border-[#F0EDE8]/45"
+          className="border border-[#EDE9E0]/25 px-4 py-2 text-xs uppercase tracking-[0.2em] text-[#EDE9E0]/85 hover:border-[#EDE9E0]/45"
         >
           + ADD PRODUCT
         </Link>
       </div>
 
-      <p className="mt-3 text-sm text-[#F0EDE8]/70 md:mt-4">
+      <p className="mt-3 text-sm text-[#EDE9E0]/70 md:mt-4">
         Manage product visibility, featured placement, and stock directly from
         cards.
       </p>

@@ -80,27 +80,27 @@ export default function Setup2FAClient() {
   };
 
   return (
-    <main className="min-h-screen bg-[#080808] px-6 py-16 text-[#F0EDE8]">
+    <main className="min-h-screen bg-[#080808] px-6 py-16 text-[#EDE9E0]">
       <div className="mx-auto w-full max-w-lg">
-        <p className="text-center font-anton text-6xl leading-none tracking-[16px] text-[#ede9e0]">
+        <p className="text-center font-anton text-6xl leading-none tracking-[16px] text-[#EDE9E0]">
           QUTB
         </p>
         <p className="mt-3 text-center text-[12px] font-medium uppercase tracking-[0.3em] text-[#555555]">
           QUTB — ADMIN
         </p>
 
-        <h1 className="mt-10 text-center text-sm uppercase tracking-[0.2em] text-[#F0EDE8]/70">
+        <h1 className="mt-10 text-center text-sm uppercase tracking-[0.2em] text-[#EDE9E0]/70">
           First-time 2FA Setup
         </h1>
 
         {loading ? (
-          <p className="mt-6 text-center text-sm text-[#F0EDE8]/60">
+          <p className="mt-6 text-center text-sm text-[#EDE9E0]/60">
             Preparing setup...
           </p>
         ) : (
           <>
-            <div className="mt-6 border border-[#F0EDE8]/20 bg-[#111111] p-5">
-              <p className="text-xs leading-6 text-[#F0EDE8]/75">
+            <div className="mt-6 border border-[#EDE9E0]/20 bg-[#080808] p-5">
+              <p className="text-xs leading-6 text-[#EDE9E0]/75">
                 Scan this QR with Google Authenticator or Authy, then enter the
                 current 6-digit code to confirm setup.
               </p>
@@ -109,18 +109,21 @@ export default function Setup2FAClient() {
                 <img
                   src={qrDataUrl}
                   alt="2FA QR"
-                  className="mx-auto mt-5 h-[220px] w-[220px] border border-[#F0EDE8]/15 bg-[#0D0D0D] p-2"
+                  width={220}
+                  height={220}
+                  loading="lazy"
+                  className="mx-auto mt-5 h-[220px] w-[220px] border border-[#EDE9E0]/15 bg-[#080808] p-2"
                 />
               ) : null}
 
-              <p className="mt-5 text-xs uppercase tracking-[0.16em] text-[#F0EDE8]/55">
+              <p className="mt-5 text-xs uppercase tracking-[0.16em] text-[#EDE9E0]/55">
                 Manual key
               </p>
-              <p className="mt-2 break-all border border-[#F0EDE8]/15 bg-[#0D0D0D] px-3 py-2 text-xs tracking-[0.12em]">
+              <p className="mt-2 break-all border border-[#EDE9E0]/15 bg-[#080808] px-3 py-2 text-xs tracking-[0.12em]">
                 {manualKey}
               </p>
 
-              <p className="mt-4 text-[11px] text-[#F0EDE8]/50">
+              <p className="mt-4 text-[11px] text-[#EDE9E0]/50">
                 {storageNote}
               </p>
             </div>
@@ -134,12 +137,12 @@ export default function Setup2FAClient() {
                 inputMode="numeric"
                 pattern="[0-9]*"
                 placeholder="Enter 6-digit code"
-                className="h-12 w-full border border-[#F0EDE8]/25 bg-[#111111] px-3 text-center text-lg tracking-[0.3em] focus:border-[#F0EDE8] focus:outline-none"
+                className="h-12 w-full border border-[#EDE9E0]/25 bg-[#080808] px-3 text-center text-lg tracking-[0.3em] focus:border-[#EDE9E0] focus:outline-none"
               />
               <button
                 type="submit"
                 disabled={confirming || code.length !== 6}
-                className="h-12 w-full border border-[#F0EDE8] bg-[#F0EDE8] text-xs font-bold uppercase tracking-[0.2em] text-[#080808] disabled:opacity-60"
+                className="h-12 w-full border border-[#EDE9E0] bg-[#EDE9E0] text-xs font-medium uppercase tracking-[0.2em] text-[#080808] disabled:opacity-60"
               >
                 {confirming ? "VERIFYING..." : "VERIFY SETUP →"}
               </button>

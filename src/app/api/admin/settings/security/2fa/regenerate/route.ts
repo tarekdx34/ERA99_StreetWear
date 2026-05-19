@@ -54,8 +54,8 @@ export async function POST(req: Request) {
     margin: 1,
     width: 220,
     color: {
-      dark: "#000000",
-      light: "#FFFFFF",
+      dark: "#080808",
+      light: "#EDE9E0",
     },
   });
 

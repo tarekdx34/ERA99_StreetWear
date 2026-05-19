@@ -6,10 +6,10 @@ type Props = { data: any };
 
 function MetricCard({ label, value, hint }: { label: string; value: string; hint?: string }) {
   return (
-    <article className="border border-[#F0EDE8]/15 bg-[#111111] p-4">
-      <p className="text-[11px] uppercase tracking-[0.18em] text-[#F0EDE8]/55">{label}</p>
-      <p className="mt-2 text-2xl font-semibold text-[#F0EDE8]">{value}</p>
-      {hint && <p className="mt-2 text-xs uppercase tracking-[0.12em] text-[#F0EDE8]/55">{hint}</p>}
+    <article className="border border-[#EDE9E0]/15 bg-[#080808] p-4">
+      <p className="text-[11px] uppercase tracking-[0.18em] text-[#EDE9E0]/55">{label}</p>
+      <p className="mt-2 text-2xl font-medium text-[#EDE9E0]">{value}</p>
+      {hint && <p className="mt-2 text-xs uppercase tracking-[0.12em] text-[#EDE9E0]/55">{hint}</p>}
     </article>
   );
 }
@@ -43,19 +43,19 @@ export function AdminCartAbandonment({ data }: Props) {
       </div>
 
       {data.recentAbandoners.length > 0 ? (
-        <article className="border border-[#F0EDE8]/15 bg-[#111111] p-4">
-          <p className="text-xs uppercase tracking-[0.16em] text-[#F0EDE8]/65">
+        <article className="border border-[#EDE9E0]/15 bg-[#080808] p-4">
+          <p className="text-xs uppercase tracking-[0.16em] text-[#EDE9E0]/65">
             Recent Abandoners (Last 7 Days) — {data.recentAbandoners.length} users
           </p>
           <div className="mt-4 max-h-96 overflow-y-auto">
             <table className="w-full text-left text-xs">
               <thead>
-                <tr className="border-b border-[#F0EDE8]/15">
-                  <th className="pb-2 uppercase tracking-[0.12em] text-[#F0EDE8]/55">User</th>
-                  <th className="pb-2 uppercase tracking-[0.12em] text-[#F0EDE8]/55">Cart Value</th>
-                  <th className="pb-2 uppercase tracking-[0.12em] text-[#F0EDE8]/55">Items</th>
-                  <th className="pb-2 uppercase tracking-[0.12em] text-[#F0EDE8]/55">Last Active</th>
-                  <th className="pb-2 uppercase tracking-[0.12em] text-[#F0EDE8]/55">Action</th>
+                <tr className="border-b border-[#EDE9E0]/15">
+                  <th className="pb-2 uppercase tracking-[0.12em] text-[#EDE9E0]/55">User</th>
+                  <th className="pb-2 uppercase tracking-[0.12em] text-[#EDE9E0]/55">Cart Value</th>
+                  <th className="pb-2 uppercase tracking-[0.12em] text-[#EDE9E0]/55">Items</th>
+                  <th className="pb-2 uppercase tracking-[0.12em] text-[#EDE9E0]/55">Last Active</th>
+                  <th className="pb-2 uppercase tracking-[0.12em] text-[#EDE9E0]/55">Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -63,11 +63,11 @@ export function AdminCartAbandonment({ data }: Props) {
                   const items = (a.data?.items as Array<any>) || [];
                   const totalItems = items.reduce((s: number, it: any) => s + (it.qty || 1), 0);
                   return (
-                    <tr key={i} className="border-b border-[#F0EDE8]/10">
-                      <td className="py-2 text-[#F0EDE8]/70">{a.userId || `anon...${a.sessionId?.slice(-6) || "unknown"}`}</td>
-                      <td className="py-2 text-[#F0EDE8]/60">{a.value ? `${a.value} EGP` : "-"}</td>
-                      <td className="py-2 text-[#F0EDE8]/60">{totalItems} items</td>
-                      <td className="py-2 text-[#F0EDE8]/50">{new Date(a.createdAt).toLocaleDateString()}</td>
+                    <tr key={i} className="border-b border-[#EDE9E0]/10">
+                      <td className="py-2 text-[#EDE9E0]/70">{a.userId || `anon...${a.sessionId?.slice(-6) || "unknown"}`}</td>
+                      <td className="py-2 text-[#EDE9E0]/60">{a.value ? `${a.value} EGP` : "-"}</td>
+                      <td className="py-2 text-[#EDE9E0]/60">{totalItems} items</td>
+                      <td className="py-2 text-[#EDE9E0]/50">{new Date(a.createdAt).toLocaleDateString()}</td>
                       <td className="py-2">
                         <button
                           disabled={sending === a.userId}
@@ -77,7 +77,7 @@ export function AdminCartAbandonment({ data }: Props) {
                               `Hi! You have ${totalItems} item(s) waiting in your cart. Complete your order now!`
                             )
                           }
-                          className="border border-[#F0EDE8]/30 px-2 py-1 text-[10px] uppercase tracking-[0.12em] text-[#F0EDE8]/70 hover:border-[#F0EDE8]/60 disabled:opacity-40"
+                          className="border border-[#EDE9E0]/30 px-2 py-1 text-[10px] uppercase tracking-[0.12em] text-[#EDE9E0]/70 hover:border-[#EDE9E0]/60 disabled:opacity-40"
                         >
                           {sending === a.userId ? "Sending..." : "Send Reminder"}
                         </button>
@@ -90,8 +90,8 @@ export function AdminCartAbandonment({ data }: Props) {
           </div>
         </article>
       ) : (
-        <article className="border border-[#F0EDE8]/15 bg-[#111111] p-4">
-          <p className="text-sm text-[#F0EDE8]/55">No recent cart abandoners in the last 7 days.</p>
+        <article className="border border-[#EDE9E0]/15 bg-[#080808] p-4">
+          <p className="text-sm text-[#EDE9E0]/55">No recent cart abandoners in the last 7 days.</p>
         </article>
       )}
     </section>

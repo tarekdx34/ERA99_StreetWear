@@ -1,42 +1,57 @@
 import { MetadataRoute } from "next";
+import { getCatalogProducts } from "@/lib/catalog";
+import { isEarlyAccessActive } from "@/lib/early-access";
 
-export default function sitemap(): MetadataRoute.Sitemap {
-  return [
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const [products, earlyAccessActive] = await Promise.all([
+    getCatalogProducts().catch((error) => {
+      console.error("Unable to build product sitemap entries", error);
+      return [];
+    }),
+    isEarlyAccessActive(),
+  ]);
+  const base: MetadataRoute.Sitemap = [
     {
       url: "https://qutb.studio",
       lastModified: new Date(),
-      changeFrequency: "weekly",
-      priority: 1,
-    },
-    {
-      url: "https://qutb.studio/shop",
-      lastModified: new Date(),
       changeFrequency: "daily",
-      priority: 0.9,
+      priority: 1,
     },
     {
       url: "https://qutb.studio/story",
       lastModified: new Date(),
       changeFrequency: "monthly",
-      priority: 0.7,
+      priority: 0.9,
     },
     {
-      url: "https://qutb.studio/track-order",
+      url: "https://qutb.studio/era-99",
+      lastModified: new Date(),
+      changeFrequency: "weekly",
+      priority: 0.9,
+    },
+    {
+      url: "https://qutb.studio/fabric",
       lastModified: new Date(),
       changeFrequency: "monthly",
-      priority: 0.5,
-    },
-    {
-      url: "https://qutb.studio/auth/login",
-      lastModified: new Date(),
-      changeFrequency: "yearly",
-      priority: 0.3,
-    },
-    {
-      url: "https://qutb.studio/auth/register",
-      lastModified: new Date(),
-      changeFrequency: "yearly",
-      priority: 0.3,
+      priority: 0.7,
     },
   ];
+
+  const productEntries = products.map((product) => ({
+    url: `https://qutb.studio/product/${product.slug}`,
+    lastModified: new Date(),
+    changeFrequency: "weekly" as const,
+    priority: 0.8,
+  }));
+
+  if (earlyAccessActive) {
+    base.push({
+      url: "https://qutb.studio/early-access",
+      lastModified: new Date(),
+      changeFrequency: "daily",
+      priority: 0.6,
+    });
+  }
+
+  return [...base, ...productEntries];
 }

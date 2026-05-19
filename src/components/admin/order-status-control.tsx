@@ -2,29 +2,25 @@
 
 import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
+import { getAllowedOrderStatuses } from "@/lib/order-status";
 
 type Props = {
   orderId: number;
   currentStatus: string;
+  paymentMethod: string;
 };
 
-const ORDER_STATUSES = [
-  "pending_confirmation",
-  "pending_payment",
-  "paid",
-  "preparing",
-  "shipped",
-  "delivered",
-  "payment_failed",
-  "cancelled",
-] as const;
-
-export function OrderStatusControl({ orderId, currentStatus }: Props) {
+export function OrderStatusControl({
+  orderId,
+  currentStatus,
+  paymentMethod,
+}: Props) {
   const router = useRouter();
   const [status, setStatus] = useState(currentStatus);
   const [savedStatus, setSavedStatus] = useState(currentStatus);
   const [notice, setNotice] = useState<string | null>(null);
   const [pending, startTransition] = useTransition();
+  const statuses = getAllowedOrderStatuses(paymentMethod);
 
   return (
     <div className="flex items-center gap-2">
@@ -34,9 +30,9 @@ export function OrderStatusControl({ orderId, currentStatus }: Props) {
           setStatus(event.target.value);
           setNotice(null);
         }}
-        className="w-[180px] border border-[#F0EDE8]/20 bg-[#111111] px-2 py-1 text-xs uppercase tracking-[0.08em]"
+        className="w-[180px] border border-[#EDE9E0]/20 bg-[#080808] px-2 py-1 text-xs uppercase tracking-[0.08em]"
       >
-        {ORDER_STATUSES.map((item) => (
+        {statuses.map((item) => (
           <option key={item} value={item}>
             {item.replaceAll("_", " ")}
           </option>
@@ -70,13 +66,13 @@ export function OrderStatusControl({ orderId, currentStatus }: Props) {
             }
           });
         }}
-        className="border border-[#F0EDE8]/25 px-2 py-1 text-[11px] uppercase tracking-[0.16em] transition-colors duration-200 hover:border-[#F0EDE8]/45 disabled:cursor-not-allowed disabled:opacity-40"
+        className="border border-[#EDE9E0]/25 px-2 py-1 text-[11px] uppercase tracking-[0.16em] transition-colors duration-200 hover:border-[#EDE9E0]/45 disabled:cursor-not-allowed disabled:opacity-40"
       >
         {pending ? "Saving..." : "Save"}
       </button>
 
       {notice ? (
-        <span className="text-[11px] text-[#F0EDE8]/60">{notice}</span>
+        <span className="text-[11px] text-[#EDE9E0]/60">{notice}</span>
       ) : null}
     </div>
   );

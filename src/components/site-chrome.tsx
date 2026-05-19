@@ -7,9 +7,7 @@ import { signOut } from "next-auth/react";
 import { useEffect, useMemo, useState } from "react";
 import { useCart } from "@/contexts/cart-context";
 import { useConsent } from "@/contexts/consent-context";
-import { useAnalytics } from "@/hooks/useAnalytics";
-import { useMetaPixel } from "@/hooks/useMetaPixel";
-import { CartIcon, SearchIcon } from "@/components/icons";
+import { CartIcon } from "@/components/icons";
 import { CartDrawer } from "@/components/cart-drawer";
 
 const defaultStripText =
@@ -17,8 +15,8 @@ const defaultStripText =
 
 function Logo() {
   return (
-    <span className="inline-flex items-end text-[34px] leading-none text-ash">
-      <span className="font-anton tracking-[16px] text-[#ede9e0]">QUTB</span>
+    <span className="inline-flex items-end text-[30px] leading-none text-ash sm:text-[34px]">
+      <span className="font-anton tracking-[0.28em] text-[#EDE9E0] sm:tracking-[16px]">QUTB</span>
     </span>
   );
 }
@@ -26,15 +24,15 @@ function Logo() {
 export function SiteChrome({
   showAnnouncementStrip = true,
   announcementText = defaultStripText,
+  dropModeActive = false,
 }: {
   showAnnouncementStrip?: boolean;
   announcementText?: string;
+  dropModeActive?: boolean;
 }) {
   const pathname = usePathname();
   const { count, openCart } = useCart();
   const { resetConsentDecision } = useConsent();
-  const { trackEvent } = useAnalytics();
-  const { track } = useMetaPixel();
 
   const isAbsoluteNav =
     pathname?.startsWith("/shop") ||
@@ -86,24 +84,38 @@ export function SiteChrome({
     <>
       {showAnnouncementStrip ? (
         <div
-          className={`${positionClass} left-0 top-0 z-50 h-8 w-full overflow-hidden border-b border-[#F0EDE8]/15 bg-[#080808]`}
+          className={`${positionClass} left-0 top-0 z-50 h-8 w-full overflow-hidden border-b border-[#EDE9E0]/15 bg-[#080808]`}
         >
-          <motion.div
-            className="flex h-full min-w-max items-center gap-14 px-6 text-[10px] uppercase tracking-[0.2em] text-[#F0EDE8]"
-            animate={{ x: ["0%", "-50%"] }}
-            transition={{ duration: 60, ease: "linear", repeat: Infinity }}
-          >
-            <span>{announcementText}</span>
-            <span>{announcementText}</span>
-            <span>{announcementText}</span>
-          </motion.div>
+          {dropModeActive ? (
+             <motion.div
+              className="flex h-full min-w-max items-center gap-14 px-6 text-[10px] uppercase tracking-[0.2em] text-[#EDE9E0]"
+              animate={{ x: ["0%", "-50%"] }}
+              transition={{ duration: 60, ease: "linear", repeat: Infinity }}
+            >
+              <span><span className="text-[#8B0000]">ERA 99 IS LIVE</span>{". QUTB — DROP 001. QUTB.STUDIO"}</span>
+              <span><span className="text-[#8B0000]">ERA 99 IS LIVE</span>{". QUTB — DROP 001. QUTB.STUDIO"}</span>
+              <span><span className="text-[#8B0000]">ERA 99 IS LIVE</span>{". QUTB — DROP 001. QUTB.STUDIO"}</span>
+              <span><span className="text-[#8B0000]">ERA 99 IS LIVE</span>{". QUTB — DROP 001. QUTB.STUDIO"}</span>
+            </motion.div>
+          ) : (
+            <motion.div
+              className="flex h-full min-w-max items-center gap-14 px-6 text-[10px] uppercase tracking-[0.2em] text-[#EDE9E0]"
+              animate={{ x: ["0%", "-50%"] }}
+              transition={{ duration: 60, ease: "linear", repeat: Infinity }}
+            >
+              <span>{announcementText}</span>
+              <span>{announcementText}</span>
+              <span>{announcementText}</span>
+              <span>{announcementText}</span>
+            </motion.div>
+          )}
         </div>
       ) : null}
 
       <header
         className={`${positionClass} left-0 ${stripHeightClass} z-50 w-full border-b border-ash/20 bg-[#080808]/80 backdrop-blur-sm`}
       >
-        <div className="mx-auto grid h-16 w-full max-w-7xl grid-cols-[auto_1fr_auto] items-center pl-4 pr-2 md:grid-cols-[1fr_auto_1fr] md:px-10">
+        <div className="mx-auto grid h-16 w-full max-w-7xl grid-cols-[minmax(0,auto)_1fr_auto] items-center pl-3 pr-2 md:grid-cols-[1fr_auto_1fr] md:px-10">
           <Link href="/" className="justify-self-start">
             <Logo />
           </Link>
@@ -120,12 +132,6 @@ export function SiteChrome({
             >
               STORY
             </Link>
-            <Link
-              href="/#footer"
-              className="transition-colors hover:text-concrete"
-            >
-              ALEX
-            </Link>
           </nav>
           <div className="ml-auto flex items-center justify-self-end gap-1 text-ash md:gap-2">
             {user ? (
@@ -133,7 +139,7 @@ export function SiteChrome({
                 <button
                   onClick={() => setMenuOpen((v) => !v)}
                   aria-label="Account menu"
-                  className="grid h-8 w-8 place-items-center rounded-full bg-[#1A1A1A] text-xs font-semibold text-[#F0EDE8]"
+                  className="grid h-8 w-8 place-items-center rounded-full bg-[#080808] text-xs font-medium text-[#EDE9E0]"
                 >
                   {initials}
                 </button>
@@ -141,18 +147,18 @@ export function SiteChrome({
                   <motion.div
                     initial={{ opacity: 0, y: -6 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="absolute right-0 top-10 w-40 border border-[#F0EDE8]/20 bg-[#111111] p-2 text-[11px] uppercase tracking-[0.15em]"
+                    className="absolute right-0 top-10 w-40 border border-[#EDE9E0]/20 bg-[#080808] p-2 text-[11px] uppercase tracking-[0.15em]"
                   >
                     <Link
                       href="/account/orders"
-                      className="block px-2 py-2 hover:bg-[#1A1A1A]"
+                      className="block px-2 py-2 hover:bg-[#080808]"
                       onClick={() => setMenuOpen(false)}
                     >
                       My Orders
                     </Link>
                     <Link
                       href="/account"
-                      className="block px-2 py-2 hover:bg-[#1A1A1A]"
+                      className="block px-2 py-2 hover:bg-[#080808]"
                       onClick={() => setMenuOpen(false)}
                     >
                       Account
@@ -163,7 +169,7 @@ export function SiteChrome({
                         setMenuOpen(false);
                         location.href = "/";
                       }}
-                      className="block w-full px-2 py-2 text-left hover:bg-[#1A1A1A]"
+                      className="block w-full px-2 py-2 text-left hover:bg-[#080808]"
                     >
                       Sign Out
                     </button>
@@ -173,24 +179,11 @@ export function SiteChrome({
             ) : (
               <Link
                 href="/auth/login"
-                className="px-1 text-[11px] uppercase tracking-[0.18em] text-[#F0EDE8]/85 md:px-2"
+                className="px-1 text-[11px] uppercase tracking-[0.18em] text-[#EDE9E0]/85 md:px-2"
               >
                 Sign In
               </Link>
             )}
-            <button
-              aria-label="Search"
-              onClick={() => {
-                const term = window.prompt("Search the collection");
-                if (!term || !term.trim()) return;
-                trackEvent("search", { search_term: term.trim() });
-                track("Search", { search_string: term.trim() });
-                window.location.href = `/shop?search=${encodeURIComponent(term.trim())}`;
-              }}
-              className="grid h-10 w-10 place-items-center border border-ash/35 hover:border-ash"
-            >
-              <SearchIcon />
-            </button>
             <button
               aria-label="Cart"
               onClick={openCart}
@@ -198,7 +191,7 @@ export function SiteChrome({
             >
               <CartIcon />
               {count > 0 ? (
-                <span className="absolute -right-2 -top-2 inline-flex min-h-5 min-w-5 items-center justify-center bg-[#1A1A1A] px-1 text-[10px] text-[#F0EDE8]">
+                <span className="absolute -right-2 -top-2 inline-flex min-h-5 min-w-5 items-center justify-center bg-[#080808] px-1 text-[10px] text-[#EDE9E0]">
                   {count}
                 </span>
               ) : null}
@@ -212,7 +205,7 @@ export function SiteChrome({
       <button
         type="button"
         onClick={resetConsentDecision}
-        className="fixed bottom-3 left-3 z-[95] text-[10px] uppercase tracking-[0.16em] text-[#F0EDE8]/65 underline hover:text-[#F0EDE8]"
+        className="fixed bottom-3 left-3 z-[95] text-[10px] uppercase tracking-[0.16em] text-[#EDE9E0]/65 underline hover:text-[#EDE9E0]"
       >
         Cookie Preferences
       </button>

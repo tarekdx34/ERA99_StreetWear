@@ -89,46 +89,46 @@ export default function VerifyEmailTokenPage({
   };
 
   return (
-    <main className="min-h-screen bg-[#080808] text-[#F0EDE8]">
+    <main className="min-h-screen bg-[#080808] text-[#EDE9E0]">
       <div className="mx-auto flex min-h-screen w-full max-w-md flex-col justify-center px-6">
-        <div className="border border-[0.5px] border-[#F0EDE8]/25 bg-[#111111] p-6 text-center">
-          <p className="font-anton text-5xl leading-none tracking-[16px] text-[#ede9e0]">QUTB</p>
+        <div className="border border-[0.5px] border-[#EDE9E0]/25 bg-[#080808] p-6 text-center">
+          <p className="font-anton text-5xl leading-none tracking-[16px] text-[#EDE9E0]">QUTB</p>
           <p className="mt-2 text-[11px] uppercase tracking-[0.3em] text-[#555555]">
             THE AXIS
           </p>
 
           {state === "loading" ? (
-            <p className="mt-8 text-sm text-[#F0EDE8]/80">Verifying your email...</p>
+            <p className="mt-8 text-sm text-[#EDE9E0]/80">Verifying your email...</p>
           ) : null}
 
           {state === "invalid" ? (
             <div className="mt-8 space-y-4">
-              <p className="text-sm text-[#8B0000]">
+              <p className="text-sm text-[#555555]">
                 This verification link is invalid or expired.
               </p>
               <button
                 type="button"
                 onClick={resend}
                 disabled={resending}
-                className="h-12 w-full border border-[0.5px] border-[#F0EDE8] bg-[#F0EDE8] text-xs uppercase tracking-[0.2em] text-[#080808] disabled:opacity-60"
+                className="h-12 w-full border border-[0.5px] border-[#EDE9E0] bg-[#EDE9E0] text-xs uppercase tracking-[0.2em] text-[#080808] disabled:opacity-60"
               >
                 {resending ? "Sending..." : "Resend verification email"}
               </button>
               {resendMessage ? (
-                <p className="text-[12px] text-[#F0EDE8]/70">{resendMessage}</p>
+                <p className="text-[12px] text-[#EDE9E0]/70">{resendMessage}</p>
               ) : null}
             </div>
           ) : null}
 
           {state === "success" ? (
-            <p className="mt-8 text-sm text-[#F0EDE8]/80">
+            <p className="mt-8 text-sm text-[#EDE9E0]/80">
               Email verified. Redirecting...
             </p>
           ) : null}
 
           <Link
             href="/"
-            className="mt-6 inline-block text-xs uppercase tracking-[0.2em] text-[#F0EDE8]/65 underline"
+            className="mt-6 inline-block text-xs uppercase tracking-[0.2em] text-[#EDE9E0]/65 underline"
           >
             Back to storefront
           </Link>

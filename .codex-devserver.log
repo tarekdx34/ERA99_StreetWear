@@ -1,22 +1,286 @@
 
 > qutb@0.1.0 dev
-> next dev -p 3018
+> next dev -p 3250
 
 ▲ Next.js 16.2.3 (Turbopack)
-- Local:         http://localhost:3018
-- Network:       http://169.254.107.7:3018
-- Environments: .env
-✓ Ready in 588ms
+- Local:         http://localhost:3250
+- Network:       http://169.254.107.7:3250
+- Environments: .env.local, .env
+✓ Ready in 590ms
 
- GET /track-order 200 in 3.3s (next.js: 182ms, application-code: 3.1s)
- GET /checkout 200 in 3.4s (next.js: 27ms, application-code: 3.4s)
- GET /product/qutb-boxy-tee-white 404 in 3.3s (next.js: 588ms, application-code: 2.7s)
- GET /shop 200 in 3.7s (next.js: 70ms, application-code: 3.6s)
- GET /nope 404 in 3.5s (next.js: 51ms, application-code: 3.4s)
- GET / 200 in 4.2s (next.js: 269ms, application-code: 4.0s)
- GET /shop 200 in 327ms (next.js: 3ms, application-code: 324ms)
- GET /product/era-99-stamp-tee-003-brown 200 in 624ms (next.js: 5ms, application-code: 619ms)
- GET /product/era-99-stamp-tee-003-brown 200 in 673ms (next.js: 4ms, application-code: 669ms)
- GET /product/era-99-stamp-tee-003-brown 200 in 732ms (next.js: 10ms, application-code: 722ms)
-✓ Compiled in 596ms
+prisma:error 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$middleware$5d$__$28$ecmascript$29$__["prisma"].setting.findUnique()` invocation in
+D:\Brand\Frontend\qutb-ordering\.next\dev\server\chunks\[root-of-the-server]__0~u90y9._.js:289:156
+
+  286 if (!(0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$middleware$5d$__$28$ecmascript$29$__["isDatabaseConfigured"])()) return fallback;
+  287 let row = null;
+  288 try {
+→ 289     row = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$middleware$5d$__$28$ecmascript$29$__["prisma"].setting.findUnique(
+Can't reach database server at `db.prisma.io:5432`
+
+Please make sure your database server is running at `db.prisma.io:5432`.
+prisma:error 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$middleware$5d$__$28$ecmascript$29$__["prisma"].setting.findUnique()` invocation in
+D:\Brand\Frontend\qutb-ordering\.next\dev\server\chunks\[root-of-the-server]__0~u90y9._.js:325:156
+
+  322 if (!(0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$middleware$5d$__$28$ecmascript$29$__["isDatabaseConfigured"])()) return fallback;
+  323 let row = null;
+  324 try {
+→ 325     row = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$middleware$5d$__$28$ecmascript$29$__["prisma"].setting.findUnique(
+Can't reach database server at `db.prisma.io:5432`
+
+Please make sure your database server is running at `db.prisma.io:5432`.
+ GET /early-access 200 in 9.2s (next.js: 363ms, proxy.ts: 543ms, application-code: 8.3s)
+ GET /early-access 200 in 1407ms (next.js: 8ms, proxy.ts: 27ms, application-code: 1372ms)
+ GET /admin/early-access 200 in 11.2s (next.js: 627ms, proxy.ts: 698ms, application-code: 9.8s)
+ GET /api/admin/early-access 200 in 3.7s (next.js: 327ms, proxy.ts: 18ms, application-code: 3.4s)
+ GET /api/admin/early-access 200 in 5.0s (next.js: 202ms, proxy.ts: 18ms, application-code: 4.7s)
+ GET /early-access 200 in 1848ms (next.js: 113ms, proxy.ts: 141ms, application-code: 1594ms)
+ GET /admin/early-access 200 in 3.9s (next.js: 70ms, proxy.ts: 289ms, application-code: 3.6s)
+ GET /early-access 200 in 5.1s (next.js: 22ms, proxy.ts: 121ms, application-code: 5.0s)
+ GET /early-access 200 in 2.2s (next.js: 75ms, proxy.ts: 39ms, application-code: 2.1s)
+ GET /admin/early-access 200 in 3.6s (next.js: 136ms, proxy.ts: 51ms, application-code: 3.4s)
+ GET /early-access 200 in 3.7s (next.js: 10ms, proxy.ts: 16ms, application-code: 3.6s)
+prisma:error 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].setting.findUnique()` invocation in
+D:\Brand\Frontend\qutb-ordering\.next\dev\server\chunks\ssr\[root-of-the-server]__0pyb.5k._.js:221:156
+
+  218 async function getAdminSettings() {
+  219     let row = null;
+  220     try {
+→ 221         row = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].setting.findUnique(
+Can't reach database server at `db.prisma.io:5432`
+
+Please make sure your database server is running at `db.prisma.io:5432`.
+prisma:error 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].setting.findUnique()` invocation in
+D:\Brand\Frontend\qutb-ordering\.next\dev\server\chunks\ssr\[root-of-the-server]__0pyb.5k._.js:367:156
+
+  364 if (!(0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["isDatabaseConfigured"])()) return fallback;
+  365 let row = null;
+  366 try {
+→ 367     row = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].setting.findUnique(
+Can't reach database server at `db.prisma.io:5432`
+
+Please make sure your database server is running at `db.prisma.io:5432`.
+prisma:error 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].setting.findUnique()` invocation in
+D:\Brand\Frontend\qutb-ordering\.next\dev\server\chunks\ssr\[root-of-the-server]__0pyb.5k._.js:403:156
+
+  400 if (!(0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["isDatabaseConfigured"])()) return fallback;
+  401 let row = null;
+  402 try {
+→ 403     row = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].setting.findUnique(
+Can't reach database server at `db.prisma.io:5432`
+
+Please make sure your database server is running at `db.prisma.io:5432`.
+prisma:error 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].setting.findUnique()` invocation in
+D:\Brand\Frontend\qutb-ordering\.next\dev\server\chunks\ssr\[root-of-the-server]__0o525gz._.js:679:147
+
+  676     }
+  677 }
+  678 async function getSetting(key) {
+→ 679     return __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].setting.findUnique(
+Can't reach database server at `db.prisma.io:5432`
+
+Please make sure your database server is running at `db.prisma.io:5432`.
+prisma:error 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].setting.findUnique()` invocation in
+D:\Brand\Frontend\qutb-ordering\.next\dev\server\chunks\ssr\[root-of-the-server]__0pyb.5k._.js:221:156
+
+  218 async function getAdminSettings() {
+  219     let row = null;
+  220     try {
+→ 221         row = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].setting.findUnique(
+Can't reach database server at `db.prisma.io:5432`
+
+Please make sure your database server is running at `db.prisma.io:5432`.
+prisma:error 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].setting.findUnique()` invocation in
+D:\Brand\Frontend\qutb-ordering\.next\dev\server\chunks\ssr\[root-of-the-server]__0pyb.5k._.js:367:156
+
+  364 if (!(0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["isDatabaseConfigured"])()) return fallback;
+  365 let row = null;
+  366 try {
+→ 367     row = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].setting.findUnique(
+Can't reach database server at `db.prisma.io:5432`
+
+Please make sure your database server is running at `db.prisma.io:5432`.
+prisma:error 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].setting.findUnique()` invocation in
+D:\Brand\Frontend\qutb-ordering\.next\dev\server\chunks\ssr\[root-of-the-server]__0pyb.5k._.js:403:156
+
+  400 if (!(0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["isDatabaseConfigured"])()) return fallback;
+  401 let row = null;
+  402 try {
+→ 403     row = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].setting.findUnique(
+Can't reach database server at `db.prisma.io:5432`
+
+Please make sure your database server is running at `db.prisma.io:5432`.
+prisma:error 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].setting.findUnique()` invocation in
+D:\Brand\Frontend\qutb-ordering\.next\dev\server\chunks\ssr\[root-of-the-server]__0pyb.5k._.js:367:156
+
+  364 if (!(0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["isDatabaseConfigured"])()) return fallback;
+  365 let row = null;
+  366 try {
+→ 367     row = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].setting.findUnique(
+Can't reach database server at `db.prisma.io:5432`
+
+Please make sure your database server is running at `db.prisma.io:5432`.
+prisma:error 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].setting.findUnique()` invocation in
+D:\Brand\Frontend\qutb-ordering\.next\dev\server\chunks\ssr\[root-of-the-server]__0pyb.5k._.js:403:156
+
+  400 if (!(0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["isDatabaseConfigured"])()) return fallback;
+  401 let row = null;
+  402 try {
+→ 403     row = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].setting.findUnique(
+Can't reach database server at `db.prisma.io:5432`
+
+Please make sure your database server is running at `db.prisma.io:5432`.
+prisma:error 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].setting.findUnique()` invocation in
+D:\Brand\Frontend\qutb-ordering\.next\dev\server\chunks\ssr\[root-of-the-server]__0pyb.5k._.js:367:156
+
+  364 if (!(0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["isDatabaseConfigured"])()) return fallback;
+  365 let row = null;
+  366 try {
+→ 367     row = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].setting.findUnique(
+Can't reach database server at `db.prisma.io:5432`
+
+Please make sure your database server is running at `db.prisma.io:5432`.
+prisma:error 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].setting.findUnique()` invocation in
+D:\Brand\Frontend\qutb-ordering\.next\dev\server\chunks\ssr\[root-of-the-server]__0pyb.5k._.js:403:156
+
+  400 if (!(0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["isDatabaseConfigured"])()) return fallback;
+  401 let row = null;
+  402 try {
+→ 403     row = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].setting.findUnique(
+Can't reach database server at `db.prisma.io:5432`
+
+Please make sure your database server is running at `db.prisma.io:5432`.
+prisma:error 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].setting.findUnique()` invocation in
+D:\Brand\Frontend\qutb-ordering\.next\dev\server\chunks\ssr\[root-of-the-server]__0pyb.5k._.js:221:156
+
+  218 async function getAdminSettings() {
+  219     let row = null;
+  220     try {
+→ 221         row = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].setting.findUnique(
+Can't reach database server at `db.prisma.io:5432`
+
+Please make sure your database server is running at `db.prisma.io:5432`.
+prisma:error 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].setting.findUnique()` invocation in
+D:\Brand\Frontend\qutb-ordering\.next\dev\server\chunks\ssr\[root-of-the-server]__0pyb.5k._.js:367:156
+
+  364 if (!(0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["isDatabaseConfigured"])()) return fallback;
+  365 let row = null;
+  366 try {
+→ 367     row = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].setting.findUnique(
+Can't reach database server at `db.prisma.io:5432`
+
+Please make sure your database server is running at `db.prisma.io:5432`.
+prisma:error 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].setting.findUnique()` invocation in
+D:\Brand\Frontend\qutb-ordering\.next\dev\server\chunks\ssr\[root-of-the-server]__0pyb.5k._.js:403:156
+
+  400 if (!(0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["isDatabaseConfigured"])()) return fallback;
+  401 let row = null;
+  402 try {
+→ 403     row = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].setting.findUnique(
+Can't reach database server at `db.prisma.io:5432`
+
+Please make sure your database server is running at `db.prisma.io:5432`.
+ GET /admin/early-access 200 in 6.2s (next.js: 52ms, proxy.ts: 18ms, application-code: 6.2s)
+ GET /early-access 200 in 6.1s (next.js: 8ms, proxy.ts: 37ms, application-code: 6.1s)
+ GET /early-access 200 in 6.3s (next.js: 44ms, proxy.ts: 36ms, application-code: 6.2s)
+ GET /early-access 200 in 2.7s (next.js: 4ms, proxy.ts: 13ms, application-code: 2.6s)
+ GET /admin/early-access 200 in 1579ms (next.js: 6ms, proxy.ts: 12ms, application-code: 1560ms)
+ GET /admin/early-access 200 in 1387ms (next.js: 4ms, proxy.ts: 302ms, application-code: 1080ms)
+ GET /api/admin/early-access 200 in 4.4s (next.js: 79ms, proxy.ts: 20ms, application-code: 4.3s)
+ GET /api/admin/early-access 200 in 10.7s (next.js: 115ms, proxy.ts: 18ms, application-code: 10.6s)
+ GET /early-access 200 in 2.1s (next.js: 4ms, proxy.ts: 3ms, application-code: 2.1s)
+ POST /api/early-access 200 in 4.9s (next.js: 323ms, proxy.ts: 8ms, application-code: 4.5s)
+prisma:error 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].setting.findUnique()` invocation in
+D:\Brand\Frontend\qutb-ordering\.next\dev\server\chunks\ssr\[root-of-the-server]__0pyb.5k._.js:221:156
+
+  218 async function getAdminSettings() {
+  219     let row = null;
+  220     try {
+→ 221         row = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].setting.findUnique(
+Can't reach database server at `db.prisma.io:5432`
+
+Please make sure your database server is running at `db.prisma.io:5432`.
+prisma:error 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].setting.findUnique()` invocation in
+D:\Brand\Frontend\qutb-ordering\.next\dev\server\chunks\ssr\[root-of-the-server]__0pyb.5k._.js:367:156
+
+  364 if (!(0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["isDatabaseConfigured"])()) return fallback;
+  365 let row = null;
+  366 try {
+→ 367     row = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].setting.findUnique(
+Can't reach database server at `db.prisma.io:5432`
+
+Please make sure your database server is running at `db.prisma.io:5432`.
+prisma:error 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].setting.findUnique()` invocation in
+D:\Brand\Frontend\qutb-ordering\.next\dev\server\chunks\ssr\[root-of-the-server]__0pyb.5k._.js:403:156
+
+  400 if (!(0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["isDatabaseConfigured"])()) return fallback;
+  401 let row = null;
+  402 try {
+→ 403     row = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].setting.findUnique(
+Can't reach database server at `db.prisma.io:5432`
+
+Please make sure your database server is running at `db.prisma.io:5432`.
+prisma:error 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].setting.findUnique()` invocation in
+D:\Brand\Frontend\qutb-ordering\.next\dev\server\chunks\ssr\[root-of-the-server]__0o525gz._.js:679:147
+
+  676     }
+  677 }
+  678 async function getSetting(key) {
+→ 679     return __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].setting.findUnique(
+Can't reach database server at `db.prisma.io:5432`
+
+Please make sure your database server is running at `db.prisma.io:5432`.
+prisma:error 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].setting.findUnique()` invocation in
+D:\Brand\Frontend\qutb-ordering\.next\dev\server\chunks\ssr\[root-of-the-server]__0pyb.5k._.js:367:156
+
+  364 if (!(0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["isDatabaseConfigured"])()) return fallback;
+  365 let row = null;
+  366 try {
+→ 367     row = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].setting.findUnique(
+Can't reach database server at `db.prisma.io:5432`
+
+Please make sure your database server is running at `db.prisma.io:5432`.
+prisma:error 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].setting.findUnique()` invocation in
+D:\Brand\Frontend\qutb-ordering\.next\dev\server\chunks\ssr\[root-of-the-server]__0pyb.5k._.js:367:156
+
+  364 if (!(0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["isDatabaseConfigured"])()) return fallback;
+  365 let row = null;
+  366 try {
+→ 367     row = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].setting.findUnique(
+Can't reach database server at `db.prisma.io:5432`
+
+Please make sure your database server is running at `db.prisma.io:5432`.
+prisma:error 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].setting.findUnique()` invocation in
+D:\Brand\Frontend\qutb-ordering\.next\dev\server\chunks\ssr\[root-of-the-server]__0pyb.5k._.js:403:156
+
+  400 if (!(0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["isDatabaseConfigured"])()) return fallback;
+  401 let row = null;
+  402 try {
+→ 403     row = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].setting.findUnique(
+Can't reach database server at `db.prisma.io:5432`
+
+Please make sure your database server is running at `db.prisma.io:5432`.
+ GET /admin/early-access 500 in 10.5s (next.js: 3ms, proxy.ts: 5ms, application-code: 10.5s)
 [?25h

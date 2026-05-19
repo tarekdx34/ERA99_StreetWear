@@ -1,6 +1,6 @@
 import type { Product } from "@/lib/products";
 import { products, sizes } from "@/lib/products";
-import { isDatabaseConfigured, prisma } from "@/lib/prisma";
+import { isDatabaseConfigured, markDatabaseUnavailable, prisma } from "@/lib/prisma";
 
 const CATALOG_PRODUCTS_KEY = "catalog_products_v3";
 const CATALOG_COLLECTIONS_KEY = "catalog_collections_v1";
@@ -126,7 +126,7 @@ function seedFromStaticProducts(): CatalogProduct[] {
         {
           id: `${id}-v1`,
           colorName: item.color,
-          colorHex: "#F0EDE8",
+          colorHex: "#EDE9E0",
           images: item.images,
           sizes: sizeMap,
         },
@@ -140,18 +140,30 @@ function seedFromStaticProducts(): CatalogProduct[] {
 async function getCatalogProductsRaw(db: CatalogDbClient = prisma): Promise<CatalogProduct[]> {
   if (!isDatabaseConfigured()) return seedFromStaticProducts();
 
-  const setting = await db.setting.findUnique({
-    where: { key: CATALOG_PRODUCTS_KEY },
-    select: { value: true },
-  });
+  let setting: { value: string } | null = null;
+  try {
+    setting = await db.setting.findUnique({
+      where: { key: CATALOG_PRODUCTS_KEY },
+      select: { value: true },
+    });
+  } catch (error) {
+    markDatabaseUnavailable(error);
+    console.warn("Catalog DB unavailable, using static products.");
+    return seedFromStaticProducts();
+  }
 
   if (!setting?.value) {
     const seeded = seedFromStaticProducts();
-    await db.setting.upsert({
-      where: { key: CATALOG_PRODUCTS_KEY },
-      create: { key: CATALOG_PRODUCTS_KEY, value: JSON.stringify(seeded) },
-      update: { value: JSON.stringify(seeded) },
-    });
+    try {
+      await db.setting.upsert({
+        where: { key: CATALOG_PRODUCTS_KEY },
+        create: { key: CATALOG_PRODUCTS_KEY, value: JSON.stringify(seeded) },
+        update: { value: JSON.stringify(seeded) },
+      });
+    } catch (error) {
+      markDatabaseUnavailable(error);
+      console.warn("Catalog DB unavailable, skipping product seed init.");
+    }
     return seeded;
   }
 
@@ -165,11 +177,16 @@ async function saveCatalogProductsRaw(
   db: CatalogDbClient = prisma,
 ) {
   if (!isDatabaseConfigured()) return;
-  await db.setting.upsert({
-    where: { key: CATALOG_PRODUCTS_KEY },
-    create: { key: CATALOG_PRODUCTS_KEY, value: JSON.stringify(items) },
-    update: { value: JSON.stringify(items) },
-  });
+  try {
+    await db.setting.upsert({
+      where: { key: CATALOG_PRODUCTS_KEY },
+      create: { key: CATALOG_PRODUCTS_KEY, value: JSON.stringify(items) },
+      update: { value: JSON.stringify(items) },
+    });
+  } catch (error) {
+    markDatabaseUnavailable(error);
+    console.warn("Catalog DB unavailable, skipping product save.");
+  }
 }
 
 export function calculateTotalStock(product: CatalogProduct) {
@@ -201,6 +218,13 @@ function toStorefrontProduct(item: CatalogProduct): Product {
     price: item.price,
     compareAtPrice: item.compareAtPrice || undefined,
     shortDescription: item.shortDescription,
+    weightGsm: item.weightGsm || 220,
+    qVariant:
+      item.fitType === "Regular"
+        ? "Q-02 Moving Q"
+        : "Q-01 Industrial Block",
+    fabricStory:
+      "100% COTTON cotton holds the shape. Garment dye and enzyme wash give the surface its lived weight. Science you can feel.",
     images: primaryVariant?.images?.length
       ? primaryVariant.images
       : ["/images/1.jpeg"],
@@ -216,10 +240,17 @@ function toStorefrontProduct(item: CatalogProduct): Product {
 export async function getCatalogCollections(): Promise<string[]> {
   if (!isDatabaseConfigured()) return DEFAULT_COLLECTIONS;
 
-  const setting = await prisma.setting.findUnique({
-    where: { key: CATALOG_COLLECTIONS_KEY },
-    select: { value: true },
-  });
+  let setting: { value: string } | null = null;
+  try {
+    setting = await prisma.setting.findUnique({
+      where: { key: CATALOG_COLLECTIONS_KEY },
+      select: { value: true },
+    });
+  } catch (error) {
+    markDatabaseUnavailable(error);
+    console.warn("Catalog DB unavailable, using default collections.");
+    return DEFAULT_COLLECTIONS;
+  }
 
   const stored = safeJsonParse<string[]>(setting?.value, []);
   const merged = Array.from(
@@ -227,11 +258,16 @@ export async function getCatalogCollections(): Promise<string[]> {
   ).filter(Boolean);
 
   if (!setting?.value) {
-    await prisma.setting.upsert({
-      where: { key: CATALOG_COLLECTIONS_KEY },
-      create: { key: CATALOG_COLLECTIONS_KEY, value: JSON.stringify(merged) },
-      update: { value: JSON.stringify(merged) },
-    });
+    try {
+      await prisma.setting.upsert({
+        where: { key: CATALOG_COLLECTIONS_KEY },
+        create: { key: CATALOG_COLLECTIONS_KEY, value: JSON.stringify(merged) },
+        update: { value: JSON.stringify(merged) },
+      });
+    } catch (error) {
+      markDatabaseUnavailable(error);
+      console.warn("Catalog DB unavailable, skipping collections init.");
+    }
   }
 
   return merged;
@@ -343,7 +379,7 @@ export async function createCatalogProduct(input: Partial<CatalogProduct>) {
     colorVariants:
       input.colorVariants && input.colorVariants.length > 0
         ? input.colorVariants
-        : [buildDefaultVariant(id, "Default", "#F0EDE8")],
+        : [buildDefaultVariant(id, "Default", "#EDE9E0")],
     createdAt: now,
     updatedAt: now,
   };
@@ -465,7 +501,7 @@ export function makeSlugFromName(name: string) {
 export function buildDefaultVariant(
   productId: string,
   colorName = "Default",
-  colorHex = "#F0EDE8",
+  colorHex = "#EDE9E0",
 ): ColorVariant {
   return {
     id: `${productId}-v-${Date.now()}`,

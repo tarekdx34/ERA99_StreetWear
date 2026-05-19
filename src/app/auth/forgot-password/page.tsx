@@ -31,17 +31,17 @@ export default function ForgotPasswordPage() {
   };
 
   return (
-    <main className="min-h-screen bg-[#080808] text-[#F0EDE8]">
+    <main className="min-h-screen bg-[#080808] text-[#EDE9E0]">
       <div className="mx-auto flex min-h-screen w-full max-w-md flex-col justify-center px-6">
-        <div className="border border-[0.5px] border-[#F0EDE8]/25 bg-[#111111] p-6">
+        <div className="border border-[0.5px] border-[#EDE9E0]/25 bg-[#080808] p-6">
           <div className="text-center">
-            <p className="font-anton text-5xl leading-none tracking-[16px] text-[#ede9e0]">QUTB</p>
+            <p className="font-anton text-5xl leading-none tracking-[16px] text-[#EDE9E0]">QUTB</p>
             <p className="mt-2 text-[11px] uppercase tracking-[0.3em] text-[#555555]">
               THE AXIS
             </p>
           </div>
 
-          <h1 className="mt-8 text-center text-xs uppercase tracking-[0.25em] text-[#F0EDE8]/70">
+          <h1 className="mt-8 text-center text-xs uppercase tracking-[0.25em] text-[#EDE9E0]/70">
             Forgot password
           </h1>
 
@@ -52,24 +52,24 @@ export default function ForgotPasswordPage() {
               type="email"
               placeholder="Email"
               autoComplete="email"
-              className="h-12 w-full border border-[0.5px] border-[#F0EDE8]/25 bg-[#0D0D0D] px-3 text-sm font-['Space_Grotesk'] outline-none focus:border-[#F0EDE8]"
+              className="h-12 w-full border border-[0.5px] border-[#EDE9E0]/25 bg-[#080808] px-3 text-sm outline-none focus:border-[#EDE9E0]"
               required
             />
 
             <button
               type="submit"
               disabled={submitting}
-              className="h-12 w-full border border-[0.5px] border-[#F0EDE8] bg-[#F0EDE8] text-sm font-semibold uppercase tracking-[0.22em] text-[#080808] disabled:opacity-60"
+              className="h-12 w-full border border-[0.5px] border-[#EDE9E0] bg-[#EDE9E0] text-sm font-medium uppercase tracking-[0.22em] text-[#080808] disabled:opacity-60"
             >
               {submitting ? "Sending..." : "Send reset link"}
             </button>
           </form>
 
           {message ? (
-            <p className="mt-4 text-[12px] text-[#F0EDE8]/70">{message}</p>
+            <p className="mt-4 text-[12px] text-[#EDE9E0]/70">{message}</p>
           ) : null}
 
-          <p className="mt-6 text-center text-[11px] text-[#F0EDE8]/55">
+          <p className="mt-6 text-center text-[11px] text-[#EDE9E0]/55">
             Back to{" "}
             <Link href="/auth/login" className="underline">
               sign in

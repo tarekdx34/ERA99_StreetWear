@@ -27,25 +27,25 @@ type Props = {
 function EditorToolbar({ editor }: { editor: any }) {
   if (!editor) return null;
   return (
-    <div className="mb-2 flex flex-wrap items-center gap-2 border border-[#F0EDE8]/15 bg-[#0E0E0E] p-2">
+    <div className="mb-2 flex flex-wrap items-center gap-2 border border-[#EDE9E0]/15 bg-[#080808] p-2">
       <button
         type="button"
         onClick={() => editor.chain().focus().toggleBold().run()}
-        className="border border-[#F0EDE8]/20 px-2 py-1 text-xs uppercase"
+        className="border border-[#EDE9E0]/20 px-2 py-1 text-xs uppercase"
       >
         Bold
       </button>
       <button
         type="button"
         onClick={() => editor.chain().focus().toggleItalic().run()}
-        className="border border-[#F0EDE8]/20 px-2 py-1 text-xs uppercase"
+        className="border border-[#EDE9E0]/20 px-2 py-1 text-xs uppercase"
       >
         Italic
       </button>
       <button
         type="button"
         onClick={() => editor.chain().focus().toggleBulletList().run()}
-        className="border border-[#F0EDE8]/20 px-2 py-1 text-xs uppercase"
+        className="border border-[#EDE9E0]/20 px-2 py-1 text-xs uppercase"
       >
         Bullets
       </button>
@@ -338,8 +338,8 @@ export function AdminProductForm({
   return (
     <section className="grid gap-6 lg:grid-cols-[60%_40%]">
       <div className="space-y-6">
-        <div className="border border-[#F0EDE8]/12 bg-[#111111] p-4">
-          <h2 className="text-xs uppercase tracking-[0.2em] text-[#F0EDE8]/65">
+        <div className="border border-[#EDE9E0]/12 bg-[#080808] p-4">
+          <h2 className="text-xs uppercase tracking-[0.2em] text-[#EDE9E0]/65">
             Basic Info
           </h2>
           <div className="mt-3 grid gap-3 md:grid-cols-2">
@@ -355,20 +355,20 @@ export function AdminProductForm({
                   setField("slug", makeSlugFromName(name));
               }}
               placeholder="Product name"
-              className="border border-[#F0EDE8]/20 bg-[#0E0E0E] px-3 py-2"
+              className="border border-[#EDE9E0]/20 bg-[#080808] px-3 py-2"
             />
             <input
               value={product.slug}
               onChange={(e) => setField("slug", e.target.value)}
               placeholder="slug"
-              className="border border-[#F0EDE8]/20 bg-[#0E0E0E] px-3 py-2"
+              className="border border-[#EDE9E0]/20 bg-[#080808] px-3 py-2"
             />
             <input
               type="number"
               value={product.price}
               onChange={(e) => setField("price", Number(e.target.value))}
               placeholder="Price EGP"
-              className="border border-[#F0EDE8]/20 bg-[#0E0E0E] px-3 py-2"
+              className="border border-[#EDE9E0]/20 bg-[#080808] px-3 py-2"
             />
             <input
               type="number"
@@ -380,14 +380,14 @@ export function AdminProductForm({
                 )
               }
               placeholder="Compare-at price"
-              className="border border-[#F0EDE8]/20 bg-[#0E0E0E] px-3 py-2"
+              className="border border-[#EDE9E0]/20 bg-[#080808] px-3 py-2"
             />
           </div>
           <div className="mt-3 grid gap-3 md:grid-cols-[1fr_auto]">
             <select
               value={product.collection}
               onChange={(e) => setField("collection", e.target.value)}
-              className="border border-[#F0EDE8]/20 bg-[#0E0E0E] px-3 py-2"
+              className="border border-[#EDE9E0]/20 bg-[#080808] px-3 py-2"
             >
               {collectionList.map((collection) => (
                 <option key={collection} value={collection}>
@@ -400,12 +400,12 @@ export function AdminProductForm({
                 value={collectionInput}
                 onChange={(e) => setCollectionInput(e.target.value)}
                 placeholder="Add collection"
-                className="border border-[#F0EDE8]/20 bg-[#0E0E0E] px-3 py-2"
+                className="border border-[#EDE9E0]/20 bg-[#080808] px-3 py-2"
               />
               <button
                 type="button"
                 onClick={addCollection}
-                className="border border-[#F0EDE8]/20 px-3 py-2 text-xs uppercase"
+                className="border border-[#EDE9E0]/20 px-3 py-2 text-xs uppercase"
               >
                 Add
               </button>
@@ -416,32 +416,32 @@ export function AdminProductForm({
             maxLength={160}
             onChange={(e) => setField("shortDescription", e.target.value)}
             placeholder="Short description (160 max)"
-            className="mt-3 h-24 w-full border border-[#F0EDE8]/20 bg-[#0E0E0E] px-3 py-2"
+            className="mt-3 h-24 w-full border border-[#EDE9E0]/20 bg-[#080808] px-3 py-2"
           />
-          <p className="mt-1 text-[11px] text-[#F0EDE8]/45">
+          <p className="mt-1 text-[11px] text-[#EDE9E0]/45">
             {product.shortDescription.length}/160
           </p>
 
           <div className="mt-4">
-            <p className="mb-2 text-[11px] uppercase tracking-[0.16em] text-[#F0EDE8]/55">
+            <p className="mb-2 text-[11px] uppercase tracking-[0.16em] text-[#EDE9E0]/55">
               Full Description
             </p>
             <EditorToolbar editor={editor} />
-            <div className="min-h-[180px] border border-[#F0EDE8]/20 bg-[#0E0E0E] p-3">
+            <div className="min-h-[180px] border border-[#EDE9E0]/20 bg-[#080808] p-3">
               <EditorContent editor={editor} />
             </div>
           </div>
         </div>
 
-        <div className="border border-[#F0EDE8]/12 bg-[#111111] p-4">
-          <h2 className="text-xs uppercase tracking-[0.2em] text-[#F0EDE8]/65">
+        <div className="border border-[#EDE9E0]/12 bg-[#080808] p-4">
+          <h2 className="text-xs uppercase tracking-[0.2em] text-[#EDE9E0]/65">
             Images & Variants
           </h2>
           <div className="mt-3 space-y-5">
             {product.colorVariants.map((variant, variantIndex) => (
               <div
                 key={variant.id}
-                className="border border-[#F0EDE8]/12 bg-[#0E0E0E] p-3"
+                className="border border-[#EDE9E0]/12 bg-[#080808] p-3"
               >
                 <div className="grid gap-2 md:grid-cols-[1fr_auto]">
                   <input
@@ -453,7 +453,7 @@ export function AdminProductForm({
                       }))
                     }
                     placeholder="Color name"
-                    className="border border-[#F0EDE8]/20 bg-[#0A0A0A] px-3 py-2"
+                    className="border border-[#EDE9E0]/20 bg-[#080808] px-3 py-2"
                   />
                   <input
                     type="color"
@@ -464,11 +464,11 @@ export function AdminProductForm({
                         colorHex: e.target.value,
                       }))
                     }
-                    className="h-10 w-16 border border-[#F0EDE8]/20 bg-[#0A0A0A]"
+                    className="h-10 w-16 border border-[#EDE9E0]/20 bg-[#080808]"
                   />
                 </div>
 
-                <label className="mt-3 block cursor-pointer border border-dashed border-[#F0EDE8]/25 px-3 py-4 text-center text-xs uppercase tracking-[0.14em] text-[#F0EDE8]/65">
+                <label className="mt-3 block cursor-pointer border border-dashed border-[#EDE9E0]/25 px-3 py-4 text-center text-xs uppercase tracking-[0.14em] text-[#EDE9E0]/65">
                   Drag/drop or click to upload JPG, PNG, WEBP (max 8)
                   <input
                     type="file"
@@ -479,7 +479,7 @@ export function AdminProductForm({
                   />
                 </label>
 
-                <p className="mt-2 text-[11px] uppercase tracking-[0.12em] text-[#F0EDE8]/45">
+                <p className="mt-2 text-[11px] uppercase tracking-[0.12em] text-[#EDE9E0]/45">
                   Reorder images by drag/drop or using arrows.
                 </p>
 
@@ -487,7 +487,7 @@ export function AdminProductForm({
                   {variant.images.map((image, imageIndex) => (
                     <div
                       key={`${variant.id}-${image}`}
-                      className="border border-[#F0EDE8]/15 p-1"
+                      className="border border-[#EDE9E0]/15 p-1"
                       draggable
                       onDragStart={(event) =>
                         event.dataTransfer.setData(
@@ -508,6 +508,9 @@ export function AdminProductForm({
                       <img
                         src={image}
                         alt="Product"
+                        width={128}
+                        height={64}
+                        loading="lazy"
                         className="h-16 w-full object-cover"
                       />
                       <div className="mt-1 grid grid-cols-3 gap-1">
@@ -521,7 +524,7 @@ export function AdminProductForm({
                               imageIndex - 1,
                             )
                           }
-                          className="w-full border border-[#F0EDE8]/20 px-1 py-1 text-[10px] uppercase disabled:opacity-30"
+                          className="w-full border border-[#EDE9E0]/20 px-1 py-1 text-[10px] uppercase disabled:opacity-30"
                         >
                           ↑
                         </button>
@@ -535,7 +538,7 @@ export function AdminProductForm({
                               imageIndex + 1,
                             )
                           }
-                          className="w-full border border-[#F0EDE8]/20 px-1 py-1 text-[10px] uppercase disabled:opacity-30"
+                          className="w-full border border-[#EDE9E0]/20 px-1 py-1 text-[10px] uppercase disabled:opacity-30"
                         >
                           ↓
                         </button>
@@ -548,7 +551,7 @@ export function AdminProductForm({
                           onClick={() =>
                             handleDeleteImage(variantIndex, imageIndex, image)
                           }
-                          className="w-full border border-[#F0EDE8]/20 px-1 py-1 text-[10px] uppercase disabled:opacity-40"
+                          className="w-full border border-[#EDE9E0]/20 px-1 py-1 text-[10px] uppercase disabled:opacity-40"
                         >
                           {deletingImageKey ===
                           `${variantIndex}-${imageIndex}-${image}`
@@ -562,7 +565,7 @@ export function AdminProductForm({
 
                 <div className="mt-3 overflow-x-auto">
                   <table className="min-w-full text-xs">
-                    <thead className="uppercase tracking-[0.12em] text-[#F0EDE8]/55">
+                    <thead className="uppercase tracking-[0.12em] text-[#EDE9E0]/55">
                       <tr>
                         <th className="py-2 text-left">Size</th>
                         <th className="py-2 text-left">Active</th>
@@ -576,7 +579,7 @@ export function AdminProductForm({
                         return (
                           <tr
                             key={`${variant.id}-${size}`}
-                            className="border-t border-[#F0EDE8]/10"
+                            className="border-t border-[#EDE9E0]/10"
                           >
                             <td className="py-2">{size}</td>
                             <td className="py-2">
@@ -616,7 +619,7 @@ export function AdminProductForm({
                                     },
                                   }))
                                 }
-                                className="w-20 border border-[#F0EDE8]/20 bg-[#0A0A0A] px-2 py-1"
+                                className="w-20 border border-[#EDE9E0]/20 bg-[#080808] px-2 py-1"
                               />
                             </td>
                             <td className="py-2">
@@ -634,7 +637,7 @@ export function AdminProductForm({
                                     },
                                   }))
                                 }
-                                className="w-full border border-[#F0EDE8]/20 bg-[#0A0A0A] px-2 py-1"
+                                className="w-full border border-[#EDE9E0]/20 bg-[#080808] px-2 py-1"
                               />
                             </td>
                           </tr>
@@ -657,19 +660,19 @@ export function AdminProductForm({
                   buildDefaultVariant(
                     prev.id,
                     `Color ${prev.colorVariants.length + 1}`,
-                    "#FFFFFF",
+                    "#EDE9E0",
                   ),
                 ],
               }))
             }
-            className="mt-3 border border-[#F0EDE8]/20 px-3 py-2 text-xs uppercase tracking-[0.16em]"
+            className="mt-3 border border-[#EDE9E0]/20 px-3 py-2 text-xs uppercase tracking-[0.16em]"
           >
             + Add Color Variant
           </button>
         </div>
 
-        <div className="border border-[#F0EDE8]/12 bg-[#111111] p-4">
-          <h2 className="text-xs uppercase tracking-[0.2em] text-[#F0EDE8]/65">
+        <div className="border border-[#EDE9E0]/12 bg-[#080808] p-4">
+          <h2 className="text-xs uppercase tracking-[0.2em] text-[#EDE9E0]/65">
             Product Details
           </h2>
           <div className="mt-3 grid gap-3 md:grid-cols-2">
@@ -677,12 +680,12 @@ export function AdminProductForm({
               value={product.fabricComposition}
               onChange={(e) => setField("fabricComposition", e.target.value)}
               placeholder="Fabric composition"
-              className="border border-[#F0EDE8]/20 bg-[#0E0E0E] px-3 py-2"
+              className="border border-[#EDE9E0]/20 bg-[#080808] px-3 py-2"
             />
             <select
               value={product.fitType}
               onChange={(e) => setField("fitType", e.target.value as FitType)}
-              className="border border-[#F0EDE8]/20 bg-[#0E0E0E] px-3 py-2"
+              className="border border-[#EDE9E0]/20 bg-[#080808] px-3 py-2"
             >
               <option value="Boxy">Boxy</option>
               <option value="Oversized">Oversized</option>
@@ -692,7 +695,7 @@ export function AdminProductForm({
               value={product.careInstructions}
               onChange={(e) => setField("careInstructions", e.target.value)}
               placeholder="Care instructions"
-              className="md:col-span-2 h-24 border border-[#F0EDE8]/20 bg-[#0E0E0E] px-3 py-2"
+              className="md:col-span-2 h-24 border border-[#EDE9E0]/20 bg-[#080808] px-3 py-2"
             />
             <input
               type="number"
@@ -701,16 +704,16 @@ export function AdminProductForm({
                 setField("weightGsm", Number(e.target.value || 0))
               }
               placeholder="Weight GSM"
-              className="border border-[#F0EDE8]/20 bg-[#0E0E0E] px-3 py-2"
+              className="border border-[#EDE9E0]/20 bg-[#080808] px-3 py-2"
             />
           </div>
         </div>
 
-        <div className="border border-[#F0EDE8]/12 bg-[#111111] p-4">
+        <div className="border border-[#EDE9E0]/12 bg-[#080808] p-4">
           <button
             type="button"
             onClick={() => setSeoOpen((v) => !v)}
-            className="w-full text-left text-xs uppercase tracking-[0.2em] text-[#F0EDE8]/65"
+            className="w-full text-left text-xs uppercase tracking-[0.2em] text-[#EDE9E0]/65"
           >
             SEO {seoOpen ? "-" : "+"}
           </button>
@@ -720,19 +723,19 @@ export function AdminProductForm({
                 value={product.metaTitle}
                 onChange={(e) => setField("metaTitle", e.target.value)}
                 placeholder="Meta title"
-                className="border border-[#F0EDE8]/20 bg-[#0E0E0E] px-3 py-2"
+                className="border border-[#EDE9E0]/20 bg-[#080808] px-3 py-2"
               />
               <textarea
                 value={product.metaDescription}
                 onChange={(e) => setField("metaDescription", e.target.value)}
                 placeholder="Meta description"
-                className="h-20 border border-[#F0EDE8]/20 bg-[#0E0E0E] px-3 py-2"
+                className="h-20 border border-[#EDE9E0]/20 bg-[#080808] px-3 py-2"
               />
               <input
                 value={product.mainImageAlt}
                 onChange={(e) => setField("mainImageAlt", e.target.value)}
                 placeholder="Main image alt text"
-                className="border border-[#F0EDE8]/20 bg-[#0E0E0E] px-3 py-2"
+                className="border border-[#EDE9E0]/20 bg-[#080808] px-3 py-2"
               />
             </div>
           ) : null}
@@ -740,8 +743,8 @@ export function AdminProductForm({
       </div>
 
       <aside className="space-y-4 lg:sticky lg:top-20 lg:self-start">
-        <div className="border border-[#F0EDE8]/12 bg-[#111111] p-4">
-          <h3 className="text-xs uppercase tracking-[0.2em] text-[#F0EDE8]/65">
+        <div className="border border-[#EDE9E0]/12 bg-[#080808] p-4">
+          <h3 className="text-xs uppercase tracking-[0.2em] text-[#EDE9E0]/65">
             Visibility
           </h3>
           <div className="mt-3 space-y-2 text-xs uppercase tracking-[0.14em]">
@@ -772,8 +775,8 @@ export function AdminProductForm({
           </div>
         </div>
 
-        <div className="border border-[#F0EDE8]/12 bg-[#111111] p-4">
-          <h3 className="text-xs uppercase tracking-[0.2em] text-[#F0EDE8]/65">
+        <div className="border border-[#EDE9E0]/12 bg-[#080808] p-4">
+          <h3 className="text-xs uppercase tracking-[0.2em] text-[#EDE9E0]/65">
             Pricing
           </h3>
           <p className="mt-2 text-lg font-medium">{product.price} EGP</p>
@@ -781,16 +784,16 @@ export function AdminProductForm({
             value={productionCost}
             onChange={(e) => setProductionCost(e.target.value)}
             placeholder="Production cost"
-            className="mt-3 w-full border border-[#F0EDE8]/20 bg-[#0E0E0E] px-3 py-2"
+            className="mt-3 w-full border border-[#EDE9E0]/20 bg-[#080808] px-3 py-2"
           />
-          <p className="mt-2 text-xs uppercase tracking-[0.14em] text-[#F0EDE8]/60">
+          <p className="mt-2 text-xs uppercase tracking-[0.14em] text-[#EDE9E0]/60">
             Gross margin: {margin === null ? "-" : `${margin.toFixed(1)}%`}
           </p>
         </div>
 
         {mode === "edit" && quickStats ? (
-          <div className="border border-[#F0EDE8]/12 bg-[#111111] p-4">
-            <h3 className="text-xs uppercase tracking-[0.2em] text-[#F0EDE8]/65">
+          <div className="border border-[#EDE9E0]/12 bg-[#080808] p-4">
+            <h3 className="text-xs uppercase tracking-[0.2em] text-[#EDE9E0]/65">
               Quick Stats
             </h3>
             <div className="mt-3 space-y-2 text-sm">
@@ -808,13 +811,13 @@ export function AdminProductForm({
           type="button"
           disabled={pending}
           onClick={saveProduct}
-          className="w-full bg-[#F0EDE8] px-4 py-3 text-xs font-semibold uppercase tracking-[0.2em] text-black disabled:opacity-60"
+          className="w-full bg-[#EDE9E0] px-4 py-3 text-xs font-medium uppercase tracking-[0.2em] text-[#080808] disabled:opacity-60"
         >
           {pending ? "Saving..." : "SAVE PRODUCT"}
         </button>
 
         {toast ? (
-          <p className="text-center text-xs uppercase tracking-[0.14em] text-[#F0EDE8]/65">
+          <p className="text-center text-xs uppercase tracking-[0.14em] text-[#EDE9E0]/65">
             {toast}
           </p>
         ) : null}

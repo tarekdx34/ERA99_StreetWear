@@ -47,7 +47,7 @@ export async function generateMetadata({
   return {
     title,
     description:
-      "QUTB. Not a brand. A position. 220 GSM heavyweight boxy essentials built in Alexandria, Egypt.",
+      "QUTB. Not a brand. A position. 100% COTTON heavyweight boxy essentials built in Alexandria, Egypt.",
     openGraph: {
       title,
       images: ["/og-shop.jpg"],

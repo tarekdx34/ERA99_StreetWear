@@ -1,6 +1,6 @@
 "use client";
 
-import { Search, ShoppingBag, Camera } from "lucide-react";
+import { ShoppingBag, Camera } from "lucide-react";
 import { motion } from "framer-motion";
 import { useEffect, useMemo, useState } from "react";
 import { useCart } from "@/contexts/cart-context";
@@ -31,7 +31,7 @@ const instagramTiles = [
 function Logo({ className = "" }) {
   return (
     <span className={className}>
-      <span className="font-anton tracking-[16px] text-[#ede9e0]">QUTB</span>
+      <span className="font-anton tracking-[16px] text-[#EDE9E0]">QUTB</span>
     </span>
   );
 }
@@ -69,27 +69,18 @@ function NavBar() {
       }`}
     >
       <div className="mx-auto grid h-16 max-w-7xl grid-cols-[1fr_auto_1fr] items-center px-6 md:px-10">
-        <a href="#" className="justify-self-start text-[28px] text-ash">
+        <a href="/" className="justify-self-start text-[28px] text-ash">
           <Logo />
         </a>
         <div className="hidden items-center gap-8 text-xs uppercase tracking-[0.15em] text-ash md:flex">
-          <a href="#drop" className="hover:text-ash/70">
+          <a href="/shop" className="hover:text-ash/70">
             SHOP
           </a>
-          <a href="#statement" className="hover:text-ash/70">
+          <a href="/story" className="hover:text-ash/70">
             STORY
-          </a>
-          <a href="#footer" className="hover:text-ash/70">
-            ALEX
           </a>
         </div>
         <div className="flex items-center justify-self-end gap-3 text-ash">
-          <button
-            aria-label="Search"
-            className="border border-ash/30 p-2 hover:border-ash"
-          >
-            <Search size={16} strokeWidth={1.7} />
-          </button>
           <button
             aria-label="Cart"
             className="border border-ash/30 p-2 hover:border-ash"
@@ -108,16 +99,21 @@ function HeroBanner() {
       <img
         src={heroImage}
         alt="QUTB campaign"
+        width={1600}
+        height={1200}
+        loading="eager"
+        fetchPriority="high"
+        srcSet={`${heroImage} 400w, ${heroImage} 800w, ${heroImage} 1200w`}
         className="h-full w-full object-cover"
       />
-      <div className="absolute inset-0 bg-gradient-to-b from-black/30 to-black/60" />
+      <div className="absolute inset-0 bg-gradient-to-b from-[#080808]/30 to-[#080808]/60" />
       <div className="absolute inset-0 flex items-center justify-center px-6 text-center">
         <div>
           <motion.h1
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1.1, ease: "easeOut" }}
-            className="font-anton text-[72px] leading-none tracking-[16px] text-[#ede9e0] drop-shadow-[0_4px_18px_rgba(0,0,0,0.8)] md:text-[120px]"
+            className="font-anton text-[72px] leading-none tracking-[16px] text-[#EDE9E0] drop-shadow-[0_4px_18px_rgba(0,0,0,0.8)] md:text-[120px]"
           >
             <Logo className="inline-flex items-end gap-1" />
           </motion.h1>
@@ -129,10 +125,10 @@ function HeroBanner() {
           </p>
           <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
             <motion.a
-              href="#drop"
+              href="/shop"
               whileHover={{ y: -2 }}
               transition={{ duration: 0.3, ease: "easeOut" }}
-              className="w-[190px] border border-ash bg-ash px-8 py-3 text-xs font-medium uppercase tracking-[0.16em] text-black"
+              className="w-[190px] border border-ash bg-ash px-8 py-3 text-xs font-medium uppercase tracking-[0.16em] text-[#080808]"
             >
               SHOP NOW
             </motion.a>
@@ -163,15 +159,19 @@ function ThreeColumnBanners() {
           <img
             src={panel.image}
             alt={panel.title}
+            width={900}
+            height={1200}
+            loading="lazy"
+            srcSet={`${panel.image} 400w, ${panel.image} 800w, ${panel.image} 1200w`}
             className="h-full w-full object-cover"
           />
-          <div className="absolute inset-0 bg-black/45" />
+          <div className="absolute inset-0 bg-[#080808]/45" />
           <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
             <h3 className="font-sans text-3xl font-medium uppercase tracking-[0.16em] text-ash">
               {panel.title}
             </h3>
             <a
-              href="#drop"
+              href="/shop"
               className="mt-3 text-xs uppercase tracking-[0.2em] text-ash hover:text-ash/70"
             >
               SHOP NOW →
@@ -229,7 +229,7 @@ function ProductCard({ product }: { product: Product }) {
       onHoverEnd={() => setHovered(false)}
       whileHover={{ y: -3 }}
       transition={{ duration: 0.3, ease: "easeOut" }}
-      className="border border-ash/20 bg-[#111111] p-3"
+      className="border border-ash/20 bg-[#080808] p-3"
     >
       <Link href={`/product/${product.slug}`}>
         <div className="relative aspect-[3/4] overflow-hidden border border-ash/15">
@@ -276,13 +276,13 @@ function ProductCard({ product }: { product: Product }) {
         className="overflow-hidden"
       >
         <div className="mt-4 flex items-center gap-2 text-[11px] uppercase tracking-[0.13em] text-ash/85">
-          {["S", "M", "L", "XL", "XXL"].map((size) => (
+          {["XS", "S", "M", "L", "XL", "XXL"].map((size) => (
             <button
               key={size}
               onClick={() => setSelectedSize(size)}
               className={`border px-2 py-1 transition-colors ${
                 selectedSize === size
-                  ? "border-ash bg-ash text-black"
+                  ? "border-ash bg-ash text-[#080808]"
                   : "border-ash/25 hover:border-ash"
               }`}
             >
@@ -292,7 +292,7 @@ function ProductCard({ product }: { product: Product }) {
         </div>
         <button
           onClick={handleAddToCart}
-          className="mt-4 w-full bg-ash px-4 py-3 text-xs font-medium uppercase tracking-[0.15em] text-black hover:bg-ash/90 transition-colors"
+          className="mt-4 w-full bg-ash px-4 py-3 text-xs font-medium uppercase tracking-[0.15em] text-[#080808] hover:bg-ash/90 transition-colors"
         >
           ADD TO CART
         </button>
@@ -396,25 +396,25 @@ function UrgencyStrip() {
   const format = (value: number) => String(value).padStart(2, "0");
 
   return (
-    <section className="w-full bg-[#111111] border-y border-[#1a1a1a] px-6 py-6 text-ash md:px-10">
+    <section className="w-full bg-[#080808] border-y border-[#080808] px-6 py-6 text-ash md:px-10">
       <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 md:flex-row">
         <p className="text-center text-xs uppercase tracking-[0.2em] md:text-left">
           ERA 99 — DROP 001 — LIMITED QUANTITIES — ORDER NOW
         </p>
         <div className="flex items-center gap-2 text-xs uppercase tracking-[0.15em]">
-          <div className="border border-ash/40 bg-black/20 px-2 py-1">
+          <div className="border border-ash/40 bg-[#080808]/20 px-2 py-1">
             {format(time.days)}D
           </div>
           <span>:</span>
-          <div className="border border-ash/40 bg-black/20 px-2 py-1">
+          <div className="border border-ash/40 bg-[#080808]/20 px-2 py-1">
             {format(time.hours)}H
           </div>
           <span>:</span>
-          <div className="border border-ash/40 bg-black/20 px-2 py-1">
+          <div className="border border-ash/40 bg-[#080808]/20 px-2 py-1">
             {format(time.minutes)}M
           </div>
           <span>:</span>
-          <div className="border border-ash/40 bg-black/20 px-2 py-1">
+          <div className="border border-ash/40 bg-[#080808]/20 px-2 py-1">
             {format(time.seconds)}S
           </div>
         </div>
@@ -428,7 +428,7 @@ function InstagramStrip() {
     <section className="bg-ink px-6 py-20 md:px-10">
       <div className="mx-auto max-w-7xl">
         <h2 className="font-anton text-5xl tracking-[16px] text-ash md:text-6xl">
-          @QUTBCO
+          @QUTBSTUDIO
         </h2>
         <div className="mt-8 grid grid-cols-1 gap-3 md:grid-cols-3 xl:grid-cols-6">
           {instagramTiles.map((image, index) => (
@@ -441,10 +441,14 @@ function InstagramStrip() {
               <img
                 src={image}
                 alt={`Instagram tile ${index + 1}`}
+                width={600}
+                height={600}
+                loading="lazy"
+                srcSet={`${image} 400w, ${image} 800w, ${image} 1200w`}
                 className="h-full w-full object-cover"
               />
               <motion.div
-                className="absolute inset-0 flex items-center justify-center bg-black/55"
+                className="absolute inset-0 flex items-center justify-center bg-[#080808]/55"
                 initial={{ opacity: 0 }}
                 whileHover={{ opacity: 1 }}
                 transition={{ duration: 0.3, ease: "easeOut" }}
@@ -455,7 +459,9 @@ function InstagramStrip() {
           ))}
         </div>
         <a
-          href="#"
+          href="https://www.instagram.com/qutbstudio/"
+          target="_blank"
+          rel="noreferrer"
           className="mt-8 inline-block text-sm uppercase tracking-[0.18em] text-ash hover:underline"
         >
           FOLLOW US ON INSTAGRAM →
@@ -488,18 +494,18 @@ function Footer() {
         </div>
 
         <div className="flex flex-col gap-3 text-xs uppercase tracking-[0.16em] text-ash/70 md:items-center">
-          <a href="#drop" className="hover:text-ash">
+          <a href="/shop" className="hover:text-ash">
             SHOP
           </a>
           <Link href="/story" className="hover:text-ash">
             STORY
           </Link>
-          <a href="#" className="hover:text-ash">
+          <a href="mailto:hello@qutb.studio" className="hover:text-ash">
             CONTACT
           </a>
-          <a href="#" className="hover:text-ash">
-            SIZE GUIDE
-          </a>
+          <Link href="/return-policy" className="hover:text-ash">
+            REFUNDS POLICY
+          </Link>
           <button
             type="button"
             onClick={resetConsentDecision}
@@ -522,7 +528,7 @@ function Footer() {
             />
             <button
               type="submit"
-              className="border border-l-0 border-ash/25 bg-ash px-4 py-3 text-xs uppercase tracking-[0.12em] text-black"
+              className="border border-l-0 border-ash/25 bg-ash px-4 py-3 text-xs uppercase tracking-[0.12em] text-[#080808]"
             >
               JOIN
             </button>

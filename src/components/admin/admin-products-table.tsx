@@ -92,9 +92,9 @@ export function AdminProductsTable({ products }: Props) {
   };
 
   return (
-    <div className="mt-6 overflow-x-auto border border-[#F0EDE8]/12 bg-[#111111] p-3">
+    <div className="mt-6 overflow-x-auto border border-[#EDE9E0]/12 bg-[#080808] p-3">
       <table className="min-w-[1200px] text-left text-sm">
-        <thead className="text-[11px] uppercase tracking-[0.18em] text-[#F0EDE8]/50">
+        <thead className="text-[11px] uppercase tracking-[0.18em] text-[#EDE9E0]/50">
           <tr>
             <th className="py-2 pr-3">Product</th>
             <th className="py-2 pr-3">Slug</th>
@@ -110,14 +110,14 @@ export function AdminProductsTable({ products }: Props) {
             return (
               <tr
                 key={item.id}
-                className="border-t border-[#F0EDE8]/10 align-top text-[#F0EDE8]/88"
+                className="border-t border-[#EDE9E0]/10 align-top text-[#EDE9E0]/88"
               >
                 <td className="py-3 pr-3">
                   <p className="font-medium">
                     {item.name} - {item.color}
                   </p>
                 </td>
-                <td className="py-3 pr-3 text-xs text-[#F0EDE8]/60">
+                <td className="py-3 pr-3 text-xs text-[#EDE9E0]/60">
                   {item.slug}
                 </td>
                 <td className="py-3 pr-3">
@@ -126,7 +126,7 @@ export function AdminProductsTable({ products }: Props) {
                     onChange={(event) =>
                       setRow(item.id, { price: event.target.value, notice: "" })
                     }
-                    className="w-28 border border-[#F0EDE8]/20 bg-[#0E0E0E] px-2 py-1"
+                    className="w-28 border border-[#EDE9E0]/20 bg-[#080808] px-2 py-1"
                     inputMode="numeric"
                   />
                 </td>
@@ -150,7 +150,7 @@ export function AdminProductsTable({ products }: Props) {
                     {sizes.map((size) => (
                       <label
                         key={`${item.id}-${size}`}
-                        className="inline-flex items-center gap-1 border border-[#F0EDE8]/15 px-2 py-1 text-[11px] uppercase tracking-[0.12em]"
+                        className="inline-flex items-center gap-1 border border-[#EDE9E0]/15 px-2 py-1 text-[11px] uppercase tracking-[0.12em]"
                       >
                         <input
                           type="checkbox"
@@ -176,12 +176,12 @@ export function AdminProductsTable({ products }: Props) {
                       type="button"
                       disabled={pending}
                       onClick={() => saveRow(item.id)}
-                      className="border border-[#F0EDE8]/25 px-3 py-1 text-[11px] uppercase tracking-[0.14em] hover:border-[#F0EDE8]/45 disabled:cursor-not-allowed disabled:opacity-40"
+                      className="border border-[#EDE9E0]/25 px-3 py-1 text-[11px] uppercase tracking-[0.14em] hover:border-[#EDE9E0]/45 disabled:cursor-not-allowed disabled:opacity-40"
                     >
                       {pending ? "Saving..." : "Save"}
                     </button>
                     {row?.notice ? (
-                      <span className="text-[11px] text-[#F0EDE8]/60">
+                      <span className="text-[11px] text-[#EDE9E0]/60">
                         {row.notice}
                       </span>
                     ) : null}

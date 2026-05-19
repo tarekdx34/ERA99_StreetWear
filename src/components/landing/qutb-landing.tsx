@@ -1,6 +1,6 @@
 "use client";
 
-import { Search, ShoppingBag, Camera } from "lucide-react";
+import { Camera } from "lucide-react";
 import { motion } from "framer-motion";
 import { useEffect, useMemo, useState } from "react";
 import { useCart } from "@/contexts/cart-context";
@@ -31,7 +31,7 @@ const instagramTiles = [
 function Logo({ className = "" }) {
   return (
     <span className={className}>
-      <span className="font-anton tracking-[16px] text-[#ede9e0]">QUTB</span>
+      <span className="font-anton tracking-[0.28em] text-[#EDE9E0] sm:tracking-[16px]">QUTB</span>
     </span>
   );
 }
@@ -69,32 +69,23 @@ function NavBar() {
       }`}
     >
       <div className="mx-auto grid h-16 max-w-7xl grid-cols-[1fr_auto_1fr] items-center px-6 md:px-10">
-        <a href="#" className="justify-self-start text-[28px] text-ash">
+        <Link href="/" className="justify-self-start text-[28px] text-ash">
           <Logo />
-        </a>
+        </Link>
         <div className="hidden items-center gap-8 text-xs uppercase tracking-[0.15em] text-ash md:flex">
-          <a href="#drop" className="hover:text-ash/70">
+          <a href="/shop" className="hover:text-ash/70">
             SHOP
           </a>
-          <a href="#statement" className="hover:text-ash/70">
+          <a href="/story" className="hover:text-ash/70">
             STORY
-          </a>
-          <a href="#footer" className="hover:text-ash/70">
-            ALEX
           </a>
         </div>
         <div className="flex items-center justify-self-end gap-3 text-ash">
           <button
-            aria-label="Search"
-            className="border border-ash/30 p-2 hover:border-ash"
-          >
-            <Search size={16} strokeWidth={1.7} />
-          </button>
-          <button
             aria-label="Cart"
             className="border border-ash/30 p-2 hover:border-ash"
           >
-            <ShoppingBag size={16} strokeWidth={1.7} />
+            BAG
           </button>
         </div>
       </div>
@@ -104,35 +95,40 @@ function NavBar() {
 
 function HeroBanner() {
   return (
-    <section className="relative h-screen w-screen overflow-hidden">
+    <section className="relative h-screen w-full overflow-hidden">
       <img
         src={heroImage}
         alt="QUTB campaign"
+        width={1600}
+        height={1200}
+        loading="eager"
+        fetchPriority="high"
+        srcSet={`${heroImage} 400w, ${heroImage} 800w, ${heroImage} 1200w`}
         className="h-full w-full object-cover"
       />
-      <div className="absolute inset-0 bg-gradient-to-b from-black/30 to-black/60" />
+      <div className="absolute inset-0 bg-gradient-to-b from-[#080808]/30 to-[#080808]/60" />
       <div className="absolute inset-0 flex items-center justify-center px-6 text-center">
         <div>
           <motion.h1
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1.1, ease: "easeOut" }}
-            className="font-anton text-[72px] leading-none tracking-[16px] text-[#ede9e0] drop-shadow-[0_4px_18px_rgba(0,0,0,0.8)] md:text-[120px]"
+            className="font-anton text-[64px] leading-none tracking-[0.16em] text-[#EDE9E0] drop-shadow-[0_4px_18px_rgba(0,0,0,0.8)] sm:tracking-[16px] md:text-[120px]"
           >
             <Logo className="inline-flex items-end gap-1" />
           </motion.h1>
-          <p className="mt-3 text-[12px] font-medium uppercase tracking-[0.4em] text-ash/65 md:text-[13px]">
+          <p className="mt-3 max-w-[20rem] text-[11px] font-medium uppercase leading-relaxed tracking-[0.22em] text-ash/65 md:max-w-none md:text-[13px] md:tracking-[0.4em]">
             Everything revolves. We are the point it revolves around.
           </p>
-          <p className="mt-5 text-[13px] uppercase tracking-[0.3em] text-ash/95 md:text-[16px]">
+          <p className="mt-5 max-w-[20rem] text-[12px] uppercase leading-relaxed tracking-[0.2em] text-ash/95 md:max-w-none md:text-[16px] md:tracking-[0.3em]">
             ERA 99 — DROP 001 — ALEXANDRIA
           </p>
           <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
             <motion.a
-              href="#drop"
+              href="/shop"
               whileHover={{ y: -2 }}
               transition={{ duration: 0.3, ease: "easeOut" }}
-              className="w-[190px] border border-ash bg-ash px-8 py-3 text-xs font-medium uppercase tracking-[0.16em] text-black"
+              className="w-[190px] border border-ash bg-ash px-8 py-3 text-xs font-medium uppercase tracking-[0.16em] text-[#080808]"
             >
               SHOP NOW
             </motion.a>
@@ -163,18 +159,22 @@ function ThreeColumnBanners() {
           <img
             src={panel.image}
             alt={panel.title}
+            width={900}
+            height={1200}
+            loading="lazy"
+            srcSet={`${panel.image} 400w, ${panel.image} 800w, ${panel.image} 1200w`}
             className="h-full w-full object-cover"
           />
-          <div className="absolute inset-0 bg-black/45" />
+          <div className="absolute inset-0 bg-[#080808]/45" />
           <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
             <h3 className="font-sans text-3xl font-medium uppercase tracking-[0.16em] text-ash">
               {panel.title}
             </h3>
             <a
-              href="#drop"
+              href="/shop"
               className="mt-3 text-xs uppercase tracking-[0.2em] text-ash hover:text-ash/70"
             >
-              SHOP NOW →
+              SHOP NOW -&gt;
             </a>
           </div>
         </motion.article>
@@ -204,8 +204,7 @@ function ProductCard({ product }: { product: Product }) {
 
   const handleAddToCart = () => {
     if (!selectedSize) {
-      // Show size selection required notice
-      alert("Please select a size");
+      alert("Select a size.");
       return;
     }
 
@@ -230,7 +229,7 @@ function ProductCard({ product }: { product: Product }) {
       onHoverEnd={() => setHovered(false)}
       whileHover={{ y: -3 }}
       transition={{ duration: 0.3, ease: "easeOut" }}
-      className="border border-ash/20 bg-[#111111] p-3"
+      className="border border-ash/20 bg-[#080808] p-3"
     >
       <Link href={`/product/${product.slug}`}>
         <div className="relative aspect-[3/4] overflow-hidden border border-ash/15">
@@ -277,13 +276,13 @@ function ProductCard({ product }: { product: Product }) {
         className="overflow-hidden"
       >
         <div className="mt-4 flex items-center gap-2 text-[11px] uppercase tracking-[0.13em] text-ash/85">
-          {["S", "M", "L", "XL", "XXL"].map((size) => (
+          {["XS", "S", "M", "L", "XL", "XXL"].map((size) => (
             <button
               key={size}
               onClick={() => setSelectedSize(size)}
               className={`border px-2 py-1 transition-colors ${
                 selectedSize === size
-                  ? "border-ash bg-ash text-black"
+                  ? "border-ash bg-ash text-[#080808]"
                   : "border-ash/25 hover:border-ash"
               }`}
             >
@@ -293,7 +292,7 @@ function ProductCard({ product }: { product: Product }) {
         </div>
         <button
           onClick={handleAddToCart}
-          className="mt-4 w-full bg-ash px-4 py-3 text-xs font-medium uppercase tracking-[0.15em] text-black hover:bg-ash/90 transition-colors"
+          className="mt-4 w-full bg-ash px-4 py-3 text-xs font-medium uppercase tracking-[0.15em] text-[#080808] hover:bg-ash/90 transition-colors"
         >
           ADD TO CART
         </button>
@@ -317,7 +316,7 @@ function ProductGrid({ products }: { products: Product[] }) {
           </div>
           <Link
             href="/shop"
-            className="inline-flex items-center gap-2 border border-ash bg-ash px-8 py-3 text-xs font-medium uppercase tracking-[0.16em] text-black transition-all duration-300 hover:bg-transparent hover:text-ash"
+            className="inline-flex items-center gap-2 border border-ash bg-ash px-8 py-3 text-xs font-medium uppercase tracking-[0.16em] text-[#080808] transition-all duration-300 hover:bg-transparent hover:text-ash"
           >
             ENTER SHOP
           </Link>
@@ -407,25 +406,25 @@ function UrgencyStrip() {
   const format = (value: number) => String(value).padStart(2, "0");
 
   return (
-    <section className="w-full bg-[#111111] border-y border-[#1a1a1a] px-6 py-6 text-ash md:px-10">
+    <section className="w-full bg-[#080808] border-y border-[#080808] px-6 py-6 text-ash md:px-10">
       <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 md:flex-row">
         <p className="text-center text-xs uppercase tracking-[0.2em] md:text-left">
-          ERA 99 — DROP 001 — LIMITED QUANTITIES — ORDER NOW
+          ERA 99 — DROP 001 — LIMITED QUANTITIES — qutb.studio
         </p>
         <div className="flex items-center gap-2 text-xs uppercase tracking-[0.15em]">
-          <div className="border border-ash/40 bg-black/20 px-2 py-1">
+          <div className="border border-ash/40 bg-[#080808]/20 px-2 py-1">
             {format(time.days)}D
           </div>
           <span>:</span>
-          <div className="border border-ash/40 bg-black/20 px-2 py-1">
+          <div className="border border-ash/40 bg-[#080808]/20 px-2 py-1">
             {format(time.hours)}H
           </div>
           <span>:</span>
-          <div className="border border-ash/40 bg-black/20 px-2 py-1">
+          <div className="border border-ash/40 bg-[#080808]/20 px-2 py-1">
             {format(time.minutes)}M
           </div>
           <span>:</span>
-          <div className="border border-ash/40 bg-black/20 px-2 py-1">
+          <div className="border border-ash/40 bg-[#080808]/20 px-2 py-1">
             {format(time.seconds)}S
           </div>
         </div>
@@ -439,7 +438,7 @@ function InstagramStrip() {
     <section className="bg-ink px-6 py-20 md:px-10">
       <div className="mx-auto max-w-7xl">
         <h2 className="font-anton text-5xl tracking-[16px] text-ash md:text-6xl">
-          @QUTBCO
+          @QUTBSTUDIO
         </h2>
         <div className="mt-8 grid grid-cols-1 gap-3 md:grid-cols-3 xl:grid-cols-6">
           {instagramTiles.map((image, index) => (
@@ -452,10 +451,14 @@ function InstagramStrip() {
               <img
                 src={image}
                 alt={`Instagram tile ${index + 1}`}
+                width={600}
+                height={600}
+                loading="lazy"
+                srcSet={`${image} 400w, ${image} 800w, ${image} 1200w`}
                 className="h-full w-full object-cover"
               />
               <motion.div
-                className="absolute inset-0 flex items-center justify-center bg-black/55"
+                className="absolute inset-0 flex items-center justify-center bg-[#080808]/55"
                 initial={{ opacity: 0 }}
                 whileHover={{ opacity: 1 }}
                 transition={{ duration: 0.3, ease: "easeOut" }}
@@ -466,7 +469,9 @@ function InstagramStrip() {
           ))}
         </div>
         <a
-          href="#"
+          href="https://www.instagram.com/qutbstudio/"
+          target="_blank"
+          rel="noreferrer"
           className="mt-8 inline-block text-sm uppercase tracking-[0.18em] text-ash hover:underline"
         >
           FOLLOW US ON INSTAGRAM →
@@ -478,6 +483,26 @@ function InstagramStrip() {
 
 function Footer() {
   const { resetConsentDecision } = useConsent();
+  const [email, setEmail] = useState("");
+  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+
+  const handleJoin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email) return;
+    try {
+      setStatus("loading");
+      const res = await fetch("/api/early-access", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, source: "join-the-drop" }),
+      });
+      if (!res.ok) throw new Error();
+      setStatus("success");
+      setEmail("");
+    } catch {
+      setStatus("error");
+    }
+  };
 
   return (
     <footer id="footer" className="bg-ink px-6 pb-8 pt-16 md:px-10">
@@ -499,18 +524,18 @@ function Footer() {
         </div>
 
         <div className="flex flex-col gap-3 text-xs uppercase tracking-[0.16em] text-ash/70 md:items-center">
-          <a href="#drop" className="hover:text-ash">
+          <a href="/shop" className="hover:text-ash">
             SHOP
           </a>
           <Link href="/story" className="hover:text-ash">
             STORY
           </Link>
-          <a href="#" className="hover:text-ash">
+          <a href="mailto:hello@qutb.studio" className="hover:text-ash">
             CONTACT
           </a>
-          <a href="#" className="hover:text-ash">
-            SIZE GUIDE
-          </a>
+          <Link href="/return-policy" className="hover:text-ash">
+            REFUNDS POLICY
+          </Link>
           <button
             type="button"
             onClick={resetConsentDecision}
@@ -524,20 +549,40 @@ function Footer() {
           <p className="text-xs uppercase tracking-[0.2em] text-ash/70">
             JOIN THE DROP
           </p>
-          <form className="mt-4 flex w-full max-w-sm">
-            <input
-              type="email"
-              required
-              placeholder="EMAIL ADDRESS"
-              className="w-full border border-ash/25 bg-transparent px-3 py-3 text-xs uppercase tracking-[0.12em] text-ash placeholder:text-ash/40 focus:border-ash focus:outline-none"
-            />
-            <button
-              type="submit"
-              className="border border-l-0 border-ash/25 bg-ash px-4 py-3 text-xs uppercase tracking-[0.12em] text-black"
-            >
-              JOIN
-            </button>
-          </form>
+          {status === "success" ? (
+            <p className="mt-4 text-xs font-medium uppercase tracking-[0.12em] text-ash">
+              ADDED TO THE LIST
+            </p>
+          ) : (
+            <form onSubmit={handleJoin} className="mt-4 flex w-full max-w-sm flex-col">
+              <div className="flex w-full">
+                <input
+                  type="email"
+                  required
+                  value={email}
+                  onChange={(e) => {
+                    setEmail(e.target.value);
+                    if (status === "error") setStatus("idle");
+                  }}
+                  placeholder="EMAIL ADDRESS"
+                  className="w-full border border-ash/25 bg-transparent px-3 py-3 text-xs uppercase tracking-[0.12em] text-ash placeholder:text-ash/40 focus:border-ash focus:outline-none"
+                  disabled={status === "loading"}
+                />
+                <button
+                  type="submit"
+                  disabled={status === "loading"}
+                  className="border border-l-0 border-ash/25 bg-ash px-4 py-3 text-xs uppercase tracking-[0.12em] text-[#080808] disabled:bg-ash/50"
+                >
+                  {status === "loading" ? "..." : "JOIN"}
+                </button>
+              </div>
+              {status === "error" && (
+                <p className="mt-2 text-[10px] uppercase text-red-500">
+                  SOMETHING WENT WRONG. TRY AGAIN.
+                </p>
+              )}
+            </form>
+          )}
         </div>
       </div>
       <p className="mt-12 text-center text-[10px] uppercase tracking-[0.15em] text-ash/45">
@@ -549,7 +594,7 @@ function Footer() {
 
 export function QutbLanding({ products }: { products: Product[] }) {
   return (
-    <div className="bg-ink text-ash">
+    <div className="overflow-x-hidden bg-ink text-ash">
       {/* AnnouncementStrip and Nav are provided by SiteChrome in layout */}
       <main>
         <HeroBanner />

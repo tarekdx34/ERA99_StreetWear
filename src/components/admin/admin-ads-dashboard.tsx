@@ -13,7 +13,7 @@ import {
 
 type Props = { data: any };
 
-const PRIMARY = "#F0EDE8";
+const PRIMARY = "#EDE9E0";
 
 function formatEGP(value: number) {
   return new Intl.NumberFormat("en-EG", {
@@ -25,10 +25,10 @@ function formatEGP(value: number) {
 
 function MetricCard({ label, value, hint }: { label: string; value: string; hint?: string }) {
   return (
-    <article className="border border-[#F0EDE8]/15 bg-[#111111] p-4">
-      <p className="text-[11px] uppercase tracking-[0.18em] text-[#F0EDE8]/55">{label}</p>
-      <p className="mt-2 text-2xl font-semibold text-[#F0EDE8]">{value}</p>
-      {hint && <p className="mt-2 text-xs uppercase tracking-[0.12em] text-[#F0EDE8]/55">{hint}</p>}
+    <article className="border border-[#EDE9E0]/15 bg-[#080808] p-4">
+      <p className="text-[11px] uppercase tracking-[0.18em] text-[#EDE9E0]/55">{label}</p>
+      <p className="mt-2 text-2xl font-medium text-[#EDE9E0]">{value}</p>
+      {hint && <p className="mt-2 text-xs uppercase tracking-[0.12em] text-[#EDE9E0]/55">{hint}</p>}
     </article>
   );
 }
@@ -47,15 +47,15 @@ export function AdminAdsDashboard({ data }: Props) {
         <MetricCard label="Ad Revenue" value={formatEGP(data.attribution.totalAdRevenue)} />
       </div>
 
-      <article className="border border-[#F0EDE8]/15 bg-[#111111] p-4">
-        <p className="text-xs uppercase tracking-[0.16em] text-[#F0EDE8]/65">Meta Events by Day (30 Days)</p>
-        <div className="h-[280px]">
-          <ResponsiveContainer width="100%" height="100%">
+      <article className="min-w-0 border border-[#EDE9E0]/15 bg-[#080808] p-4">
+        <p className="text-xs uppercase tracking-[0.16em] text-[#EDE9E0]/65">Meta Events by Day (30 Days)</p>
+        <div className="h-[280px] min-w-0">
+          <ResponsiveContainer width="100%" height={280} minWidth={0}>
             <BarChart data={data.meta.dailyMeta}>
-              <CartesianGrid stroke="#2b2b2b" vertical={false} />
+              <CartesianGrid stroke="#555555" vertical={false} />
               <XAxis dataKey="label" stroke={PRIMARY} tick={{ fill: PRIMARY, fontSize: 10 }} />
               <YAxis stroke={PRIMARY} tick={{ fill: PRIMARY, fontSize: 10 }} />
-              <Tooltip contentStyle={{ background: "#0d0d0d", border: "1px solid #2a2a2a", color: PRIMARY }} />
+              <Tooltip contentStyle={{ background: "#080808", border: "1px solid #555555", color: PRIMARY }} />
               <Legend wrapperStyle={{ color: PRIMARY, fontSize: 11 }} />
               <Bar dataKey="total" stackId="a" fill={PRIMARY} name="Total" />
             </BarChart>
@@ -64,36 +64,36 @@ export function AdminAdsDashboard({ data }: Props) {
       </article>
 
       <div className="grid gap-4 xl:grid-cols-2">
-        <article className="border border-[#F0EDE8]/15 bg-[#111111] p-4">
-          <p className="text-xs uppercase tracking-[0.16em] text-[#F0EDE8]/65">Event Breakdown (30 Days)</p>
+        <article className="min-w-0 border border-[#EDE9E0]/15 bg-[#080808] p-4">
+          <p className="text-xs uppercase tracking-[0.16em] text-[#EDE9E0]/65">Event Breakdown (30 Days)</p>
           <div className="mt-3 space-y-2 text-sm">
             {data.meta.breakdown.map((item: any) => (
-              <div key={item.event} className="flex items-center justify-between border-b border-[#F0EDE8]/10 pb-2">
-                <span className="uppercase tracking-[0.12em] text-[#F0EDE8]/65">{item.event}</span>
+              <div key={item.event} className="flex items-center justify-between border-b border-[#EDE9E0]/10 pb-2">
+                <span className="uppercase tracking-[0.12em] text-[#EDE9E0]/65">{item.event}</span>
                 <span>{item.count}</span>
               </div>
             ))}
             <div className="flex items-center justify-between pt-2">
-              <span className="uppercase tracking-[0.12em] text-[#F0EDE8]/65">Success / Fail</span>
+              <span className="uppercase tracking-[0.12em] text-[#EDE9E0]/65">Success / Fail</span>
               <span>
-                <span className="text-green-400">{data.meta.successCount}</span> /{" "}
-                <span className="text-red-400">{data.meta.failCount}</span>
+                <span className="text-[#EDE9E0]">{data.meta.successCount}</span> /{" "}
+                <span className="text-[#555555]">{data.meta.failCount}</span>
               </span>
             </div>
           </div>
         </article>
 
-        <article className="border border-[#F0EDE8]/15 bg-[#111111] p-4">
-          <p className="text-xs uppercase tracking-[0.16em] text-[#F0EDE8]/65">Revenue by Source</p>
+        <article className="min-w-0 border border-[#EDE9E0]/15 bg-[#080808] p-4">
+          <p className="text-xs uppercase tracking-[0.16em] text-[#EDE9E0]/65">Revenue by Source</p>
           <div className="mt-3 space-y-2 text-sm">
             {data.attribution.revenueBySource.map((item: any) => (
-              <div key={item.source} className="flex items-center justify-between border-b border-[#F0EDE8]/10 pb-2">
-                <span className="uppercase tracking-[0.12em] text-[#F0EDE8]/65">{item.source}</span>
+              <div key={item.source} className="flex items-center justify-between border-b border-[#EDE9E0]/10 pb-2">
+                <span className="uppercase tracking-[0.12em] text-[#EDE9E0]/65">{item.source}</span>
                 <span>{formatEGP(item.revenue)}</span>
               </div>
             ))}
             <div className="flex items-center justify-between pt-2">
-              <span className="uppercase tracking-[0.12em] text-[#F0EDE8]/65">Total</span>
+              <span className="uppercase tracking-[0.12em] text-[#EDE9E0]/65">Total</span>
               <span>{formatEGP(data.attribution.totalAdRevenue)}</span>
             </div>
           </div>

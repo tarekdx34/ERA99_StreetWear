@@ -1,0 +1,12 @@
+
+> qutb@0.1.0 dev
+> next dev -p 3250
+
+ظû▓ Next.js 16.2.3 (Turbopack)
+- Local:         http://localhost:3250
+- Network:       http://169.254.107.7:3250
+- Environments: .env.local, .env
+ظ£ô Ready in 500ms
+
+ GET / 200 in 12.5s (next.js: 141ms, proxy.ts: 5.7s, application-code: 6.6s)
+ GET /admin/login?next=%2Fadmin%2Fearly-access 200 in 573ms (next.js: 36ms, proxy.ts: 9ms, application-code: 529ms)

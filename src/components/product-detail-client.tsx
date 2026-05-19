@@ -23,7 +23,7 @@ import { ProductCard } from "@/components/product-card";
 function Accordion({ title, content }: { title: string; content: string }) {
   const [open, setOpen] = useState(false);
   return (
-    <div className="border-b border-[#F0EDE8]/15">
+    <div className="border-b border-[#EDE9E0]/15">
       <button
         className="flex w-full items-center justify-between py-4 text-left text-sm uppercase tracking-[0.14em]"
         onClick={() => setOpen((v) => !v)}
@@ -37,7 +37,7 @@ function Accordion({ title, content }: { title: string; content: string }) {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            className="overflow-hidden pb-4 text-sm text-[#F0EDE8]/72"
+            className="overflow-hidden pb-4 text-sm text-[#EDE9E0]/72"
           >
             {content}
           </motion.p>
@@ -59,7 +59,7 @@ function SizeGuideModal({
       {open ? (
         <>
           <motion.button
-            className="fixed inset-0 z-[90] bg-black/70"
+            className="fixed inset-0 z-[90] bg-[#080808]/70"
             onClick={onClose}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -70,14 +70,14 @@ function SizeGuideModal({
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 30 }}
             transition={{ duration: 0.3, ease: "easeOut" }}
-            className="fixed left-1/2 top-1/2 z-[100] w-[92vw] max-w-lg -translate-x-1/2 -translate-y-1/2 border border-[#F0EDE8]/30 bg-[#111111] p-5"
+            className="fixed left-1/2 top-1/2 z-[100] w-[92vw] max-w-lg -translate-x-1/2 -translate-y-1/2 border border-[#EDE9E0]/30 bg-[#080808] p-5"
           >
-            <div className="mb-4 flex items-center justify-between border-b border-[#F0EDE8]/15 pb-3">
+            <div className="mb-4 flex items-center justify-between border-b border-[#EDE9E0]/15 pb-3">
               <h4 className="text-sm uppercase tracking-[0.14em]">
                 SIZE GUIDE (CM)
               </h4>
               <button
-                className="border border-[#F0EDE8]/25 p-2"
+                className="border border-[#EDE9E0]/25 p-2"
                 onClick={onClose}
               >
                 <CloseIcon />
@@ -85,7 +85,7 @@ function SizeGuideModal({
             </div>
             <table className="w-full text-left text-xs uppercase tracking-[0.1em]">
               <thead>
-                <tr className="border-b border-[#F0EDE8]/15 text-[#F0EDE8]/60">
+                <tr className="border-b border-[#EDE9E0]/15 text-[#EDE9E0]/60">
                   <th className="py-2">Size</th>
                   <th className="py-2">Chest</th>
                   <th className="py-2">Length</th>
@@ -93,8 +93,8 @@ function SizeGuideModal({
                 </tr>
               </thead>
               <tbody>
-                {["S", "M", "L", "XL", "XXL"].map((size, i) => (
-                  <tr key={size} className="border-b border-[#F0EDE8]/10">
+                {["XS", "S", "M", "L", "XL", "XXL"].map((size, i) => (
+                  <tr key={size} className="border-b border-[#EDE9E0]/10">
                     <td className="py-2">{size}</td>
                     <td className="py-2">{56 + i * 2}</td>
                     <td className="py-2">{64 + i * 1.5}</td>
@@ -196,7 +196,7 @@ function PhotoViewerModal({
         <>
           <motion.button
             aria-label="Close photo viewer"
-            className="fixed inset-0 z-[130] bg-black/80"
+            className="fixed inset-0 z-[130] bg-[#080808]/80"
             onClick={onClose}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -208,19 +208,19 @@ function PhotoViewerModal({
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 18 }}
             transition={{ duration: 0.25, ease: "easeOut" }}
-            className="fixed left-1/2 top-1/2 z-[140] w-[96vw] max-w-5xl -translate-x-1/2 -translate-y-1/2 border border-[#F0EDE8]/30 bg-[#0B0B0B] p-4 md:p-5"
+            className="fixed left-1/2 top-1/2 z-[140] w-[96vw] max-w-5xl -translate-x-1/2 -translate-y-1/2 border border-[#EDE9E0]/30 bg-[#080808] p-4 md:p-5"
             role="dialog"
             aria-modal="true"
           >
             <div className="mb-3 flex items-center justify-between">
-              <p className="text-[11px] uppercase tracking-[0.18em] text-[#F0EDE8]/65">
+              <p className="text-[11px] uppercase tracking-[0.18em] text-[#EDE9E0]/65">
                 View Photo - Hover to Zoom
               </p>
-              <p className="text-[11px] uppercase tracking-[0.18em] text-[#F0EDE8]/55">
+              <p className="text-[11px] uppercase tracking-[0.18em] text-[#EDE9E0]/55">
                 {activeIndex + 1} / {totalImages}
               </p>
               <button
-                className="border border-[#F0EDE8]/25 p-2"
+                className="border border-[#EDE9E0]/25 p-2"
                 onClick={onClose}
                 aria-label="Close photo viewer"
               >
@@ -229,7 +229,7 @@ function PhotoViewerModal({
             </div>
 
             <div
-              className="relative overflow-hidden border border-[#F0EDE8]/15"
+              className="relative overflow-hidden border border-[#EDE9E0]/15"
               onTouchStart={(event) => {
                 const touch = event.touches[0];
                 touchStartXRef.current = touch.clientX;
@@ -268,7 +268,7 @@ function PhotoViewerModal({
                     type="button"
                     onClick={goPrev}
                     aria-label="Previous photo"
-                    className="absolute left-2 top-1/2 z-[141] -translate-y-1/2 border border-[#F0EDE8]/35 bg-black/45 px-3 py-2 text-sm"
+                    className="absolute left-2 top-1/2 z-[141] -translate-y-1/2 border border-[#EDE9E0]/35 bg-[#080808]/45 px-3 py-2 text-sm"
                   >
                     ←
                   </button>
@@ -276,7 +276,7 @@ function PhotoViewerModal({
                     type="button"
                     onClick={goNext}
                     aria-label="Next photo"
-                    className="absolute right-2 top-1/2 z-[141] -translate-y-1/2 border border-[#F0EDE8]/35 bg-black/45 px-3 py-2 text-sm"
+                    className="absolute right-2 top-1/2 z-[141] -translate-y-1/2 border border-[#EDE9E0]/35 bg-[#080808]/45 px-3 py-2 text-sm"
                   >
                     →
                   </button>
@@ -286,6 +286,9 @@ function PhotoViewerModal({
               <img
                 src={activeImage}
                 alt={alt}
+                width={1200}
+                height={1600}
+                loading="lazy"
                 className="max-h-[90vh] w-full object-contain"
                 style={{
                   transform: zoomActive ? "scale(2)" : "scale(1)",
@@ -330,7 +333,8 @@ export function ProductDetailClient({
     [product.id, relatedProducts],
   );
 
-  const canAdd = !!selectedSize;
+  const hasStock = sizes.some((size) => product.stockBySize[size]);
+  const canAdd = !!selectedSize && Boolean(product.stockBySize[selectedSize]);
 
   useEffect(() => {
     trackEvent("view_item", {
@@ -348,10 +352,8 @@ export function ProductDetailClient({
   }, [product.id]);
 
   const handleAdd = () => {
-    if (!selectedSize) return;
+    if (!canAdd || !selectedSize) return;
     setFly(true);
-    const out = product.stockBySize[selectedSize];
-    if (!out) return;
     window.setTimeout(() => {
       addItem({
         productId: product.id,
@@ -368,7 +370,7 @@ export function ProductDetailClient({
   };
 
   const handleBuyNow = () => {
-    if (!selectedSize) return;
+    if (!canAdd || !selectedSize) return;
     addItem({
       productId: product.id,
       slug: product.slug,
@@ -395,10 +397,15 @@ export function ProductDetailClient({
       <div className="mx-auto grid max-w-7xl grid-cols-1 gap-10 lg:grid-cols-[60%_40%]">
         <section>
           <div className="lg:sticky lg:top-28">
-            <div className="overflow-hidden border border-[#F0EDE8]/15">
+            <div className="overflow-hidden border border-[#EDE9E0]/15">
               <img
                 src={mainImage}
-                alt={product.name}
+                alt={`QUTB ${product.name} in ${product.color} — 100% COTTON garment dyed tee, ${product.price} EGP`}
+                width={1200}
+                height={1600}
+                fetchPriority="high"
+                loading="eager"
+                srcSet={`${mainImage} 400w, ${mainImage} 800w, ${mainImage} 1200w`}
                 className="w-full h-auto min-h-[75vh] object-cover cursor-zoom-in"
                 onTouchStart={(event) => {
                   const touch = event.touches[0];
@@ -434,7 +441,7 @@ export function ProductDetailClient({
             </div>
             <button
               onClick={() => setOpenPhotoViewer(true)}
-              className="mt-2 text-xs uppercase tracking-[0.16em] text-[#F0EDE8]/72 hover:underline"
+              className="mt-2 text-xs uppercase tracking-[0.16em] text-[#EDE9E0]/72 hover:underline"
             >
               VIEW PHOTO →
             </button>
@@ -443,11 +450,14 @@ export function ProductDetailClient({
                 <button
                   key={image}
                   onClick={() => setMainImage(image)}
-                  className={`overflow-hidden border ${mainImage === image ? "border-[#F0EDE8]" : "border-[#F0EDE8]/20"}`}
+                  className={`overflow-hidden border ${mainImage === image ? "border-[#EDE9E0]" : "border-[#EDE9E0]/20"}`}
                 >
                   <img
                     src={image}
-                    alt={`${product.name} thumb`}
+                    alt={`QUTB ${product.name} in ${product.color} — 100% COTTON garment dyed tee, ${product.price} EGP`}
+                    width={240}
+                    height={320}
+                    loading="lazy"
                     className="h-24 w-full object-cover"
                   />
                 </button>
@@ -457,16 +467,22 @@ export function ProductDetailClient({
         </section>
 
         <section>
-          <p className="text-[11px] uppercase tracking-[0.14em] text-[#F0EDE8]/45">
+          <p className="text-[11px] uppercase tracking-[0.14em] text-[#EDE9E0]/45">
             HOME / SHOP / {product.name} {product.color}
           </p>
           <h1 className="mt-4 text-[32px] font-medium">
             {product.name} — {product.color}
           </h1>
-          <p className="mt-2 text-[28px] font-bold">
+          <div className="mt-4 grid gap-2 text-xs uppercase tracking-[0.16em] text-[#EDE9E0]/65 sm:grid-cols-2">
+            <p>GSM: {product.weightGsm} GSM</p>
+            <p>Colorway: {product.color}</p>
+            <p>Q Variant: {product.qVariant}</p>
+            <p>Stock: {hasStock ? "IN STOCK" : "SOLD OUT"}</p>
+          </div>
+          <p className="mt-2 text-[28px] font-medium">
             {product.compareAtPrice ? (
               <>
-                <span className="mr-2 line-through text-[#F0EDE8]/45">
+                <span className="mr-2 line-through text-[#EDE9E0]/45">
                   {formatEGP(product.compareAtPrice)}
                 </span>
                 <span>{formatEGP(product.price)}</span>
@@ -489,10 +505,16 @@ export function ProductDetailClient({
             ERA 99 — DROP 001 — LIMITED
           </div>
 
-          <div className="my-6 border-b-[0.5px] border-[#F0EDE8]/15" />
+          <div className="my-6 border-b-[0.5px] border-[#EDE9E0]/15" />
+
+          {!hasStock ? (
+            <p className="mb-6 border border-[#8B0000] px-4 py-3 text-sm uppercase tracking-[0.18em] text-[#EDE9E0]">
+              Gone. Watch for the next era.
+            </p>
+          ) : null}
 
           <div>
-            <p className="mb-3 text-xs uppercase tracking-[0.16em] text-[#F0EDE8]/65">
+            <p className="mb-3 text-xs uppercase tracking-[0.16em] text-[#EDE9E0]/65">
               Select size
             </p>
             <div className="flex flex-wrap gap-2">
@@ -505,9 +527,9 @@ export function ProductDetailClient({
                     onClick={() => setSelectedSize(size)}
                     className={`h-11 w-11 border text-xs uppercase tracking-[0.1em] ${
                       selectedSize === size
-                        ? "border-[#F0EDE8] bg-[#F0EDE8] text-black"
-                        : "border-[#F0EDE8]/30"
-                    } ${!inStock ? "cursor-not-allowed text-[#F0EDE8]/30 line-through" : "hover:border-[#F0EDE8]"}`}
+                        ? "border-[#EDE9E0] bg-[#EDE9E0] text-[#080808]"
+                        : "border-[#EDE9E0]/30"
+                    } ${!inStock ? "cursor-not-allowed text-[#EDE9E0]/30 line-through" : "hover:border-[#EDE9E0]"}`}
                   >
                     {size}
                   </button>
@@ -515,68 +537,72 @@ export function ProductDetailClient({
               })}
             </div>
             {!selectedSize ? (
-              <p className="mt-2 text-xs text-[#c0392b]">
+              <p className="mt-2 text-xs text-[#555555]">
                 Please select a size.
               </p>
             ) : null}
             <button
               onClick={() => setOpenGuide(true)}
-              className="mt-3 text-xs uppercase tracking-[0.16em] text-[#F0EDE8]/75 hover:underline"
+              className="mt-3 text-xs uppercase tracking-[0.16em] text-[#EDE9E0]/75 hover:underline"
             >
               SIZE GUIDE →
             </button>
           </div>
 
+          {hasStock ? (
           <div className="mt-6 flex items-center gap-4">
-            <span className="text-xs uppercase tracking-[0.16em] text-[#F0EDE8]/65">
+            <span className="text-xs uppercase tracking-[0.16em] text-[#EDE9E0]/65">
               Qty
             </span>
-            <div className="inline-flex items-center border border-[#F0EDE8]/30">
+            <div className="inline-flex items-center border border-[#EDE9E0]/30">
               <button
-                className="grid h-11 w-11 place-items-center border-r border-[#F0EDE8]/30"
+                className="grid h-11 w-11 place-items-center border-r border-[#EDE9E0]/30"
                 onClick={() => setQty((q) => Math.max(1, q - 1))}
               >
                 <MinusIcon />
               </button>
               <span className="w-12 text-center text-sm">{qty}</span>
               <button
-                className="grid h-11 w-11 place-items-center border-l border-[#F0EDE8]/30"
+                className="grid h-11 w-11 place-items-center border-l border-[#EDE9E0]/30"
                 onClick={() => setQty((q) => q + 1)}
               >
                 <PlusIcon />
               </button>
             </div>
           </div>
+          ) : null}
 
+          {hasStock ? (
           <div className="mt-6 space-y-3">
             <button
               disabled={!canAdd}
               onClick={handleAdd}
-              className="w-full bg-[#F0EDE8] px-4 py-3 text-sm font-bold uppercase tracking-[0.14em] text-black disabled:opacity-50"
+              className="w-full bg-[#EDE9E0] px-4 py-3 text-sm font-medium uppercase tracking-[0.14em] text-[#080808] disabled:opacity-50"
             >
               ADD TO CART
             </button>
             <button
               disabled={!canAdd}
               onClick={handleBuyNow}
-              className="w-full border border-[#F0EDE8]/40 px-4 py-3 text-sm uppercase tracking-[0.14em] disabled:opacity-50"
+              className="w-full border border-[#EDE9E0]/40 px-4 py-3 text-sm uppercase tracking-[0.14em] disabled:opacity-50"
             >
               BUY NOW
             </button>
           </div>
+          ) : null}
 
-          <div className="mt-6 grid grid-cols-1 gap-2 text-xs text-[#F0EDE8]/72 sm:grid-cols-3">
-            <div className="flex items-center gap-2 border border-[#F0EDE8]/12 px-3 py-2">
+          <div className="mt-6 grid grid-cols-1 gap-2 text-xs text-[#EDE9E0]/72 sm:grid-cols-3">
+            <div className="flex items-center gap-2 border border-[#EDE9E0]/12 px-3 py-2">
               <TruckIcon />
               Free Alex Delivery
             </div>
-            <div className="flex items-center gap-2 border border-[#F0EDE8]/12 px-3 py-2">
+            <div className="flex items-center gap-2 border border-[#EDE9E0]/12 px-3 py-2">
               <ShieldIcon />
               ERA 99 99
             </div>
-            <div className="flex items-center gap-2 border border-[#F0EDE8]/12 px-3 py-2">
+            <div className="flex items-center gap-2 border border-[#EDE9E0]/12 px-3 py-2">
               <WeightIcon />
-              220GSM Heavyweight
+              100% COTTON
             </div>
           </div>
 
@@ -585,6 +611,8 @@ export function ProductDetailClient({
               title="Fabric Details"
               content={product.description.fabric}
             />
+            <Accordion title="Fabric Story" content={product.fabricStory} />
+            <Accordion title="Q Variant" content={product.qVariant} />
             <Accordion title="Size & Fit" content={product.description.fit} />
             <Accordion
               title="Care Instructions"
@@ -618,7 +646,7 @@ export function ProductDetailClient({
       <AnimatePresence>
         {fly ? (
           <motion.div
-            className="fixed left-1/2 top-[50%] z-[120] h-8 w-8 border border-[#F0EDE8] bg-[#F0EDE8]"
+            className="fixed left-1/2 top-[50%] z-[120] h-8 w-8 border border-[#EDE9E0] bg-[#EDE9E0]"
             initial={{ x: 0, y: 0, opacity: 1 }}
             animate={{ x: "42vw", y: "-44vh", opacity: 0.2, scale: 0.3 }}
             exit={{ opacity: 0 }}

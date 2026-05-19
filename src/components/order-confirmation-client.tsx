@@ -75,13 +75,13 @@ export function OrderConfirmationClient(props: Props) {
             cx="40"
             cy="40"
             r="38"
-            stroke="#F0EDE8"
+            stroke="#EDE9E0"
             strokeWidth="2"
             fill="none"
           />
           <motion.path
             d="M22 41l12 12 24-26"
-            stroke="#F0EDE8"
+            stroke="#EDE9E0"
             strokeWidth="4"
             fill="none"
             strokeLinecap="square"
@@ -94,13 +94,13 @@ export function OrderConfirmationClient(props: Props) {
         <h1 className="mt-6 font-blackletter display-hero text-5xl md:text-[64px]">
           ORDER RECEIVED
         </h1>
-        <p className="mt-2 text-xl text-[#F0EDE8]/50"></p>
+        <p className="mt-2 text-xl text-[#EDE9E0]/50"></p>
         <p className="mt-4 text-sm uppercase tracking-[0.2em]">
           #{props.orderNumber}
         </p>
 
-        <section className="mt-8 border border-[#F0EDE8]/18 bg-[#111111] p-5 text-left">
-          <h2 className="text-xs uppercase tracking-[0.16em] text-[#F0EDE8]/65">
+        <section className="mt-8 border border-[#EDE9E0]/18 bg-[#080808] p-5 text-left">
+          <h2 className="text-xs uppercase tracking-[0.16em] text-[#EDE9E0]/65">
             Order Summary
           </h2>
           <div className="mt-4 space-y-2 text-sm">
@@ -111,52 +111,52 @@ export function OrderConfirmationClient(props: Props) {
               </p>
             ))}
           </div>
-          <div className="mt-4 border-t border-[#F0EDE8]/15 pt-4 text-sm text-[#F0EDE8]/75">
+          <div className="mt-4 border-t border-[#EDE9E0]/15 pt-4 text-sm text-[#EDE9E0]/75">
             <p>
               {props.address}, {props.city}, {props.governorate}
             </p>
-            <p className="mt-1 text-[11px] uppercase tracking-[0.14em] text-[#F0EDE8]/55">
+            <p className="mt-1 text-[11px] uppercase tracking-[0.14em] text-[#EDE9E0]/55">
               Payment: Cash on Delivery
             </p>
-            <p className="mt-1 text-lg font-bold text-[#F0EDE8]">
+            <p className="mt-1 text-lg font-medium text-[#EDE9E0]">
               Total: {formatEGP(props.total)}
             </p>
           </div>
         </section>
 
-        <p className="mt-6 text-sm text-[#F0EDE8]/75">
+        <p className="mt-6 text-sm text-[#EDE9E0]/75">
           {paid
             ? "Payment confirmed. Your order is being prepared and will ship within 1-2 business days."
             : "Our team will call you within 24 hours to confirm your order before shipping."}
         </p>
 
         {!props.isLoggedIn ? (
-          <section className="mt-8 border border-[#F0EDE8]/18 bg-[#111111] p-6 text-left">
-            <h2 className="text-xs uppercase tracking-[0.16em] text-[#F0EDE8]/65">
+          <section className="mt-8 border border-[#EDE9E0]/18 bg-[#080808] p-6 text-left">
+            <h2 className="text-xs uppercase tracking-[0.16em] text-[#EDE9E0]/65">
               TRACK YOUR ORDER
             </h2>
-            <p className="mt-2 text-sm text-[#F0EDE8]/60">
+            <p className="mt-2 text-sm text-[#EDE9E0]/60">
               Create an account to track this order, view your order history, and get faster checkout on future orders.
             </p>
 
             <div className="mt-4 flex flex-col gap-2 sm:flex-row">
               <a
                 href={`/auth/register?next=/account&claimOrder=${props.orderId}&claimOrderToken=${encodedClaimToken}`}
-                className="flex-1 border border-[#F0EDE8] bg-[#F0EDE8] px-4 py-3 text-center text-xs font-bold uppercase tracking-[0.14em] text-black"
+                className="flex-1 border border-[#EDE9E0] bg-[#EDE9E0] px-4 py-3 text-center text-xs font-medium uppercase tracking-[0.14em] text-[#080808]"
               >
                 CREATE ACCOUNT
               </a>
               <a
                 href={`/auth/login?next=/account&claimOrder=${props.orderId}&claimOrderToken=${encodedClaimToken}`}
-                className="flex-1 border border-[#F0EDE8]/25 px-4 py-3 text-center text-xs uppercase tracking-[0.14em] hover:border-[#F0EDE8]"
+                className="flex-1 border border-[#EDE9E0]/25 px-4 py-3 text-center text-xs uppercase tracking-[0.14em] hover:border-[#EDE9E0]"
               >
                 LOGIN
               </a>
             </div>
 
-            <p className="mt-3 text-xs text-[#F0EDE8]/45">
+            <p className="mt-3 text-xs text-[#EDE9E0]/45">
               Or track as guest:{" "}
-              <a href="/track-order" className="text-[#F0EDE8] underline">
+              <a href="/track-order" className="text-[#EDE9E0] underline">
                 Track Order
               </a>
             </p>
@@ -166,7 +166,7 @@ export function OrderConfirmationClient(props: Props) {
         <div className="mt-6">
           <Link
             href="/shop"
-            className="inline-block border border-[#F0EDE8]/25 px-6 py-3 text-xs uppercase tracking-[0.14em] hover:border-[#F0EDE8]"
+            className="inline-block border border-[#EDE9E0]/25 px-6 py-3 text-xs uppercase tracking-[0.14em] hover:border-[#EDE9E0]"
           >
             CONTINUE SHOPPING
           </Link>
@@ -179,7 +179,7 @@ export function OrderConfirmationClient(props: Props) {
             rel="noreferrer"
             className="mt-8 inline-block text-sm hover:underline"
           >
-            Questions? WhatsApp us directly →
+            WhatsApp support
           </a>
         ) : null}
       </div>

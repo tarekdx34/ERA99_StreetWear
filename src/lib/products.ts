@@ -6,6 +6,9 @@ export type Product = {
   price: number;
   compareAtPrice?: number;
   shortDescription?: string;
+  weightGsm: number;
+  qVariant: string;
+  fabricStory: string;
   images: string[];
   description: {
     fabric: string;
@@ -15,7 +18,10 @@ export type Product = {
   stockBySize: Record<string, boolean>;
 };
 
-export const sizes = ["S", "M", "L", "XL", "XXL"];
+export const sizes = ["XS", "S", "M", "L", "XL", "XXL"];
+
+const coreFabricStory =
+  "100% COTTON cotton holds the shape. Garment dye and enzyme wash give the surface its lived weight. Science you can feel.";
 
 export const products: Product[] = [
   {
@@ -24,6 +30,9 @@ export const products: Product[] = [
     name: "QUTB Boxy Tee",
     color: "White",
     price: 450,
+    weightGsm: 220,
+    qVariant: "Q-01 Industrial Block",
+    fabricStory: coreFabricStory,
     images: [
       "/images/1.jpeg",
       "/images/2.jpeg",
@@ -31,11 +40,11 @@ export const products: Product[] = [
       "/images/11.jpeg",
     ],
     description: {
-      fabric: "220 GSM. Boxy. Built in Alexandria. This is QUTB.",
-      fit: "220 GSM. Boxy. Built in Alexandria. This is QUTB.",
-      care: "220 GSM. Boxy. Built in Alexandria. This is QUTB.",
+      fabric: "100% COTTON. Boxy. Built in Alexandria. This is QUTB.",
+      fit: "100% COTTON. Boxy. Built in Alexandria. This is QUTB.",
+      care: "100% COTTON. Boxy. Built in Alexandria. This is QUTB.",
     },
-    stockBySize: { S: true, M: true, L: true, XL: true, XXL: false },
+    stockBySize: { XS: true, S: true, M: true, L: true, XL: true, XXL: false },
   },
   {
     id: "qutb-black-boxy",
@@ -43,6 +52,9 @@ export const products: Product[] = [
     name: "QUTB Boxy Tee",
     color: "Black",
     price: 450,
+    weightGsm: 220,
+    qVariant: "Q-01 Industrial Block",
+    fabricStory: coreFabricStory,
     images: [
       "/images/4.png",
       "/images/5.jpeg",
@@ -50,11 +62,11 @@ export const products: Product[] = [
       "/images/7.jpeg",
     ],
     description: {
-      fabric: "220 GSM. Boxy. Built in Alexandria. This is QUTB.",
-      fit: "220 GSM. Boxy. Built in Alexandria. This is QUTB.",
-      care: "220 GSM. Boxy. Built in Alexandria. This is QUTB.",
+      fabric: "100% COTTON. Boxy. Built in Alexandria. This is QUTB.",
+      fit: "100% COTTON. Boxy. Built in Alexandria. This is QUTB.",
+      care: "100% COTTON. Boxy. Built in Alexandria. This is QUTB.",
     },
-    stockBySize: { S: false, M: true, L: true, XL: true, XXL: true },
+    stockBySize: { XS: true, S: false, M: true, L: true, XL: true, XXL: true },
   },
   {
     id: "qutb-gray-boxy",
@@ -62,6 +74,9 @@ export const products: Product[] = [
     name: "QUTB Boxy Tee",
     color: "Gray",
     price: 450,
+    weightGsm: 220,
+    qVariant: "Q-01 Industrial Block",
+    fabricStory: coreFabricStory,
     images: [
       "/images/10.jpeg",
       "/images/8.jpeg",
@@ -69,11 +84,11 @@ export const products: Product[] = [
       "/images/2.jpeg",
     ],
     description: {
-      fabric: "220 GSM. Boxy. Built in Alexandria. This is QUTB.",
-      fit: "220 GSM. Boxy. Built in Alexandria. This is QUTB.",
-      care: "220 GSM. Boxy. Built in Alexandria. This is QUTB.",
+      fabric: "100% COTTON. Boxy. Built in Alexandria. This is QUTB.",
+      fit: "100% COTTON. Boxy. Built in Alexandria. This is QUTB.",
+      care: "100% COTTON. Boxy. Built in Alexandria. This is QUTB.",
     },
-    stockBySize: { S: true, M: true, L: false, XL: true, XXL: true },
+    stockBySize: { XS: true, S: true, M: true, L: false, XL: true, XXL: true },
   },
   {
     id: "qutb-raw-white",
@@ -81,6 +96,9 @@ export const products: Product[] = [
     name: "QUTB Raw Tee",
     color: "White",
     price: 520,
+    weightGsm: 220,
+    qVariant: "Q-01 Industrial Block",
+    fabricStory: coreFabricStory,
     images: [
       "/images/3.jpeg",
       "/images/1.jpeg",
@@ -88,11 +106,11 @@ export const products: Product[] = [
       "/images/2.jpeg",
     ],
     description: {
-      fabric: "220 GSM. Boxy. Built in Alexandria. This is QUTB.",
-      fit: "220 GSM. Boxy. Built in Alexandria. This is QUTB.",
-      care: "220 GSM. Boxy. Built in Alexandria. This is QUTB.",
+      fabric: "100% COTTON. Boxy. Built in Alexandria. This is QUTB.",
+      fit: "100% COTTON. Boxy. Built in Alexandria. This is QUTB.",
+      care: "100% COTTON. Boxy. Built in Alexandria. This is QUTB.",
     },
-    stockBySize: { S: true, M: true, L: true, XL: false, XXL: false },
+    stockBySize: { XS: true, S: true, M: true, L: true, XL: false, XXL: false },
   },
 ];
 

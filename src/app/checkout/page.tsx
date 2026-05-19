@@ -173,7 +173,7 @@ export default function CheckoutPage() {
 
           if (!exists) {
             const save = window.confirm(
-              "Save this address to your account?",
+              "Save this address to your account.",
             );
             if (save) {
               const [firstName, ...rest] = form.customerName.trim().split(" ");
@@ -218,37 +218,37 @@ export default function CheckoutPage() {
   };
 
   const inputBase =
-    "h-12 w-full border border-[#F0EDE8]/20 bg-[#111111] px-3 text-sm text-[#F0EDE8] placeholder:text-[#F0EDE8]/40 focus:border-[#F0EDE8] focus:outline-none";
+    "h-12 w-full border border-[#EDE9E0]/20 bg-[#080808] px-3 text-sm text-[#EDE9E0] placeholder:text-[#EDE9E0]/40 focus:border-[#EDE9E0] focus:outline-none";
 
   return (
     <main className="bg-[#080808] px-6 pb-28 pt-28 md:px-10 md:pb-14">
       <div className="mx-auto grid max-w-7xl grid-cols-1 gap-8 lg:grid-cols-[60%_40%]">
         <form onSubmit={submit} className="space-y-10">
           {errors.items ? (
-            <p className="text-xs text-[#8B0000]">{errors.items}</p>
+            <p className="text-xs text-[#555555]">{errors.items}</p>
           ) : null}
 
           <section>
-            <h2 className="mb-4 text-xs uppercase tracking-[0.2em] text-[#F0EDE8]/60">
+            <h2 className="mb-4 text-xs uppercase tracking-[0.2em] text-[#EDE9E0]/60">
               YOUR DETAILS
             </h2>
             <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
               <div className="md:col-span-2">
                 <input
-                  className={`${inputBase} ${errors.customerName ? "border-[#8B0000]" : ""}`}
+                  className={`${inputBase} ${errors.customerName ? "border-[#555555]" : ""}`}
                   placeholder="Full name"
                   value={form.customerName}
                   onChange={(e) => setField("customerName", e.target.value)}
                 />
                 {errors.customerName ? (
-                  <p className="mt-1 text-[12px] text-[#8B0000]">
+                  <p className="mt-1 text-[12px] text-[#555555]">
                     {errors.customerName}
                   </p>
                 ) : null}
               </div>
               <div>
                 <input
-                  className={`${inputBase} ${errors.phone ? "border-[#8B0000]" : ""}`}
+                  className={`${inputBase} ${errors.phone ? "border-[#555555]" : ""}`}
                   placeholder="Phone number"
                   value={form.phone}
                   onChange={(e) =>
@@ -259,15 +259,15 @@ export default function CheckoutPage() {
                   }
                 />
                 {errors.phone ? (
-                  <p className="mt-1 text-[12px] text-[#8B0000]">
+                  <p className="mt-1 text-[12px] text-[#555555]">
                     {errors.phone}
                   </p>
                 ) : form.phone.length === 11 ? (
-                  <p className="mt-1 text-[12px] text-[#F0EDE8]/55">✓ Valid</p>
+                  <p className="mt-1 text-[12px] text-[#EDE9E0]/55">Valid</p>
                 ) : null}
               </div>
               <div>
-                <label className="mb-1 block text-[11px] uppercase tracking-[0.14em] text-[#F0EDE8]/60">
+                <label className="mb-1 block text-[11px] uppercase tracking-[0.14em] text-[#EDE9E0]/60">
                   Email (optional — for order confirmation)
                 </label>
                 <input
@@ -277,13 +277,13 @@ export default function CheckoutPage() {
                   value={form.email}
                   onChange={(e) => setField("email", e.target.value)}
                 />
-                <p className="mt-1 text-[12px] text-[#F0EDE8]/45">
+                <p className="mt-1 text-[12px] text-[#EDE9E0]/45">
                   We only use this to send your order confirmation.
                 </p>
               </div>
               <div>
                 <select
-                  className={`${inputBase} ${errors.governorate ? "border-[#8B0000]" : ""}`}
+                  className={`${inputBase} ${errors.governorate ? "border-[#555555]" : ""}`}
                   value={form.governorate}
                   onChange={(e) => {
                     const value = e.target.value;
@@ -304,7 +304,7 @@ export default function CheckoutPage() {
                   ))}
                 </select>
                 {errors.governorate ? (
-                  <p className="mt-1 text-[12px] text-[#8B0000]">
+                  <p className="mt-1 text-[12px] text-[#555555]">
                     {errors.governorate}
                   </p>
                 ) : null}
@@ -313,13 +313,13 @@ export default function CheckoutPage() {
               {form.governorate ? (
                 <div className="md:col-span-2">
                   <input
-                    className={`${inputBase} ${errors.city ? "border-[#8B0000]" : ""}`}
+                    className={`${inputBase} ${errors.city ? "border-[#555555]" : ""}`}
                     placeholder="City / District"
                     value={form.city}
                     onChange={(e) => setField("city", e.target.value)}
                   />
                   {errors.city ? (
-                    <p className="mt-1 text-[12px] text-[#8B0000]">
+                    <p className="mt-1 text-[12px] text-[#555555]">
                       {errors.city}
                     </p>
                   ) : null}
@@ -328,13 +328,13 @@ export default function CheckoutPage() {
 
               <div className="md:col-span-2">
                 <input
-                  className={`${inputBase} ${errors.address ? "border-[#8B0000]" : ""}`}
+                  className={`${inputBase} ${errors.address ? "border-[#555555]" : ""}`}
                   placeholder="Street address"
                   value={form.address}
                   onChange={(e) => setField("address", e.target.value)}
                 />
                 {errors.address ? (
-                  <p className="mt-1 text-[12px] text-[#8B0000]">
+                  <p className="mt-1 text-[12px] text-[#555555]">
                     {errors.address}
                   </p>
                 ) : null}
@@ -351,8 +351,8 @@ export default function CheckoutPage() {
 
               <div className="md:col-span-2">
                 <textarea
-                  className="min-h-28 w-full border border-[#F0EDE8]/20 bg-[#111111] px-3 py-3 text-sm text-[#F0EDE8] placeholder:text-[#F0EDE8]/40 focus:border-[#F0EDE8] focus:outline-none"
-                  placeholder="Any special instructions for your order?"
+                  className="min-h-28 w-full border border-[#EDE9E0]/20 bg-[#080808] px-3 py-3 text-sm text-[#EDE9E0] placeholder:text-[#EDE9E0]/40 focus:border-[#EDE9E0] focus:outline-none"
+                  placeholder="Special instructions for your order."
                   value={form.notes}
                   onChange={(e) => setField("notes", e.target.value)}
                 />
@@ -361,14 +361,14 @@ export default function CheckoutPage() {
           </section>
 
           <section>
-            <h2 className="mb-4 text-xs uppercase tracking-[0.2em] text-[#F0EDE8]/60">
+            <h2 className="mb-4 text-xs uppercase tracking-[0.2em] text-[#EDE9E0]/60">
               DELIVERY METHOD
             </h2>
-            <div className="border border-[#F0EDE8]/20 bg-[#111111] p-4 text-sm">
+            <div className="border border-[#EDE9E0]/20 bg-[#080808] p-4 text-sm">
               {form.governorate === "Alexandria" ? (
                 <p>
                   Alexandria Delivery — 1 to 2 days —{" "}
-                  <span className="text-[#8B0000]">FREE</span>
+                  <span className="text-[#555555]">{formatEGP(0)}</span>
                 </p>
               ) : (
                 <p>
@@ -381,7 +381,7 @@ export default function CheckoutPage() {
         </form>
 
         <aside className="lg:sticky lg:top-28 lg:h-fit">
-          <div className="border border-[#F0EDE8]/18 bg-[#111111] p-6">
+          <div className="border border-[#EDE9E0]/18 bg-[#080808] p-6">
             <h3 className="text-sm uppercase tracking-[0.16em]">
               ORDER SUMMARY
             </h3>
@@ -389,18 +389,21 @@ export default function CheckoutPage() {
               {items.map((item) => (
                 <div
                   key={`${item.productId}-${item.size}`}
-                  className="grid grid-cols-[52px_1fr_auto] gap-3 border-b border-[#F0EDE8]/10 pb-3"
+                  className="grid grid-cols-[52px_1fr_auto] gap-3 border-b border-[#EDE9E0]/10 pb-3"
                 >
-                  <img
-                    src={item.image}
-                    alt={item.name}
-                    className="h-13 w-13 object-cover"
-                  />
+                    <img
+                      src={item.image}
+                      alt={item.name}
+                      width={52}
+                      height={52}
+                      loading="lazy"
+                      className="h-13 w-13 object-cover"
+                    />
                   <div>
                     <p className="text-xs uppercase tracking-[0.1em]">
                       {item.name}
                     </p>
-                    <p className="text-[11px] text-[#F0EDE8]/60">
+                    <p className="text-[11px] text-[#EDE9E0]/60">
                       {item.color} / {item.size} / x{item.qty}
                     </p>
                   </div>
@@ -411,30 +414,30 @@ export default function CheckoutPage() {
               ))}
             </div>
 
-            <div className="mt-4 space-y-2 border-t border-[#F0EDE8]/15 pt-4 text-sm">
+            <div className="mt-4 space-y-2 border-t border-[#EDE9E0]/15 pt-4 text-sm">
               <div className="flex justify-between">
-                <span className="text-[#F0EDE8]/70">Subtotal</span>
+                <span className="text-[#EDE9E0]/70">Subtotal</span>
                 <span>{formatEGP(subtotal)}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-[#F0EDE8]/70">Delivery</span>
+                <span className="text-[#EDE9E0]/70">Delivery</span>
                 <span>
-                  {deliveryFee === 0 ? "FREE" : formatEGP(deliveryFee)}
+                  {formatEGP(deliveryFee)}
                 </span>
               </div>
-              <div className="flex justify-between text-lg font-bold">
+              <div className="flex justify-between text-lg font-medium">
                 <span>Total</span>
                 <span>{formatEGP(total)}</span>
               </div>
-              <p className="pt-1 text-[11px] uppercase tracking-[0.16em] text-[#F0EDE8]/50">
-                Payment: Cash on Delivery
+              <p className="pt-1 text-[11px] uppercase tracking-[0.16em] text-[#EDE9E0]/50">
+                Payment: COD only. Cash on delivery.
               </p>
             </div>
 
             <button
               onClick={placeOrder}
               disabled={processing}
-              className="mt-5 w-full bg-[#F0EDE8] px-4 py-3 text-[18px] font-bold uppercase tracking-[0.12em] text-black disabled:opacity-60"
+              className="mt-5 w-full bg-[#EDE9E0] px-4 py-3 text-[18px] font-medium uppercase tracking-[0.12em] text-[#080808] disabled:opacity-60"
             >
               {processing ? (
                 <motion.span
@@ -447,7 +450,7 @@ export default function CheckoutPage() {
                 "PLACE ORDER →"
               )}
             </button>
-            <div className="mt-3 flex items-center justify-center gap-2 text-[12px] text-[#F0EDE8]/55">
+            <div className="mt-3 flex items-center justify-center gap-2 text-[12px] text-[#EDE9E0]/55">
               <LockIcon />
               Secure checkout
             </div>
@@ -455,11 +458,11 @@ export default function CheckoutPage() {
         </aside>
       </div>
 
-      <div className="fixed inset-x-0 bottom-0 z-40 border-t border-[#F0EDE8]/15 bg-[#080808] p-3 lg:hidden">
+      <div className="fixed inset-x-0 bottom-0 z-40 border-t border-[#EDE9E0]/15 bg-[#080808] p-3 lg:hidden">
         <button
           onClick={placeOrder}
           disabled={processing}
-          className="w-full bg-[#F0EDE8] px-4 py-3 text-base font-bold uppercase tracking-[0.12em] text-black disabled:opacity-60"
+          className="w-full bg-[#EDE9E0] px-4 py-3 text-base font-medium uppercase tracking-[0.12em] text-[#080808] disabled:opacity-60"
         >
           {processing ? "PROCESSING..." : `PLACE ORDER → ${formatEGP(total)}`}
         </button>

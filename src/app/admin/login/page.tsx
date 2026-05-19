@@ -77,14 +77,15 @@ export default function AdminLoginPage() {
       return;
     }
 
-    router.push("/admin/dashboard");
+    const next = new URLSearchParams(window.location.search).get("next");
+    router.push(next || "/admin/dashboard");
     router.refresh();
   };
 
   return (
     <main className="min-h-screen bg-[#080808] text-[#F0EDE8]">
       <div className="mx-auto flex min-h-screen w-full max-w-md flex-col items-center justify-center px-6">
-        <p className="font-anton text-6xl leading-none tracking-[16px] text-[#ede9e0]">
+        <p className="font-anton text-6xl leading-none tracking-[16px] text-[#EDE9E0]">
           QUTB
         </p>
         <p className="mt-3 text-[12px] font-medium uppercase tracking-[0.3em] text-[#555555]">
@@ -98,6 +99,7 @@ export default function AdminLoginPage() {
         {step === "password" ? (
           <form onSubmit={startLogin} className="mt-6 w-full space-y-3">
             <input
+              name="username"
               value={username}
               onChange={(event) => setUsername(event.target.value)}
               placeholder="Username"
@@ -106,6 +108,7 @@ export default function AdminLoginPage() {
               required
             />
             <input
+              name="password"
               value={password}
               onChange={(event) => setPassword(event.target.value)}
               type="password"
@@ -119,12 +122,13 @@ export default function AdminLoginPage() {
               type="submit"
               className="h-12 w-full border border-[#F0EDE8] bg-[#F0EDE8] text-xs font-bold uppercase tracking-[0.2em] text-[#080808] disabled:opacity-60"
             >
-              {loading ? "CHECKING..." : "CONTINUE →"}
+              {loading ? "CHECKING..." : "CONTINUE ->"}
             </button>
           </form>
         ) : (
           <form onSubmit={verifyCode} className="mt-6 w-full space-y-3">
             <input
+              name="totpCode"
               ref={codeRef}
               value={code}
               onChange={(event) =>
@@ -151,7 +155,7 @@ export default function AdminLoginPage() {
               type="submit"
               className="h-12 w-full border border-[#F0EDE8] bg-[#F0EDE8] text-xs font-bold uppercase tracking-[0.2em] text-[#080808] disabled:opacity-60"
             >
-              {loading ? "VERIFYING..." : "VERIFY →"}
+              {loading ? "VERIFYING..." : "VERIFY ->"}
             </button>
             <button
               type="button"

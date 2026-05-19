@@ -213,7 +213,7 @@ function buildColors(products: ShopProduct[]): ShopColorFacet[] {
         map.set(slug, {
           label: variant.colorName,
           slug,
-          hex: variant.colorHex || "#F0EDE8",
+          hex: variant.colorHex || "#EDE9E0",
         });
       }
     }

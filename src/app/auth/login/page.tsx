@@ -106,27 +106,27 @@ export default function LoginPage() {
   };
 
   return (
-    <main className="min-h-screen bg-[#080808] text-[#F0EDE8]">
+    <main className="min-h-screen bg-[#080808] text-[#EDE9E0]">
       <div className="mx-auto flex min-h-screen w-full max-w-md flex-col justify-center px-6">
-        <div className="border border-[0.5px] border-[#F0EDE8]/25 bg-[#111111] p-6">
+        <div className="border border-[0.5px] border-[#EDE9E0]/25 bg-[#080808] p-6">
           <div className="text-center">
-            <p className="font-anton text-5xl leading-none tracking-[16px] text-[#ede9e0]">QUTB</p>
+            <p className="font-anton text-5xl leading-none tracking-[16px] text-[#EDE9E0]">QUTB</p>
             <p className="mt-2 text-[11px] uppercase tracking-[0.3em] text-[#555555]">
               THE AXIS
             </p>
           </div>
 
-          <h1 className="mt-8 text-center text-xs uppercase tracking-[0.25em] text-[#F0EDE8]/70">
+          <h1 className="mt-8 text-center text-xs uppercase tracking-[0.25em] text-[#EDE9E0]/70">
             Sign In
           </h1>
 
           {flashMessage === "password-updated" ? (
-            <p className="mt-4 text-[12px] text-[#F0EDE8]/75">
+            <p className="mt-4 text-[12px] text-[#EDE9E0]/75">
               Password updated. Please sign in.
             </p>
           ) : null}
           {flashMessage === "account-created" ? (
-            <p className="mt-4 text-[12px] text-[#F0EDE8]/75">
+            <p className="mt-4 text-[12px] text-[#EDE9E0]/75">
               Account created. Please sign in.
             </p>
           ) : null}
@@ -138,7 +138,7 @@ export default function LoginPage() {
               type="email"
               placeholder="Email"
               autoComplete="email"
-              className="h-12 w-full border border-[0.5px] border-[#F0EDE8]/25 bg-[#0D0D0D] px-3 text-sm font-['Space_Grotesk'] outline-none focus:border-[#F0EDE8]"
+              className="h-12 w-full border border-[0.5px] border-[#EDE9E0]/25 bg-[#080808] px-3 text-sm outline-none focus:border-[#EDE9E0]"
               required
             />
 
@@ -148,39 +148,39 @@ export default function LoginPage() {
               type="password"
               placeholder="Password"
               autoComplete="current-password"
-              className="h-12 w-full border border-[0.5px] border-[#F0EDE8]/25 bg-[#0D0D0D] px-3 text-sm font-['Space_Grotesk'] outline-none focus:border-[#F0EDE8]"
+              className="h-12 w-full border border-[0.5px] border-[#EDE9E0]/25 bg-[#080808] px-3 text-sm outline-none focus:border-[#EDE9E0]"
               required
             />
 
-            <label className="flex items-center gap-2 text-[11px] uppercase tracking-[0.16em] text-[#F0EDE8]/70">
+            <label className="flex items-center gap-2 text-[11px] uppercase tracking-[0.16em] text-[#EDE9E0]/70">
               <input
                 type="checkbox"
                 checked={rememberMe}
                 onChange={(event) => setRememberMe(event.target.checked)}
-                className="h-4 w-4 accent-[#F0EDE8]"
+                className="h-4 w-4 accent-[#EDE9E0]"
               />
               Remember me
             </label>
 
-            {error ? <p className="text-[12px] text-[#8B0000]">{error}</p> : null}
+            {error ? <p className="text-[12px] text-[#555555]">{error}</p> : null}
 
             <button
               type="submit"
               disabled={submitting || countdown > 0}
-              className="h-12 w-full border border-[0.5px] border-[#F0EDE8] bg-[#F0EDE8] text-sm font-semibold uppercase tracking-[0.22em] text-[#080808] disabled:opacity-60"
+              className="h-12 w-full border border-[0.5px] border-[#EDE9E0] bg-[#EDE9E0] text-sm font-medium uppercase tracking-[0.22em] text-[#080808] disabled:opacity-60"
             >
               {submitting ? "Signing in..." : "Sign in"}
             </button>
           </form>
 
-          <div className="mt-6 space-y-2 text-center text-[11px] text-[#F0EDE8]/55">
+          <div className="mt-6 space-y-2 text-center text-[11px] text-[#EDE9E0]/55">
             <p>
               <Link href="/auth/forgot-password" className="underline">
-                Forgot password?
+                Forgot password
               </Link>
             </p>
             <p>
-              No account?{" "}
+              No account.{" "}
               <Link href="/auth/register" className="underline">
                 Register
               </Link>

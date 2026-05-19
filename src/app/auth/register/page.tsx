@@ -167,17 +167,17 @@ export default function RegisterPage() {
   };
 
   return (
-    <main className="min-h-screen bg-[#080808] text-[#F0EDE8]">
+    <main className="min-h-screen bg-[#080808] text-[#EDE9E0]">
       <div className="mx-auto flex min-h-screen w-full max-w-md flex-col justify-center px-6">
-        <div className="border border-[0.5px] border-[#F0EDE8]/25 bg-[#111111] p-6">
+        <div className="border border-[0.5px] border-[#EDE9E0]/25 bg-[#080808] p-6">
           <div className="text-center">
-            <p className="font-anton text-5xl leading-none tracking-[16px] text-[#ede9e0]">QUTB</p>
+            <p className="font-anton text-5xl leading-none tracking-[16px] text-[#EDE9E0]">QUTB</p>
             <p className="mt-2 text-[11px] uppercase tracking-[0.3em] text-[#555555]">
               THE AXIS
             </p>
           </div>
 
-          <h1 className="mt-8 text-center text-xs uppercase tracking-[0.25em] text-[#F0EDE8]/70">
+          <h1 className="mt-8 text-center text-xs uppercase tracking-[0.25em] text-[#EDE9E0]/70">
             Create Account
           </h1>
 
@@ -186,20 +186,20 @@ export default function RegisterPage() {
               value={form.firstName}
               onChange={(event) => setField("firstName", event.target.value)}
               placeholder="First name"
-              className="h-12 w-full border border-[0.5px] border-[#F0EDE8]/25 bg-[#0D0D0D] px-3 text-sm font-['Space_Grotesk'] outline-none focus:border-[#F0EDE8]"
+              className="h-12 w-full border border-[0.5px] border-[#EDE9E0]/25 bg-[#080808] px-3 text-sm outline-none focus:border-[#EDE9E0]"
             />
             {errors.firstName ? (
-              <p className="text-[12px] text-[#8B0000]">{errors.firstName}</p>
+              <p className="text-[12px] text-[#555555]">{errors.firstName}</p>
             ) : null}
 
             <input
               value={form.lastName}
               onChange={(event) => setField("lastName", event.target.value)}
               placeholder="Last name"
-              className="h-12 w-full border border-[0.5px] border-[#F0EDE8]/25 bg-[#0D0D0D] px-3 text-sm font-['Space_Grotesk'] outline-none focus:border-[#F0EDE8]"
+              className="h-12 w-full border border-[0.5px] border-[#EDE9E0]/25 bg-[#080808] px-3 text-sm outline-none focus:border-[#EDE9E0]"
             />
             {errors.lastName ? (
-              <p className="text-[12px] text-[#8B0000]">{errors.lastName}</p>
+              <p className="text-[12px] text-[#555555]">{errors.lastName}</p>
             ) : null}
 
             <input
@@ -208,15 +208,15 @@ export default function RegisterPage() {
               onBlur={checkEmailUniqueness}
               placeholder="Email"
               type="email"
-              className={`h-12 w-full border border-[0.5px] bg-[#0D0D0D] px-3 text-sm font-['Space_Grotesk'] outline-none focus:border-[#F0EDE8] ${
-                errors.email ? "border-[#8B0000]" : "border-[#F0EDE8]/25"
+              className={`h-12 w-full border border-[0.5px] bg-[#080808] px-3 text-sm outline-none focus:border-[#EDE9E0] ${
+                errors.email ? "border-[#555555]" : "border-[#EDE9E0]/25"
               }`}
             />
             {checkingEmail ? (
-              <p className="text-[12px] text-[#F0EDE8]/55">Checking email...</p>
+              <p className="text-[12px] text-[#EDE9E0]/55">Checking email...</p>
             ) : null}
             {errors.email ? (
-              <p className="text-[12px] text-[#8B0000]">{errors.email}</p>
+              <p className="text-[12px] text-[#555555]">{errors.email}</p>
             ) : null}
 
             <input
@@ -224,15 +224,15 @@ export default function RegisterPage() {
               onChange={(event) => setField("password", event.target.value)}
               placeholder="Password"
               type="password"
-              className={`h-12 w-full border border-[0.5px] bg-[#0D0D0D] px-3 text-sm font-['Space_Grotesk'] outline-none focus:border-[#F0EDE8] ${
-                errors.password ? "border-[#8B0000]" : "border-[#F0EDE8]/25"
+              className={`h-12 w-full border border-[0.5px] bg-[#080808] px-3 text-sm outline-none focus:border-[#EDE9E0] ${
+                errors.password ? "border-[#555555]" : "border-[#EDE9E0]/25"
               }`}
             />
-            <p className="text-[11px] uppercase tracking-[0.2em] text-[#F0EDE8]/60">
+            <p className="text-[11px] uppercase tracking-[0.2em] text-[#EDE9E0]/60">
               Strength: {passwordStrength}
             </p>
             {errors.password ? (
-              <p className="text-[12px] text-[#8B0000]">{errors.password}</p>
+              <p className="text-[12px] text-[#555555]">{errors.password}</p>
             ) : null}
 
             <input
@@ -248,17 +248,17 @@ export default function RegisterPage() {
               }}
               placeholder="Confirm password"
               type="password"
-              className={`h-12 w-full border border-[0.5px] bg-[#0D0D0D] px-3 text-sm font-['Space_Grotesk'] outline-none focus:border-[#F0EDE8] ${
-                errors.confirmPassword ? "border-[#8B0000]" : "border-[#F0EDE8]/25"
+              className={`h-12 w-full border border-[0.5px] bg-[#080808] px-3 text-sm outline-none focus:border-[#EDE9E0] ${
+                errors.confirmPassword ? "border-[#555555]" : "border-[#EDE9E0]/25"
               }`}
             />
             {errors.confirmPassword ? (
-              <p className="text-[12px] text-[#8B0000]">{errors.confirmPassword}</p>
+              <p className="text-[12px] text-[#555555]">{errors.confirmPassword}</p>
             ) : null}
 
             {existsError ? (
-              <p className="text-[12px] text-[#8B0000]">
-                Account already exists. Sign in instead?{" "}
+              <p className="text-[12px] text-[#555555]">
+                Account already exists. Sign in instead.{" "}
                 <Link href="/auth/login" className="underline">
                   Go to sign in
                 </Link>
@@ -266,20 +266,20 @@ export default function RegisterPage() {
             ) : null}
 
             {errors.form ? (
-              <p className="text-[12px] text-[#8B0000]">{errors.form}</p>
+              <p className="text-[12px] text-[#555555]">{errors.form}</p>
             ) : null}
 
             <button
               type="submit"
               disabled={submitting}
-              className="h-12 w-full border border-[0.5px] border-[#F0EDE8] bg-[#F0EDE8] text-sm font-semibold uppercase tracking-[0.22em] text-[#080808] disabled:opacity-60"
+              className="h-12 w-full border border-[0.5px] border-[#EDE9E0] bg-[#EDE9E0] text-sm font-medium uppercase tracking-[0.22em] text-[#080808] disabled:opacity-60"
             >
               {submitting ? "Creating..." : "Create account"}
             </button>
           </form>
 
-          <p className="mt-6 text-center text-[11px] text-[#F0EDE8]/55">
-            Already have an account?{" "}
+          <p className="mt-6 text-center text-[11px] text-[#EDE9E0]/55">
+            Already have an account.{" "}
             <Link href="/auth/login" className="underline">
               Sign in
             </Link>

@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { isCodPaymentMethod } from "@/lib/order-status";
 
 type OrderStage = {
   status: string;
@@ -13,6 +14,7 @@ type Props = {
   orderStatus: string;
   createdAt: string;
   updatedAt?: string;
+  paymentMethod?: string;
   stages?: OrderStage[];
 };
 
@@ -54,21 +56,17 @@ const DEFAULT_STAGES: Array<{ status: string; label: string; description: string
   },
 ];
 
-function getStageIndex(status: string): number {
-  const order = [
-    "pending_confirmation",
-    "pending_payment",
-    "preparing",
-    "shipped",
-    "delivered",
-  ];
+function getStageIndex(status: string, paymentMethod?: string): number {
   if (status === "cancelled" || status === "payment_failed") return -1;
+  const order = isCodPaymentMethod(paymentMethod)
+    ? ["pending_confirmation", "preparing", "shipped", "delivered"]
+    : ["pending_confirmation", "pending_payment", "preparing", "shipped", "delivered"];
   return order.indexOf(status);
 }
 
-export function OrderTimeline({ orderStatus, createdAt, updatedAt, stages }: Props) {
+export function OrderTimeline({ orderStatus, createdAt, updatedAt, paymentMethod, stages }: Props) {
   const stageList = stages || DEFAULT_STAGES;
-  const currentIndex = getStageIndex(orderStatus);
+  const currentIndex = getStageIndex(orderStatus, paymentMethod);
   const isCancelled = orderStatus === "cancelled" || orderStatus === "payment_failed";
   const createdDate = new Date(createdAt).toLocaleString("en-GB", {
     timeZone: "Africa/Cairo",
@@ -90,17 +88,25 @@ export function OrderTimeline({ orderStatus, createdAt, updatedAt, stages }: Pro
       })
     : null;
 
+  const activeStages = stageList.filter((s) => {
+    if (isCodPaymentMethod(paymentMethod) && (s.status === "pending_payment" || s.status === "payment_failed")) {
+      return false;
+    }
+    if (s.status === "cancelled" || s.status === "payment_failed") {
+      return orderStatus === s.status;
+    }
+    const idx = getStageIndex(s.status, paymentMethod);
+    return idx !== -1 && idx <= currentIndex;
+  });
+
   const visibleStages = isCancelled
-    ? stageList.filter((s) => s.status === orderStatus)
-    : stageList.filter((s) => {
-        const idx = getStageIndex(s.status);
-        return idx <= currentIndex || idx === -1;
-      });
+    ? activeStages
+    : activeStages;
 
   return (
     <div className="space-y-0">
       {visibleStages.map((stage, index) => {
-        const stageIdx = getStageIndex(stage.status);
+        const stageIdx = getStageIndex(stage.status, paymentMethod);
         const isCompleted = !isCancelled && stageIdx < currentIndex;
         const isCurrent = !isCancelled && stageIdx === currentIndex;
         const isFuture = !isCancelled && stageIdx > currentIndex;
@@ -118,18 +124,18 @@ export function OrderTimeline({ orderStatus, createdAt, updatedAt, stages }: Pro
               <div
                 className={`h-3 w-3 border-2 ${
                   isCompleted
-                    ? "border-[#F0EDE8] bg-[#F0EDE8]"
+                    ? "border-[#EDE9E0] bg-[#EDE9E0]"
                     : isCurrent
-                      ? "border-[#8B0000] bg-[#8B0000]"
+                      ? "border-[#555555] bg-[#555555]"
                       : isFailed
-                        ? "border-[#8B0000] bg-[#8B0000]"
-                        : "border-[#F0EDE8]/30 bg-transparent"
+                        ? "border-[#555555] bg-[#555555]"
+                        : "border-[#EDE9E0]/30 bg-transparent"
                 }`}
               />
               {index < visibleStages.length - 1 && (
                 <div
                   className={`my-1 w-px flex-1 ${
-                    isCompleted || isCurrent ? "bg-[#F0EDE8]/60" : "bg-[#F0EDE8]/15"
+                    isCompleted || isCurrent ? "bg-[#EDE9E0]/60" : "bg-[#EDE9E0]/15"
                   }`}
                 />
               )}
@@ -138,23 +144,23 @@ export function OrderTimeline({ orderStatus, createdAt, updatedAt, stages }: Pro
             <div className="flex-1 pb-6">
               <p
                 className={`text-xs uppercase tracking-[0.16em] ${
-                  isFuture ? "text-[#F0EDE8]/30" : "text-[#F0EDE8]"
+                isFuture ? "text-[#EDE9E0]/30" : "text-[#EDE9E0]"
                 }`}
               >
                 {stage.label}
               </p>
               <p
                 className={`mt-1 text-sm ${
-                  isFuture ? "text-[#F0EDE8]/30" : "text-[#F0EDE8]/65"
+                isFuture ? "text-[#EDE9E0]/30" : "text-[#EDE9E0]/65"
                 }`}
               >
                 {stage.description}
               </p>
               {isCompleted && updatedDate && isCurrent === false && (
-                <p className="mt-1 text-[11px] text-[#F0EDE8]/45">{updatedDate}</p>
+                <p className="mt-1 text-[11px] text-[#EDE9E0]/45">{updatedDate}</p>
               )}
               {isCurrent && createdDate && currentIndex === 0 && (
-                <p className="mt-1 text-[11px] text-[#F0EDE8]/45">{createdDate}</p>
+                <p className="mt-1 text-[11px] text-[#EDE9E0]/45">{createdDate}</p>
               )}
             </div>
           </motion.div>

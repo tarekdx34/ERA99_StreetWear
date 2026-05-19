@@ -106,13 +106,13 @@ function cardImagesForProduct(product: ShopProduct) {
 
 function ProductSkeletonGrid() {
   return (
-    <div className="grid grid-cols-2 gap-[1px] bg-[#F0EDE8]/20 md:grid-cols-4">
+    <div className="grid grid-cols-2 gap-[1px] bg-[#EDE9E0]/20 md:grid-cols-4">
       {Array.from({ length: 8 }).map((_, index) => (
         <div key={index} className="bg-[#080808] p-0">
-          <div className="shop-skeleton relative aspect-[3/4] bg-[#111111]" />
+          <div className="shop-skeleton relative aspect-[3/4] bg-[#080808]" />
           <div className="space-y-2 py-3">
-            <div className="h-3 w-3/4 bg-[#111111]" />
-            <div className="h-3 w-1/2 bg-[#111111]" />
+            <div className="h-3 w-3/4 bg-[#080808]" />
+            <div className="h-3 w-1/2 bg-[#080808]" />
           </div>
         </div>
       ))}
@@ -122,16 +122,16 @@ function ProductSkeletonGrid() {
 
 function EmptyState({ search, onClear }: { search: string; onClear: () => void }) {
   return (
-    <div className="grid min-h-[420px] place-items-center border border-[#F0EDE8]/15 bg-[#080808] px-6 text-center">
+    <div className="grid min-h-[420px] place-items-center border border-[#EDE9E0]/15 bg-[#080808] px-6 text-center">
       <div>
-        <div className="font-blackletter text-[120px] leading-none text-[#F0EDE8]/6">0</div>
-        <p className="text-base text-[#F0EDE8]/70">No products found</p>
+        <div className="font-anton text-[120px] leading-none tracking-[16px] text-[#EDE9E0]/6">0</div>
+        <p className="text-base text-[#EDE9E0]/70">No products found</p>
         {search ? (
-          <p className="mt-2 text-sm text-[#F0EDE8]/55">No results for "{search}"</p>
+          <p className="mt-2 text-sm text-[#EDE9E0]/55">No results for "{search}"</p>
         ) : null}
         <div className="mt-6 flex flex-col items-center gap-2 text-sm uppercase tracking-[0.18em]">
-          <button onClick={onClear} className="text-[#F0EDE8]">CLEAR FILTERS -&gt;</button>
-          <button onClick={onClear} className="text-[#F0EDE8]">VIEW ALL PRODUCTS -&gt;</button>
+          <button onClick={onClear} className="text-[#EDE9E0]">CLEAR FILTERS -&gt;</button>
+          <button onClick={onClear} className="text-[#EDE9E0]">VIEW ALL PRODUCTS -&gt;</button>
         </div>
       </div>
     </div>
@@ -469,7 +469,7 @@ export function ShopClient({ data }: { data: ShopDataResult }) {
   };
 
   return (
-    <main className="min-h-screen bg-[#080808] px-4 pb-24 pt-24 text-[#F0EDE8] md:px-8 md:pt-28">
+    <main className="min-h-screen bg-[#080808] px-6 pb-24 pt-24 text-[#EDE9E0] md:px-10 md:pt-28">
       <style jsx global>{`
         .shop-skeleton::after {
           content: "";
@@ -478,7 +478,7 @@ export function ShopClient({ data }: { data: ShopDataResult }) {
           left: -120%;
           width: 120%;
           height: 100%;
-          background: linear-gradient(90deg, transparent, rgba(240, 237, 232, 0.04), transparent);
+          background: linear-gradient(90deg, transparent, rgba(237, 233, 224, 0.04), transparent);
           animation: shop-shimmer 1.5s ease-out infinite;
         }
         @keyframes shop-shimmer {
@@ -501,26 +501,26 @@ export function ShopClient({ data }: { data: ShopDataResult }) {
         }
       `}</style>
 
-      <section className="mx-auto max-w-[1480px]">
+      <section className="mx-auto max-w-7xl">
         <header>
           <div className="flex items-end justify-between gap-4">
-            <h1 className="font-blackletter text-[48px] leading-none md:text-[72px]">SHOP</h1>
-            <p className="pb-2 text-[11px] uppercase tracking-[0.3em] text-[#F0EDE8]/55">{data.total} PRODUCTS</p>
+            <h1 className="font-anton text-[42px] leading-none tracking-[12px] md:text-[56px] md:tracking-[14px]">SHOP</h1>
+            <p className="pb-2 text-[11px] uppercase tracking-[0.3em] text-[#EDE9E0]/55">{data.total} PRODUCTS</p>
           </div>
-          <div className="mt-4 h-px w-full bg-[#F0EDE8]/15" />
+          <div className="mt-4 h-px w-full bg-[#EDE9E0]/15" />
 
           <div className="relative mt-4">
-            <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-[#F0EDE8]/45" />
+            <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-[#EDE9E0]/45" />
             <input
               value={searchInput}
               onChange={(event) => setSearchInput(event.target.value)}
               placeholder="SEARCH PRODUCTS..."
-              className="h-[52px] w-full border-[0.5px] border-[#F0EDE8]/25 bg-[#0D0D0D] pl-11 pr-10 text-[12px] uppercase tracking-[0.24em] outline-none placeholder:text-[#F0EDE8]/45"
+              className="h-[52px] w-full border-[0.5px] border-[#EDE9E0]/25 bg-[#080808] pl-11 pr-10 text-[12px] uppercase tracking-[0.24em] outline-none placeholder:text-[#EDE9E0]/45"
             />
             {searchInput ? (
               <button
                 onClick={() => setSearchInput("")}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-[#F0EDE8]/55"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-[#EDE9E0]/55"
                 aria-label="Clear search"
               >
                 <X className="h-4 w-4" />
@@ -530,7 +530,7 @@ export function ShopClient({ data }: { data: ShopDataResult }) {
         </header>
 
         <div className="mt-6 grid gap-6 md:grid-cols-[260px_minmax(0,1fr)] md:gap-6">
-          <aside className="hidden h-screen sticky top-0 overflow-y-auto border-[0.5px] border-[#F0EDE8]/15 bg-[#0D0D0D] p-4 md:block">
+          <aside className="hidden h-screen sticky top-0 overflow-y-auto border-[0.5px] border-[#EDE9E0]/15 bg-[#080808] p-4 md:block">
             <FilterPanel
               data={data}
               selectedCollection={selectedCollection}
@@ -572,7 +572,7 @@ export function ShopClient({ data }: { data: ShopDataResult }) {
               <div className="relative">
                 <button
                   onClick={() => setSortOpen((value) => !value)}
-                  className="flex h-10 items-center gap-2 border-[0.5px] border-[#F0EDE8]/25 bg-[#111111] px-4 text-[11px] uppercase tracking-[0.22em]"
+                  className="flex h-10 items-center gap-2 border-[0.5px] border-[#EDE9E0]/25 bg-[#080808] px-4 text-[11px] uppercase tracking-[0.22em]"
                 >
                   SORT: {SORT_OPTIONS.find((item) => item.value === selectedSort)?.label?.toUpperCase() || "NEWEST"}
                   <ChevronDown className="h-4 w-4" />
@@ -584,14 +584,14 @@ export function ShopClient({ data }: { data: ShopDataResult }) {
                       animate={{ opacity: 1 }}
                       exit={{ opacity: 0 }}
                       transition={{ duration: 0.2, ease: "easeOut" }}
-                      className="absolute right-0 top-11 z-40 min-w-[240px] border-[0.5px] border-[#F0EDE8]/25 bg-[#111111]"
+                      className="absolute right-0 top-11 z-40 min-w-[240px] border-[0.5px] border-[#EDE9E0]/25 bg-[#080808]"
                     >
                       {SORT_OPTIONS.map((item) => (
                         <button
                           key={item.value}
                           onClick={() => applySort(item.value)}
                           className={`block w-full px-4 py-3 text-left text-[11px] uppercase tracking-[0.2em] ${
-                            item.value === selectedSort ? "text-[#F0EDE8]" : "text-[#F0EDE8]/65"
+                            item.value === selectedSort ? "text-[#EDE9E0]" : "text-[#EDE9E0]/65"
                           }`}
                         >
                           {item.label}
@@ -610,7 +610,7 @@ export function ShopClient({ data }: { data: ShopDataResult }) {
             ) : null}
 
             {!isPending && data.products.length > 0 ? (
-              <div className="grid grid-cols-2 gap-[1px] bg-[#F0EDE8]/20 md:grid-cols-4">
+              <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-4">
                 {data.products.map((product, index) => {
                   const sizeOptions = extractSizeOptions(product);
                   const inStockSizes = sizeOptions.filter((size) => size.active && size.stock > 0);
@@ -631,7 +631,7 @@ export function ShopClient({ data }: { data: ShopDataResult }) {
                       transition={{ duration: 0.3, delay: index * 0.05, ease: "easeOut" }}
                       onHoverStart={() => setHoveredCard(product.id)}
                       onHoverEnd={() => setHoveredCard((value) => (value === product.id ? null : value))}
-                      className="bg-[#080808]"
+                      className="border border-[#EDE9E0]/20 bg-[#080808] p-3"
                     >
                       <div className="relative">
                         <Link
@@ -657,7 +657,7 @@ export function ShopClient({ data }: { data: ShopDataResult }) {
                           onTouchEnd={(event) => handleCardTouchEnd(product, event)}
                           onTouchCancel={() => handleCardTouchCancel(product.id)}
                         >
-                          <div className="relative aspect-[3/4] overflow-hidden">
+                          <div className="relative aspect-[3/4] overflow-hidden border border-[#EDE9E0]/15">
                             <Image
                               src={cardImages[activeImageIndex] || product.primaryImage}
                               alt={product.name}
@@ -667,13 +667,13 @@ export function ShopClient({ data }: { data: ShopDataResult }) {
                             />
 
                             {product.newArrival ? (
-                              <span className="absolute left-2 top-2 bg-[#080808] px-2 py-1 text-[10px] uppercase tracking-[0.15em] text-[#F0EDE8]">
+                              <span className="absolute left-2 top-2 bg-[#080808] px-2 py-1 text-[10px] uppercase tracking-[0.15em] text-[#EDE9E0]">
                                 NEW
                               </span>
                             ) : null}
 
                             {product.soldOut ? (
-                              <div className="absolute inset-0 grid place-items-center bg-[#080808]/72 text-[11px] uppercase tracking-[0.24em] text-[#F0EDE8]/65">
+                              <div className="absolute inset-0 grid place-items-center bg-[#080808]/72 text-[11px] uppercase tracking-[0.24em] text-[#EDE9E0]/65">
                                 SOLD OUT
                               </div>
                             ) : null}
@@ -685,16 +685,16 @@ export function ShopClient({ data }: { data: ShopDataResult }) {
                             ) : null}
                           </div>
 
-                          <div className="bg-[#080808] px-3 py-3">
-                            <h3 className="truncate text-sm font-medium text-[#F0EDE8]">{product.name}</h3>
-                            <p className="mt-1 text-[11px] uppercase tracking-[0.3em] text-[#F0EDE8]/55">
+                          <div className="bg-[#080808] py-3">
+                            <h3 className="truncate text-sm font-medium text-[#EDE9E0]">{product.name}</h3>
+                            <p className="mt-1 text-[11px] uppercase tracking-[0.3em] text-[#EDE9E0]/55">
                               {product.collection.toUpperCase()}
                             </p>
-                            <p className="mt-2 text-sm font-medium text-[#F0EDE8]">
+                            <p className="mt-2 text-sm font-medium text-[#EDE9E0]">
                               {product.compareAtPrice ? (
                                 <>
-                                  <span className="mr-2 text-[#F0EDE8]/45 line-through">{formatEGP(product.compareAtPrice)}</span>
-                                  <span className="text-[#F0EDE8]">{formatEGP(product.price)}</span>
+                                  <span className="mr-2 text-[#EDE9E0]/45 line-through">{formatEGP(product.compareAtPrice)}</span>
+                                  <span className="text-[#EDE9E0]">{formatEGP(product.price)}</span>
                                 </>
                               ) : (
                                 formatEGP(product.price)
@@ -712,7 +712,7 @@ export function ShopClient({ data }: { data: ShopDataResult }) {
                             setQuickViewImageIndex(0);
                             trackEvent("view_item", { name: product.name, price: product.price, id: product.id });
                           }}
-                          className={`${INTERACTION_LAYERS.quickViewZone} absolute right-2 top-2 bg-[#080808]/80 px-2 py-1 text-[10px] uppercase tracking-[0.2em] text-[#F0EDE8]`}
+                          className={`${INTERACTION_LAYERS.quickViewZone} absolute right-2 top-2 bg-[#080808]/80 px-2 py-1 text-[10px] uppercase tracking-[0.2em] text-[#EDE9E0]`}
                         >
                           QUICK VIEW
                         </motion.button>
@@ -722,12 +722,12 @@ export function ShopClient({ data }: { data: ShopDataResult }) {
                             initial={false}
                             animate={{ y: hoveredCard === product.id ? 0 : "100%" }}
                             transition={{ duration: 0.25, ease: "easeOut" }}
-                            className="pointer-events-auto h-12 bg-[#111111] px-2"
+                            className="pointer-events-auto h-12 bg-[#080808] px-2"
                           >
                             {singleQuickAdd ? (
                               <button
                                 onClick={() => addToCartQuick(product, inStockSizes[0].size)}
-                                className="h-full w-full border-[0.5px] border-[#F0EDE8]/80 text-[11px] uppercase tracking-[0.18em]"
+                                className="h-full w-full border-[0.5px] border-[#EDE9E0]/80 text-[11px] uppercase tracking-[0.18em]"
                               >
                                 ADD TO CART
                               </button>
@@ -743,8 +743,8 @@ export function ShopClient({ data }: { data: ShopDataResult }) {
                                       onClick={() => addToCartQuick(product, size.size)}
                                       className={`border-[0.5px] text-[11px] uppercase tracking-[0.18em] ${
                                         disabled
-                                          ? "border-[#F0EDE8]/20 text-[#F0EDE8]/35 line-through"
-                                          : "border-[#F0EDE8]/80 text-[#F0EDE8]"
+                                          ? "border-[#EDE9E0]/20 text-[#EDE9E0]/35 line-through"
+                                          : "border-[#EDE9E0]/80 text-[#EDE9E0]"
                                       }`}
                                     >
                                       {addedKey === key ? "✓ ADDED" : size.size}
@@ -756,7 +756,7 @@ export function ShopClient({ data }: { data: ShopDataResult }) {
                           </motion.div>
                         </div>
 
-                        <div className="shop-touch-quick-add bg-[#111111] p-1">
+                        <div className="shop-touch-quick-add bg-[#080808] p-1">
                           <div className="grid h-10 grid-cols-5 gap-1">
                             {sizeOptions.map((size) => {
                               const key = `${product.id}-${size.size}`;
@@ -768,8 +768,8 @@ export function ShopClient({ data }: { data: ShopDataResult }) {
                                   onClick={() => addToCartQuick(product, size.size)}
                                   className={`border-[0.5px] text-[11px] uppercase tracking-[0.18em] ${
                                     disabled
-                                      ? "border-[#F0EDE8]/20 text-[#F0EDE8]/35 line-through"
-                                      : "border-[#F0EDE8]/80 text-[#F0EDE8]"
+                                      ? "border-[#EDE9E0]/20 text-[#EDE9E0]/35 line-through"
+                                      : "border-[#EDE9E0]/80 text-[#EDE9E0]"
                                   }`}
                                 >
                                   {addedKey === key ? "✓" : size.size}
@@ -785,6 +785,7 @@ export function ShopClient({ data }: { data: ShopDataResult }) {
               </div>
             ) : null}
 
+            {data.totalPages > 1 ? (
             <div className="mt-8 flex items-center justify-center gap-2">
               <button
                 disabled={data.page <= 1}
@@ -794,7 +795,7 @@ export function ShopClient({ data }: { data: ShopDataResult }) {
                   })
                 }
                 className={`text-xs uppercase tracking-[0.2em] ${
-                  data.page <= 1 ? "text-[#F0EDE8]/35" : "text-[#F0EDE8]/75"
+                  data.page <= 1 ? "text-[#EDE9E0]/35" : "text-[#EDE9E0]/75"
                 }`}
               >
                 ← PREV
@@ -802,7 +803,7 @@ export function ShopClient({ data }: { data: ShopDataResult }) {
 
               {paginationItems.map((item, index) =>
                 item === "..." ? (
-                  <span key={`ellipsis-${index}`} className="px-2 text-[#F0EDE8]/45">...</span>
+                  <span key={`ellipsis-${index}`} className="px-2 text-[#EDE9E0]/45">...</span>
                 ) : (
                   <button
                     key={item}
@@ -813,8 +814,8 @@ export function ShopClient({ data }: { data: ShopDataResult }) {
                     }
                     className={`h-8 w-8 border-[0.5px] text-xs ${
                       item === data.page
-                        ? "border-[#F0EDE8] bg-[#F0EDE8] text-[#080808]"
-                        : "border-[#F0EDE8]/70 text-[#F0EDE8]"
+                        ? "border-[#EDE9E0] bg-[#EDE9E0] text-[#080808]"
+                        : "border-[#EDE9E0]/70 text-[#EDE9E0]"
                     }`}
                   >
                     {item}
@@ -830,14 +831,15 @@ export function ShopClient({ data }: { data: ShopDataResult }) {
                   })
                 }
                 className={`text-xs uppercase tracking-[0.2em] ${
-                  data.page >= data.totalPages ? "text-[#F0EDE8]/35" : "text-[#F0EDE8]/75"
+                  data.page >= data.totalPages ? "text-[#EDE9E0]/35" : "text-[#EDE9E0]/75"
                 }`}
               >
                 NEXT →
               </button>
             </div>
+            ) : null}
 
-            <p className="mt-3 text-center text-[12px] text-[#F0EDE8]/55">
+            <p className="mt-3 text-center text-[12px] text-[#EDE9E0]/55">
               Showing {showingStart}-{showingEnd} of {data.total} products
             </p>
           </section>
@@ -845,7 +847,7 @@ export function ShopClient({ data }: { data: ShopDataResult }) {
 
         <button
           onClick={() => setMobileFiltersOpen(true)}
-          className="fixed bottom-5 right-5 z-40 border-[0.5px] border-[#F0EDE8]/35 bg-[#111111] px-4 py-2 text-[11px] uppercase tracking-[0.22em] md:hidden"
+          className="fixed bottom-5 right-5 z-40 border-[0.5px] border-[#EDE9E0]/35 bg-[#080808] px-4 py-2 text-[11px] uppercase tracking-[0.22em] md:hidden"
         >
           FILTER {activeFilterCount > 0 ? `(${activeFilterCount})` : ""}
         </button>
@@ -858,7 +860,7 @@ export function ShopClient({ data }: { data: ShopDataResult }) {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.2, ease: "easeOut" }}
-                className="fixed inset-0 z-50 bg-black/60"
+                className="fixed inset-0 z-50 bg-[#080808]/60"
                 onClick={() => setMobileFiltersOpen(false)}
               />
               <motion.aside
@@ -866,10 +868,10 @@ export function ShopClient({ data }: { data: ShopDataResult }) {
                 animate={{ x: 0 }}
                 exit={{ x: "-100%" }}
                 transition={{ duration: 0.25, ease: "easeOut" }}
-                className="fixed left-0 top-0 z-[55] h-full w-full max-w-[360px] overflow-y-auto bg-[#0D0D0D] p-4"
+                className="fixed left-0 top-0 z-[55] h-full w-full max-w-[360px] overflow-y-auto bg-[#080808] p-4"
               >
                 <div className="mb-4 flex items-center justify-between">
-                  <p className="text-[11px] uppercase tracking-[0.24em] text-[#F0EDE8]/65">Filters</p>
+                  <p className="text-[11px] uppercase tracking-[0.24em] text-[#EDE9E0]/65">Filters</p>
                   <button onClick={() => setMobileFiltersOpen(false)}>
                     <X className="h-5 w-5" />
                   </button>
@@ -921,7 +923,7 @@ export function ShopClient({ data }: { data: ShopDataResult }) {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.2, ease: "easeOut" }}
-                className="fixed inset-0 z-[65] bg-black/75 backdrop-blur-[2px]"
+                className="fixed inset-0 z-[65] bg-[#080808]/75 backdrop-blur-[2px]"
                 onClick={() => setQuickViewProductId(null)}
               />
               <motion.div
@@ -929,7 +931,7 @@ export function ShopClient({ data }: { data: ShopDataResult }) {
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.96 }}
                 transition={{ duration: 0.2, ease: "easeOut" }}
-                className="fixed inset-x-4 bottom-0 z-[66] max-h-[85vh] overflow-y-auto border-[0.5px] border-[#F0EDE8]/25 bg-[#111111] p-4 md:inset-x-[max(4vw,24px)] md:bottom-auto md:top-1/2 md:max-h-[86vh] md:w-[min(900px,92vw)] md:-translate-y-1/2 md:p-6"
+                className="fixed inset-x-4 bottom-0 z-[66] max-h-[85vh] overflow-y-auto border-[0.5px] border-[#EDE9E0]/25 bg-[#080808] p-4 md:inset-x-[max(4vw,24px)] md:bottom-auto md:top-1/2 md:max-h-[86vh] md:w-[min(900px,92vw)] md:-translate-y-1/2 md:p-6"
                 ref={quickViewRef}
                 role="dialog"
                 aria-modal="true"
@@ -952,13 +954,13 @@ export function ShopClient({ data }: { data: ShopDataResult }) {
                         onClick={() =>
                           setQuickViewImageIndex((value) => (value - 1 + quickViewProduct.images.length) % quickViewProduct.images.length)
                         }
-                        className="absolute left-2 top-1/2 -translate-y-1/2 border-[0.5px] border-[#F0EDE8]/45 bg-[#080808]/80 p-2"
+                        className="absolute left-2 top-1/2 -translate-y-1/2 border-[0.5px] border-[#EDE9E0]/45 bg-[#080808]/80 p-2"
                       >
                         <ChevronLeft className="h-4 w-4" />
                       </button>
                       <button
                         onClick={() => setQuickViewImageIndex((value) => (value + 1) % quickViewProduct.images.length)}
-                        className="absolute right-2 top-1/2 -translate-y-1/2 border-[0.5px] border-[#F0EDE8]/45 bg-[#080808]/80 p-2"
+                        className="absolute right-2 top-1/2 -translate-y-1/2 border-[0.5px] border-[#EDE9E0]/45 bg-[#080808]/80 p-2"
                       >
                         <ChevronRight className="h-4 w-4" />
                       </button>
@@ -970,7 +972,7 @@ export function ShopClient({ data }: { data: ShopDataResult }) {
                           key={image}
                           onClick={() => setQuickViewImageIndex(index)}
                           className={`relative aspect-[3/4] border-[0.5px] ${
-                            index === quickViewImageIndex ? "border-[#F0EDE8]" : "border-[#F0EDE8]/25"
+                            index === quickViewImageIndex ? "border-[#EDE9E0]" : "border-[#EDE9E0]/25"
                           }`}
                         >
                           <Image src={image} alt={`${quickViewProduct.name} ${index + 1}`} fill sizes="120px" className="object-cover" />
@@ -980,14 +982,14 @@ export function ShopClient({ data }: { data: ShopDataResult }) {
                   </div>
 
                   <div>
-                    <h2 className="font-blackletter text-[32px] leading-none">{quickViewProduct.name}</h2>
-                    <p className="mt-2 text-[11px] uppercase tracking-[0.3em] text-[#F0EDE8]/55">
+                    <h2 className="font-anton text-[32px] leading-none tracking-[16px]">{quickViewProduct.name}</h2>
+                    <p className="mt-2 text-[11px] uppercase tracking-[0.3em] text-[#EDE9E0]/55">
                       {quickViewProduct.collection}
                     </p>
-                    <p className="mt-4 text-2xl font-semibold">
+                    <p className="mt-4 text-2xl font-medium">
                       {quickViewProduct.compareAtPrice ? (
                         <>
-                          <span className="mr-3 text-[#F0EDE8]/45 line-through">{formatEGP(quickViewProduct.compareAtPrice)}</span>
+                          <span className="mr-3 text-[#EDE9E0]/45 line-through">{formatEGP(quickViewProduct.compareAtPrice)}</span>
                           <span>{formatEGP(quickViewProduct.price)}</span>
                         </>
                       ) : (
@@ -1010,8 +1012,8 @@ export function ShopClient({ data }: { data: ShopDataResult }) {
                             onClick={() => addToCartQuick(quickViewProduct, size.size)}
                             className={`h-9 border-[0.5px] text-[11px] uppercase tracking-[0.18em] ${
                               disabled
-                                ? "border-[#F0EDE8]/20 text-[#F0EDE8]/35 line-through"
-                                : "border-[#F0EDE8]/75 text-[#F0EDE8]"
+                                ? "border-[#EDE9E0]/20 text-[#EDE9E0]/35 line-through"
+                                : "border-[#EDE9E0]/75 text-[#EDE9E0]"
                             }`}
                           >
                             {size.size}
@@ -1020,16 +1022,16 @@ export function ShopClient({ data }: { data: ShopDataResult }) {
                       })}
                     </div>
 
-                    <button className="mt-3 text-[11px] uppercase tracking-[0.2em] text-[#F0EDE8]/75" onClick={() => setSizeGuideOpen(true)}>
+                    <button className="mt-3 text-[11px] uppercase tracking-[0.2em] text-[#EDE9E0]/75" onClick={() => setSizeGuideOpen(true)}>
                       SIZE GUIDE →
                     </button>
 
                     <div className="mt-4 flex items-center gap-3">
-                      <button className="border-[0.5px] border-[#F0EDE8]/45 p-2">
+                      <button className="border-[0.5px] border-[#EDE9E0]/45 p-2">
                         <Minus className="h-4 w-4" />
                       </button>
                       <span className="text-sm">1</span>
-                      <button className="border-[0.5px] border-[#F0EDE8]/45 p-2">
+                      <button className="border-[0.5px] border-[#EDE9E0]/45 p-2">
                         <Plus className="h-4 w-4" />
                       </button>
                     </div>
@@ -1039,7 +1041,7 @@ export function ShopClient({ data }: { data: ShopDataResult }) {
                         const firstAvailable = extractSizeOptions(quickViewProduct).find((size) => size.active && size.stock > 0);
                         if (firstAvailable) addToCartQuick(quickViewProduct, firstAvailable.size);
                       }}
-                      className="mt-4 h-11 w-full bg-[#F0EDE8] text-[11px] font-bold uppercase tracking-[0.2em] text-[#080808]"
+                      className="mt-4 h-11 w-full bg-[#EDE9E0] text-[11px] font-medium uppercase tracking-[0.2em] text-[#080808]"
                     >
                       ADD TO CART
                     </button>
@@ -1047,17 +1049,17 @@ export function ShopClient({ data }: { data: ShopDataResult }) {
                     <Link
                       href={`/product/${quickViewProduct.slug}`}
                       onClick={() => setQuickViewProductId(null)}
-                      className="mt-3 inline-block text-[11px] uppercase tracking-[0.2em] text-[#F0EDE8]"
+                      className="mt-3 inline-block text-[11px] uppercase tracking-[0.2em] text-[#EDE9E0]"
                     >
                       VIEW FULL DETAILS →
                     </Link>
 
-                    <p className="mt-4 text-sm text-[#F0EDE8]/65">{quickViewProduct.shortDescription}</p>
+                    <p className="mt-4 text-sm text-[#EDE9E0]/65">{quickViewProduct.shortDescription}</p>
 
-                    <div className="mt-4 space-y-1 text-[11px] uppercase tracking-[0.2em] text-[#F0EDE8]/65">
+                    <div className="mt-4 space-y-1 text-[11px] uppercase tracking-[0.2em] text-[#EDE9E0]/65">
                       <p>Free Alex Delivery</p>
                       <p>Limited Stock</p>
-                      <p>220GSM Heavyweight</p>
+                      <p>100% COTTON</p>
                     </div>
                   </div>
                 </div>
@@ -1070,7 +1072,7 @@ export function ShopClient({ data }: { data: ShopDataResult }) {
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         transition={{ duration: 0.2, ease: "easeOut" }}
-                        className="absolute inset-0 z-[3] bg-black/60"
+                        className="absolute inset-0 z-[3] bg-[#080808]/60"
                         onClick={() => setSizeGuideOpen(false)}
                       />
                       <motion.div
@@ -1078,7 +1080,7 @@ export function ShopClient({ data }: { data: ShopDataResult }) {
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: 12 }}
                         transition={{ duration: 0.2, ease: "easeOut" }}
-                        className="absolute left-1/2 top-1/2 z-[4] w-[min(520px,90vw)] -translate-x-1/2 -translate-y-1/2 border-[0.5px] border-[#F0EDE8]/25 bg-[#0D0D0D] p-4"
+                        className="absolute left-1/2 top-1/2 z-[4] w-[min(520px,90vw)] -translate-x-1/2 -translate-y-1/2 border-[0.5px] border-[#EDE9E0]/25 bg-[#080808] p-4"
                       >
                         <div className="mb-3 flex items-center justify-between">
                           <p className="text-[11px] uppercase tracking-[0.2em]">Size Guide (cm)</p>
@@ -1088,7 +1090,7 @@ export function ShopClient({ data }: { data: ShopDataResult }) {
                         </div>
                         <table className="w-full text-left text-[12px]">
                           <thead>
-                            <tr className="text-[#F0EDE8]/55">
+                            <tr className="text-[#EDE9E0]/55">
                               <th className="py-2">Size</th>
                               <th className="py-2">Chest</th>
                               <th className="py-2">Length</th>
@@ -1097,13 +1099,14 @@ export function ShopClient({ data }: { data: ShopDataResult }) {
                           </thead>
                           <tbody>
                             {[
+                              ["XS", "56", "66", "21"],
                               ["S", "58", "68", "22"],
                               ["M", "60", "70", "23"],
                               ["L", "62", "72", "24"],
                               ["XL", "64", "74", "25"],
                               ["XXL", "66", "76", "26"],
                             ].map((row) => (
-                              <tr key={row[0]} className="border-t border-[#F0EDE8]/15">
+                              <tr key={row[0]} className="border-t border-[#EDE9E0]/15">
                                 {row.map((value) => (
                                   <td key={value} className="py-2">{value}</td>
                                 ))}
@@ -1161,7 +1164,7 @@ function FilterPanel({
 }) {
   const sizeAvailability = useMemo(() => {
     const map = new Map<string, boolean>();
-    for (const size of ["S", "M", "L", "XL", "XXL"]) {
+    for (const size of ["XS", "S", "M", "L", "XL", "XXL"]) {
       map.set(size, data.availableSizes.includes(size));
     }
     return map;
@@ -1170,11 +1173,11 @@ function FilterPanel({
   return (
     <div className="space-y-5">
       <section>
-        <p className="text-[11px] uppercase tracking-[0.3em] text-[#F0EDE8]/55">Collection</p>
+        <p className="text-[11px] uppercase tracking-[0.3em] text-[#EDE9E0]/55">Collection</p>
         <div className="mt-3 space-y-2 text-[12px] uppercase tracking-[0.2em]">
           <button
             onClick={() => onCollectionChange("all")}
-            className={selectedCollection === "all" ? "text-[#F0EDE8]" : "text-[#F0EDE8]/55"}
+            className={selectedCollection === "all" ? "text-[#EDE9E0]" : "text-[#EDE9E0]/55"}
           >
             All
           </button>
@@ -1182,7 +1185,7 @@ function FilterPanel({
             <div key={item.slug}>
               <button
                 onClick={() => onCollectionChange(item.slug)}
-                className={selectedCollection === item.slug ? "text-[#F0EDE8]" : "text-[#F0EDE8]/55"}
+                className={selectedCollection === item.slug ? "text-[#EDE9E0]" : "text-[#EDE9E0]/55"}
               >
                 {item.label}
               </button>
@@ -1191,12 +1194,12 @@ function FilterPanel({
         </div>
       </section>
 
-      <div className="h-px bg-[#F0EDE8]/15" />
+      <div className="h-px bg-[#EDE9E0]/15" />
 
       <section>
-        <p className="text-[11px] uppercase tracking-[0.3em] text-[#F0EDE8]/55">Size</p>
+        <p className="text-[11px] uppercase tracking-[0.3em] text-[#EDE9E0]/55">Size</p>
         <div className="mt-3 flex gap-2">
-          {["S", "M", "L", "XL", "XXL"].map((size) => {
+          {["XS", "S", "M", "L", "XL", "XXL"].map((size) => {
             const enabled = sizeAvailability.get(size);
             const selected = selectedSizes.includes(size);
             return (
@@ -1206,10 +1209,10 @@ function FilterPanel({
                 onClick={() => onSizeToggle(size)}
                 className={`h-9 w-9 border-[0.5px] text-[11px] uppercase ${
                   selected
-                    ? "border-[#F0EDE8] bg-[#F0EDE8] text-[#080808]"
+                    ? "border-[#EDE9E0] bg-[#EDE9E0] text-[#080808]"
                     : enabled
-                      ? "border-[#F0EDE8]/55 text-[#F0EDE8]"
-                      : "border-[#F0EDE8]/20 text-[#F0EDE8]/35 line-through"
+                      ? "border-[#EDE9E0]/55 text-[#EDE9E0]"
+                      : "border-[#EDE9E0]/20 text-[#EDE9E0]/35 line-through"
                 }`}
               >
                 {size}
@@ -1219,10 +1222,10 @@ function FilterPanel({
         </div>
       </section>
 
-      <div className="h-px bg-[#F0EDE8]/15" />
+      <div className="h-px bg-[#EDE9E0]/15" />
 
       <section>
-        <p className="text-[11px] uppercase tracking-[0.3em] text-[#F0EDE8]/55">Color</p>
+        <p className="text-[11px] uppercase tracking-[0.3em] text-[#EDE9E0]/55">Color</p>
         <div className="mt-3 flex flex-wrap gap-2">
           {data.colors.map((color) => {
             const selected = selectedColors.includes(color.slug);
@@ -1235,10 +1238,10 @@ function FilterPanel({
                 className="group relative"
               >
                 <span
-                  className={`block h-6 w-6 border-[0.5px] border-[#F0EDE8]/35 ${selected ? "ring-2 ring-[#F0EDE8]" : ""}`}
+                  className={`block h-6 w-6 border-[0.5px] border-[#EDE9E0]/35 ${selected ? "ring-2 ring-[#EDE9E0]" : ""}`}
                   style={{ backgroundColor: color.hex }}
                 />
-                <span className="pointer-events-none absolute -top-7 left-1/2 hidden -translate-x-1/2 whitespace-nowrap bg-[#080808] px-2 py-1 text-[10px] uppercase tracking-[0.15em] text-[#F0EDE8] group-hover:block">
+                <span className="pointer-events-none absolute -top-7 left-1/2 hidden -translate-x-1/2 whitespace-nowrap bg-[#080808] px-2 py-1 text-[10px] uppercase tracking-[0.15em] text-[#EDE9E0] group-hover:block">
                   {color.label}
                 </span>
               </motion.button>
@@ -1247,18 +1250,18 @@ function FilterPanel({
         </div>
       </section>
 
-      <div className="h-px bg-[#F0EDE8]/15" />
+      <div className="h-px bg-[#EDE9E0]/15" />
 
       <section>
-        <p className="text-[11px] uppercase tracking-[0.3em] text-[#F0EDE8]/55">Price</p>
-        <p className="mt-2 text-[12px] text-[#F0EDE8]/75">
+        <p className="text-[11px] uppercase tracking-[0.3em] text-[#EDE9E0]/55">Price</p>
+        <p className="mt-2 text-[12px] text-[#EDE9E0]/75">
           {Math.floor(priceMin)} EGP - {Math.floor(priceMax)} EGP
         </p>
 
         <div className="relative mt-3 h-8">
-          <div className="absolute top-3 h-[2px] w-full bg-[#1F1F1F]" />
+          <div className="absolute top-3 h-[2px] w-full bg-[#555555]" />
           <div
-            className="absolute top-3 h-[2px] bg-[#F0EDE8]"
+            className="absolute top-3 h-[2px] bg-[#EDE9E0]"
             style={{
               left: `${((priceMin - data.minPriceBound) / (data.maxPriceBound - data.minPriceBound || 1)) * 100}%`,
               right: `${100 - ((priceMax - data.minPriceBound) / (data.maxPriceBound - data.minPriceBound || 1)) * 100}%`,
@@ -1287,21 +1290,21 @@ function FilterPanel({
         </div>
       </section>
 
-      <div className="h-px bg-[#F0EDE8]/15" />
+      <div className="h-px bg-[#EDE9E0]/15" />
 
       <section>
-        <p className="text-[11px] uppercase tracking-[0.3em] text-[#F0EDE8]/55">Availability</p>
+        <p className="text-[11px] uppercase tracking-[0.3em] text-[#EDE9E0]/55">Availability</p>
         <div className="mt-3 space-y-2 text-[12px] uppercase tracking-[0.2em]">
           <button
             onClick={() => onAvailabilityChange("in-stock")}
-            className={selectedAvailability === "in-stock" ? "text-[#F0EDE8]" : "text-[#F0EDE8]/55"}
+            className={selectedAvailability === "in-stock" ? "text-[#EDE9E0]" : "text-[#EDE9E0]/55"}
           >
             In Stock
           </button>
           <div>
             <button
               onClick={() => onAvailabilityChange("all")}
-              className={selectedAvailability === "all" ? "text-[#F0EDE8]" : "text-[#F0EDE8]/55"}
+              className={selectedAvailability === "all" ? "text-[#EDE9E0]" : "text-[#EDE9E0]/55"}
             >
               All
             </button>

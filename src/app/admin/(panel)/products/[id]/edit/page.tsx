@@ -23,7 +23,7 @@ export default async function AdminEditProductPage({
   return (
     <section>
       <div className="mb-4">
-        <p className="text-[12px] uppercase tracking-[0.28em] text-[#F0EDE8]/55">
+        <p className="text-[12px] uppercase tracking-[0.28em] text-[#EDE9E0]/55">
           99 - PRODUCTS
         </p>
         <h1 className="mt-3 font-blackletter text-4xl md:text-5xl">Edit Product</h1>

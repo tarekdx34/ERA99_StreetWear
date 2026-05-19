@@ -15,12 +15,12 @@ const chapterClass = "text-[11px] uppercase tracking-[0.5em] text-[#555555]";
 
 const timelineEvents = [
   {
-    label: "15 YEARS",
-    body: "Our father spent 15 years inside Egyptian factories. Not owning. Serving. Learning every thread, every supplier, every machine that other people's brands ran on.",
+    label: "20+ YEARS",
+    body: "Built by people who spent 20+ years in Egyptian factories before making a shirt for themselves.",
   },
   {
-    label: "THE QUESTION",
-    body: 'One day I asked him — why are we building their brand and not ours?',
+    label: "THE POSITION",
+    body: "The axis stays fixed. The product carries the position.",
   },
   {
     label: "THE BUILD",
@@ -32,7 +32,7 @@ const timelineEvents = [
   },
   {
     label: "DROP 001",
-    body: "ERA 99 is the first chapter. 220 GSM Egyptian combed cotton. Heavyweight. Boxy. Drop shoulder. Built in Alexandria, Egypt.",
+    body: "ERA 99 is the first chapter. 100% COTTON Egyptian combed cotton. Heavyweight. Boxy. Drop shoulder. Built in Alexandria, Egypt.",
   },
 ];
 
@@ -64,7 +64,7 @@ export function StoryPage() {
   );
 
   return (
-    <div className="bg-[#080808] text-[#ede9e0]">
+    <div className="overflow-x-hidden bg-[#080808] text-[#EDE9E0]">
       <AnimatePresence>
         {showIntro ? (
           <motion.div
@@ -74,7 +74,7 @@ export function StoryPage() {
             transition={{ duration: 0.35, ease: "easeOut" }}
           >
             <motion.div
-              className="font-anton text-[92px] tracking-[16px] text-[#ede9e0] md:text-[124px]"
+              className="font-anton text-[72px] tracking-[0.18em] text-[#EDE9E0] sm:text-[92px] sm:tracking-[16px] md:text-[124px]"
               initial={{ opacity: 0 }}
               animate={{ opacity: [0, 1, 1, 0] }}
               transition={{
@@ -95,17 +95,17 @@ export function StoryPage() {
         animate={!showIntro ? contentReveal.animate : contentReveal.initial}
         transition={contentReveal.transition}
       >
-        <section className="relative flex min-h-screen flex-col items-center justify-center px-6 text-center">
+        <section className="relative flex min-h-screen flex-col items-center justify-center px-6 pt-32 text-center md:pt-36">
           <motion.p
             {...reveal}
-            className="absolute top-24 text-[14px] tracking-[0.4em] text-[#555555]"
+            className="absolute top-32 text-[14px] tracking-[0.4em] text-[#555555] md:top-36"
           >
             NOT A BRAND. A POSITION.
           </motion.p>
 
           <motion.h1
             {...reveal}
-            className="font-anton max-w-[800px] text-[72px] leading-none tracking-[16px] text-[#ede9e0] md:text-[120px]"
+            className="font-anton max-w-[800px] text-[64px] leading-none tracking-[0.18em] text-[#EDE9E0] sm:text-[72px] sm:tracking-[16px] md:text-[120px]"
           >
             QUTB
           </motion.h1>
@@ -113,7 +113,7 @@ export function StoryPage() {
           <motion.p
             {...reveal}
             transition={{ duration: 0.7, ease: "easeOut", delay: 0.15 }}
-            className="mt-8 text-[16px] leading-[1.6] text-[#ede9e0]/70 md:text-[20px]"
+            className="mt-8 text-[16px] leading-[1.6] text-[#EDE9E0]/70 md:text-[20px]"
           >
             Everything revolves.
             <br />
@@ -123,7 +123,7 @@ export function StoryPage() {
           <motion.p
             {...reveal}
             transition={{ duration: 0.7, ease: "easeOut", delay: 0.3 }}
-            className="mt-6 text-[13px] uppercase tracking-[0.3em] text-[#555555]"
+            className="mt-6 max-w-[20rem] text-[12px] uppercase leading-relaxed tracking-[0.2em] text-[#555555] sm:max-w-none sm:text-[13px] sm:tracking-[0.3em]"
           >
             ERA 99 — DROP 001 — ALEXANDRIA
           </motion.p>
@@ -137,7 +137,7 @@ export function StoryPage() {
                 transition={{ duration: 0.25, ease: "easeOut" }}
               >
                 <motion.div
-                  className="h-16 w-px bg-[#ede9e0]/45"
+                  className="h-16 w-px bg-[#EDE9E0]/45"
                   animate={{ y: [0, 12, 0], opacity: [0.45, 1, 0.45] }}
                   transition={{
                     duration: 1.8,
@@ -151,7 +151,7 @@ export function StoryPage() {
         </section>
 
         <section className="relative overflow-hidden px-6 py-24 md:px-10 md:py-32">
-          <div className="pointer-events-none absolute left-4 top-8 text-[18vw] leading-none text-[#ede9e0]/[0.04] md:left-10">
+          <div className="pointer-events-none absolute left-4 top-8 text-[18vw] leading-none text-[#EDE9E0]/[0.04] md:left-10">
             Q
           </div>
           <div className="mx-auto grid max-w-7xl grid-cols-1 gap-10 md:grid-cols-[1fr_1.2fr] md:gap-14">
@@ -163,7 +163,7 @@ export function StoryPage() {
               <motion.h2
                 {...reveal}
                 transition={{ duration: 0.7, ease: "easeOut", delay: 0.1 }}
-                className="mt-6 font-anton text-[56px] leading-none tracking-[16px] text-[#ede9e0]"
+                className="mt-6 font-anton text-[52px] leading-none tracking-[0.18em] text-[#EDE9E0] sm:text-[56px] sm:tracking-[16px]"
               >
                 QUTB.
               </motion.h2>
@@ -173,41 +173,37 @@ export function StoryPage() {
                 transition={{ duration: 0.7, ease: "easeOut", delay: 0.2 }}
                 className="mt-10 text-[18px] leading-[1.8] text-[rgba(237,233,224,0.85)]"
               >
-                My father spent 15 years inside Egyptian factories. Not owning.
-                Serving. Learning every thread, every supplier, every machine
-                that other people&apos;s brands ran on.
+                Built by people who spent 20+ years in Egyptian factories before
+                making a shirt for themselves.
               </motion.p>
               <motion.p
                 {...reveal}
                 transition={{ duration: 0.7, ease: "easeOut", delay: 0.35 }}
                 className="mt-7 text-[18px] leading-[1.8] text-[rgba(237,233,224,0.85)]"
               >
-                One day I asked him — why are we building their brand and not
-                ours?
+                They built for global labels. They chose to build for themselves.
               </motion.p>
               <motion.p
                 {...reveal}
                 transition={{ duration: 0.7, ease: "easeOut", delay: 0.5 }}
                 className="mt-7 text-[18px] leading-[1.8] text-[rgba(237,233,224,0.85)]"
               >
-                Six months of sampling. Washing. Wearing. Breaking fabric until
-                it held. QUTB. The axis. The fixed point that everything else
-                revolves around.
+                Sampling, washing, and wear testing set the standard. QUTB holds
+                the axis.
               </motion.p>
               <motion.p
                 {...reveal}
                 transition={{ duration: 0.7, ease: "easeOut", delay: 0.65 }}
                 className="mt-7 text-[18px] leading-[1.8] text-[rgba(237,233,224,0.85)]"
               >
-                Alexandria is that point. This family is that point. This brand
-                is that point.
+                Alexandria is the fixed point.
               </motion.p>
               <motion.p
                 {...reveal}
                 transition={{ duration: 0.7, ease: "easeOut", delay: 0.8 }}
                 className="mt-7 text-[18px] leading-[1.8] text-[rgba(237,233,224,0.85)]"
               >
-                ERA 99 is the first chapter.
+                ERA 99 is the first chapter. 100% COTTON. Garment dyed. Wash tested.
               </motion.p>
             </div>
           </div>
@@ -215,15 +211,18 @@ export function StoryPage() {
 
         <motion.section
           {...reveal}
-          className="relative left-1/2 right-1/2 -mx-[50vw] h-[70vh] w-screen overflow-hidden"
+          className="relative h-[70vh] w-full overflow-hidden"
         >
           <img
             src="/images/1.jpeg"
             alt="Alexandria campaign"
+            width={1600}
+            height={1200}
+            loading="lazy"
             className="h-full w-full object-cover"
           />
           <div className="absolute inset-0 bg-[linear-gradient(to_bottom,transparent_40%,rgba(8,8,8,0.9)_100%)]" />
-          <div className="absolute bottom-8 left-6 flex items-center gap-3 text-[13px] uppercase tracking-[0.3em] text-[#ede9e0]/70 md:left-10">
+          <div className="absolute bottom-8 left-4 flex flex-wrap items-center gap-3 text-[12px] uppercase tracking-[0.18em] text-[#EDE9E0]/70 md:left-10 md:text-[13px] md:tracking-[0.3em]">
             <span>Alexandria, Egypt</span>
             <span>—</span>
             <span>2025</span>
@@ -234,7 +233,7 @@ export function StoryPage() {
           <div className="mx-auto grid max-w-7xl grid-cols-1 items-start gap-10 md:grid-cols-2 md:gap-14">
             <motion.div {...reveal} className="order-2 md:order-1">
               <p className={chapterClass}>THE ORIGIN</p>
-              <h2 className="mt-6 font-anton text-[48px] leading-none tracking-[16px] text-[#ede9e0]">
+              <h2 className="mt-6 font-anton text-[44px] leading-none tracking-[0.16em] text-[#EDE9E0] sm:text-[48px] sm:tracking-[16px]">
                 Built by two.
               </h2>
               <motion.p
@@ -242,37 +241,85 @@ export function StoryPage() {
                 transition={{ duration: 0.7, ease: "easeOut", delay: 0.2 }}
                 className="mt-10 text-[18px] leading-[1.8] text-[rgba(237,233,224,0.85)]"
               >
-                ERA 99 began with a conversation. A father. 15 years in
-                Egyptian factories. A son. One question: why not ours?
+                A father and son building from factory memory, not moodboards.
               </motion.p>
               <motion.p
                 {...reveal}
                 transition={{ duration: 0.7, ease: "easeOut", delay: 0.35 }}
                 className="mt-7 text-[18px] leading-[1.8] text-[rgba(237,233,224,0.85)]"
               >
-                Most brands guess at quality. We grew up inside it. Every
-                supplier we use, every fabric weight we chose, every stitch
-                specification — nothing was decided blindly. This is the
-                advantage you cannot buy and cannot fake.
+                100% COTTON, garment dyed, wash tested. Specs earn the feeling.
               </motion.p>
               <motion.p
                 {...reveal}
                 transition={{ duration: 0.7, ease: "easeOut", delay: 0.5 }}
                 className="mt-7 text-[18px] leading-[1.8] text-[rgba(237,233,224,0.85)]"
               >
-                We are not a startup. We are a family that decided to stop
-                building other people&apos;s brands and start building our own.
+                QUTB stands on production memory and deliberate standards.
               </motion.p>
             </motion.div>
 
             <motion.div
               {...reveal}
-              className="order-1 aspect-square w-full overflow-hidden bg-[linear-gradient(145deg,#0b0b0b,#131313)] md:order-2"
-              style={{
-                backgroundImage:
-                  "radial-gradient(circle at 20% 20%, rgba(237,233,224,0.05), transparent 40%), radial-gradient(circle at 80% 70%, rgba(237,233,224,0.04), transparent 45%)",
-              }}
-            />
+              className="relative order-1 flex aspect-square w-full items-center justify-center overflow-hidden border border-ash/10 bg-ash/5 md:order-2"
+            >
+              <img
+                src="/images/story/factory-1.jpg"
+                alt="QUTB factory process"
+                className="absolute inset-0 h-full w-full object-cover"
+                loading="lazy"
+                onLoad={(event) => {
+                  const label = event.currentTarget.nextElementSibling;
+                  if (label instanceof HTMLElement) label.style.display = "none";
+                }}
+                onError={(event) => {
+                  event.currentTarget.style.display = "none";
+                }}
+              />
+              <p className="text-xs uppercase tracking-widest text-[#555555]">
+                /images/story/factory-1.jpg
+              </p>
+            </motion.div>
+          </div>
+        </section>
+
+        <section className="px-6 py-24 md:px-10 md:py-32 bg-[#111]">
+          <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-10 md:grid-cols-2 md:gap-14">
+            <motion.div
+              {...reveal}
+              className="relative flex aspect-square w-full items-center justify-center overflow-hidden border border-ash/10 bg-ash/5"
+            >
+              <img
+                src="/images/story/father-son-sketch.jpg"
+                alt="Father and son sketch"
+                className="absolute inset-0 h-full w-full object-cover"
+                loading="lazy"
+                onLoad={(event) => {
+                  const label = event.currentTarget.nextElementSibling;
+                  if (label instanceof HTMLElement) label.style.display = "none";
+                }}
+                onError={(event) => {
+                  event.currentTarget.style.display = "none";
+                }}
+              />
+              <p className="text-xs uppercase tracking-widest text-[#555555]">
+                /images/story/father-son-sketch.jpg
+              </p>
+            </motion.div>
+
+            <motion.div {...reveal}>
+              <p className={chapterClass}>THE LEGACY</p>
+              <h2 className="mt-6 font-anton text-[40px] leading-none tracking-[0.12em] text-[#EDE9E0] sm:text-[48px] sm:tracking-[16px]">
+                A dialogue across generations.
+              </h2>
+              <motion.p
+                {...reveal}
+                transition={{ duration: 0.7, ease: "easeOut", delay: 0.2 }}
+                className="mt-10 text-[18px] leading-[1.8] text-[rgba(237,233,224,0.85)]"
+              >
+                What begins in the factory is passed down out of it. The conversations that start over sewing machines echo in the streets.
+              </motion.p>
+            </motion.div>
           </div>
         </section>
 
@@ -291,14 +338,14 @@ export function StoryPage() {
             <motion.h2
               {...reveal}
               transition={{ duration: 0.7, ease: "easeOut", delay: 0.1 }}
-              className="mt-6 font-anton text-[48px] leading-none tracking-[16px] text-[#ede9e0] md:text-[72px]"
+              className="mt-6 font-anton text-[44px] leading-none tracking-[0.16em] text-[#EDE9E0] sm:text-[48px] sm:tracking-[16px] md:text-[72px]"
             >
               Alexandria.
             </motion.h2>
             <motion.p
               {...reveal}
               transition={{ duration: 0.7, ease: "easeOut", delay: 0.2 }}
-              className="mt-8 text-[12px] uppercase tracking-[0.3em] text-[#555555]"
+              className="mt-8 text-[11px] uppercase leading-relaxed tracking-[0.18em] text-[#555555] sm:text-[12px] sm:tracking-[0.3em]"
             >
               32°N, 29°E — MEDITERRANEAN COAST — EST. 331 BC
             </motion.p>
@@ -332,10 +379,8 @@ export function StoryPage() {
                 className="text-[17px] leading-[1.85] text-[rgba(237,233,224,0.85)]"
               >
                 <p>
-                  Alexandria is our axis. The fixed point. The place we come
-                  from and the place everything in this brand points back to.
-                  Every shirt we make carries that address — even when no one
-                  can read it.
+                  Alexandria holds. Every shirt carries that address — even
+                  when no one can read it.
                 </p>
               </motion.div>
             </div>
@@ -343,11 +388,11 @@ export function StoryPage() {
             <motion.div
               {...reveal}
               transition={{ duration: 0.7, ease: "easeOut", delay: 0.55 }}
-              className="mt-14 border-t border-[#ede9e0]/10 pt-10"
+              className="mt-14 border-t border-[#EDE9E0]/10 pt-10"
             >
               <div className="grid grid-cols-1 gap-8 text-center md:grid-cols-3">
                 <div>
-                  <p className="font-anton text-[48px] leading-none tracking-[16px] text-[#ede9e0]">
+                  <p className="font-anton text-[42px] leading-none tracking-[0.14em] text-[#EDE9E0] sm:text-[48px] sm:tracking-[16px]">
                     331 BC
                   </p>
                   <p className="mt-3 text-[12px] uppercase tracking-[0.2em] text-[#555555]">
@@ -355,15 +400,15 @@ export function StoryPage() {
                   </p>
                 </div>
                 <div>
-                  <p className="font-anton text-[48px] leading-none tracking-[16px] text-[#ede9e0]">
-                    220 GSM
+                  <p className="font-anton text-[34px] leading-none tracking-[0.08em] text-[#EDE9E0] sm:text-[48px] sm:tracking-[16px]">
+                    100% COTTON
                   </p>
                   <p className="mt-3 text-[12px] uppercase tracking-[0.2em] text-[#555555]">
                     Fabric Weight
                   </p>
                 </div>
                 <div>
-                  <p className="font-anton text-[48px] leading-none tracking-[16px] text-[#ede9e0]">
+                  <p className="font-anton text-[42px] leading-none tracking-[0.14em] text-[#EDE9E0] sm:text-[48px] sm:tracking-[16px]">
                     QUTB
                   </p>
                   <p className="mt-3 text-[12px] uppercase tracking-[0.2em] text-[#555555]">
@@ -383,7 +428,7 @@ export function StoryPage() {
             <motion.h2
               {...reveal}
               transition={{ duration: 0.7, ease: "easeOut", delay: 0.1 }}
-              className="mt-6 font-anton text-[48px] leading-none tracking-[16px] text-[#ede9e0]"
+              className="mt-6 font-anton text-[42px] leading-none tracking-[0.14em] text-[#EDE9E0] sm:text-[48px] sm:tracking-[16px]"
             >
               How we got here.
             </motion.h2>
@@ -418,7 +463,7 @@ export function StoryPage() {
                         </p>
                       </div>
 
-                      <div className="absolute left-4 top-2 h-3 w-3 -translate-x-1/2 border border-[#ede9e0]/50 bg-[#080808] md:left-1/2 md:top-3" />
+                      <div className="absolute left-4 top-2 h-3 w-3 -translate-x-1/2 border border-[#EDE9E0]/50 bg-[#080808] md:left-1/2 md:top-3" />
                     </motion.div>
                   );
                 })}
@@ -435,14 +480,14 @@ export function StoryPage() {
             <motion.blockquote
               {...reveal}
               transition={{ duration: 0.7, ease: "easeOut", delay: 0.1 }}
-              className="mt-8 font-anton text-[28px] leading-[1.4] tracking-[8px] text-[#ede9e0] md:text-[40px]"
+              className="mt-8 font-anton text-[26px] leading-[1.35] tracking-[0.16em] text-[#EDE9E0] sm:tracking-[8px] md:text-[40px]"
             >
               Not a brand. A position.
             </motion.blockquote>
             <motion.div
               {...reveal}
               transition={{ duration: 0.7, ease: "easeOut", delay: 0.2 }}
-              className="mx-auto mt-10 h-px w-20 bg-[#ede9e0]/30"
+              className="mx-auto mt-10 h-px w-20 bg-[#EDE9E0]/30"
             />
             <motion.p
               {...reveal}
@@ -458,21 +503,21 @@ export function StoryPage() {
           <div className="mx-auto max-w-3xl">
             <motion.h2
               {...reveal}
-              className="font-anton text-[64px] leading-none tracking-[16px] text-[#ede9e0] md:text-[90px]"
+              className="font-anton text-[58px] leading-none tracking-[0.18em] text-[#EDE9E0] sm:text-[64px] sm:tracking-[16px] md:text-[90px]"
             >
               QUTB
             </motion.h2>
             <motion.p
               {...reveal}
               transition={{ duration: 0.7, ease: "easeOut", delay: 0.1 }}
-              className="mt-4 text-[20px] text-[#ede9e0]/65"
+              className="mt-4 text-[20px] text-[#EDE9E0]/65"
             >
-              Everything revolves. We are the point it revolves around.
+              The axis holds.
             </motion.p>
             <motion.p
               {...reveal}
               transition={{ duration: 0.7, ease: "easeOut", delay: 0.2 }}
-              className="mt-5 text-[13px] uppercase tracking-[0.4em] text-[#555555]"
+              className="mt-5 text-[12px] uppercase leading-relaxed tracking-[0.22em] text-[#555555] sm:text-[13px] sm:tracking-[0.4em]"
             >
               ERA 99 — DROP 001 — LIVE
             </motion.p>
@@ -484,13 +529,13 @@ export function StoryPage() {
             >
               <Link
                 href="/shop"
-                className="border border-[#ede9e0] bg-[#ede9e0] px-8 py-3 text-xs font-bold uppercase tracking-[0.16em] text-[#080808]"
-              >
-                SHOP THE DROP →
+                className="border border-[#EDE9E0] bg-[#EDE9E0] px-8 py-3 text-xs font-medium uppercase tracking-[0.16em] text-[#080808]"
+            >
+              ENTER ERA 99
               </Link>
               <Link
                 href="/"
-                className="border border-[#ede9e0] px-8 py-3 text-xs font-bold uppercase tracking-[0.16em] text-[#ede9e0]"
+                className="border border-[#EDE9E0] px-8 py-3 text-xs font-medium uppercase tracking-[0.16em] text-[#EDE9E0]"
               >
                 BACK TO HOME
               </Link>

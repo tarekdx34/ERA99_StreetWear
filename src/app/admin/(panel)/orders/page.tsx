@@ -122,25 +122,25 @@ export default async function AdminOrdersPage({
 
   return (
     <section>
-      <p className="text-[12px] uppercase tracking-[0.28em] text-[#F0EDE8]/55">
+      <p className="text-[12px] uppercase tracking-[0.28em] text-[#EDE9E0]/55">
         99 - ORDERS
       </p>
       <h1 className="mt-2 font-blackletter text-4xl md:text-5xl">Orders</h1>
-      <p className="mt-3 text-sm text-[#F0EDE8]/70">
+      <p className="mt-3 text-sm text-[#EDE9E0]/70">
         Search, filter, and process order flow with inline status updates.
       </p>
 
-      <form className="mt-4 grid gap-3 border border-[#F0EDE8]/12 bg-[#111111] p-3 md:mt-6 md:grid-cols-[minmax(260px,1fr)_220px_170px_170px_auto]">
+      <form className="mt-4 grid gap-3 border border-[#EDE9E0]/12 bg-[#080808] p-3 md:mt-6 md:grid-cols-[minmax(260px,1fr)_220px_170px_170px_auto]">
         <input
           name="q"
           defaultValue={query}
           placeholder="Search order number, customer, phone, city"
-          className="w-full border border-[#F0EDE8]/20 bg-[#0E0E0E] px-3 py-2 text-sm outline-none placeholder:text-[#F0EDE8]/40 focus:border-[#F0EDE8]/45"
+          className="w-full border border-[#EDE9E0]/20 bg-[#080808] px-3 py-2 text-sm outline-none placeholder:text-[#EDE9E0]/40 focus:border-[#EDE9E0]/45"
         />
         <select
           name="status"
           defaultValue={status}
-          className="min-w-[220px] border border-[#F0EDE8]/20 bg-[#0E0E0E] px-3 py-2 text-xs uppercase tracking-[0.08em]"
+          className="min-w-[220px] border border-[#EDE9E0]/20 bg-[#080808] px-3 py-2 text-xs uppercase tracking-[0.08em]"
         >
           {FILTER_STATUSES.map((item) => (
             <option key={item} value={item}>
@@ -152,23 +152,23 @@ export default async function AdminOrdersPage({
           type="date"
           name="from"
           defaultValue={from}
-          className="border border-[#F0EDE8]/20 bg-[#0E0E0E] px-3 py-2 text-xs uppercase tracking-[0.08em]"
+          className="border border-[#EDE9E0]/20 bg-[#080808] px-3 py-2 text-xs uppercase tracking-[0.08em]"
         />
         <input
           type="date"
           name="to"
           defaultValue={to}
-          className="border border-[#F0EDE8]/20 bg-[#0E0E0E] px-3 py-2 text-xs uppercase tracking-[0.08em]"
+          className="border border-[#EDE9E0]/20 bg-[#080808] px-3 py-2 text-xs uppercase tracking-[0.08em]"
         />
         <button
           type="submit"
-          className="border border-[#F0EDE8]/25 px-4 py-2 text-xs uppercase tracking-[0.18em] transition-colors duration-200 hover:border-[#F0EDE8]/45"
+          className="border border-[#EDE9E0]/25 px-4 py-2 text-xs uppercase tracking-[0.18em] transition-colors duration-200 hover:border-[#EDE9E0]/45"
         >
           Apply
         </button>
       </form>
 
-      <div className="mt-3 flex flex-wrap items-center justify-between gap-2 text-[11px] uppercase tracking-[0.15em] text-[#F0EDE8]/55">
+      <div className="mt-3 flex flex-wrap items-center justify-between gap-2 text-[11px] uppercase tracking-[0.15em] text-[#EDE9E0]/55">
         <p>
           Showing {(safePage - 1) * PAGE_SIZE + (orders.length ? 1 : 0)}-
           {(safePage - 1) * PAGE_SIZE + orders.length} of {totalCount}
@@ -192,8 +192,8 @@ export default async function AdminOrdersPage({
           aria-disabled={safePage <= 1}
           className={`border px-3 py-2 text-xs uppercase tracking-[0.16em] ${
             safePage <= 1
-              ? "pointer-events-none border-[#F0EDE8]/10 text-[#F0EDE8]/35"
-              : "border-[#F0EDE8]/25 text-[#F0EDE8]/75 hover:border-[#F0EDE8]/45"
+              ? "pointer-events-none border-[#EDE9E0]/10 text-[#EDE9E0]/35"
+              : "border-[#EDE9E0]/25 text-[#EDE9E0]/75 hover:border-[#EDE9E0]/45"
           }`}
         >
           Previous
@@ -203,8 +203,8 @@ export default async function AdminOrdersPage({
           aria-disabled={safePage >= totalPages}
           className={`border px-3 py-2 text-xs uppercase tracking-[0.16em] ${
             safePage >= totalPages
-              ? "pointer-events-none border-[#F0EDE8]/10 text-[#F0EDE8]/35"
-              : "border-[#F0EDE8]/25 text-[#F0EDE8]/75 hover:border-[#F0EDE8]/45"
+              ? "pointer-events-none border-[#EDE9E0]/10 text-[#EDE9E0]/35"
+              : "border-[#EDE9E0]/25 text-[#EDE9E0]/75 hover:border-[#EDE9E0]/45"
           }`}
         >
           Next

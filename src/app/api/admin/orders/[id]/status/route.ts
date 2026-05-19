@@ -3,18 +3,15 @@ import { z } from "zod";
 import { requireAdminRole } from "@/lib/admin-security";
 import { releaseInventoryForOrder, toInventoryOrderItems } from "@/lib/catalog";
 import { prisma } from "@/lib/prisma";
+import {
+  ORDER_STATUSES,
+  isAllowedOrderStatus,
+  paymentStatusForOrderStatus,
+  releasesInventory,
+} from "@/lib/order-status";
 
 const statusSchema = z.object({
-  orderStatus: z.enum([
-    "pending_confirmation",
-    "pending_payment",
-    "paid",
-    "preparing",
-    "shipped",
-    "delivered",
-    "payment_failed",
-    "cancelled",
-  ]),
+  orderStatus: z.enum(ORDER_STATUSES),
 });
 
 export async function PATCH(
@@ -35,23 +32,30 @@ export async function PATCH(
   try {
     const body = await req.json();
     const parsed = statusSchema.parse(body);
-    const nextPaymentStatus =
-      parsed.orderStatus === "delivered" ? "paid" : undefined;
 
     const existing = await prisma.order.findUnique({
       where: { id: orderId },
-      select: { id: true, orderStatus: true, items: true },
+      select: {
+        id: true,
+        orderStatus: true,
+        items: true,
+        paymentMethod: true,
+      },
     });
 
     if (!existing) {
       return NextResponse.json({ message: "Order not found" }, { status: 404 });
     }
 
-    const movingToReleasedState =
-      parsed.orderStatus === "cancelled" || parsed.orderStatus === "payment_failed";
-    const wasAlreadyReleased =
-      existing.orderStatus === "cancelled" ||
-      existing.orderStatus === "payment_failed";
+    if (!isAllowedOrderStatus(parsed.orderStatus, existing.paymentMethod)) {
+      return NextResponse.json(
+        { message: "Invalid status for this payment method" },
+        { status: 400 },
+      );
+    }
+
+    const movingToReleasedState = releasesInventory(parsed.orderStatus);
+    const wasAlreadyReleased = releasesInventory(existing.orderStatus);
 
     if (movingToReleasedState && !wasAlreadyReleased) {
       await releaseInventoryForOrder(toInventoryOrderItems(existing.items));
@@ -61,7 +65,10 @@ export async function PATCH(
       where: { id: orderId },
       data: {
         orderStatus: parsed.orderStatus,
-        ...(nextPaymentStatus ? { paymentStatus: nextPaymentStatus } : {}),
+        paymentStatus: paymentStatusForOrderStatus(
+          parsed.orderStatus,
+          existing.paymentMethod,
+        ),
       },
       select: {
         id: true,

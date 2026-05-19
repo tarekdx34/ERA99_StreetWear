@@ -50,11 +50,23 @@ export default async function AdminDashboardPage() {
     0,
   );
   const pendingPayment = await safe(
-    () => prisma.order.count({ where: { orderStatus: "pending_payment" } }),
+    () => prisma.order.count({
+      where: {
+        OR: [
+          { orderStatus: "pending_payment" },
+          { orderStatus: { in: ["preparing", "shipped"] }, paymentMethod: "COD" }
+        ]
+      }
+    }),
     0,
   );
   const failedPayments = await safe(
-    () => prisma.order.count({ where: { orderStatus: "payment_failed" } }),
+    () =>
+      prisma.order.count({
+        where: {
+          OR: [{ orderStatus: "payment_failed" }, { paymentStatus: "failed" }],
+        },
+      }),
     0,
   );
   const todayRevenue = await safe(
@@ -62,7 +74,10 @@ export default async function AdminDashboardPage() {
       prisma.order.aggregate({
         _sum: { total: true },
         where: {
-          orderStatus: "paid",
+          OR: [
+            { orderStatus: "paid" },
+            { orderStatus: "delivered", paymentStatus: "paid" }
+          ],
           createdAt: { gte: todayStart },
         },
       }),
@@ -73,7 +88,10 @@ export default async function AdminDashboardPage() {
       prisma.order.aggregate({
         _sum: { total: true },
         where: {
-          orderStatus: "paid",
+          OR: [
+            { orderStatus: "paid" },
+            { orderStatus: "delivered", paymentStatus: "paid" }
+          ],
           createdAt: { gte: weekStart },
         },
       }),
@@ -114,7 +132,7 @@ export default async function AdminDashboardPage() {
       prisma.order.count({
         where: {
           orderStatus: "pending_confirmation",
-          paymentMethod: "cod",
+          paymentMethod: "COD",
           createdAt: { lt: thirtyMinutesAgo },
         },
       }),
@@ -174,7 +192,7 @@ export default async function AdminDashboardPage() {
     () =>
       prisma.order.count({
         where: {
-          orderStatus: "payment_failed",
+          OR: [{ orderStatus: "payment_failed" }, { paymentStatus: "failed" }],
           createdAt: { gte: dayAgo },
         },
       }),
@@ -184,7 +202,10 @@ export default async function AdminDashboardPage() {
     () =>
       prisma.order.count({
         where: {
-          orderStatus: "paid",
+          OR: [
+            { orderStatus: "paid", paymentStatus: "paid" },
+            { orderStatus: "delivered", paymentStatus: "paid" },
+          ],
           createdAt: { gte: dayAgo },
         },
       }),
@@ -378,69 +399,69 @@ export default async function AdminDashboardPage() {
 
   return (
     <section>
-      <p className="text-[12px] uppercase tracking-[0.28em] text-[#F0EDE8]/55">
+      <p className="text-[12px] uppercase tracking-[0.28em] text-[#EDE9E0]/55">
         99 - OPERATIONS
       </p>
       <h1 className="mt-2 font-blackletter text-4xl md:text-5xl">Dashboard</h1>
-      <p className="mt-3 text-sm text-[#F0EDE8]/70">
+      <p className="mt-3 text-sm text-[#EDE9E0]/70">
         Live snapshot of order flow and revenue so you can triage quickly.
       </p>
 
       <div className="mt-4 grid gap-3 md:mt-6 md:grid-cols-2 xl:grid-cols-4">
-        <div className="border border-[#F0EDE8]/12 bg-[#121212] p-4">
-          <p className="text-[11px] uppercase tracking-[0.18em] text-[#F0EDE8]/55">
+        <div className="border border-[#EDE9E0]/12 bg-[#080808] p-4">
+          <p className="text-[11px] uppercase tracking-[0.18em] text-[#EDE9E0]/55">
             TOTAL ORDERS
           </p>
-          <p className="mt-3 text-3xl font-semibold">{totalOrders}</p>
+          <p className="mt-3 text-3xl font-medium">{totalOrders}</p>
         </div>
         <div className="border border-[#8B0000]/45 bg-[#8B0000]/10 p-4">
-          <p className="text-[11px] uppercase tracking-[0.18em] text-[#F0EDE8]/55">
+          <p className="text-[11px] uppercase tracking-[0.18em] text-[#EDE9E0]/55">
             PENDING CONFIRMATION
           </p>
-          <p className="mt-3 text-3xl font-semibold">{pendingConfirmation}</p>
+          <p className="mt-3 text-3xl font-medium">{pendingConfirmation}</p>
         </div>
-        <div className="border border-[#F0EDE8]/12 bg-[#121212] p-4">
-          <p className="text-[11px] uppercase tracking-[0.18em] text-[#F0EDE8]/55">
+        <div className="border border-[#EDE9E0]/12 bg-[#080808] p-4">
+          <p className="text-[11px] uppercase tracking-[0.18em] text-[#EDE9E0]/55">
             PENDING PAYMENT
           </p>
-          <p className="mt-3 text-3xl font-semibold">{pendingPayment}</p>
+          <p className="mt-3 text-3xl font-medium">{pendingPayment}</p>
         </div>
-        <div className="border border-[#F0EDE8]/12 bg-[#121212] p-4">
-          <p className="text-[11px] uppercase tracking-[0.18em] text-[#F0EDE8]/55">
+        <div className="border border-[#EDE9E0]/12 bg-[#080808] p-4">
+          <p className="text-[11px] uppercase tracking-[0.18em] text-[#EDE9E0]/55">
             TODAY PAID REVENUE
           </p>
-          <p className="mt-3 text-3xl font-semibold">
+          <p className="mt-3 text-3xl font-medium">
             {formatCurrency(todayRevenue._sum.total || 0)}
           </p>
         </div>
       </div>
 
       <div className="mt-3 grid gap-3 md:grid-cols-2 xl:grid-cols-4">
-        <div className="border border-[#F0EDE8]/12 bg-[#121212] p-4">
-          <p className="text-[11px] uppercase tracking-[0.18em] text-[#F0EDE8]/55">
+        <div className="border border-[#EDE9E0]/12 bg-[#080808] p-4">
+          <p className="text-[11px] uppercase tracking-[0.18em] text-[#EDE9E0]/55">
             TODAY ORDERS
           </p>
-          <p className="mt-3 text-2xl font-semibold">{totalOrdersToday}</p>
+          <p className="mt-3 text-2xl font-medium">{totalOrdersToday}</p>
         </div>
-        <div className="border border-[#F0EDE8]/12 bg-[#121212] p-4">
-          <p className="text-[11px] uppercase tracking-[0.18em] text-[#F0EDE8]/55">
+        <div className="border border-[#EDE9E0]/12 bg-[#080808] p-4">
+          <p className="text-[11px] uppercase tracking-[0.18em] text-[#EDE9E0]/55">
             WEEK ORDERS
           </p>
-          <p className="mt-3 text-2xl font-semibold">{totalOrdersThisWeek}</p>
+          <p className="mt-3 text-2xl font-medium">{totalOrdersThisWeek}</p>
         </div>
-        <div className="border border-[#F0EDE8]/12 bg-[#121212] p-4">
-          <p className="text-[11px] uppercase tracking-[0.18em] text-[#F0EDE8]/55">
+        <div className="border border-[#EDE9E0]/12 bg-[#080808] p-4">
+          <p className="text-[11px] uppercase tracking-[0.18em] text-[#EDE9E0]/55">
             WEEK REVENUE
           </p>
-          <p className="mt-3 text-2xl font-semibold">
+          <p className="mt-3 text-2xl font-medium">
             {formatCurrency(weekRevenue._sum.total || 0)}
           </p>
         </div>
-        <div className="border border-[#F0EDE8]/12 bg-[#121212] p-4">
-          <p className="text-[11px] uppercase tracking-[0.18em] text-[#F0EDE8]/55">
+        <div className="border border-[#EDE9E0]/12 bg-[#080808] p-4">
+          <p className="text-[11px] uppercase tracking-[0.18em] text-[#EDE9E0]/55">
             FAILED PAYMENTS
           </p>
-          <p className="mt-3 text-2xl font-semibold">{failedPayments}</p>
+          <p className="mt-3 text-2xl font-medium">{failedPayments}</p>
         </div>
       </div>
 
@@ -457,14 +478,14 @@ export default async function AdminDashboardPage() {
         recommendations={recommendations}
       />
 
-      <div className="mt-8 border border-[#F0EDE8]/12 bg-[#111111] p-4">
+      <div className="mt-8 border border-[#EDE9E0]/12 bg-[#080808] p-4">
         <div className="flex items-center justify-between">
-          <h2 className="text-xs uppercase tracking-[0.22em] text-[#F0EDE8]/75">
+          <h2 className="text-xs uppercase tracking-[0.22em] text-[#EDE9E0]/75">
             Recent Orders
           </h2>
           <Link
             href="/admin/orders"
-            className="text-xs uppercase tracking-[0.18em] text-[#F0EDE8]/70 transition-colors hover:text-[#F0EDE8]"
+            className="text-xs uppercase tracking-[0.18em] text-[#EDE9E0]/70 transition-colors hover:text-[#EDE9E0]"
           >
             View All
           </Link>
@@ -472,7 +493,7 @@ export default async function AdminDashboardPage() {
 
         <div className="mt-3 overflow-x-auto">
           <table className="min-w-full text-left text-sm">
-            <thead className="text-[11px] uppercase tracking-[0.18em] text-[#F0EDE8]/50">
+            <thead className="text-[11px] uppercase tracking-[0.18em] text-[#EDE9E0]/50">
               <tr>
                 <th className="py-2 pr-3">Order</th>
                 <th className="py-2 pr-3">Customer</th>
@@ -486,16 +507,16 @@ export default async function AdminDashboardPage() {
               {recentOrders.map((order) => (
                 <tr
                   key={order.id}
-                  className="border-t border-[#F0EDE8]/10 text-[#F0EDE8]/88"
+                  className="border-t border-[#EDE9E0]/10 text-[#EDE9E0]/88"
                 >
                   <td className="py-3 pr-3 font-medium">{order.orderNumber}</td>
                   <td className="py-3 pr-3">{order.customerName}</td>
                   <td className="py-3 pr-3">{formatCurrency(order.total)}</td>
                   <td className="py-3 pr-3">{order.paymentMethod}</td>
-                  <td className="py-3 pr-3 uppercase tracking-[0.08em] text-[#F0EDE8]/70">
+                  <td className="py-3 pr-3 uppercase tracking-[0.08em] text-[#EDE9E0]/70">
                     {order.orderStatus.replaceAll("_", " ")}
                   </td>
-                  <td className="py-3 text-[#F0EDE8]/55">
+                  <td className="py-3 text-[#EDE9E0]/55">
                     {order.createdAt.toLocaleString("en-GB", {
                       day: "2-digit",
                       month: "short",

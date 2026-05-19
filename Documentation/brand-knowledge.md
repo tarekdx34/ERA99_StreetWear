@@ -40,7 +40,7 @@ Last updated: 2026-04-13
 
 - Core category currently implemented: **heavyweight boxy-fit t-shirts**.
 - Main specifications repeatedly present in product and story copy:
-  - 220 GSM heavyweight cotton variants.
+  - 100% COTTON heavyweight cotton variants.
   - Boxy / oversized silhouettes.
   - Dropped shoulders or structured drape depending on SKU.
 - Size grid used in code: **S, M, L, XL, XXL**.
@@ -169,4 +169,4 @@ Last updated: 2026-04-13
 
 ## Practical One-Paragraph Brand Summary
 
-ERA 99 () is an Alexandria-rooted streetwear label built around the idea of the axis: a fixed point in a constantly moving culture. The brand identity is anchored in heavyweight, boxy essentials (especially 220 GSM tees), the recurring code "99," and a confident anti-trend voice focused on fabric, fit, and conviction over noise. Its storefront and storytelling consistently position the brand as locally grounded, family-built, and production-aware, while commerce operations already support Egyptian delivery logistics, COD/online payment, and marketing telemetry for scalable drop-based growth.
+ERA 99 () is an Alexandria-rooted streetwear label built around the idea of the axis: a fixed point in a constantly moving culture. The brand identity is anchored in heavyweight, boxy essentials (especially 100% COTTON tees), the recurring code "99," and a confident anti-trend voice focused on fabric, fit, and conviction over noise. Its storefront and storytelling consistently position the brand as locally grounded, family-built, and production-aware, while commerce operations already support Egyptian delivery logistics, COD/online payment, and marketing telemetry for scalable drop-based growth.

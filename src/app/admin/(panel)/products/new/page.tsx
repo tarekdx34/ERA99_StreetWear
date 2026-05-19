@@ -27,7 +27,7 @@ function createBlankProduct(): CatalogProduct {
     metaTitle: "",
     metaDescription: "",
     mainImageAlt: "",
-    colorVariants: [buildDefaultVariant(id, "Default", "#F0EDE8")],
+    colorVariants: [buildDefaultVariant(id, "Default", "#EDE9E0")],
     createdAt: now,
     updatedAt: now,
   };
@@ -43,7 +43,7 @@ export default async function AdminNewProductPage() {
   return (
     <section>
       <div className="mb-4">
-        <p className="text-[12px] uppercase tracking-[0.28em] text-[#F0EDE8]/55">
+        <p className="text-[12px] uppercase tracking-[0.28em] text-[#EDE9E0]/55">
           99 - PRODUCTS
         </p>
         <h1 className="mt-3 font-blackletter text-4xl md:text-5xl">New Product</h1>

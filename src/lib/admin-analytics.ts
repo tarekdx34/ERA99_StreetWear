@@ -1,5 +1,6 @@
 import { prisma } from "@/lib/prisma";
 import { getAdminCatalogCardProducts } from "@/lib/catalog";
+import { countsAsRevenue } from "@/lib/order-status";
 
 type OrderLite = {
   id: number;
@@ -9,6 +10,7 @@ type OrderLite = {
   governorate: string;
   total: number;
   paymentMethod: string;
+  paymentStatus: string;
   orderStatus: string;
   createdAt: Date;
   items: unknown;
@@ -88,6 +90,7 @@ export async function getAdminAnalyticsData() {
       governorate: true,
       total: true,
       paymentMethod: true,
+      paymentStatus: true,
       orderStatus: true,
       createdAt: true,
       items: true,
@@ -104,6 +107,7 @@ export async function getAdminAnalyticsData() {
       governorate: true,
       total: true,
       paymentMethod: true,
+      paymentStatus: true,
       orderStatus: true,
       createdAt: true,
       items: true,
@@ -111,32 +115,43 @@ export async function getAdminAnalyticsData() {
     orderBy: { createdAt: "asc" },
   })) as OrderLite[];
 
-  const totalRevenueAllTime = allOrders.reduce(
+  const revenueOrders = allOrders.filter(countsAsRevenue);
+
+  const totalRevenueAllTime = revenueOrders.reduce(
     (sum, order) => sum + order.total,
     0,
   );
-  const revenueThisMonth = allOrders
+  const revenueThisMonth = revenueOrders
     .filter((order) => order.createdAt >= monthStart)
     .reduce((sum, order) => sum + order.total, 0);
-  const revenueThisWeek = allOrders
+  const revenueThisWeek = revenueOrders
     .filter((order) => order.createdAt >= weekStart)
     .reduce((sum, order) => sum + order.total, 0);
 
-  const revenueLastMonth = allOrders
+  const revenueLastMonth = revenueOrders
     .filter(
       (order) =>
         order.createdAt >= lastMonthStart && order.createdAt < monthStart,
     )
     .reduce((sum, order) => sum + order.total, 0);
 
-  const avgOrderValue = allOrders.length
-    ? totalRevenueAllTime / allOrders.length
+  const avgOrderValue = revenueOrders.length
+    ? totalRevenueAllTime / revenueOrders.length
     : 0;
 
-  const codRevenue = allOrders
+  const codRevenue = revenueOrders
     .filter((order) => order.paymentMethod === "COD")
     .reduce((sum, order) => sum + order.total, 0);
-  const onlineRevenue = allOrders
+
+  const pendingCodRevenue = allOrders
+    .filter(
+      (order) =>
+        order.paymentMethod === "COD" &&
+        (order.orderStatus === "preparing" || order.orderStatus === "shipped")
+    )
+    .reduce((sum, order) => sum + order.total, 0);
+
+  const onlineRevenue = revenueOrders
     .filter((order) => order.paymentMethod !== "COD")
     .reduce((sum, order) => sum + order.total, 0);
 
@@ -175,7 +190,7 @@ export async function getAdminAnalyticsData() {
     const d = addDays(ninetyDaysStart, i);
     dailyRevenue90Map[dayKey(d)] = 0;
   }
-  for (const order of orders) {
+  for (const order of orders.filter(countsAsRevenue)) {
     const key = dayKey(order.createdAt);
     if (dailyRevenue90Map[key] !== undefined) {
       dailyRevenue90Map[key] += order.total;

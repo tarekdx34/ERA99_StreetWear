@@ -7,12 +7,12 @@ export function isEgyptPhone(value: string) {
 }
 
 export function orderNumberFromId(id: number) {
-  return `99-${String(id).padStart(5, "0")}`;
+  return `#QTB-${String(id).padStart(5, "0")}`;
 }
 
 export function orderNumberFromIdWithPrefix(id: number, prefix: string) {
-  const cleanPrefix = (prefix || "99").trim() || "99";
-  return `${cleanPrefix}-${String(id).padStart(5, "0")}`;
+  const cleanPrefix = (prefix || "QTB").replace(/^#/, "").trim() || "QTB";
+  return `#${cleanPrefix}-${String(id).padStart(5, "0")}`;
 }
 
 export type CloudinaryUrlParts = {

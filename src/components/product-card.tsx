@@ -15,20 +15,28 @@ export function ProductCard({ product }: { product: Product }) {
       onHoverEnd={() => setHovered(false)}
       whileHover={{ y: -3 }}
       transition={{ duration: 0.3, ease: "easeOut" }}
-      className="border border-[#F0EDE8]/20 bg-[#111111] p-3"
+      className="border border-[#EDE9E0]/20 bg-[#080808] p-3"
     >
       <Link href={`/product/${product.slug}`} className="block">
-        <div className="relative aspect-[3/4] overflow-hidden border border-[#F0EDE8]/15">
+        <div className="relative aspect-[3/4] overflow-hidden border border-[#EDE9E0]/15">
           <motion.img
             src={product.images[0]}
-            alt={`${product.name} ${product.color}`}
+            alt={`QUTB ${product.name} in ${product.color} — 100% COTTON garment dyed tee, ${product.price} EGP`}
+            width={600}
+            height={800}
+            loading="lazy"
+            srcSet={`${product.images[0]} 400w, ${product.images[0]} 800w, ${product.images[0]} 1200w`}
             className="absolute inset-0 h-full w-full object-cover"
             animate={{ opacity: hovered ? 0 : 1 }}
             transition={{ duration: 0.3, ease: "easeOut" }}
           />
           <motion.img
             src={product.images[1] ?? product.images[0]}
-            alt={`${product.name} ${product.color} back`}
+            alt={`QUTB ${product.name} in ${product.color} — 100% COTTON garment dyed tee, ${product.price} EGP`}
+            width={600}
+            height={800}
+            loading="lazy"
+            srcSet={`${product.images[1] ?? product.images[0]} 400w, ${product.images[1] ?? product.images[0]} 800w, ${product.images[1] ?? product.images[0]} 1200w`}
             className="absolute inset-0 h-full w-full object-cover"
             animate={{ opacity: hovered ? 1 : 0 }}
             transition={{ duration: 0.3, ease: "easeOut" }}
@@ -37,10 +45,10 @@ export function ProductCard({ product }: { product: Product }) {
         <h3 className="mt-4 text-sm font-medium uppercase tracking-[0.1em]">
           {product.name} — {product.color}
         </h3>
-        <p className="mt-2 text-xs uppercase tracking-[0.14em] text-[#F0EDE8]/65">
+        <p className="mt-2 text-xs uppercase tracking-[0.14em] text-[#EDE9E0]/65">
           {product.compareAtPrice ? (
             <>
-              <span className="mr-2 line-through text-[#F0EDE8]/45">
+              <span className="mr-2 line-through text-[#EDE9E0]/45">
                 {formatEGP(product.compareAtPrice)}
               </span>
               <span>{formatEGP(product.price)}</span>

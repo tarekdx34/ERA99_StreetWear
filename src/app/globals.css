@@ -2,17 +2,13 @@
 
 :root {
   --background: #080808;
-  --foreground: #f0ede8;
+  --foreground: #EDE9E0;
   --color-ink: #080808;
-  --color-ash: #f0ede8;
-  --color-blood: #8b0000;
-  --color-concrete: #6b7280;
-  --font-space-grotesk: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
-  --font-barlow: "Arial Narrow", "Impact", "Franklin Gothic Medium", "Segoe UI",
-    sans-serif;
-  --font-anton: "Impact", "Arial Narrow", "Haettenschweiler", "Segoe UI",
-    sans-serif;
-  --font-display: var(--font-barlow);
+  --color-ash: #EDE9E0;
+  --color-blood: #8B0000;
+  --color-concrete: #555555;
+  --font-ui: Arial, "Barlow Condensed", sans-serif;
+  --font-anton: var(--font-anton-google), "Anton", Arial, sans-serif;
 }
 
 @theme inline {
@@ -22,15 +18,16 @@
   --color-ash: var(--color-ash);
   --color-blood: var(--color-blood);
   --color-concrete: var(--color-concrete);
-  --font-sans: var(--font-space-grotesk);
-  --font-blackletter: var(--font-display);
-  --font-sekuya: var(--font-space-grotesk);
+  --font-sans: var(--font-ui);
+  --font-blackletter: var(--font-anton);
+  --font-sekuya: var(--font-ui);
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-space-grotesk), sans-serif;
+  font-family: var(--font-ui), sans-serif;
+  font-weight: 400;
 }
 
 * {
@@ -39,40 +36,47 @@ body {
 }
 
 .font-blackletter {
-  font-family: var(--font-display), sans-serif;
-  letter-spacing: -1px; /* Global default for big text */
+  font-family: var(--font-anton), sans-serif;
+  font-weight: 400;
+  letter-spacing: 16px;
+  text-transform: uppercase;
 }
 
 .display-logo {
-  letter-spacing: -1px;
+  letter-spacing: 16px;
 }
 
 .font-anton {
   font-family: var(--font-anton), sans-serif;
   font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 16px;
 }
 
 .display-hero {
-  font-family: var(--font-display), sans-serif;
-  letter-spacing: -2px !important;
+  font-family: var(--font-anton), sans-serif;
+  letter-spacing: 16px !important;
   text-transform: uppercase !important;
-  font-weight: 900 !important;
+  font-weight: 400 !important;
   line-height: 0.85 !important;
-  color: #fff !important;
+  color: #EDE9E0 !important;
 }
 
 @media (min-width: 768px) {
-  .font-blackletter {
-    letter-spacing: 0.005em;
-  }
-
-  .display-logo {
-    letter-spacing: 0.035em;
-  }
-
+  .font-blackletter,
+  .display-logo,
   .display-hero {
-    letter-spacing: -0.02em;
+    letter-spacing: 16px;
   }
+}
+
+@font-face {
+  font-family: "Anton-Fallback";
+  src: local("Arial");
+  size-adjust: 110%;
+  ascent-override: 95%;
+  descent-override: 0%;
+  line-gap-override: 0%;
 }
 
 input,

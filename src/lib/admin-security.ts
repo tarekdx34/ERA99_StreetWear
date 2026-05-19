@@ -1,5 +1,5 @@
 import bcrypt from "bcryptjs";
-import { generateSecret, generateURI, verify } from "otplib";
+import { generateSecret, generateURI, verifySync } from "otplib";
 import { prisma } from "@/lib/prisma";
 import crypto from "crypto";
 import { getServerSession } from "next-auth";
@@ -253,7 +253,8 @@ export function createChallengeToken(input: {
   });
 }
 
-export function verifyChallengeToken(token: string, ip: string) {
+export function verifyChallengeToken(token: string, _ip: string) {
+  void _ip;
   const [encoded, signature] = token.split(".");
   if (!encoded || !signature) return null;
 
@@ -276,7 +277,6 @@ export function verifyChallengeToken(token: string, ip: string) {
       base64UrlToBuffer(encoded).toString("utf8"),
     ) as ChallengePayload;
     if (payload.exp < Date.now()) return null;
-    if (payload.ip !== ip) return null;
     return payload;
   } catch {
     return null;
@@ -335,14 +335,15 @@ export async function confirmTotpSecret() {
 export function verifyTotpCode(code: string, secret: string) {
   const normalized = code.replace(/\D/g, "").slice(0, 6);
   if (normalized.length !== 6) return false;
-  return verify({
+  const result = verifySync({
     token: normalized,
     secret,
     strategy: "totp",
     period: 30,
-    epochTolerance: 1,
+    epochTolerance: 60,
     digits: 6,
   });
+  return Boolean(result.valid);
 }
 
 export function buildOtpAuthUri(secret: string) {
@@ -495,7 +496,11 @@ export async function requireAdminRole() {
   }
 
   if ((session.user as any).role !== "admin") {
-    return { ok: false as const, status: 403, message: "Forbidden: Admin role required" };
+    return {
+      ok: false as const,
+      status: 403,
+      message: "Forbidden: Admin role required",
+    };
   }
 
   const currentVersion = await getSessionVersion();

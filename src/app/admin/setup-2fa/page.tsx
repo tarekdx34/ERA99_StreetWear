@@ -5,8 +5,8 @@ export default function Setup2FAPage() {
   return (
     <Suspense
       fallback={
-        <main className="min-h-screen bg-[#080808] px-6 py-16 text-[#F0EDE8]">
-          <div className="mx-auto w-full max-w-lg text-center text-sm text-[#F0EDE8]/65">
+        <main className="min-h-screen bg-[#080808] px-6 py-16 text-[#EDE9E0]">
+          <div className="mx-auto w-full max-w-lg text-center text-sm text-[#EDE9E0]/65">
             Loading setup...
           </div>
         </main>

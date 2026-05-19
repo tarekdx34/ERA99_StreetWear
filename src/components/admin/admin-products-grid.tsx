@@ -46,20 +46,23 @@ export function AdminProductsGrid({ products }: Props) {
         return (
           <article
             key={item.id}
-            className={`relative overflow-hidden border bg-[#111111] ${
+            className={`relative overflow-hidden border bg-[#080808] ${
               lowStock
                 ? "border-[#8B0000]/70 border-b-2"
-                : "border-[#F0EDE8]/15"
+                : "border-[#EDE9E0]/15"
             }`}
           >
-            <div className="relative aspect-[4/5] overflow-hidden border-b border-[#F0EDE8]/10">
+            <div className="relative aspect-[4/5] overflow-hidden border-b border-[#EDE9E0]/10">
               <img
                 src={item.image}
                 alt={item.name}
+                width={480}
+                height={600}
+                loading="lazy"
                 className="h-full w-full object-cover"
               />
               {outOfStock ? (
-                <div className="absolute inset-0 grid place-items-center bg-black/60 text-xs uppercase tracking-[0.22em] text-[#F0EDE8]/80">
+                <div className="absolute inset-0 grid place-items-center bg-[#080808]/60 text-xs uppercase tracking-[0.22em] text-[#EDE9E0]/80">
                   Out of Stock
                 </div>
               ) : null}
@@ -70,10 +73,10 @@ export function AdminProductsGrid({ products }: Props) {
                 <h3 className="text-sm font-medium uppercase tracking-[0.12em]">
                   {item.name}
                 </h3>
-                <p className="mt-1 text-xs uppercase tracking-[0.15em] text-[#F0EDE8]/70">
+                <p className="mt-1 text-xs uppercase tracking-[0.15em] text-[#EDE9E0]/70">
                   {item.compareAtPrice ? (
                     <>
-                      <span className="mr-2 line-through text-[#F0EDE8]/45">
+                      <span className="mr-2 line-through text-[#EDE9E0]/45">
                         {item.compareAtPrice} EGP
                       </span>
                       <span>{item.price} EGP</span>
@@ -85,7 +88,7 @@ export function AdminProductsGrid({ products }: Props) {
               </div>
 
               <div>
-                <p className="text-[11px] uppercase tracking-[0.16em] text-[#F0EDE8]/55">
+                <p className="text-[11px] uppercase tracking-[0.16em] text-[#EDE9E0]/55">
                   Stock
                 </p>
                 <button
@@ -99,7 +102,7 @@ export function AdminProductsGrid({ products }: Props) {
                       }));
                     }
                   }}
-                  className="mt-1 text-lg font-semibold"
+                  className="mt-1 text-lg font-medium"
                 >
                   {item.totalStock}
                 </button>
@@ -114,7 +117,7 @@ export function AdminProductsGrid({ products }: Props) {
                           [item.id]: event.target.value,
                         }))
                       }
-                      className="w-20 border border-[#F0EDE8]/20 bg-[#0E0E0E] px-2 py-1 text-sm"
+                      className="w-20 border border-[#EDE9E0]/20 bg-[#080808] px-2 py-1 text-sm"
                       inputMode="numeric"
                     />
                     <button
@@ -130,7 +133,7 @@ export function AdminProductsGrid({ products }: Props) {
                           return copy;
                         });
                       }}
-                      className="border border-[#F0EDE8]/20 px-2 py-1 text-[11px] uppercase tracking-[0.14em]"
+                      className="border border-[#EDE9E0]/20 px-2 py-1 text-[11px] uppercase tracking-[0.14em]"
                     >
                       Save
                     </button>
@@ -145,8 +148,8 @@ export function AdminProductsGrid({ products }: Props) {
                   onClick={() => updateQuick(item.id, { active: !item.active })}
                   className={`border px-2 py-2 ${
                     item.active
-                      ? "border-[#F0EDE8]/30 text-[#F0EDE8]"
-                      : "border-[#F0EDE8]/15 text-[#F0EDE8]/55"
+                      ? "border-[#EDE9E0]/30 text-[#EDE9E0]"
+                      : "border-[#EDE9E0]/15 text-[#EDE9E0]/55"
                   }`}
                 >
                   Active: {item.active ? "On" : "Off"}
@@ -159,8 +162,8 @@ export function AdminProductsGrid({ products }: Props) {
                   }
                   className={`border px-2 py-2 ${
                     item.featured
-                      ? "border-[#F0EDE8]/30 text-[#F0EDE8]"
-                      : "border-[#F0EDE8]/15 text-[#F0EDE8]/55"
+                      ? "border-[#EDE9E0]/30 text-[#EDE9E0]"
+                      : "border-[#EDE9E0]/15 text-[#EDE9E0]/55"
                   }`}
                 >
                   Featured: {item.featured ? "On" : "Off"}
@@ -173,8 +176,8 @@ export function AdminProductsGrid({ products }: Props) {
                   }
                   className={`col-span-2 border px-2 py-2 ${
                     item.newArrival
-                      ? "border-[#F0EDE8]/30 text-[#F0EDE8]"
-                      : "border-[#F0EDE8]/15 text-[#F0EDE8]/55"
+                      ? "border-[#EDE9E0]/30 text-[#EDE9E0]"
+                      : "border-[#EDE9E0]/15 text-[#EDE9E0]/55"
                   }`}
                 >
                   New Arrival: {item.newArrival ? "On" : "Off"}
@@ -183,7 +186,7 @@ export function AdminProductsGrid({ products }: Props) {
 
               <Link
                 href={`/admin/products/${item.id}/edit`}
-                className="block border border-[#F0EDE8]/20 px-3 py-2 text-center text-xs uppercase tracking-[0.16em] text-[#F0EDE8]/85 hover:border-[#F0EDE8]/45"
+                className="block border border-[#EDE9E0]/20 px-3 py-2 text-center text-xs uppercase tracking-[0.16em] text-[#EDE9E0]/85 hover:border-[#EDE9E0]/45"
               >
                 Edit
               </Link>

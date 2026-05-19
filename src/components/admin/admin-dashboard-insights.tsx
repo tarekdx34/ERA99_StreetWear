@@ -26,8 +26,8 @@ type Props = {
 
 const severityClassMap: Record<AlertSeverity, string> = {
   critical: "border-[#8B0000]/65 bg-[#8B0000]/12",
-  warning: "border-[#F0EDE8]/30 bg-[#1A1A1A]",
-  info: "border-[#F0EDE8]/18 bg-[#151515]",
+  warning: "border-[#EDE9E0]/30 bg-[#080808]",
+  info: "border-[#EDE9E0]/18 bg-[#080808]",
 };
 
 const severityTextMap: Record<AlertSeverity, string> = {
@@ -39,12 +39,12 @@ const severityTextMap: Record<AlertSeverity, string> = {
 export function AdminDashboardInsights({ alerts, recommendations }: Props) {
   return (
     <section className="mt-8 grid gap-4 xl:grid-cols-[1.2fr_1fr]">
-      <article className="border border-[#F0EDE8]/12 bg-[#111111] p-4">
+      <article className="border border-[#EDE9E0]/12 bg-[#080808] p-4">
         <div className="flex items-center justify-between">
-          <h2 className="text-xs uppercase tracking-[0.22em] text-[#F0EDE8]/75">
+          <h2 className="text-xs uppercase tracking-[0.22em] text-[#EDE9E0]/75">
             Smart Alerts
           </h2>
-          <p className="text-[11px] uppercase tracking-[0.14em] text-[#F0EDE8]/50">
+          <p className="text-[11px] uppercase tracking-[0.14em] text-[#EDE9E0]/50">
             Rule-based
           </p>
         </div>
@@ -54,17 +54,17 @@ export function AdminDashboardInsights({ alerts, recommendations }: Props) {
             const body = (
               <div className={`border p-3 ${severityClassMap[alert.severity]}`}>
                 <div className="flex items-center justify-between gap-3">
-                  <p className="text-[10px] uppercase tracking-[0.16em] text-[#F0EDE8]/55">
+                  <p className="text-[10px] uppercase tracking-[0.16em] text-[#EDE9E0]/55">
                     {alert.label}
                   </p>
-                  <p className="text-[10px] uppercase tracking-[0.16em] text-[#F0EDE8]/45">
+                  <p className="text-[10px] uppercase tracking-[0.16em] text-[#EDE9E0]/45">
                     {severityTextMap[alert.severity]}
                   </p>
                 </div>
-                <p className="mt-2 text-2xl font-semibold text-[#F0EDE8]">
+                <p className="mt-2 text-2xl font-medium text-[#EDE9E0]">
                   {alert.value}
                 </p>
-                <p className="mt-1 text-xs text-[#F0EDE8]/62">{alert.detail}</p>
+                <p className="mt-1 text-xs text-[#EDE9E0]/62">{alert.detail}</p>
               </div>
             );
 
@@ -83,23 +83,23 @@ export function AdminDashboardInsights({ alerts, recommendations }: Props) {
         </div>
       </article>
 
-      <article className="border border-[#F0EDE8]/12 bg-[#111111] p-4">
-        <h2 className="text-xs uppercase tracking-[0.22em] text-[#F0EDE8]/75">
+      <article className="border border-[#EDE9E0]/12 bg-[#080808] p-4">
+        <h2 className="text-xs uppercase tracking-[0.22em] text-[#EDE9E0]/75">
           Recommended Actions
         </h2>
         <div className="mt-3 space-y-3">
           {recommendations.map((item) => (
             <div
               key={item.id}
-              className="border border-[#F0EDE8]/14 bg-[#151515] p-3"
+              className="border border-[#EDE9E0]/14 bg-[#080808] p-3"
             >
-              <p className="text-sm text-[#F0EDE8]">{item.title}</p>
-              <p className="mt-1 text-xs text-[#F0EDE8]/60">
+              <p className="text-sm text-[#EDE9E0]">{item.title}</p>
+              <p className="mt-1 text-xs text-[#EDE9E0]/60">
                 {item.description}
               </p>
               <Link
                 href={item.href}
-                className="mt-3 inline-block text-[11px] uppercase tracking-[0.16em] text-[#F0EDE8]/76 transition-colors hover:text-[#F0EDE8]"
+                className="mt-3 inline-block text-[11px] uppercase tracking-[0.16em] text-[#EDE9E0]/76 transition-colors hover:text-[#EDE9E0]"
               >
                 {item.actionLabel}
               </Link>

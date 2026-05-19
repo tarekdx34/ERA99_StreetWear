@@ -1,4 +1,4 @@
-import { prisma } from "@/lib/prisma";
+import { isDatabaseConfigured, markDatabaseUnavailable, prisma } from "@/lib/prisma";
 
 export type DeliveryFeeRow = {
   governorate: string;
@@ -152,17 +152,31 @@ function sanitize(raw: any): AdminSettingsModel {
 }
 
 export async function getAdminSettings() {
-  const row = await prisma.setting.findUnique({
-    where: { key: SETTINGS_KEY },
-    select: { value: true },
-  });
+  if (!isDatabaseConfigured()) return defaultSettings;
+
+  let row: { value: string } | null = null;
+  try {
+    row = await prisma.setting.findUnique({
+      where: { key: SETTINGS_KEY },
+      select: { value: true },
+    });
+  } catch (error) {
+    markDatabaseUnavailable(error);
+    console.warn("Unable to read admin settings; using defaults.");
+    return defaultSettings;
+  }
 
   if (!row?.value) {
-    await prisma.setting.upsert({
-      where: { key: SETTINGS_KEY },
-      create: { key: SETTINGS_KEY, value: JSON.stringify(defaultSettings) },
-      update: { value: JSON.stringify(defaultSettings) },
-    });
+    try {
+      await prisma.setting.upsert({
+        where: { key: SETTINGS_KEY },
+        create: { key: SETTINGS_KEY, value: JSON.stringify(defaultSettings) },
+        update: { value: JSON.stringify(defaultSettings) },
+      });
+    } catch (error) {
+      markDatabaseUnavailable(error);
+      console.warn("Unable to initialize admin settings; skipping init.");
+    }
     return defaultSettings;
   }
 
@@ -174,6 +188,25 @@ export async function getAdminSettings() {
 }
 
 export async function saveAdminSettings(input: Partial<AdminSettingsModel>) {
+  if (!isDatabaseConfigured()) {
+    return sanitize({
+      ...defaultSettings,
+      ...input,
+      cloudinaryUrl:
+        input.cloudinaryUrl === undefined
+          ? defaultSettings.cloudinaryUrl
+          : input.cloudinaryUrl === SECRET_MASK
+            ? defaultSettings.cloudinaryUrl
+            : String(input.cloudinaryUrl).trim(),
+      telegramBotToken:
+        input.telegramBotToken === undefined
+          ? defaultSettings.telegramBotToken
+          : input.telegramBotToken === SECRET_MASK
+            ? defaultSettings.telegramBotToken
+            : String(input.telegramBotToken).trim(),
+    });
+  }
+
   const current = await getAdminSettings();
   const next = sanitize({
     ...current,
@@ -192,11 +225,16 @@ export async function saveAdminSettings(input: Partial<AdminSettingsModel>) {
           : String(input.telegramBotToken).trim(),
   });
 
-  await prisma.setting.upsert({
-    where: { key: SETTINGS_KEY },
-    create: { key: SETTINGS_KEY, value: JSON.stringify(next) },
-    update: { value: JSON.stringify(next) },
-  });
+  try {
+    await prisma.setting.upsert({
+      where: { key: SETTINGS_KEY },
+      create: { key: SETTINGS_KEY, value: JSON.stringify(next) },
+      update: { value: JSON.stringify(next) },
+    });
+  } catch (error) {
+    markDatabaseUnavailable(error);
+    console.warn("Unable to save admin settings; skipping write.");
+  }
 
   return next;
 }
@@ -213,7 +251,8 @@ export async function getPublicStorefrontSettings() {
   const full = await getAdminSettings();
   return {
     showAnnouncementStrip: full.showAnnouncementStrip,
-    announcementStripText: full.announcementStripText,
+    announcementStripText:
+      process.env.ANNOUNCEMENT_TEXT || full.announcementStripText,
     maintenanceMode: full.maintenanceMode,
     storeName: full.storeName,
     orderNumberPrefix: full.orderNumberPrefix,

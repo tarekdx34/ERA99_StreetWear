@@ -256,7 +256,7 @@ export function AccountPageClient() {
   };
 
   const deleteAddress = async (id: string) => {
-    const confirmed = window.confirm("Delete this address?");
+    const confirmed = window.confirm("Delete this address.");
     if (!confirmed) return;
 
     const res = await csrfFetch(`/api/account/addresses/${id}`, { method: "DELETE" });
@@ -289,7 +289,7 @@ export function AccountPageClient() {
   const deleteAccount = async (event: FormEvent) => {
     event.preventDefault();
     const confirmed = window.confirm(
-      "This will permanently delete your account and data. Continue?",
+      "This permanently deletes your account and data. Continue.",
     );
     if (!confirmed) return;
 
@@ -315,75 +315,75 @@ export function AccountPageClient() {
   }
 
   return (
-    <main className="bg-[#080808] px-6 pb-20 pt-28 text-[#F0EDE8] md:px-10">
+    <main className="bg-[#080808] px-6 pb-20 pt-28 text-[#EDE9E0] md:px-10">
       <div className="mx-auto max-w-5xl space-y-8">
         <h1 className="text-2xl uppercase tracking-[0.18em]">My Account</h1>
 
         {message ? (
-          <div className="border border-[#F0EDE8]/25 bg-[#111111] p-3 text-sm">{message}</div>
+          <div className="border border-[#EDE9E0]/25 bg-[#080808] p-3 text-sm">{message}</div>
         ) : null}
 
-        <section className="border border-[#F0EDE8]/15 bg-[#111111] p-5">
-          <h2 className="text-xs uppercase tracking-[0.18em] text-[#F0EDE8]/65">Profile</h2>
+        <section className="border border-[#EDE9E0]/15 bg-[#080808] p-5">
+          <h2 className="text-xs uppercase tracking-[0.18em] text-[#EDE9E0]/65">Profile</h2>
           <p className="mt-2 text-sm">Email: {profile?.email}</p>
-          <p className="text-sm text-[#F0EDE8]/70">Member since: {memberSince}</p>
+          <p className="text-sm text-[#EDE9E0]/70">Member since: {memberSince}</p>
 
           <form className="mt-4 grid grid-cols-1 gap-3 md:grid-cols-2" onSubmit={saveName}>
-            <input className="h-12 border border-[#F0EDE8]/20 bg-[#0D0D0D] px-3" value={nameForm.firstName} onChange={(e) => setNameForm((p) => ({ ...p, firstName: e.target.value }))} placeholder="First name" />
-            <input className="h-12 border border-[#F0EDE8]/20 bg-[#0D0D0D] px-3" value={nameForm.lastName} onChange={(e) => setNameForm((p) => ({ ...p, lastName: e.target.value }))} placeholder="Last name" />
-            <button className="h-12 border border-[#F0EDE8] bg-[#F0EDE8] text-[#080808] text-xs uppercase tracking-[0.16em] md:col-span-2">Save name</button>
+            <input className="h-12 border border-[#EDE9E0]/20 bg-[#080808] px-3" value={nameForm.firstName} onChange={(e) => setNameForm((p) => ({ ...p, firstName: e.target.value }))} placeholder="First name" />
+            <input className="h-12 border border-[#EDE9E0]/20 bg-[#080808] px-3" value={nameForm.lastName} onChange={(e) => setNameForm((p) => ({ ...p, lastName: e.target.value }))} placeholder="Last name" />
+            <button className="h-12 border border-[#EDE9E0] bg-[#EDE9E0] text-[#080808] text-xs uppercase tracking-[0.16em] md:col-span-2">Save name</button>
           </form>
 
           <form className="mt-6 space-y-3" onSubmit={changePassword}>
-            <p className="text-xs uppercase tracking-[0.16em] text-[#F0EDE8]/65">Change password</p>
-            <input type="password" className="h-12 w-full border border-[#F0EDE8]/20 bg-[#0D0D0D] px-3" value={passwordForm.currentPassword} onChange={(e) => setPasswordForm((p) => ({ ...p, currentPassword: e.target.value }))} placeholder="Current password" />
-            <input type="password" className="h-12 w-full border border-[#F0EDE8]/20 bg-[#0D0D0D] px-3" value={passwordForm.password} onChange={(e) => setPasswordForm((p) => ({ ...p, password: e.target.value }))} placeholder="New password" />
-            <input type="password" className="h-12 w-full border border-[#F0EDE8]/20 bg-[#0D0D0D] px-3" value={passwordForm.confirmPassword} onChange={(e) => setPasswordForm((p) => ({ ...p, confirmPassword: e.target.value }))} placeholder="Confirm new password" />
-            <button className="h-12 w-full border border-[#F0EDE8]/35 text-xs uppercase tracking-[0.16em]">Update password</button>
+            <p className="text-xs uppercase tracking-[0.16em] text-[#EDE9E0]/65">Change password</p>
+            <input type="password" className="h-12 w-full border border-[#EDE9E0]/20 bg-[#080808] px-3" value={passwordForm.currentPassword} onChange={(e) => setPasswordForm((p) => ({ ...p, currentPassword: e.target.value }))} placeholder="Current password" />
+            <input type="password" className="h-12 w-full border border-[#EDE9E0]/20 bg-[#080808] px-3" value={passwordForm.password} onChange={(e) => setPasswordForm((p) => ({ ...p, password: e.target.value }))} placeholder="New password" />
+            <input type="password" className="h-12 w-full border border-[#EDE9E0]/20 bg-[#080808] px-3" value={passwordForm.confirmPassword} onChange={(e) => setPasswordForm((p) => ({ ...p, confirmPassword: e.target.value }))} placeholder="Confirm new password" />
+            <button className="h-12 w-full border border-[#EDE9E0]/35 text-xs uppercase tracking-[0.16em]">Update password</button>
           </form>
 
           <form className="mt-6 space-y-3" onSubmit={changeEmail}>
-            <p className="text-xs uppercase tracking-[0.16em] text-[#F0EDE8]/65">Change email</p>
-            <input className="h-12 w-full border border-[#F0EDE8]/20 bg-[#0D0D0D] px-3" value={emailForm.email} onChange={(e) => setEmailForm((p) => ({ ...p, email: e.target.value }))} placeholder="New email" />
-            <input type="password" className="h-12 w-full border border-[#F0EDE8]/20 bg-[#0D0D0D] px-3" value={emailForm.currentPassword} onChange={(e) => setEmailForm((p) => ({ ...p, currentPassword: e.target.value }))} placeholder="Confirm with current password" />
-            <button className="h-12 w-full border border-[#F0EDE8]/35 text-xs uppercase tracking-[0.16em]">Update email</button>
+            <p className="text-xs uppercase tracking-[0.16em] text-[#EDE9E0]/65">Change email</p>
+            <input className="h-12 w-full border border-[#EDE9E0]/20 bg-[#080808] px-3" value={emailForm.email} onChange={(e) => setEmailForm((p) => ({ ...p, email: e.target.value }))} placeholder="New email" />
+            <input type="password" className="h-12 w-full border border-[#EDE9E0]/20 bg-[#080808] px-3" value={emailForm.currentPassword} onChange={(e) => setEmailForm((p) => ({ ...p, currentPassword: e.target.value }))} placeholder="Confirm with current password" />
+            <button className="h-12 w-full border border-[#EDE9E0]/35 text-xs uppercase tracking-[0.16em]">Update email</button>
           </form>
         </section>
 
-        <section className="border border-[#F0EDE8]/15 bg-[#111111] p-5" ref={ordersSectionRef}>
-          <h2 className="text-xs uppercase tracking-[0.18em] text-[#F0EDE8]/65">Order History</h2>
+        <section className="border border-[#EDE9E0]/15 bg-[#080808] p-5" ref={ordersSectionRef}>
+          <h2 className="text-xs uppercase tracking-[0.18em] text-[#EDE9E0]/65">Order History</h2>
           <div className="mt-4 space-y-3">
-            {orders.length === 0 ? <p className="text-sm text-[#F0EDE8]/60">No orders yet.</p> : null}
+            {orders.length === 0 ? <p className="text-sm text-[#EDE9E0]/60">No orders yet.</p> : null}
             {orders.map((order) => {
               const items = Array.isArray(order.items) ? order.items : [];
               return (
-                <div key={order.id} className="border border-[#F0EDE8]/10 p-3">
+                <div key={order.id} className="border border-[#EDE9E0]/10 p-3">
                   <div className="flex flex-wrap items-center justify-between gap-2">
                     <p className="text-xs uppercase tracking-[0.14em]">{order.orderNumber}</p>
-                    <p className="text-xs text-[#F0EDE8]/65">{new Date(order.createdAt).toLocaleString()}</p>
+                    <p className="text-xs text-[#EDE9E0]/65">{new Date(order.createdAt).toLocaleString()}</p>
                   </div>
                   <div className="mt-1 flex items-center gap-2">
-                    <span className="border border-[#F0EDE8]/25 px-2 py-1 text-[10px] uppercase tracking-[0.12em]">
+                    <span className="border border-[#EDE9E0]/25 px-2 py-1 text-[10px] uppercase tracking-[0.12em]">
                       {order.orderStatus.replace(/_/g, " ")}
                     </span>
-                    <span className="text-[11px] text-[#F0EDE8]/65">{order.paymentStatus}</span>
+                    <span className="text-[11px] text-[#EDE9E0]/65">{order.paymentStatus}</span>
                   </div>
                   <p className="mt-2 text-sm">{formatEGP(order.total)}</p>
-                  <p className="mt-1 text-[12px] text-[#F0EDE8]/60">{items.length} items</p>
+                  <p className="mt-1 text-[12px] text-[#EDE9E0]/60">{items.length} items</p>
                   <div className="mt-3 flex flex-wrap gap-2">
                     <button
                       onClick={() =>
                         setExpandedOrderId((prev) => (prev === order.id ? null : order.id))
                       }
-                      className="border border-[#F0EDE8]/35 px-3 py-2 text-[11px] uppercase tracking-[0.16em]"
+                      className="border border-[#EDE9E0]/35 px-3 py-2 text-[11px] uppercase tracking-[0.16em]"
                     >
                       {expandedOrderId === order.id ? "Hide details" : "View details"}
                     </button>
-                    <button onClick={() => reorder(order.id)} className="border border-[#F0EDE8]/35 px-3 py-2 text-[11px] uppercase tracking-[0.16em]">Reorder</button>
+                    <button onClick={() => reorder(order.id)} className="border border-[#EDE9E0]/35 px-3 py-2 text-[11px] uppercase tracking-[0.16em]">Reorder</button>
                   </div>
 
                   {expandedOrderId === order.id ? (
-                    <div className="mt-3 border-t border-[#F0EDE8]/10 pt-3 text-[12px] text-[#F0EDE8]/75">
+                    <div className="mt-3 border-t border-[#EDE9E0]/10 pt-3 text-[12px] text-[#EDE9E0]/75">
                       {items.map((item: any, idx: number) => (
                         <p key={`${order.id}-${idx}`}>
                           {item.name} / {item.color} / {item.size} x{item.qty}
@@ -397,43 +397,43 @@ export function AccountPageClient() {
           </div>
         </section>
 
-        <section className="border border-[#F0EDE8]/15 bg-[#111111] p-5">
-          <h2 className="text-xs uppercase tracking-[0.18em] text-[#F0EDE8]/65">Saved Addresses</h2>
+        <section className="border border-[#EDE9E0]/15 bg-[#080808] p-5">
+          <h2 className="text-xs uppercase tracking-[0.18em] text-[#EDE9E0]/65">Saved Addresses</h2>
 
           <div className="mt-4 space-y-3">
             {addresses.map((address) => (
-              <div key={address.id} className="border border-[#F0EDE8]/10 p-3">
+              <div key={address.id} className="border border-[#EDE9E0]/10 p-3">
                 <p className="text-sm">{address.firstName} {address.lastName} {address.isDefault ? "(Default)" : ""}</p>
-                <p className="text-[12px] text-[#F0EDE8]/65">{address.governorate}, {address.city}, {address.street}</p>
+                <p className="text-[12px] text-[#EDE9E0]/65">{address.governorate}, {address.city}, {address.street}</p>
                 <div className="mt-2 flex gap-2">
-                  {!address.isDefault ? <button onClick={() => setDefaultAddress(address.id)} className="border border-[#F0EDE8]/35 px-3 py-1 text-[10px] uppercase">Set default</button> : null}
-                  <button onClick={() => deleteAddress(address.id)} className="border border-[#8B0000]/65 px-3 py-1 text-[10px] uppercase text-[#F0EDE8]">Delete</button>
+                  {!address.isDefault ? <button onClick={() => setDefaultAddress(address.id)} className="border border-[#EDE9E0]/35 px-3 py-1 text-[10px] uppercase">Set default</button> : null}
+                  <button onClick={() => deleteAddress(address.id)} className="border border-[#555555]/65 px-3 py-1 text-[10px] uppercase text-[#EDE9E0]">Delete</button>
                 </div>
               </div>
             ))}
           </div>
 
           <form className="mt-6 grid grid-cols-1 gap-3 md:grid-cols-2" onSubmit={addAddress}>
-            <input className="h-12 border border-[#F0EDE8]/20 bg-[#0D0D0D] px-3" placeholder="Label" value={addressForm.label} onChange={(e) => setAddressForm((p) => ({ ...p, label: e.target.value }))} />
-            <input className="h-12 border border-[#F0EDE8]/20 bg-[#0D0D0D] px-3" placeholder="First name" value={addressForm.firstName} onChange={(e) => setAddressForm((p) => ({ ...p, firstName: e.target.value }))} />
-            <input className="h-12 border border-[#F0EDE8]/20 bg-[#0D0D0D] px-3" placeholder="Last name" value={addressForm.lastName} onChange={(e) => setAddressForm((p) => ({ ...p, lastName: e.target.value }))} />
-            <input className="h-12 border border-[#F0EDE8]/20 bg-[#0D0D0D] px-3" placeholder="Phone" value={addressForm.phone} onChange={(e) => setAddressForm((p) => ({ ...p, phone: e.target.value }))} />
-            <input className="h-12 border border-[#F0EDE8]/20 bg-[#0D0D0D] px-3" placeholder="Governorate" value={addressForm.governorate} onChange={(e) => setAddressForm((p) => ({ ...p, governorate: e.target.value }))} />
-            <input className="h-12 border border-[#F0EDE8]/20 bg-[#0D0D0D] px-3" placeholder="City" value={addressForm.city} onChange={(e) => setAddressForm((p) => ({ ...p, city: e.target.value }))} />
-            <input className="h-12 border border-[#F0EDE8]/20 bg-[#0D0D0D] px-3 md:col-span-2" placeholder="Street" value={addressForm.street} onChange={(e) => setAddressForm((p) => ({ ...p, street: e.target.value }))} />
-            <input className="h-12 border border-[#F0EDE8]/20 bg-[#0D0D0D] px-3 md:col-span-2" placeholder="Building" value={addressForm.building} onChange={(e) => setAddressForm((p) => ({ ...p, building: e.target.value }))} />
+            <input className="h-12 border border-[#EDE9E0]/20 bg-[#080808] px-3" placeholder="Label" value={addressForm.label} onChange={(e) => setAddressForm((p) => ({ ...p, label: e.target.value }))} />
+            <input className="h-12 border border-[#EDE9E0]/20 bg-[#080808] px-3" placeholder="First name" value={addressForm.firstName} onChange={(e) => setAddressForm((p) => ({ ...p, firstName: e.target.value }))} />
+            <input className="h-12 border border-[#EDE9E0]/20 bg-[#080808] px-3" placeholder="Last name" value={addressForm.lastName} onChange={(e) => setAddressForm((p) => ({ ...p, lastName: e.target.value }))} />
+            <input className="h-12 border border-[#EDE9E0]/20 bg-[#080808] px-3" placeholder="Phone" value={addressForm.phone} onChange={(e) => setAddressForm((p) => ({ ...p, phone: e.target.value }))} />
+            <input className="h-12 border border-[#EDE9E0]/20 bg-[#080808] px-3" placeholder="Governorate" value={addressForm.governorate} onChange={(e) => setAddressForm((p) => ({ ...p, governorate: e.target.value }))} />
+            <input className="h-12 border border-[#EDE9E0]/20 bg-[#080808] px-3" placeholder="City" value={addressForm.city} onChange={(e) => setAddressForm((p) => ({ ...p, city: e.target.value }))} />
+            <input className="h-12 border border-[#EDE9E0]/20 bg-[#080808] px-3 md:col-span-2" placeholder="Street" value={addressForm.street} onChange={(e) => setAddressForm((p) => ({ ...p, street: e.target.value }))} />
+            <input className="h-12 border border-[#EDE9E0]/20 bg-[#080808] px-3 md:col-span-2" placeholder="Building" value={addressForm.building} onChange={(e) => setAddressForm((p) => ({ ...p, building: e.target.value }))} />
             <label className="md:col-span-2 flex items-center gap-2 text-xs uppercase tracking-[0.14em]">
               <input type="checkbox" checked={addressForm.isDefault} onChange={(e) => setAddressForm((p) => ({ ...p, isDefault: e.target.checked }))} /> Set as default
             </label>
-            <button className="h-12 border border-[#F0EDE8] bg-[#F0EDE8] text-[#080808] text-xs uppercase tracking-[0.16em] md:col-span-2">Save address</button>
+            <button className="h-12 border border-[#EDE9E0] bg-[#EDE9E0] text-[#080808] text-xs uppercase tracking-[0.16em] md:col-span-2">Save address</button>
           </form>
         </section>
 
-        <section className="border border-[#8B0000]/45 bg-[#8B0000]/10 p-5">
-          <h2 className="text-xs uppercase tracking-[0.18em] text-[#F0EDE8]">Danger Zone</h2>
+        <section className="border border-[#555555]/45 bg-[#080808] p-5">
+          <h2 className="text-xs uppercase tracking-[0.18em] text-[#EDE9E0]">Account Actions</h2>
           <form className="mt-4 space-y-3" onSubmit={deleteAccount}>
-            <input type="password" className="h-12 w-full border border-[#8B0000]/70 bg-[#0D0D0D] px-3" placeholder="Enter password to confirm" value={deletePassword} onChange={(e) => setDeletePassword(e.target.value)} />
-            <button className="h-12 w-full border border-[#8B0000] bg-[#8B0000] text-xs uppercase tracking-[0.18em]">Delete account</button>
+            <input type="password" className="h-12 w-full border border-[#555555]/70 bg-[#080808] px-3" placeholder="Enter password to confirm" value={deletePassword} onChange={(e) => setDeletePassword(e.target.value)} />
+            <button className="h-12 w-full border border-[#EDE9E0]/35 text-xs uppercase tracking-[0.18em]">Delete account</button>
           </form>
         </section>
       </div>
