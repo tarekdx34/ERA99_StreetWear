@@ -10,7 +10,11 @@ let databaseUnavailableUntil = 0;
 
 function isConnectivityError(error: unknown) {
   if (!error || typeof error !== "object") return false;
-  const maybeError = error as { code?: unknown; name?: unknown; message?: unknown };
+  const maybeError = error as {
+    code?: unknown;
+    name?: unknown;
+    message?: unknown;
+  };
 
   if (maybeError.code === "P1001" || maybeError.code === "P1002") return true;
 

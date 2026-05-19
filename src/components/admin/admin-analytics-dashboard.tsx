@@ -510,7 +510,12 @@ export function AdminAnalyticsDashboard({ data }: Props) {
               COD vs Online by Governorate
             </p>
             <div className="h-[220px] min-w-0 md:h-[260px]">
-              <ResponsiveContainer width="100%" height="100%" minWidth={0} minHeight={0}>
+              <ResponsiveContainer
+                width="100%"
+                height="100%"
+                minWidth={0}
+                minHeight={0}
+              >
                 <BarChart data={data.customers.preferenceByGovernorate}>
                   <CartesianGrid stroke="#555555" vertical={false} />
                   <XAxis

@@ -93,7 +93,9 @@ export function AdminEarlyAccessClient() {
   const filtered = useMemo(() => {
     const query = search.trim().toLowerCase();
     if (!query) return subscribers;
-    return subscribers.filter((item) => item.email.toLowerCase().includes(query));
+    return subscribers.filter((item) =>
+      item.email.toLowerCase().includes(query),
+    );
   }, [search, subscribers]);
 
   const exportCsv = async () => {
@@ -134,7 +136,9 @@ export function AdminEarlyAccessClient() {
         <FlagPanel
           label="EARLY ACCESS PAGE"
           active={earlyAccessActive}
-          onToggle={() => updateFlags({ earlyAccessActive: !earlyAccessActive })}
+          onToggle={() =>
+            updateFlags({ earlyAccessActive: !earlyAccessActive })
+          }
           liveCopy="Customers are redirected to /early-access until this is turned off."
           hiddenCopy="/early-access redirects to the homepage."
         />
@@ -220,16 +224,16 @@ export function AdminEarlyAccessClient() {
           <table className="w-full min-w-[720px] text-left text-sm">
             <thead className="text-xs uppercase tracking-[0.16em] text-[#555555]">
               <tr>
-                <th className="border-b border-[#EDE9E0]/15 py-3 pr-3">Email</th>
+                <th className="border-b border-[#EDE9E0]/15 py-3 pr-3">
+                  Email
+                </th>
                 <th className="border-b border-[#EDE9E0]/15 py-3 pr-3">
                   Signed Up
                 </th>
                 <th className="border-b border-[#EDE9E0]/15 py-3 pr-3">
                   Source
                 </th>
-                <th className="border-b border-[#EDE9E0]/15 py-3">
-                  Converted
-                </th>
+                <th className="border-b border-[#EDE9E0]/15 py-3">Converted</th>
               </tr>
             </thead>
             <tbody>

@@ -11,15 +11,16 @@ import { requireAdminRole } from "@/lib/admin-security";
 
 async function requireSession() {
   const auth = await requireAdminRole();
-  return auth.ok
-    ? { ok: true as const, status: 200, message: "OK" }
-    : auth;
+  return auth.ok ? { ok: true as const, status: 200, message: "OK" } : auth;
 }
 
 export async function GET(req: Request) {
   const auth = await requireSession();
   if (!auth.ok) {
-    return NextResponse.json({ message: auth.message }, { status: auth.status });
+    return NextResponse.json(
+      { message: auth.message },
+      { status: auth.status },
+    );
   }
 
   const url = new URL(req.url);
@@ -60,7 +61,10 @@ export async function GET(req: Request) {
 export async function PATCH(req: Request) {
   const auth = await requireSession();
   if (!auth.ok) {
-    return NextResponse.json({ message: auth.message }, { status: auth.status });
+    return NextResponse.json(
+      { message: auth.message },
+      { status: auth.status },
+    );
   }
 
   const body = await req.json().catch(() => ({}));

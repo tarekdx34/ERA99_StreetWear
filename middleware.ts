@@ -26,12 +26,8 @@ const PUBLIC_FILE_PATTERN =
 
 async function getEarlyAccessActiveFromInternalState(request: NextRequest) {
   try {
-    const origin =
-      process.env.NEXT_PUBLIC_SITE_URL ||
-      request.nextUrl.origin ||
-      "http://localhost:3250";
-    const stateUrl = new URL("/api/internal/early-access-state", origin);
-    const response = await fetch(stateUrl.toString(), {
+    const stateUrl = new URL("/api/internal/early-access-state", request.url);
+    const response = await fetch(stateUrl, {
       cache: "no-store",
       headers: { cookie: request.headers.get("cookie") || "" },
     });
@@ -43,6 +39,7 @@ async function getEarlyAccessActiveFromInternalState(request: NextRequest) {
       earlyAccessActive?: unknown;
       countdownEnabled?: unknown;
     } | null;
+    console.log("Internal state data:", data);
     return Boolean(data?.earlyAccessActive) || Boolean(data?.countdownEnabled);
   } catch (error) {
     console.log("Internal state fetch error:", error);
@@ -106,44 +103,56 @@ export async function middleware(request: NextRequest) {
     }
   }
 
-  const token = await getToken({
-    req: request,
-    secret: process.env.NEXTAUTH_SECRET,
-  });
-  const tokenRole =
-    typeof token === "object" && token && "role" in token
-      ? (token as Record<string, unknown>).role
-      : null;
-  const isAdmin = tokenRole === "admin";
+  if (!isAdminArea && !isAdminApi) {
+    const internalActive = await getEarlyAccessActiveFromInternalState(request);
+    const isLocked = internalActive;
 
-  if (!isAdmin && !isAdminArea && !isAdminApi) {
-    if (!isApiRoute && !isEarlyAccessPage && !isPublicFile) {
-      const isLocked = await getEarlyAccessActiveFromInternalState(request);
-      if (isLocked) {
-        return NextResponse.redirect(new URL("/early-access", request.url));
-      }
+    if (!isApiRoute && !isEarlyAccessPage && !isPublicFile && isLocked) {
+      return NextResponse.redirect(new URL("/early-access", request.url));
     }
+
+    return response;
   }
 
   if (isAllowed) {
     return response;
   }
 
-  if (isAdminArea || isAdminApi) {
-    if (isAdmin) {
-      return response;
+  const token = await getToken({
+    req: request,
+    secret: process.env.NEXTAUTH_SECRET,
+  });
+
+  if (token) {
+    const tokenRole =
+      typeof token === "object" && token && "role" in token
+        ? (token as Record<string, unknown>).role
+        : null;
+
+    if (isAdminArea || isAdminApi) {
+      if (tokenRole === "admin") {
+        return response;
+      }
+
+      if (isAdminApi) {
+        return NextResponse.json({ message: "Unauthorized" }, { status: 403 });
+      }
+
+      const redirectUrl = new URL("/admin/login", request.url);
+      redirectUrl.searchParams.set("next", pathname);
+      return NextResponse.redirect(redirectUrl);
     }
 
-    if (isAdminApi) {
-      return NextResponse.json({ message: "Unauthorized" }, { status: 403 });
-    }
-
-    const redirectUrl = new URL("/admin/login", request.url);
-    redirectUrl.searchParams.set("next", pathname);
-    return NextResponse.redirect(redirectUrl);
+    return response;
   }
 
-  return response;
+  if (pathname.startsWith("/api/admin")) {
+    return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+  }
+
+  const redirectUrl = new URL("/admin/login", request.url);
+  redirectUrl.searchParams.set("next", pathname);
+  return NextResponse.redirect(redirectUrl);
 }
 
 export const config = {

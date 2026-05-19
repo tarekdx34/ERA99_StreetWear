@@ -1,4 +1,8 @@
-import { isDatabaseConfigured, markDatabaseUnavailable, prisma } from "@/lib/prisma";
+import {
+  isDatabaseConfigured,
+  markDatabaseUnavailable,
+  prisma,
+} from "@/lib/prisma";
 
 export type DeliveryFeeRow = {
   governorate: string;
@@ -73,8 +77,7 @@ export const defaultSettings: AdminSettingsModel = {
   dashboardSecurityCriticalCount: 15,
 
   showAnnouncementStrip: true,
-  announcementStripText:
-    "QUTB — ERA 99 — DROP 001 — ALEXANDRIA",
+  announcementStripText: "QUTB — ERA 99 — DROP 001 — ALEXANDRIA",
   maintenanceMode: false,
 };
 

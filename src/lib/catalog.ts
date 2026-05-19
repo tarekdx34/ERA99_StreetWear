@@ -1,6 +1,10 @@
 import type { Product } from "@/lib/products";
 import { products, sizes } from "@/lib/products";
-import { isDatabaseConfigured, markDatabaseUnavailable, prisma } from "@/lib/prisma";
+import {
+  isDatabaseConfigured,
+  markDatabaseUnavailable,
+  prisma,
+} from "@/lib/prisma";
 
 const CATALOG_PRODUCTS_KEY = "catalog_products_v3";
 const CATALOG_COLLECTIONS_KEY = "catalog_collections_v1";
@@ -137,7 +141,9 @@ function seedFromStaticProducts(): CatalogProduct[] {
   });
 }
 
-async function getCatalogProductsRaw(db: CatalogDbClient = prisma): Promise<CatalogProduct[]> {
+async function getCatalogProductsRaw(
+  db: CatalogDbClient = prisma,
+): Promise<CatalogProduct[]> {
   if (!isDatabaseConfigured()) return seedFromStaticProducts();
 
   let setting: { value: string } | null = null;
@@ -220,9 +226,7 @@ function toStorefrontProduct(item: CatalogProduct): Product {
     shortDescription: item.shortDescription,
     weightGsm: item.weightGsm || 220,
     qVariant:
-      item.fitType === "Regular"
-        ? "Q-02 Moving Q"
-        : "Q-01 Industrial Block",
+      item.fitType === "Regular" ? "Q-02 Moving Q" : "Q-01 Industrial Block",
     fabricStory:
       "100% COTTON cotton holds the shape. Garment dye and enzyme wash give the surface its lived weight. Science you can feel.",
     images: primaryVariant?.images?.length
@@ -583,7 +587,9 @@ async function mutateInventoryForOrder(
     const slot = variant.sizes[sizeKey];
     const qty = Math.max(0, Math.floor(item.qty || 0));
     if (!slot?.active || qty <= 0) {
-      throw new Error(`Invalid stock mutation for ${item.productId} ${item.size}`);
+      throw new Error(
+        `Invalid stock mutation for ${item.productId} ${item.size}`,
+      );
     }
 
     if (action === "reserve") {
@@ -600,7 +606,9 @@ async function mutateInventoryForOrder(
   await saveCatalogProductsRaw(nextProducts, db);
 }
 
-export function toInventoryOrderItems(orderItems: unknown): InventoryOrderItem[] {
+export function toInventoryOrderItems(
+  orderItems: unknown,
+): InventoryOrderItem[] {
   if (!Array.isArray(orderItems)) return [];
   return orderItems
     .map((rawItem) => {
@@ -612,11 +620,15 @@ export function toInventoryOrderItems(orderItems: unknown): InventoryOrderItem[]
         productId: String(item.productId || "").trim(),
         size: String(item.size || "").trim(),
         qty: Math.max(0, Math.floor(Number(item.qty || 0))),
-        color: typeof item.color === "string" ? String(item.color).trim() : undefined,
+        color:
+          typeof item.color === "string"
+            ? String(item.color).trim()
+            : undefined,
       };
     })
     .filter(
-      (item) => item.productId.length > 0 && item.size.length > 0 && item.qty > 0,
+      (item) =>
+        item.productId.length > 0 && item.size.length > 0 && item.qty > 0,
     );
 }
 

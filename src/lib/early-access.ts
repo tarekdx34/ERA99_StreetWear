@@ -1,12 +1,20 @@
 import path from "node:path";
 import { readFile, writeFile } from "node:fs/promises";
-import { prisma, isDatabaseConfigured, markDatabaseUnavailable } from "@/lib/prisma";
+import {
+  prisma,
+  isDatabaseConfigured,
+  markDatabaseUnavailable,
+} from "@/lib/prisma";
 
 const EARLY_ACCESS_KEY = "early_access_active";
 const DROP_MODE_KEY = "drop_mode_active";
 const EARLY_ACCESS_COUNTDOWN_ENABLED_KEY = "early_access_countdown_enabled";
 const EARLY_ACCESS_DROP_AT_KEY = "early_access_drop_at";
-const LOCAL_STATE_FILE = path.join(process.cwd(), ".next", "early-access-state.json");
+const LOCAL_STATE_FILE = path.join(
+  process.cwd(),
+  ".next",
+  "early-access-state.json",
+);
 
 type LocalEarlyAccessState = {
   earlyAccessActive: boolean;
@@ -73,7 +81,8 @@ async function readLocalState(): Promise<LocalEarlyAccessState> {
           ? parsed.countdownEnabled
           : fallback.countdownEnabled,
       earlyAccessDropAt:
-        typeof parsed.earlyAccessDropAt === "string" || parsed.earlyAccessDropAt === null
+        typeof parsed.earlyAccessDropAt === "string" ||
+        parsed.earlyAccessDropAt === null
           ? parsed.earlyAccessDropAt
           : fallback.earlyAccessDropAt,
     };
@@ -191,7 +200,9 @@ async function getStringSetting(key: string, envName: string) {
     return readLocalStringSetting(key);
   }
 
-  return parseDateSetting(row?.value) || readLocalStringSetting(key) || fallback;
+  return (
+    parseDateSetting(row?.value) || readLocalStringSetting(key) || fallback
+  );
 }
 
 async function setStringSetting(key: string, value: string | null) {
@@ -298,19 +309,21 @@ export async function setEarlyAccessDropAt(value: string | null) {
 
 export async function getEarlyAccessState() {
   const released = await releaseEarlyAccessIfExpired();
-  const [earlyAccessActive, dropModeActive, countdownEnabled, earlyAccessDropAt] =
-    await Promise.all([
-      released
-        ? Promise.resolve(false)
-        : getBooleanSetting(EARLY_ACCESS_KEY, "EARLY_ACCESS_ACTIVE"),
-      released
-        ? Promise.resolve(true)
-        : getBooleanSetting(DROP_MODE_KEY, "DROP_MODE_ACTIVE"),
-      released
-        ? Promise.resolve(false)
-        : isEarlyAccessCountdownEnabled(),
-      getEarlyAccessDropAt(),
-    ]);
+  const [
+    earlyAccessActive,
+    dropModeActive,
+    countdownEnabled,
+    earlyAccessDropAt,
+  ] = await Promise.all([
+    released
+      ? Promise.resolve(false)
+      : getBooleanSetting(EARLY_ACCESS_KEY, "EARLY_ACCESS_ACTIVE"),
+    released
+      ? Promise.resolve(true)
+      : getBooleanSetting(DROP_MODE_KEY, "DROP_MODE_ACTIVE"),
+    released ? Promise.resolve(false) : isEarlyAccessCountdownEnabled(),
+    getEarlyAccessDropAt(),
+  ]);
 
   return {
     earlyAccessActive,
