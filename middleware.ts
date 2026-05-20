@@ -53,6 +53,7 @@ export async function middleware(request: NextRequest) {
   const isAllowed = ALLOWLIST.some((path) => pathname.startsWith(path));
   const isAdminArea = pathname.startsWith("/admin");
   const isAdminApi = pathname.startsWith("/api/admin");
+  const isInternalApi = pathname.startsWith("/api/internal/");
   const isApiRoute = pathname.startsWith("/api/");
   const isEarlyAccessPage = pathname === "/early-access";
   const isPublicFile = PUBLIC_FILE_PATTERN.test(pathname);
@@ -101,6 +102,12 @@ export async function middleware(request: NextRequest) {
         },
       );
     }
+  }
+
+  // Internal API routes should bypass middleware logic to avoid recursion
+  // (middleware calling internal API -> middleware -> ...). Fast-return.
+  if (isInternalApi) {
+    return response;
   }
 
   if (!isAdminArea && !isAdminApi) {
@@ -156,5 +163,5 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/((?!_next/static|_next/image|favicon.ico).*)"],
+  matcher: ["/((?!_next/static|_next/image|favicon.ico|api/internal/).*)"],
 };

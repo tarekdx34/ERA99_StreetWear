@@ -45,7 +45,7 @@ export default async function EarlyAccessPage() {
   return (
     <main className="relative grid min-h-screen overflow-hidden bg-[#080808] px-4 py-12 text-[#EDE9E0] sm:px-6 sm:py-16">
       <img
-        src="/images/1.jpeg"
+        src="/images/1.avif"
         alt=""
         className="absolute inset-0 h-full w-full object-cover opacity-45"
       />

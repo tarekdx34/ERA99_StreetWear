@@ -34,10 +34,10 @@ export const products: Product[] = [
     qVariant: "Q-01 Industrial Block",
     fabricStory: coreFabricStory,
     images: [
-      "/images/1.jpeg",
-      "/images/2.jpeg",
-      "/images/3.jpeg",
-      "/images/11.jpeg",
+      "/images/1.avif",
+      "/images/2.webp",
+      "/images/3.webp",
+      "/images/11.avif",
     ],
     description: {
       fabric: "100% COTTON. Boxy. Built in Alexandria. This is QUTB.",
@@ -56,10 +56,10 @@ export const products: Product[] = [
     qVariant: "Q-01 Industrial Block",
     fabricStory: coreFabricStory,
     images: [
-      "/images/4.png",
-      "/images/5.jpeg",
-      "/images/6.jpeg",
-      "/images/7.jpeg",
+      "/images/4.webp",
+      "/images/5.webp",
+      "/images/6.webp",
+      "/images/7.webp",
     ],
     description: {
       fabric: "100% COTTON. Boxy. Built in Alexandria. This is QUTB.",
@@ -81,7 +81,7 @@ export const products: Product[] = [
       "/images/10.jpeg",
       "/images/8.jpeg",
       "/images/9.jpeg",
-      "/images/2.jpeg",
+      "/images/2.webp",
     ],
     description: {
       fabric: "100% COTTON. Boxy. Built in Alexandria. This is QUTB.",
@@ -100,10 +100,10 @@ export const products: Product[] = [
     qVariant: "Q-01 Industrial Block",
     fabricStory: coreFabricStory,
     images: [
-      "/images/3.jpeg",
-      "/images/1.jpeg",
-      "/images/11.jpeg",
-      "/images/2.jpeg",
+      "/images/3.webp",
+      "/images/1.avif",
+      "/images/11.avif",
+      "/images/2.webp",
     ],
     description: {
       fabric: "100% COTTON. Boxy. Built in Alexandria. This is QUTB.",

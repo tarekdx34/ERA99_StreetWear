@@ -1,5 +1,9 @@
 import { PrismaClient } from "@prisma/client";
-import type { CatalogProduct, CatalogSize, VariantSize } from "../src/lib/catalog";
+import type {
+  CatalogProduct,
+  CatalogSize,
+  VariantSize,
+} from "../src/lib/catalog";
 
 const prisma = new PrismaClient();
 const CATALOG_PRODUCTS_KEY = "catalog_products_v3";
@@ -7,7 +11,10 @@ const CATALOG_COLLECTIONS_KEY = "catalog_collections_v1";
 
 const sizes: CatalogSize[] = ["S", "M", "L", "XL", "XXL"];
 
-function makeSizeMap(productId: string, stockBySize: Partial<Record<CatalogSize, number>>) {
+function makeSizeMap(
+  productId: string,
+  stockBySize: Partial<Record<CatalogSize, number>>,
+) {
   const map = {} as Record<CatalogSize, VariantSize>;
   for (const size of sizes) {
     const stock = Math.max(0, Math.floor(stockBySize[size] || 0));
@@ -83,7 +90,7 @@ async function main() {
       fabric: "220GSM heavyweight cotton jersey",
       colorName: "White",
       colorHex: "#F0EDE8",
-      images: ["/images/1.jpeg", "/images/2.jpeg", "/images/3.jpeg"],
+      images: ["/images/1.avif", "/images/2.webp", "/images/3.webp"],
       newArrival: true,
       featured: true,
       createdAt: "2026-04-10T10:00:00.000Z",
@@ -100,7 +107,7 @@ async function main() {
       fabric: "240GSM enzyme-washed cotton",
       colorName: "Black",
       colorHex: "#111111",
-      images: ["/images/4.png", "/images/5.jpeg", "/images/6.jpeg"],
+      images: ["/images/4.webp", "/images/5.webp", "/images/6.webp"],
       newArrival: true,
       createdAt: "2026-04-11T11:00:00.000Z",
       stockBySize: { S: 0, M: 2, L: 2, XL: 1, XXL: 1 },
@@ -129,7 +136,7 @@ async function main() {
       fabric: "230GSM loopback cotton french terry",
       colorName: "Olive",
       colorHex: "#5A5F45",
-      images: ["/images/11.jpeg", "/images/3.jpeg", "/images/1.jpeg"],
+      images: ["/images/11.avif", "/images/3.webp", "/images/1.avif"],
       createdAt: "2026-04-12T08:00:00.000Z",
       stockBySize: { S: 4, M: 4, L: 4, XL: 3, XXL: 2 },
     }),
@@ -144,7 +151,7 @@ async function main() {
       fabric: "260GSM heavyweight slub cotton",
       colorName: "Red",
       colorHex: "#8B0000",
-      images: ["/images/2.jpeg", "/images/7.jpeg", "/images/6.jpeg"],
+      images: ["/images/2.webp", "/images/7.webp", "/images/6.webp"],
       createdAt: "2026-04-13T08:30:00.000Z",
       stockBySize: { S: 0, M: 0, L: 0, XL: 0, XXL: 0 },
     }),
@@ -158,7 +165,7 @@ async function main() {
       fabric: "220GSM heavyweight cotton jersey",
       colorName: "Navy",
       colorHex: "#1F2A44",
-      images: ["/images/5.jpeg", "/images/4.png", "/images/8.jpeg"],
+      images: ["/images/5.webp", "/images/4.webp", "/images/8.jpeg"],
       createdAt: "2026-04-08T08:30:00.000Z",
       stockBySize: { S: 2, M: 2, L: 1, XL: 0, XXL: 0 },
     }),
@@ -172,7 +179,10 @@ async function main() {
 
   await prisma.setting.upsert({
     where: { key: CATALOG_COLLECTIONS_KEY },
-    create: { key: CATALOG_COLLECTIONS_KEY, value: JSON.stringify(["Drop 001", "Drop 002", "Drop 003"]) },
+    create: {
+      key: CATALOG_COLLECTIONS_KEY,
+      value: JSON.stringify(["Drop 001", "Drop 002", "Drop 003"]),
+    },
     update: { value: JSON.stringify(["Drop 001", "Drop 002", "Drop 003"]) },
   });
 
@@ -238,7 +248,9 @@ async function main() {
     ],
   });
 
-  console.log("Seeded 6 shop test products and 3 test orders (2 count toward best-selling).");
+  console.log(
+    "Seeded 6 shop test products and 3 test orders (2 count toward best-selling).",
+  );
 }
 
 main()

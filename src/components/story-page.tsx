@@ -181,7 +181,8 @@ export function StoryPage() {
                 transition={{ duration: 0.7, ease: "easeOut", delay: 0.35 }}
                 className="mt-7 text-[18px] leading-[1.8] text-[rgba(237,233,224,0.85)]"
               >
-                They built for global labels. They chose to build for themselves.
+                They built for global labels. They chose to build for
+                themselves.
               </motion.p>
               <motion.p
                 {...reveal}
@@ -203,7 +204,8 @@ export function StoryPage() {
                 transition={{ duration: 0.7, ease: "easeOut", delay: 0.8 }}
                 className="mt-7 text-[18px] leading-[1.8] text-[rgba(237,233,224,0.85)]"
               >
-                ERA 99 is the first chapter. 100% COTTON. Garment dyed. Wash tested.
+                ERA 99 is the first chapter. 100% COTTON. Garment dyed. Wash
+                tested.
               </motion.p>
             </div>
           </div>
@@ -214,7 +216,7 @@ export function StoryPage() {
           className="relative h-[70vh] w-full overflow-hidden"
         >
           <img
-            src="/images/1.jpeg"
+            src="/images/1.avif"
             alt="Alexandria campaign"
             width={1600}
             height={1200}
@@ -264,20 +266,21 @@ export function StoryPage() {
               className="relative order-1 flex aspect-square w-full items-center justify-center overflow-hidden border border-ash/10 bg-ash/5 md:order-2"
             >
               <img
-                src="/images/story/factory-1.jpg"
+                src="/images/story/factory-1.webp"
                 alt="QUTB factory process"
                 className="absolute inset-0 h-full w-full object-cover"
                 loading="lazy"
                 onLoad={(event) => {
                   const label = event.currentTarget.nextElementSibling;
-                  if (label instanceof HTMLElement) label.style.display = "none";
+                  if (label instanceof HTMLElement)
+                    label.style.display = "none";
                 }}
                 onError={(event) => {
                   event.currentTarget.style.display = "none";
                 }}
               />
               <p className="text-xs uppercase tracking-widest text-[#555555]">
-                /images/story/factory-1.jpg
+                /images/story/factory-1.webp
               </p>
             </motion.div>
           </div>
@@ -290,20 +293,21 @@ export function StoryPage() {
               className="relative flex aspect-square w-full items-center justify-center overflow-hidden border border-ash/10 bg-ash/5"
             >
               <img
-                src="/images/story/father-son-sketch.jpg"
+                src="/images/story/father-son-sketch.webp"
                 alt="Father and son sketch"
                 className="absolute inset-0 h-full w-full object-cover"
                 loading="lazy"
                 onLoad={(event) => {
                   const label = event.currentTarget.nextElementSibling;
-                  if (label instanceof HTMLElement) label.style.display = "none";
+                  if (label instanceof HTMLElement)
+                    label.style.display = "none";
                 }}
                 onError={(event) => {
                   event.currentTarget.style.display = "none";
                 }}
               />
               <p className="text-xs uppercase tracking-widest text-[#555555]">
-                /images/story/father-son-sketch.jpg
+                /images/story/father-son-sketch.webp
               </p>
             </motion.div>
 
@@ -317,7 +321,9 @@ export function StoryPage() {
                 transition={{ duration: 0.7, ease: "easeOut", delay: 0.2 }}
                 className="mt-10 text-[18px] leading-[1.8] text-[rgba(237,233,224,0.85)]"
               >
-                What begins in the factory is passed down out of it. The conversations that start over sewing machines echo in the streets.
+                What begins in the factory is passed down out of it. The
+                conversations that start over sewing machines echo in the
+                streets.
               </motion.p>
             </motion.div>
           </div>
@@ -379,8 +385,8 @@ export function StoryPage() {
                 className="text-[17px] leading-[1.85] text-[rgba(237,233,224,0.85)]"
               >
                 <p>
-                  Alexandria holds. Every shirt carries that address — even
-                  when no one can read it.
+                  Alexandria holds. Every shirt carries that address — even when
+                  no one can read it.
                 </p>
               </motion.div>
             </div>
@@ -530,8 +536,8 @@ export function StoryPage() {
               <Link
                 href="/shop"
                 className="border border-[#EDE9E0] bg-[#EDE9E0] px-8 py-3 text-xs font-medium uppercase tracking-[0.16em] text-[#080808]"
-            >
-              ENTER ERA 99
+              >
+                ENTER ERA 99
               </Link>
               <Link
                 href="/"

@@ -8,30 +8,31 @@ import { useConsent } from "@/contexts/consent-context";
 import type { Product } from "@/lib/products";
 import Link from "next/link";
 
-const tickerText =
-  "QUTB — ERA 99 — DROP 001 — ALEXANDRIA";
+const tickerText = "QUTB — ERA 99 — DROP 001 — ALEXANDRIA";
 
-const heroImage = "/images/1.jpeg";
+const heroImage = "/images/1.avif";
 
 const bannerPanels = [
-  { title: "BOXY FIT", image: "/images/2.jpeg" },
-  { title: "HEAVYWEIGHT", image: "/images/4.png" },
-  { title: "FIRST DROP", image: "/images/7.jpeg" },
+  { title: "BOXY FIT", image: "/images/2.webp" },
+  { title: "HEAVYWEIGHT", image: "/images/4.webp" },
+  { title: "FIRST DROP", image: "/images/7.webp" },
 ];
 
 const instagramTiles = [
-  "/images/1.jpeg",
-  "/images/2.jpeg",
-  "/images/3.jpeg",
-  "/images/4.png",
-  "/images/5.jpeg",
-  "/images/6.jpeg",
+  "/images/1.avif",
+  "/images/2.webp",
+  "/images/3.webp",
+  "/images/4.webp",
+  "/images/5.webp",
+  "/images/6.webp",
 ];
 
 function Logo({ className = "" }) {
   return (
     <span className={className}>
-      <span className="font-anton tracking-[0.28em] text-[#EDE9E0] sm:tracking-[16px]">QUTB</span>
+      <span className="font-anton tracking-[0.28em] text-[#EDE9E0] sm:tracking-[16px]">
+        QUTB
+      </span>
     </span>
   );
 }
@@ -199,8 +200,8 @@ function ProductCard({ product }: { product: Product }) {
   const [selectedSize, setSelectedSize] = useState<string | null>(null);
   const { addItem, openCart } = useCart();
 
-  const frontImage = product.images[0] || "/images/1.jpeg";
-  const backImage = product.images[1] || "/images/2.jpeg";
+  const frontImage = product.images[0] || "/images/1.avif";
+  const backImage = product.images[1] || "/images/2.webp";
 
   const handleAddToCart = () => {
     if (!selectedSize) {
@@ -484,7 +485,9 @@ function InstagramStrip() {
 function Footer() {
   const { resetConsentDecision } = useConsent();
   const [email, setEmail] = useState("");
-  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const [status, setStatus] = useState<
+    "idle" | "loading" | "success" | "error"
+  >("idle");
 
   const handleJoin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -520,7 +523,9 @@ function Footer() {
           <p className="mt-3 text-xs uppercase tracking-[0.16em] text-ash/65">
             Alexandria, Egypt
           </p>
-          <p className="mt-2 text-sm text-[#555555]">QUTB · Alexandria, Egypt · The axis holds.</p>
+          <p className="mt-2 text-sm text-[#555555]">
+            QUTB · Alexandria, Egypt · The axis holds.
+          </p>
         </div>
 
         <div className="flex flex-col gap-3 text-xs uppercase tracking-[0.16em] text-ash/70 md:items-center">
@@ -554,7 +559,10 @@ function Footer() {
               ADDED TO THE LIST
             </p>
           ) : (
-            <form onSubmit={handleJoin} className="mt-4 flex w-full max-w-sm flex-col">
+            <form
+              onSubmit={handleJoin}
+              className="mt-4 flex w-full max-w-sm flex-col"
+            >
               <div className="flex w-full">
                 <input
                   type="email"
@@ -601,7 +609,6 @@ export function QutbLanding({ products }: { products: Product[] }) {
         <ThreeColumnBanners />
         <ProductGrid products={products} />
         <BrandStatement />
-        <UrgencyStrip />
         <InstagramStrip />
       </main>
       <Footer />

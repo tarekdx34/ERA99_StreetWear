@@ -1,11 +1,20 @@
 import { prisma } from "@/lib/prisma";
-import { calculateTotalStock, getAdminCatalogProducts, type CatalogProduct } from "@/lib/catalog";
+import {
+  calculateTotalStock,
+  getAdminCatalogProducts,
+  type CatalogProduct,
+} from "@/lib/catalog";
 
 export const SHOP_PAGE_SIZE = 16;
 const ORDERED_SIZES = ["S", "M", "L", "XL", "XXL"] as const;
 const BEST_SELLING_STATUSES = ["paid", "delivered", "shipped", "preparing"];
 
-export type ShopSort = "newest" | "best-selling" | "price-asc" | "price-desc" | "name";
+export type ShopSort =
+  | "newest"
+  | "best-selling"
+  | "price-asc"
+  | "price-desc"
+  | "name";
 export type ShopAvailability = "all" | "in-stock";
 
 export type ShopQueryParams = {
@@ -131,28 +140,32 @@ function parseAvailability(raw: string | undefined): ShopAvailability {
 }
 
 function flattenImages(product: CatalogProduct) {
-  const images = product.colorVariants.flatMap((variant) => variant.images || []);
+  const images = product.colorVariants.flatMap(
+    (variant) => variant.images || [],
+  );
   const unique = Array.from(new Set(images.filter(Boolean)));
   if (unique.length > 0) return unique;
-  return ["/images/1.jpeg"];
+  return ["/images/1.avif"];
 }
 
 function toShopProduct(product: CatalogProduct): ShopProduct {
   const images = flattenImages(product);
-  const variants: ShopProductVariant[] = product.colorVariants.map((variant) => ({
-    id: variant.id,
-    colorName: variant.colorName,
-    colorHex: variant.colorHex,
-    images: variant.images,
-    sizes: ORDERED_SIZES.map((size) => {
-      const slot = variant.sizes[size];
-      return {
-        size,
-        stock: slot?.stock || 0,
-        active: Boolean(slot?.active),
-      };
+  const variants: ShopProductVariant[] = product.colorVariants.map(
+    (variant) => ({
+      id: variant.id,
+      colorName: variant.colorName,
+      colorHex: variant.colorHex,
+      images: variant.images,
+      sizes: ORDERED_SIZES.map((size) => {
+        const slot = variant.sizes[size];
+        return {
+          size,
+          stock: slot?.stock || 0,
+          active: Boolean(slot?.active),
+        };
+      }),
     }),
-  }));
+  );
 
   const totalStock = calculateTotalStock(product);
   return {
@@ -198,7 +211,11 @@ async function getBestSellingMap() {
 }
 
 function buildCollections(products: ShopProduct[]): ShopFacet[] {
-  return Array.from(new Map(products.map((item) => [item.collectionSlug, item.collection])).entries())
+  return Array.from(
+    new Map(
+      products.map((item) => [item.collectionSlug, item.collection]),
+    ).entries(),
+  )
     .map(([slug, label]) => ({ slug, label }))
     .sort((a, b) => a.label.localeCompare(b.label));
 }
@@ -218,7 +235,9 @@ function buildColors(products: ShopProduct[]): ShopColorFacet[] {
       }
     }
   }
-  return Array.from(map.values()).sort((a, b) => a.label.localeCompare(b.label));
+  return Array.from(map.values()).sort((a, b) =>
+    a.label.localeCompare(b.label),
+  );
 }
 
 function buildAvailableSizes(products: ShopProduct[]) {
@@ -231,7 +250,10 @@ function buildAvailableSizes(products: ShopProduct[]) {
     for (const variant of product.variants) {
       for (const size of variant.sizes) {
         if (!size.active) continue;
-        stockBySize.set(size.size, (stockBySize.get(size.size) || 0) + Math.max(0, size.stock));
+        stockBySize.set(
+          size.size,
+          (stockBySize.get(size.size) || 0) + Math.max(0, size.stock),
+        );
       }
     }
   }
@@ -250,7 +272,9 @@ function getPriceBounds(products: ShopProduct[]) {
   };
 }
 
-export async function getShopData(params: ShopQueryParams): Promise<ShopDataResult> {
+export async function getShopData(
+  params: ShopQueryParams,
+): Promise<ShopDataResult> {
   const sourceProducts = (await getAdminCatalogProducts())
     .filter((item) => item.active)
     .map(toShopProduct);
@@ -261,19 +285,30 @@ export async function getShopData(params: ShopQueryParams): Promise<ShopDataResu
   const bounds = getPriceBounds(sourceProducts);
 
   const queryCollection = (params.collection || "all").trim().toLowerCase();
-  const querySizes = parseCsvValue(params.size).map((item) => item.toUpperCase());
-  const queryColors = parseCsvValue(params.color).map((item) => item.toLowerCase());
+  const querySizes = parseCsvValue(params.size).map((item) =>
+    item.toUpperCase(),
+  );
+  const queryColors = parseCsvValue(params.color).map((item) =>
+    item.toLowerCase(),
+  );
   const queryMinPrice = parsePositiveNumber(params.minPrice, bounds.min);
-  const queryMaxPrice = parsePositiveNumber(params.maxPrice, Math.max(bounds.max, queryMinPrice));
+  const queryMaxPrice = parsePositiveNumber(
+    params.maxPrice,
+    Math.max(bounds.max, queryMinPrice),
+  );
   const querySort = parseSort(params.sort);
   const querySearch = (params.search || "").trim();
   const queryAvailability = parseAvailability(params.availability);
   const requestedPage = parsePage(params.page);
 
-  const normalizedCollection = queryCollection && queryCollection !== "all" ? queryCollection : "all";
+  const normalizedCollection =
+    queryCollection && queryCollection !== "all" ? queryCollection : "all";
 
   let filtered = sourceProducts.filter((product) => {
-    if (normalizedCollection !== "all" && product.collectionSlug !== normalizedCollection) {
+    if (
+      normalizedCollection !== "all" &&
+      product.collectionSlug !== normalizedCollection
+    ) {
       return false;
     }
 
@@ -295,7 +330,9 @@ export async function getShopData(params: ShopQueryParams): Promise<ShopDataResu
     }
 
     if (queryColors.length > 0) {
-      const colorSlugs = product.variants.map((variant) => slugifyValue(variant.colorName));
+      const colorSlugs = product.variants.map((variant) =>
+        slugifyValue(variant.colorName),
+      );
       const hasColor = queryColors.some((item) => colorSlugs.includes(item));
       if (!hasColor) return false;
     }
@@ -318,9 +355,13 @@ export async function getShopData(params: ShopQueryParams): Promise<ShopDataResu
   if (querySort === "name") {
     filtered = filtered.sort((a, b) => a.name.localeCompare(b.name));
   } else if (querySort === "price-asc") {
-    filtered = filtered.sort((a, b) => a.price - b.price || b.createdAt.localeCompare(a.createdAt));
+    filtered = filtered.sort(
+      (a, b) => a.price - b.price || b.createdAt.localeCompare(a.createdAt),
+    );
   } else if (querySort === "price-desc") {
-    filtered = filtered.sort((a, b) => b.price - a.price || b.createdAt.localeCompare(a.createdAt));
+    filtered = filtered.sort(
+      (a, b) => b.price - a.price || b.createdAt.localeCompare(a.createdAt),
+    );
   } else if (querySort === "best-selling") {
     const bestSellingMap = await getBestSellingMap();
     filtered = filtered.sort((a, b) => {

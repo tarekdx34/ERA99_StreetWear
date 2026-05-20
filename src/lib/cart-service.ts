@@ -37,7 +37,7 @@ async function getVariantStock(productId: string, variantId: string) {
       name: "Unavailable product",
       color: "",
       price: 0,
-      image: "/images/1.jpeg",
+      image: "/images/1.avif",
     };
   }
 
@@ -51,7 +51,7 @@ async function getVariantStock(productId: string, variantId: string) {
     name: product.name,
     color: primaryVariant?.colorName || "Core",
     price: product.price,
-    image: primaryVariant?.images?.[0] || "/images/1.jpeg",
+    image: primaryVariant?.images?.[0] || "/images/1.avif",
   };
 }
 
@@ -65,7 +65,9 @@ async function ensureCart(userId: string) {
   return cart;
 }
 
-export async function getHydratedCart(userId: string): Promise<CartResponseItem[]> {
+export async function getHydratedCart(
+  userId: string,
+): Promise<CartResponseItem[]> {
   const cart = await ensureCart(userId);
   const items = await prisma.cartItem.findMany({
     where: { cartId: cart.id },
@@ -111,7 +113,10 @@ export async function addCartItem(userId: string, input: GuestCartItemInput) {
   });
 
   if (existing) {
-    const nextQty = Math.min(existing.quantity + boundedQty, stock.maxQty || MAX_QTY_PER_ITEM);
+    const nextQty = Math.min(
+      existing.quantity + boundedQty,
+      stock.maxQty || MAX_QTY_PER_ITEM,
+    );
     await prisma.cartItem.update({
       where: { id: existing.id },
       data: { quantity: nextQty },
@@ -130,9 +135,15 @@ export async function addCartItem(userId: string, input: GuestCartItemInput) {
   return getHydratedCart(userId);
 }
 
-export async function updateCartItemQty(userId: string, itemId: string, qty: number) {
+export async function updateCartItemQty(
+  userId: string,
+  itemId: string,
+  qty: number,
+) {
   const cart = await ensureCart(userId);
-  const item = await prisma.cartItem.findFirst({ where: { id: itemId, cartId: cart.id } });
+  const item = await prisma.cartItem.findFirst({
+    where: { id: itemId, cartId: cart.id },
+  });
   if (!item) return getHydratedCart(userId);
 
   if (qty <= 0) {
@@ -145,7 +156,10 @@ export async function updateCartItemQty(userId: string, itemId: string, qty: num
   if (bounded <= 0) {
     await prisma.cartItem.delete({ where: { id: item.id } });
   } else {
-    await prisma.cartItem.update({ where: { id: item.id }, data: { quantity: bounded } });
+    await prisma.cartItem.update({
+      where: { id: item.id },
+      data: { quantity: bounded },
+    });
   }
 
   return getHydratedCart(userId);
@@ -163,9 +177,14 @@ export async function clearCart(userId: string) {
   return [] as CartResponseItem[];
 }
 
-export async function mergeGuestCart(userId: string, guestItems: GuestCartItemInput[]) {
+export async function mergeGuestCart(
+  userId: string,
+  guestItems: GuestCartItemInput[],
+) {
   const cart = await ensureCart(userId);
-  const serverItems = await prisma.cartItem.findMany({ where: { cartId: cart.id } });
+  const serverItems = await prisma.cartItem.findMany({
+    where: { cartId: cart.id },
+  });
 
   const guestMerged = new Map<string, GuestCartItemInput>();
   for (const raw of guestItems) {
@@ -185,7 +204,9 @@ export async function mergeGuestCart(userId: string, guestItems: GuestCartItemIn
     if (!stock.inStock || stock.maxQty <= 0) continue;
 
     const existing = serverItems.find(
-      (item) => item.productId === guest.productId && item.variantId === guest.variantId,
+      (item) =>
+        item.productId === guest.productId &&
+        item.variantId === guest.variantId,
     );
 
     if (existing) {

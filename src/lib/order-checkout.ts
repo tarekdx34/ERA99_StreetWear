@@ -68,7 +68,8 @@ function findVariantForItem(
   const targetColor = color.trim().toLowerCase();
   const exactColor = targetColor
     ? colorVariants.find((variant) => {
-        if (variant.colorName.trim().toLowerCase() !== targetColor) return false;
+        if (variant.colorName.trim().toLowerCase() !== targetColor)
+          return false;
         const sizeSlot = variant.sizes[size];
         return Boolean(sizeSlot?.active);
       })
@@ -89,7 +90,10 @@ export async function resolveOrderPricingAndItems(input: {
   governorate: string;
 }) {
   if (!input.governorate.trim()) {
-    throw new OrderValidationError("INVALID_DESTINATION", "Governorate is required");
+    throw new OrderValidationError(
+      "INVALID_DESTINATION",
+      "Governorate is required",
+    );
   }
 
   const parsedItems = z.array(orderItemSchema).min(1).safeParse(input.items);
@@ -101,7 +105,9 @@ export async function resolveOrderPricingAndItems(input: {
   const normalized: NormalizedOrderItem[] = [];
 
   for (const item of parsedItems.data) {
-    const product = catalog.find((entry) => entry.id === item.productId && entry.active);
+    const product = catalog.find(
+      (entry) => entry.id === item.productId && entry.active,
+    );
     if (!product) {
       throw new OrderValidationError(
         "PRODUCT_NOT_FOUND",
@@ -135,7 +141,7 @@ export async function resolveOrderPricingAndItems(input: {
       size,
       qty: item.qty,
       unitPrice: product.price,
-      image: variant.images[0] || "/images/1.jpeg",
+      image: variant.images[0] || "/images/1.avif",
     });
   }
 

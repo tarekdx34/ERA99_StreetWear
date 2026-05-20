@@ -113,7 +113,7 @@ export function SiteChrome({
       ) : null}
 
       <header
-        className={`${positionClass} left-0 ${stripHeightClass} z-50 w-full border-b border-ash/20 bg-[#080808]/80 backdrop-blur-sm`}
+        className={`${positionClass} left-0 ${stripHeightClass} z-50 w-full border-b border-ash/20 bg-[#080808]/80 backdrop-blur-sm !-mt-px`}
       >
         <div className="mx-auto grid h-16 w-full max-w-7xl grid-cols-[minmax(0,auto)_1fr_auto] items-center pl-3 pr-2 md:grid-cols-[1fr_auto_1fr] md:px-10">
           <Link href="/" className="justify-self-start">

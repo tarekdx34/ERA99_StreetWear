@@ -231,7 +231,7 @@ function toStorefrontProduct(item: CatalogProduct): Product {
       "100% COTTON cotton holds the shape. Garment dye and enzyme wash give the surface its lived weight. Science you can feel.",
     images: primaryVariant?.images?.length
       ? primaryVariant.images
-      : ["/images/1.jpeg"],
+      : ["/images/1.avif"],
     description: {
       fabric: item.fabricComposition,
       fit: item.fitType,
@@ -311,7 +311,7 @@ export async function getAdminCatalogCardProducts(): Promise<
     name: item.name,
     price: item.price,
     compareAtPrice: item.compareAtPrice,
-    image: item.colorVariants[0]?.images?.[0] || "/images/1.jpeg",
+    image: item.colorVariants[0]?.images?.[0] || "/images/1.avif",
     totalStock: calculateTotalStock(item),
     active: item.active,
     featured: item.featured,

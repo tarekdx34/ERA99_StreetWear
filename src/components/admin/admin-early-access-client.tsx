@@ -76,7 +76,7 @@ export function AdminEarlyAccessClient() {
     const res = await fetch("/api/admin/early-access", {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ earlyAccessDropAt }),
+      body: JSON.stringify({ earlyAccessDropAt, countdownEnabled }),
     });
     if (!res.ok) {
       setNotice("Unable to update countdown.");

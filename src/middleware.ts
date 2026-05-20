@@ -52,6 +52,9 @@ async function getEarlyAccessActiveFromInternalState(request: NextRequest) {
 
 export async function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
+  if (request.headers.get("next-router-prefetch")) {
+    return NextResponse.next();
+  }
   console.log("MIDDLEWARE HIT:", pathname);
   const isAllowed = ALLOWLIST.some((path) => pathname.startsWith(path));
   const isAdminArea = pathname.startsWith("/admin");
@@ -116,6 +119,8 @@ export async function middleware(request: NextRequest) {
       : null;
   const isAdmin = tokenRole === "admin";
 
+  const isInternalApi = pathname.startsWith("/api/internal/");
+
   if (!isAdmin && !isAdminArea && !isAdminApi) {
     if (!isApiRoute && !isEarlyAccessPage && !isPublicFile) {
       const isLocked = await getEarlyAccessActiveFromInternalState(request);
@@ -123,6 +128,12 @@ export async function middleware(request: NextRequest) {
         return NextResponse.redirect(new URL("/early-access", request.url));
       }
     }
+  }
+
+  // Internal API routes are only called by the middleware itself — no further
+  // processing needed (auth, redirects, etc. don't apply).
+  if (isInternalApi) {
+    return response;
   }
 
   if (isAllowed) {
@@ -147,5 +158,7 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/((?!_next/static|_next/image|favicon.ico).*)"],
+  matcher: [
+    "/((?!_next/static|_next/image|images/|favicon.ico|api/internal/).*)",
+  ],
 };
