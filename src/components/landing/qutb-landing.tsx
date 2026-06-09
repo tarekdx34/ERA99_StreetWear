@@ -1,617 +1,309 @@
 "use client";
 
-import { Camera } from "lucide-react";
-import { motion } from "framer-motion";
-import { useEffect, useMemo, useState } from "react";
-import { useCart } from "@/contexts/cart-context";
-import { useConsent } from "@/contexts/consent-context";
-import type { Product } from "@/lib/products";
 import Link from "next/link";
+import { motion } from "framer-motion";
+import { ChevronDown } from "lucide-react";
+import { BrandLogo } from "@/components/brand";
+import { QutbFooter } from "@/components/qutb-footer";
+import { useCart } from "@/contexts/cart-context";
+import type { Product } from "@/lib/products";
+import { formatEGP } from "@/lib/utils";
 
-const tickerText = "QUTB — ERA 99 — DROP 001 — ALEXANDRIA";
+const heroImage =
+  "https://images.unsplash.com/photo-1761503347697-ade0eb2fc097?w=1920&h=1200&fit=crop&auto=format";
 
-const heroImage = "/images/1.avif";
-
-const bannerPanels = [
-  { title: "BOXY FIT", image: "/images/2.webp" },
-  { title: "HEAVYWEIGHT", image: "/images/4.webp" },
-  { title: "FIRST DROP", image: "/images/7.webp" },
+const storyPanels = [
+  {
+    label: "01 - The Uniform",
+    title: "Three silhouettes. Built to stay.",
+    body: "A permanent collection of cotton essentials refined through fabric, fit, and repetition.",
+    href: "/shop",
+    image: "/images/2.webp",
+  },
+  {
+    label: "02 - Alexandria",
+    title: "Made near the sea.",
+    body: "The city gives QUTB its pace: salt air, soft light, and the quiet confidence of everyday work.",
+    href: "/story#alexandria",
+    image: "/images/1.avif",
+  },
+  {
+    label: "03 - Cotton",
+    title: "Fabric before fashion.",
+    body: "Weight, weave, yarn, and finish come first. The garment follows the material.",
+    href: "/story#cotton",
+    image: "/images/4.webp",
+  },
 ];
 
-const instagramTiles = [
-  "/images/1.avif",
-  "/images/2.webp",
-  "/images/3.webp",
-  "/images/4.webp",
-  "/images/5.webp",
-  "/images/6.webp",
-];
-
-function Logo({ className = "" }) {
-  return (
-    <span className={className}>
-      <span className="font-anton tracking-[0.28em] text-[#EDE9E0] sm:tracking-[16px]">
-        QUTB
-      </span>
-    </span>
-  );
-}
-
-function AnnouncementStrip() {
-  return (
-    <div className="fixed left-0 top-0 z-50 h-8 w-full overflow-hidden border-b border-ash/20 bg-ink">
-      <motion.div
-        className="flex h-full min-w-max items-center gap-14 px-6 text-[10px] uppercase tracking-[0.2em] text-ash/95"
-        animate={{ x: ["0%", "-50%"] }}
-        transition={{ duration: 55, ease: "linear", repeat: Infinity }}
-      >
-        <span>{tickerText}</span>
-        <span>{tickerText}</span>
-        <span>{tickerText}</span>
-        <span>{tickerText}</span>
-      </motion.div>
-    </div>
-  );
-}
-
-function NavBar() {
-  const [solid, setSolid] = useState(false);
-
-  useEffect(() => {
-    const onScroll = () => setSolid(window.scrollY > 60);
-    window.addEventListener("scroll", onScroll);
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
-  return (
-    <nav
-      className={`fixed left-0 top-8 z-50 w-full border-b-[0.5px] border-[rgba(240,237,232,0.15)] ${
-        solid ? "bg-ink" : "bg-transparent"
-      }`}
-    >
-      <div className="mx-auto grid h-16 max-w-7xl grid-cols-[1fr_auto_1fr] items-center px-6 md:px-10">
-        <Link href="/" className="justify-self-start text-[28px] text-ash">
-          <Logo />
-        </Link>
-        <div className="hidden items-center gap-8 text-xs uppercase tracking-[0.15em] text-ash md:flex">
-          <a href="/shop" className="hover:text-ash/70">
-            SHOP
-          </a>
-          <a href="/story" className="hover:text-ash/70">
-            STORY
-          </a>
-        </div>
-        <div className="flex items-center justify-self-end gap-3 text-ash">
-          <button
-            aria-label="Cart"
-            className="border border-ash/30 p-2 hover:border-ash"
-          >
-            BAG
-          </button>
-        </div>
-      </div>
-    </nav>
-  );
-}
-
-function HeroBanner() {
-  return (
-    <section className="relative h-screen w-full overflow-hidden">
-      <img
-        src={heroImage}
-        alt="QUTB campaign"
-        width={1600}
-        height={1200}
-        loading="eager"
-        fetchPriority="high"
-        srcSet={`${heroImage} 400w, ${heroImage} 800w, ${heroImage} 1200w`}
-        className="h-full w-full object-cover"
-      />
-      <div className="absolute inset-0 bg-gradient-to-b from-[#080808]/30 to-[#080808]/60" />
-      <div className="absolute inset-0 flex items-center justify-center px-6 text-center">
-        <div>
-          <motion.h1
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1.1, ease: "easeOut" }}
-            className="font-anton text-[64px] leading-none tracking-[0.16em] text-[#EDE9E0] drop-shadow-[0_4px_18px_rgba(0,0,0,0.8)] sm:tracking-[16px] md:text-[120px]"
-          >
-            <Logo className="inline-flex items-end gap-1" />
-          </motion.h1>
-          <p className="mt-3 max-w-[20rem] text-[11px] font-medium uppercase leading-relaxed tracking-[0.22em] text-ash/65 md:max-w-none md:text-[13px] md:tracking-[0.4em]">
-            Everything revolves. We are the point it revolves around.
-          </p>
-          <p className="mt-5 max-w-[20rem] text-[12px] uppercase leading-relaxed tracking-[0.2em] text-ash/95 md:max-w-none md:text-[16px] md:tracking-[0.3em]">
-            ERA 99 — DROP 001 — ALEXANDRIA
-          </p>
-          <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
-            <motion.a
-              href="/shop"
-              whileHover={{ y: -2 }}
-              transition={{ duration: 0.3, ease: "easeOut" }}
-              className="w-[190px] border border-ash bg-ash px-8 py-3 text-xs font-medium uppercase tracking-[0.16em] text-[#080808]"
-            >
-              SHOP NOW
-            </motion.a>
-            <motion.a
-              href="#statement"
-              whileHover={{ y: -2 }}
-              transition={{ duration: 0.3, ease: "easeOut" }}
-              className="w-[190px] border border-ash bg-transparent px-8 py-3 text-xs font-medium uppercase tracking-[0.16em] text-ash"
-            >
-              OUR STORY
-            </motion.a>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function ThreeColumnBanners() {
-  return (
-    <section className="grid w-full grid-cols-1 md:grid-cols-3">
-      {bannerPanels.map((panel) => (
-        <motion.article
-          key={panel.title}
-          whileHover={{ scale: 1.01 }}
-          className="relative aspect-[3/4] overflow-hidden"
-        >
-          <img
-            src={panel.image}
-            alt={panel.title}
-            width={900}
-            height={1200}
-            loading="lazy"
-            srcSet={`${panel.image} 400w, ${panel.image} 800w, ${panel.image} 1200w`}
-            className="h-full w-full object-cover"
-          />
-          <div className="absolute inset-0 bg-[#080808]/45" />
-          <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
-            <h3 className="font-sans text-3xl font-medium uppercase tracking-[0.16em] text-ash">
-              {panel.title}
-            </h3>
-            <a
-              href="/shop"
-              className="mt-3 text-xs uppercase tracking-[0.2em] text-ash hover:text-ash/70"
-            >
-              SHOP NOW -&gt;
-            </a>
-          </div>
-        </motion.article>
-      ))}
-    </section>
-  );
-}
-
-interface CartProduct {
-  productId: string;
-  slug: string;
-  name: string;
-  color: string;
-  size: string;
-  qty: number;
-  unitPrice: number;
-  image: string;
-}
-
-function ProductCard({ product }: { product: Product }) {
-  const [hovered, setHovered] = useState(false);
-  const [selectedSize, setSelectedSize] = useState<string | null>(null);
+function FeaturedProductCard({ product }: { product: Product }) {
   const { addItem, openCart } = useCart();
+  const firstAvailable = Object.entries(product.stockBySize).find(
+    ([, available]) => available,
+  )?.[0];
 
-  const frontImage = product.images[0] || "/images/1.avif";
-  const backImage = product.images[1] || "/images/2.webp";
-
-  const handleAddToCart = () => {
-    if (!selectedSize) {
-      alert("Select a size.");
-      return;
-    }
-
-    const cartItem: CartProduct = {
+  const handleQuickAdd = () => {
+    if (!firstAvailable) return;
+    addItem({
       productId: product.id,
       slug: product.slug,
       name: product.name,
       color: product.color,
-      size: selectedSize,
+      size: firstAvailable,
       qty: 1,
       unitPrice: product.price,
-      image: frontImage,
-    };
-
-    addItem(cartItem as any);
+      image: product.images[0],
+    });
     openCart();
   };
 
   return (
     <motion.article
-      onHoverStart={() => setHovered(true)}
-      onHoverEnd={() => setHovered(false)}
-      whileHover={{ y: -3 }}
-      transition={{ duration: 0.3, ease: "easeOut" }}
-      className="border border-ash/20 bg-[#080808] p-3"
+      whileHover={{ y: -4 }}
+      transition={{ duration: 0.35, ease: "easeOut" }}
+      className="group"
     >
-      <Link href={`/product/${product.slug}`}>
-        <div className="relative aspect-[3/4] overflow-hidden border border-ash/15">
-          <motion.img
-            src={frontImage}
-            alt={`${product.name} front`}
-            className="absolute inset-0 h-full w-full object-cover"
-            animate={{ opacity: hovered ? 0 : 1 }}
-            transition={{ duration: 0.3, ease: "easeOut" }}
-          />
-          <motion.img
-            src={backImage}
-            alt={`${product.name} back`}
-            className="absolute inset-0 h-full w-full object-cover"
-            animate={{ opacity: hovered ? 1 : 0 }}
-            transition={{ duration: 0.3, ease: "easeOut" }}
-          />
-        </div>
+      <Link
+        href={`/product/${product.slug}`}
+        className="relative block aspect-[3/4] overflow-hidden bg-[#EDE8DF]"
+      >
+        <img
+          src={product.images[0]}
+          alt={`${product.name} in ${product.color}`}
+          width={720}
+          height={960}
+          loading="lazy"
+          className="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-[1.03] group-hover:opacity-0"
+        />
+        <img
+          src={product.images[1] || product.images[0]}
+          alt={`${product.name} fabric detail`}
+          width={720}
+          height={960}
+          loading="lazy"
+          className="absolute inset-0 h-full w-full object-cover opacity-0 transition duration-700 group-hover:scale-[1.03] group-hover:opacity-100"
+        />
       </Link>
 
-      <h3 className="mt-4 font-sans text-sm font-medium uppercase tracking-[0.1em] text-ash">
-        {product.name} - {product.color}
-      </h3>
-      <p className="mt-2 text-xs uppercase tracking-[0.15em] text-ash/72">
-        {product.compareAtPrice ? (
-          <>
-            <span className="mr-2 line-through text-ash/45">
-              {product.compareAtPrice} EGP
-            </span>
-            <span>{product.price} EGP</span>
-          </>
-        ) : (
-          <span>{product.price} EGP</span>
-        )}
-      </p>
-
-      <motion.div
-        animate={{
-          opacity: hovered ? 1 : 0,
-          height: hovered ? "auto" : 0,
-          y: hovered ? 0 : 8,
-        }}
-        transition={{ duration: 0.3, ease: "easeOut" }}
-        className="overflow-hidden"
-      >
-        <div className="mt-4 flex items-center gap-2 text-[11px] uppercase tracking-[0.13em] text-ash/85">
-          {["XS", "S", "M", "L", "XL", "XXL"].map((size) => (
-            <button
-              key={size}
-              onClick={() => setSelectedSize(size)}
-              className={`border px-2 py-1 transition-colors ${
-                selectedSize === size
-                  ? "border-ash bg-ash text-[#080808]"
-                  : "border-ash/25 hover:border-ash"
-              }`}
-            >
-              {size}
-            </button>
-          ))}
+      <div className="mt-5">
+        <p className="mb-1 text-[10px] uppercase tracking-[0.2em] text-[#111111]/35">
+          {product.weightGsm} GSM - {product.qVariant}
+        </p>
+        <div className="flex items-start justify-between gap-4">
+          <Link
+            href={`/product/${product.slug}`}
+            className="font-brand-serif text-[19px] leading-tight text-[#111111] hover:opacity-70"
+          >
+            {product.name}
+          </Link>
+          <p className="whitespace-nowrap text-sm text-[#111111]">
+            {product.compareAtPrice ? (
+              <>
+                <span className="mr-2 text-[#7C7C75] line-through">
+                  {formatEGP(product.compareAtPrice)}
+                </span>
+                {formatEGP(product.price)}
+              </>
+            ) : (
+              formatEGP(product.price)
+            )}
+          </p>
         </div>
+        <p className="mt-1 text-sm font-light text-[#7C7C75]">
+          {product.color}
+        </p>
         <button
-          onClick={handleAddToCart}
-          className="mt-4 w-full bg-ash px-4 py-3 text-xs font-medium uppercase tracking-[0.15em] text-[#080808] hover:bg-ash/90 transition-colors"
+          type="button"
+          disabled={!firstAvailable}
+          onClick={handleQuickAdd}
+          className="mt-4 border-b border-[#111111]/50 pb-1 text-[11px] uppercase tracking-[0.16em] text-[#111111] transition-opacity hover:opacity-60 disabled:cursor-not-allowed disabled:opacity-35"
         >
-          ADD TO CART
+          {firstAvailable ? `Quick Add - ${firstAvailable}` : "Sold Out"}
         </button>
-      </motion.div>
+      </div>
     </motion.article>
   );
 }
 
-function ProductGrid({ products }: { products: Product[] }) {
-  return (
-    <section id="drop" className="bg-ink px-6 py-20 md:px-10">
-      <div className="mx-auto max-w-7xl">
-        <div className="flex flex-col items-start justify-between gap-6 md:flex-row md:items-end">
-          <div>
-            <h2 className="font-anton text-5xl tracking-[16px] text-ash md:text-6xl">
-              QUTB
-            </h2>
-            <p className="mt-2 text-xs uppercase tracking-[0.24em] text-ash/55">
-              ERA 99 — DROP 001
-            </p>
-          </div>
-          <Link
-            href="/shop"
-            className="inline-flex items-center gap-2 border border-ash bg-ash px-8 py-3 text-xs font-medium uppercase tracking-[0.16em] text-[#080808] transition-all duration-300 hover:bg-transparent hover:text-ash"
-          >
-            ENTER SHOP
-          </Link>
-        </div>
-        <div className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-4">
-          {products.slice(0, 4).map((product) => (
-            <ProductCard key={product.id} product={product} />
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function BrandStatement() {
-  return (
-    <section
-      id="statement"
-      className="relative w-full overflow-hidden bg-ink px-6 py-24 md:px-10"
-    >
-      <div className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-[20vw] leading-none text-ash/[0.06] md:left-10">
-        Q
-      </div>
-      <div className="mx-auto grid max-w-7xl grid-cols-1 gap-10 md:grid-cols-2">
-        <div />
-        <div className="relative z-10 flex flex-col justify-center">
-          <p className="text-xs uppercase tracking-[0.22em] text-[#555555]">
-            NOT A BRAND. A POSITION.
-          </p>
-          <h3 className="mt-5 max-w-2xl text-3xl leading-[1.3] text-ash md:text-[32px]">
-            We are the axis. The fixed point. Everything revolves — we stay
-            still.
-          </h3>
-          <p className="mt-5 max-w-xl text-base text-ash/60">
-            Born in Alexandria. Built for those who do not ask for permission.
-          </p>
-          <Link
-            href="/story"
-            className="mt-8 w-fit text-sm uppercase tracking-[0.16em] text-ash hover:underline"
-          >
-            READ THE STORY →
-          </Link>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-interface CountdownTime {
-  days: number;
-  hours: number;
-  minutes: number;
-  seconds: number;
-}
-
-function useCountdown(targetTimestamp: number): CountdownTime {
-  const calculate = () => {
-    const diff = Math.max(0, targetTimestamp - Date.now());
-    const totalSeconds = Math.floor(diff / 1000);
-    const days = Math.floor(totalSeconds / 86400);
-    const hours = Math.floor((totalSeconds % 86400) / 3600);
-    const minutes = Math.floor((totalSeconds % 3600) / 60);
-    const seconds = totalSeconds % 60;
-    return { days, hours, minutes, seconds };
-  };
-
-  const [time, setTime] = useState<CountdownTime>({
-    days: 0,
-    hours: 0,
-    minutes: 0,
-    seconds: 0,
-  });
-
-  useEffect(() => {
-    setTime(calculate());
-    const id = window.setInterval(() => setTime(calculate()), 1000);
-    return () => window.clearInterval(id);
-  }, [targetTimestamp]);
-
-  return time;
-}
-
-function UrgencyStrip() {
-  const target = useMemo(() => Date.now() + 7 * 24 * 60 * 60 * 1000, []);
-  const time = useCountdown(target);
-
-  const format = (value: number) => String(value).padStart(2, "0");
+export function QutbLanding({ products }: { products: Product[] }) {
+  const featured = products.slice(0, 3);
 
   return (
-    <section className="w-full bg-[#080808] border-y border-[#080808] px-6 py-6 text-ash md:px-10">
-      <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 md:flex-row">
-        <p className="text-center text-xs uppercase tracking-[0.2em] md:text-left">
-          ERA 99 — DROP 001 — LIMITED QUANTITIES — qutb.studio
-        </p>
-        <div className="flex items-center gap-2 text-xs uppercase tracking-[0.15em]">
-          <div className="border border-ash/40 bg-[#080808]/20 px-2 py-1">
-            {format(time.days)}D
-          </div>
-          <span>:</span>
-          <div className="border border-ash/40 bg-[#080808]/20 px-2 py-1">
-            {format(time.hours)}H
-          </div>
-          <span>:</span>
-          <div className="border border-ash/40 bg-[#080808]/20 px-2 py-1">
-            {format(time.minutes)}M
-          </div>
-          <span>:</span>
-          <div className="border border-ash/40 bg-[#080808]/20 px-2 py-1">
-            {format(time.seconds)}S
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
+    <div className="overflow-x-hidden bg-[#FAF8F4] text-[#111111]">
+      <main>
+        <section
+          className="relative flex min-h-[600px] w-full items-center justify-center overflow-hidden text-center"
+          style={{ height: "100svh", backgroundColor: "#1D2635" }}
+        >
+          <img
+            src={heroImage}
+            alt="Clear turquoise Mediterranean water with rocky shoreline"
+            width={1920}
+            height={1200}
+            loading="eager"
+            fetchPriority="high"
+            className="absolute inset-0 h-full w-full object-cover"
+            style={{ objectPosition: "center 60%" }}
+          />
+          <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(17,17,17,0.35)_0%,rgba(17,17,17,0.1)_40%,rgba(17,17,17,0.65)_100%)]" />
 
-function InstagramStrip() {
-  return (
-    <section className="bg-ink px-6 py-20 md:px-10">
-      <div className="mx-auto max-w-7xl">
-        <h2 className="font-anton text-5xl tracking-[16px] text-ash md:text-6xl">
-          @QUTBSTUDIO
-        </h2>
-        <div className="mt-8 grid grid-cols-1 gap-3 md:grid-cols-3 xl:grid-cols-6">
-          {instagramTiles.map((image, index) => (
-            <motion.article
-              key={`${image}-${index}`}
-              whileHover={{ y: -3 }}
-              transition={{ duration: 0.3, ease: "easeOut" }}
-              className="group relative aspect-square overflow-hidden border border-ash/15"
+          <div className="relative z-10 flex flex-col items-center px-6 pt-16">
+            <motion.p
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
+              className="qutb-eyebrow mb-8 text-[#FAF8F4]/70"
+            >
+              Alexandria, Egypt
+            </motion.p>
+            <motion.h1
+              initial={{ opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1, ease: "easeOut", delay: 0.1 }}
+              className="text-[#FAF8F4]"
+            >
+              <BrandLogo className="text-[clamp(5rem,16vw,11rem)] tracking-[0.18em]" />
+            </motion.h1>
+            <motion.p
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.9, ease: "easeOut", delay: 0.25 }}
+              className="mt-8 max-w-[400px] text-[13px] font-light uppercase leading-[1.9] tracking-[0.18em] text-[#FAF8F4]/85 md:text-[15px]"
+            >
+              Modern Mediterranean Essentials.
+              <br />
+              Born from the sea. Built to last.
+            </motion.p>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.8, ease: "easeOut", delay: 0.45 }}
+              className="mt-12"
+            >
+              <Link
+                href="/shop"
+                className="qutb-link-underline text-[12px] uppercase tracking-[0.2em] text-[#FAF8F4] transition-opacity hover:opacity-70"
+              >
+                Shop The Uniform
+              </Link>
+            </motion.div>
+          </div>
+
+          <ChevronDown
+            size={17}
+            strokeWidth={1.5}
+            className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce text-[#FAF8F4]/50"
+          />
+        </section>
+
+        <section className="bg-[#FAF8F4] px-6 py-24 md:px-12 md:py-32">
+          <div className="mx-auto grid max-w-[1400px] grid-cols-1 gap-10 md:grid-cols-12">
+            <div className="md:col-span-5">
+              <p className="qutb-eyebrow text-[#7C7C75]">01 - The Premise</p>
+              <h2 className="mt-8 font-brand-serif text-[clamp(2.7rem,6vw,6.6rem)] font-medium leading-none tracking-[-0.01em]">
+                The everyday uniform, refined by the coast.
+              </h2>
+            </div>
+            <div className="flex items-end md:col-span-4 md:col-start-8">
+              <p className="max-w-md text-[16px] font-light leading-[1.85] text-[#7C7C75]">
+                QUTB is a wardrobe of cotton essentials shaped by Alexandria:
+                clean silhouettes, quiet materials, and a sense of permanence
+                that feels lived in from the first wear.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <section className="grid grid-cols-1 md:grid-cols-3">
+          {storyPanels.map((panel) => (
+            <Link
+              key={panel.title}
+              href={panel.href}
+              className="group relative aspect-[4/5] overflow-hidden bg-[#1D2635]"
             >
               <img
-                src={image}
-                alt={`Instagram tile ${index + 1}`}
-                width={600}
-                height={600}
+                src={panel.image}
+                alt={panel.title}
+                width={900}
+                height={1125}
                 loading="lazy"
-                srcSet={`${image} 400w, ${image} 800w, ${image} 1200w`}
-                className="h-full w-full object-cover"
+                className="absolute inset-0 h-full w-full object-cover opacity-85 transition duration-700 group-hover:scale-[1.03]"
               />
-              <motion.div
-                className="absolute inset-0 flex items-center justify-center bg-[#080808]/55"
-                initial={{ opacity: 0 }}
-                whileHover={{ opacity: 1 }}
-                transition={{ duration: 0.3, ease: "easeOut" }}
-              >
-                <Camera size={20} />
-              </motion.div>
-            </motion.article>
-          ))}
-        </div>
-        <a
-          href="https://www.instagram.com/qutbstudio/"
-          target="_blank"
-          rel="noreferrer"
-          className="mt-8 inline-block text-sm uppercase tracking-[0.18em] text-ash hover:underline"
-        >
-          FOLLOW US ON INSTAGRAM →
-        </a>
-      </div>
-    </section>
-  );
-}
-
-function Footer() {
-  const { resetConsentDecision } = useConsent();
-  const [email, setEmail] = useState("");
-  const [status, setStatus] = useState<
-    "idle" | "loading" | "success" | "error"
-  >("idle");
-
-  const handleJoin = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!email) return;
-    try {
-      setStatus("loading");
-      const res = await fetch("/api/early-access", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, source: "join-the-drop" }),
-      });
-      if (!res.ok) throw new Error();
-      setStatus("success");
-      setEmail("");
-    } catch {
-      setStatus("error");
-    }
-  };
-
-  return (
-    <footer id="footer" className="bg-ink px-6 pb-8 pt-16 md:px-10">
-      <div className="mx-auto grid max-w-7xl grid-cols-1 gap-10 border-t border-ash/20 pt-12 md:grid-cols-3">
-        <div>
-          <div className="text-[34px] text-ash">
-            <Logo />
-          </div>
-          <p className="mt-3 text-xs font-medium uppercase tracking-[0.3em] text-[#555555]">
-            THE AXIS
-          </p>
-          <p className="mt-1 text-[12px] font-medium uppercase tracking-[0.4em] text-[#555555]">
-            QUTB
-          </p>
-          <p className="mt-3 text-xs uppercase tracking-[0.16em] text-ash/65">
-            Alexandria, Egypt
-          </p>
-          <p className="mt-2 text-sm text-[#555555]">
-            QUTB · Alexandria, Egypt · The axis holds.
-          </p>
-        </div>
-
-        <div className="flex flex-col gap-3 text-xs uppercase tracking-[0.16em] text-ash/70 md:items-center">
-          <a href="/shop" className="hover:text-ash">
-            SHOP
-          </a>
-          <Link href="/story" className="hover:text-ash">
-            STORY
-          </Link>
-          <a href="mailto:hello@qutb.studio" className="hover:text-ash">
-            CONTACT
-          </a>
-          <Link href="/return-policy" className="hover:text-ash">
-            REFUNDS POLICY
-          </Link>
-          <button
-            type="button"
-            onClick={resetConsentDecision}
-            className="text-left hover:text-ash md:text-center"
-          >
-            COOKIE PREFERENCES
-          </button>
-        </div>
-
-        <div>
-          <p className="text-xs uppercase tracking-[0.2em] text-ash/70">
-            JOIN THE DROP
-          </p>
-          {status === "success" ? (
-            <p className="mt-4 text-xs font-medium uppercase tracking-[0.12em] text-ash">
-              ADDED TO THE LIST
-            </p>
-          ) : (
-            <form
-              onSubmit={handleJoin}
-              className="mt-4 flex w-full max-w-sm flex-col"
-            >
-              <div className="flex w-full">
-                <input
-                  type="email"
-                  required
-                  value={email}
-                  onChange={(e) => {
-                    setEmail(e.target.value);
-                    if (status === "error") setStatus("idle");
-                  }}
-                  placeholder="EMAIL ADDRESS"
-                  className="w-full border border-ash/25 bg-transparent px-3 py-3 text-xs uppercase tracking-[0.12em] text-ash placeholder:text-ash/40 focus:border-ash focus:outline-none"
-                  disabled={status === "loading"}
-                />
-                <button
-                  type="submit"
-                  disabled={status === "loading"}
-                  className="border border-l-0 border-ash/25 bg-ash px-4 py-3 text-xs uppercase tracking-[0.12em] text-[#080808] disabled:bg-ash/50"
-                >
-                  {status === "loading" ? "..." : "JOIN"}
-                </button>
-              </div>
-              {status === "error" && (
-                <p className="mt-2 text-[10px] uppercase text-red-500">
-                  SOMETHING WENT WRONG. TRY AGAIN.
+              <div className="absolute inset-0 bg-[linear-gradient(to_top,rgba(17,17,17,0.65),rgba(17,17,17,0.06))]" />
+              <div className="absolute inset-x-0 bottom-0 p-8 text-[#FAF8F4] md:p-10">
+                <p className="qutb-eyebrow text-[#FAF8F4]/55">
+                  {panel.label}
                 </p>
-              )}
-            </form>
-          )}
-        </div>
-      </div>
-      <p className="mt-12 text-center text-[10px] uppercase tracking-[0.15em] text-ash/45">
-        © 2025 QUTB — All rights reserved
-      </p>
-    </footer>
-  );
-}
+                <h3 className="mt-4 font-brand-serif text-3xl leading-tight md:text-4xl">
+                  {panel.title}
+                </h3>
+                <p className="mt-4 max-w-sm text-sm font-light leading-[1.7] text-[#FAF8F4]/70">
+                  {panel.body}
+                </p>
+              </div>
+            </Link>
+          ))}
+        </section>
 
-export function QutbLanding({ products }: { products: Product[] }) {
-  return (
-    <div className="overflow-x-hidden bg-ink text-ash">
-      {/* AnnouncementStrip and Nav are provided by SiteChrome in layout */}
-      <main>
-        <HeroBanner />
-        <ThreeColumnBanners />
-        <ProductGrid products={products} />
-        <BrandStatement />
-        <InstagramStrip />
+        <section className="bg-[#FAF8F4] px-6 py-24 md:px-12 md:py-32">
+          <div className="mx-auto max-w-[1400px]">
+            <div className="mb-14 flex flex-col items-start justify-between gap-5 md:flex-row md:items-end">
+              <div>
+                <p className="qutb-eyebrow text-[#7C7C75]">The Uniform</p>
+                <h2 className="mt-4 font-brand-serif text-[clamp(2.3rem,5vw,4.6rem)] font-medium leading-none tracking-[-0.01em]">
+                  New essentials.
+                </h2>
+              </div>
+              <Link
+                href="/shop"
+                className="qutb-link-underline text-[12px] uppercase tracking-[0.16em] text-[#111111] transition-opacity hover:opacity-60"
+              >
+                View All
+              </Link>
+            </div>
+
+            <div className="grid grid-cols-1 gap-x-8 gap-y-14 sm:grid-cols-2 lg:grid-cols-3">
+              {featured.map((product) => (
+                <FeaturedProductCard key={product.id} product={product} />
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section
+          id="salt-journal"
+          className="bg-[#111111] px-6 py-24 text-[#FAF8F4] md:px-12 md:py-32"
+        >
+          <div className="mx-auto grid max-w-[1400px] grid-cols-1 items-center gap-12 lg:grid-cols-12">
+            <div className="lg:col-span-5">
+              <p className="qutb-eyebrow text-[#FAF8F4]/35">
+                Salt Journal
+              </p>
+              <h2 className="mt-6 font-brand-serif text-[clamp(2.6rem,5vw,4.8rem)] font-medium leading-[1.05]">
+                Fabric first.
+                <br />
+                Logo second.
+                <br />
+                Always.
+              </h2>
+            </div>
+            <div className="lg:col-span-5 lg:col-start-8">
+              <p className="text-[16px] font-light leading-[1.9] text-[#FAF8F4]/60">
+                Every QUTB piece starts with the cotton: GSM, hand feel, dye
+                depth, shrink behavior, and the way it holds shape after real
+                wear. The journal documents the standards behind the quiet.
+              </p>
+              <Link
+                href="/story#fabric"
+                className="qutb-link-underline mt-8 inline-block text-[12px] uppercase tracking-[0.18em] text-[#FAF8F4]"
+              >
+                Read The Notes
+              </Link>
+            </div>
+          </div>
+        </section>
       </main>
-      <Footer />
+      <QutbFooter />
     </div>
   );
 }

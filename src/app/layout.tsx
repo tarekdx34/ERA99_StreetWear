@@ -1,7 +1,13 @@
 import type { Metadata } from "next";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
-import { Anton } from "next/font/google";
+import {
+  Anton,
+  Bodoni_Moda,
+  Cormorant_Garamond,
+  DM_Sans,
+  Gwendolyn,
+} from "next/font/google";
 import "./globals.css";
 import { Providers } from "@/components/providers";
 import { SiteChrome } from "@/components/site-chrome";
@@ -15,10 +21,39 @@ const anton = Anton({
   display: "swap",
 });
 
+const dmSans = DM_Sans({
+  subsets: ["latin"],
+  weight: ["300", "400", "500"],
+  variable: "--font-dm-sans",
+  display: "swap",
+});
+
+const bodoni = Bodoni_Moda({
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+  variable: "--font-bodoni",
+  display: "swap",
+});
+
+const cormorant = Cormorant_Garamond({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600"],
+  style: ["normal", "italic"],
+  variable: "--font-cormorant",
+  display: "swap",
+});
+
+const gwendolyn = Gwendolyn({
+  subsets: ["latin"],
+  weight: ["400", "700"],
+  variable: "--font-gwendolyn",
+  display: "swap",
+});
+
 export const metadata: Metadata = {
-  title: "QUTB — Not A Brand. A Position. | Alexandria, Egypt",
+  title: "QUTB — Modern Mediterranean Essentials | Alexandria, Egypt",
   description:
-    "QUTB. 100% COTTON. Garment dyed. Enzyme washed. Built in Alexandria. ERA 99 — Drop 001. Everything revolves. We are the point it revolves around.",
+    "QUTB makes modern Mediterranean essentials from cotton, craft, and the quiet rhythm of Alexandria.",
   metadataBase: new URL("https://qutb.studio"),
   alternates: {
     canonical: "https://qutb.studio",
@@ -29,9 +64,9 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: "QUTB — Not A Brand. A Position.",
+    title: "QUTB — Modern Mediterranean Essentials",
     description:
-      "100% COTTON. Garment dyed. Built in Alexandria. ERA 99 is live.",
+      "Quiet luxury essentials born by the Mediterranean in Alexandria.",
     url: "https://qutb.studio",
     siteName: "QUTB",
     images: [
@@ -48,8 +83,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "QUTB — Not A Brand. A Position.",
-    description: "100% COTTON. Garment dyed. Built in Alexandria.",
+    title: "QUTB — Modern Mediterranean Essentials",
+    description: "Cotton essentials shaped by Alexandria and the sea.",
     images: ["/og/homepage.jpg"],
   },
   other: {
@@ -109,17 +144,16 @@ export default async function RootLayout({
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
-        <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Anton&text=QUTBERA0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ%20.&display=swap" />
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&text=QUTBERA0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ%20.&display=swap" />
         <link rel="dns-prefetch" href="//fonts.googleapis.com" />
         <style>{`
-          body{background:#080808;color:#EDE9E0;font-family:Arial,"Barlow Condensed",sans-serif}
-          .font-anton,.font-blackletter,.display-hero{font-family:var(--font-anton-google),Anton,Arial,sans-serif;font-weight:400;text-transform:uppercase;letter-spacing:16px}
+          body{background:#FAF8F4;color:#111111;font-family:var(--font-dm-sans),Arial,sans-serif}
+          .font-anton{font-family:var(--font-anton-google),Anton,Arial,sans-serif;font-weight:400;text-transform:uppercase;letter-spacing:0.12em}
+          .font-blackletter,.display-hero{font-family:var(--font-bodoni),Georgia,serif;font-weight:500;letter-spacing:0}
         `}</style>
       </head>
       <body
         suppressHydrationWarning
-        className="min-h-full overflow-x-hidden bg-[#080808] text-[#EDE9E0]"
+        className={`min-h-full overflow-x-hidden bg-[#FAF8F4] text-[#111111] ${dmSans.variable} ${bodoni.variable} ${cormorant.variable} ${gwendolyn.variable} ${anton.variable}`}
       >
         <Providers>
           {!isAdminArea && !isEarlyAccessPage ? (

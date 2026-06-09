@@ -1,0 +1,498 @@
+
+> qutb@0.1.0 dev
+> next dev -p 3250
+
+▲ Next.js 16.2.3 (Turbopack)
+- Local:         http://localhost:3250
+- Network:       http://169.254.144.1:3250
+- Environments: .env.local, .env
+✓ Ready in 935ms
+
+MIDDLEWARE HIT: /
+releaseEarlyAccessIfExpired: {
+  earlyAccessActive: false,
+  dropModeActive: true,
+  countdownEnabled: false,
+  earlyAccessDropAt: '2026-05-20T00:07:00.000Z',
+  now: '2026-06-08T11:31:04.047Z'
+}
+ GET /api/internal/early-access-state 200 in 1978ms (next.js: 271ms, application-code: 1707ms)
+Internal state data: {
+  earlyAccessActive: false,
+  dropModeActive: true,
+  countdownEnabled: false,
+  earlyAccessDropAt: '2026-05-20T00:07:00.000Z'
+}
+releaseEarlyAccessIfExpired: {
+  earlyAccessActive: false,
+  dropModeActive: true,
+  countdownEnabled: false,
+  earlyAccessDropAt: '2026-05-20T00:07:00.000Z',
+  now: '2026-06-08T11:31:06.422Z'
+}
+ GET / 200 in 5.3s (next.js: 146ms, proxy.ts: 2.2s, application-code: 3.0s)
+MIDDLEWARE HIT: /api/auth/session
+MIDDLEWARE HIT: /api/auth/session
+releaseEarlyAccessIfExpired: {
+  earlyAccessActive: false,
+  dropModeActive: true,
+  countdownEnabled: false,
+  earlyAccessDropAt: '2026-05-20T00:07:00.000Z',
+  now: '2026-06-08T11:31:08.375Z'
+}
+releaseEarlyAccessIfExpired: {
+  earlyAccessActive: false,
+  dropModeActive: true,
+  countdownEnabled: false,
+  earlyAccessDropAt: '2026-05-20T00:07:00.000Z',
+  now: '2026-06-08T11:31:08.578Z'
+}
+ GET /api/internal/early-access-state 200 in 532ms (next.js: 14ms, application-code: 518ms)
+Internal state data: {
+  earlyAccessActive: false,
+  dropModeActive: true,
+  countdownEnabled: false,
+  earlyAccessDropAt: '2026-05-20T00:07:00.000Z'
+}
+ GET /api/internal/early-access-state 200 in 745ms (next.js: 6ms, application-code: 739ms)
+Internal state data: {
+  earlyAccessActive: false,
+  dropModeActive: true,
+  countdownEnabled: false,
+  earlyAccessDropAt: '2026-05-20T00:07:00.000Z'
+}
+ GET /api/auth/session 200 in 1990ms (next.js: 1391ms, proxy.ts: 566ms, application-code: 32ms)
+ GET /api/auth/session 200 in 1999ms (next.js: 1179ms, proxy.ts: 783ms, application-code: 37ms)
+MIDDLEWARE HIT: /
+releaseEarlyAccessIfExpired: {
+  earlyAccessActive: false,
+  dropModeActive: true,
+  countdownEnabled: false,
+  earlyAccessDropAt: '2026-05-20T00:07:00.000Z',
+  now: '2026-06-08T11:31:26.537Z'
+}
+ GET /api/internal/early-access-state 200 in 566ms (next.js: 3ms, application-code: 563ms)
+Internal state data: {
+  earlyAccessActive: false,
+  dropModeActive: true,
+  countdownEnabled: false,
+  earlyAccessDropAt: '2026-05-20T00:07:00.000Z'
+}
+releaseEarlyAccessIfExpired: {
+  earlyAccessActive: false,
+  dropModeActive: true,
+  countdownEnabled: false,
+  earlyAccessDropAt: '2026-05-20T00:07:00.000Z',
+  now: '2026-06-08T11:31:27.200Z'
+}
+ GET / 200 in 1275ms (next.js: 4ms, proxy.ts: 579ms, application-code: 691ms)
+MIDDLEWARE HIT: /api/auth/session
+MIDDLEWARE HIT: /shop
+releaseEarlyAccessIfExpired: {
+  earlyAccessActive: false,
+  dropModeActive: true,
+  countdownEnabled: false,
+  earlyAccessDropAt: '2026-05-20T00:07:00.000Z',
+  now: '2026-06-08T11:31:27.764Z'
+}
+ GET /api/internal/early-access-state 200 in 384ms (next.js: 5ms, application-code: 379ms)
+Internal state data: {
+  earlyAccessActive: false,
+  dropModeActive: true,
+  countdownEnabled: false,
+  earlyAccessDropAt: '2026-05-20T00:07:00.000Z'
+}
+releaseEarlyAccessIfExpired: {
+  earlyAccessActive: false,
+  dropModeActive: true,
+  countdownEnabled: false,
+  earlyAccessDropAt: '2026-05-20T00:07:00.000Z',
+  now: '2026-06-08T11:31:28.024Z'
+}
+ GET /api/auth/session 200 in 433ms (next.js: 20ms, proxy.ts: 397ms, application-code: 16ms)
+ GET /api/internal/early-access-state 200 in 537ms (next.js: 4ms, application-code: 533ms)
+Internal state data: {
+  earlyAccessActive: false,
+  dropModeActive: true,
+  countdownEnabled: false,
+  earlyAccessDropAt: '2026-05-20T00:07:00.000Z'
+}
+releaseEarlyAccessIfExpired: {
+  earlyAccessActive: false,
+  dropModeActive: true,
+  countdownEnabled: false,
+  earlyAccessDropAt: '2026-05-20T00:07:00.000Z',
+  now: '2026-06-08T11:31:28.533Z'
+}
+ GET /shop 200 in 1117ms (next.js: 52ms, proxy.ts: 552ms, application-code: 513ms)
+MIDDLEWARE HIT: /api/auth/session
+releaseEarlyAccessIfExpired: {
+  earlyAccessActive: false,
+  dropModeActive: true,
+  countdownEnabled: false,
+  earlyAccessDropAt: '2026-05-20T00:07:00.000Z',
+  now: '2026-06-08T11:31:29.301Z'
+}
+ GET /api/internal/early-access-state 200 in 444ms (next.js: 3ms, application-code: 440ms)
+Internal state data: {
+  earlyAccessActive: false,
+  dropModeActive: true,
+  countdownEnabled: false,
+  earlyAccessDropAt: '2026-05-20T00:07:00.000Z'
+}
+ GET /api/auth/session 200 in 520ms (next.js: 17ms, proxy.ts: 467ms, application-code: 35ms)
+MIDDLEWARE HIT: /
+releaseEarlyAccessIfExpired: {
+  earlyAccessActive: false,
+  dropModeActive: true,
+  countdownEnabled: false,
+  earlyAccessDropAt: '2026-05-20T00:07:00.000Z',
+  now: '2026-06-08T11:31:54.716Z'
+}
+ GET /api/internal/early-access-state 200 in 468ms (next.js: 3ms, application-code: 466ms)
+Internal state data: {
+  earlyAccessActive: false,
+  dropModeActive: true,
+  countdownEnabled: false,
+  earlyAccessDropAt: '2026-05-20T00:07:00.000Z'
+}
+ GET / 200 in 720ms (next.js: 6ms, proxy.ts: 489ms, application-code: 225ms)
+MIDDLEWARE HIT: /api/auth/session
+releaseEarlyAccessIfExpired: {
+  earlyAccessActive: false,
+  dropModeActive: true,
+  countdownEnabled: false,
+  earlyAccessDropAt: '2026-05-20T00:07:00.000Z',
+  now: '2026-06-08T11:31:55.386Z'
+}
+ GET /api/internal/early-access-state 200 in 269ms (next.js: 3ms, application-code: 266ms)
+Internal state data: {
+  earlyAccessActive: false,
+  dropModeActive: true,
+  countdownEnabled: false,
+  earlyAccessDropAt: '2026-05-20T00:07:00.000Z'
+}
+ GET /api/auth/session 200 in 340ms (next.js: 20ms, proxy.ts: 288ms, application-code: 32ms)
+MIDDLEWARE HIT: /product/era-99-ringer-tee
+releaseEarlyAccessIfExpired: {
+  earlyAccessActive: false,
+  dropModeActive: true,
+  countdownEnabled: false,
+  earlyAccessDropAt: '2026-05-20T00:07:00.000Z',
+  now: '2026-06-08T11:32:02.787Z'
+}
+ GET /api/internal/early-access-state 200 in 332ms (next.js: 3ms, application-code: 329ms)
+Internal state data: {
+  earlyAccessActive: false,
+  dropModeActive: true,
+  countdownEnabled: false,
+  earlyAccessDropAt: '2026-05-20T00:07:00.000Z'
+}
+releaseEarlyAccessIfExpired: {
+  earlyAccessActive: false,
+  dropModeActive: true,
+  countdownEnabled: false,
+  earlyAccessDropAt: '2026-05-20T00:07:00.000Z',
+  now: '2026-06-08T11:32:03.938Z'
+}
+ GET /product/era-99-ringer-tee 200 in 1628ms (next.js: 602ms, proxy.ts: 347ms, application-code: 678ms)
+MIDDLEWARE HIT: /api/auth/session
+MIDDLEWARE HIT: /story
+releaseEarlyAccessIfExpired: {
+  earlyAccessActive: false,
+  dropModeActive: true,
+  countdownEnabled: false,
+  earlyAccessDropAt: '2026-05-20T00:07:00.000Z',
+  now: '2026-06-08T11:32:04.559Z'
+}
+ GET /api/internal/early-access-state 200 in 294ms (next.js: 3ms, application-code: 291ms)
+Internal state data: {
+  earlyAccessActive: false,
+  dropModeActive: true,
+  countdownEnabled: false,
+  earlyAccessDropAt: '2026-05-20T00:07:00.000Z'
+}
+releaseEarlyAccessIfExpired: {
+  earlyAccessActive: false,
+  dropModeActive: true,
+  countdownEnabled: false,
+  earlyAccessDropAt: '2026-05-20T00:07:00.000Z',
+  now: '2026-06-08T11:32:04.739Z'
+}
+ GET /api/auth/session 200 in 328ms (next.js: 15ms, proxy.ts: 304ms, application-code: 10ms)
+ GET /api/internal/early-access-state 200 in 312ms (next.js: 3ms, application-code: 309ms)
+Internal state data: {
+  earlyAccessActive: false,
+  dropModeActive: true,
+  countdownEnabled: false,
+  earlyAccessDropAt: '2026-05-20T00:07:00.000Z'
+}
+releaseEarlyAccessIfExpired: {
+  earlyAccessActive: false,
+  dropModeActive: true,
+  countdownEnabled: false,
+  earlyAccessDropAt: '2026-05-20T00:07:00.000Z',
+  now: '2026-06-08T11:32:05.109Z'
+}
+ GET /story 200 in 746ms (next.js: 32ms, proxy.ts: 329ms, application-code: 385ms)
+MIDDLEWARE HIT: /api/auth/session
+releaseEarlyAccessIfExpired: {
+  earlyAccessActive: false,
+  dropModeActive: true,
+  countdownEnabled: false,
+  earlyAccessDropAt: '2026-05-20T00:07:00.000Z',
+  now: '2026-06-08T11:32:05.610Z'
+}
+ GET /api/internal/early-access-state 200 in 298ms (next.js: 3ms, application-code: 296ms)
+Internal state data: {
+  earlyAccessActive: false,
+  dropModeActive: true,
+  countdownEnabled: false,
+  earlyAccessDropAt: '2026-05-20T00:07:00.000Z'
+}
+ GET /api/auth/session 200 in 333ms (next.js: 16ms, proxy.ts: 308ms, application-code: 9ms)
+MIDDLEWARE HIT: /
+releaseEarlyAccessIfExpired: {
+  earlyAccessActive: false,
+  dropModeActive: true,
+  countdownEnabled: false,
+  earlyAccessDropAt: '2026-05-20T00:07:00.000Z',
+  now: '2026-06-08T11:32:07.654Z'
+}
+ GET /api/internal/early-access-state 200 in 293ms (next.js: 3ms, application-code: 290ms)
+Internal state data: {
+  earlyAccessActive: false,
+  dropModeActive: true,
+  countdownEnabled: false,
+  earlyAccessDropAt: '2026-05-20T00:07:00.000Z'
+}
+ GET / 200 in 536ms (next.js: 4ms, proxy.ts: 306ms, application-code: 225ms)
+MIDDLEWARE HIT: /api/auth/session
+releaseEarlyAccessIfExpired: {
+  earlyAccessActive: false,
+  dropModeActive: true,
+  countdownEnabled: false,
+  earlyAccessDropAt: '2026-05-20T00:07:00.000Z',
+  now: '2026-06-08T11:32:08.369Z'
+}
+ GET /api/internal/early-access-state 200 in 287ms (next.js: 3ms, application-code: 284ms)
+Internal state data: {
+  earlyAccessActive: false,
+  dropModeActive: true,
+  countdownEnabled: false,
+  earlyAccessDropAt: '2026-05-20T00:07:00.000Z'
+}
+ GET /api/auth/session 200 in 334ms (next.js: 16ms, proxy.ts: 300ms, application-code: 19ms)
+MIDDLEWARE HIT: /story
+releaseEarlyAccessIfExpired: {
+  earlyAccessActive: false,
+  dropModeActive: true,
+  countdownEnabled: false,
+  earlyAccessDropAt: '2026-05-20T00:07:00.000Z',
+  now: '2026-06-08T11:32:21.670Z'
+}
+ GET /api/internal/early-access-state 200 in 500ms (next.js: 2ms, application-code: 498ms)
+Internal state data: {
+  earlyAccessActive: false,
+  dropModeActive: true,
+  countdownEnabled: false,
+  earlyAccessDropAt: '2026-05-20T00:07:00.000Z'
+}
+ GET /story 200 in 536ms (next.js: 4ms, proxy.ts: 512ms, application-code: 20ms)
+MIDDLEWARE HIT: /api/auth/session
+releaseEarlyAccessIfExpired: {
+  earlyAccessActive: false,
+  dropModeActive: true,
+  countdownEnabled: false,
+  earlyAccessDropAt: '2026-05-20T00:07:00.000Z',
+  now: '2026-06-08T11:32:22.078Z'
+}
+ GET /api/internal/early-access-state 200 in 283ms (next.js: 2ms, application-code: 281ms)
+Internal state data: {
+  earlyAccessActive: false,
+  dropModeActive: true,
+  countdownEnabled: false,
+  earlyAccessDropAt: '2026-05-20T00:07:00.000Z'
+}
+ GET /api/auth/session 200 in 314ms (next.js: 14ms, proxy.ts: 292ms, application-code: 8ms)
+MIDDLEWARE HIT: /
+releaseEarlyAccessIfExpired: {
+  earlyAccessActive: false,
+  dropModeActive: true,
+  countdownEnabled: false,
+  earlyAccessDropAt: '2026-05-20T00:07:00.000Z',
+  now: '2026-06-08T11:32:29.911Z'
+}
+ GET /api/internal/early-access-state 200 in 288ms (next.js: 4ms, application-code: 284ms)
+Internal state data: {
+  earlyAccessActive: false,
+  dropModeActive: true,
+  countdownEnabled: false,
+  earlyAccessDropAt: '2026-05-20T00:07:00.000Z'
+}
+releaseEarlyAccessIfExpired: {
+  earlyAccessActive: false,
+  dropModeActive: true,
+  countdownEnabled: false,
+  earlyAccessDropAt: '2026-05-20T00:07:00.000Z',
+  now: '2026-06-08T11:32:30.350Z'
+}
+ GET / 200 in 776ms (next.js: 3ms, proxy.ts: 310ms, application-code: 463ms)
+MIDDLEWARE HIT: /api/auth/session
+releaseEarlyAccessIfExpired: {
+  earlyAccessActive: false,
+  dropModeActive: true,
+  countdownEnabled: false,
+  earlyAccessDropAt: '2026-05-20T00:07:00.000Z',
+  now: '2026-06-08T11:32:30.978Z'
+}
+ GET /api/internal/early-access-state 200 in 281ms (next.js: 3ms, application-code: 278ms)
+Internal state data: {
+  earlyAccessActive: false,
+  dropModeActive: true,
+  countdownEnabled: false,
+  earlyAccessDropAt: '2026-05-20T00:07:00.000Z'
+}
+ GET /api/auth/session 200 in 339ms (next.js: 15ms, proxy.ts: 292ms, application-code: 32ms)
+MIDDLEWARE HIT: /shop
+releaseEarlyAccessIfExpired: {
+  earlyAccessActive: false,
+  dropModeActive: true,
+  countdownEnabled: false,
+  earlyAccessDropAt: '2026-05-20T00:07:00.000Z',
+  now: '2026-06-08T11:32:31.750Z'
+}
+ GET /api/internal/early-access-state 200 in 263ms (next.js: 2ms, application-code: 261ms)
+Internal state data: {
+  earlyAccessActive: false,
+  dropModeActive: true,
+  countdownEnabled: false,
+  earlyAccessDropAt: '2026-05-20T00:07:00.000Z'
+}
+releaseEarlyAccessIfExpired: {
+  earlyAccessActive: false,
+  dropModeActive: true,
+  countdownEnabled: false,
+  earlyAccessDropAt: '2026-05-20T00:07:00.000Z',
+  now: '2026-06-08T11:32:32.114Z'
+}
+ GET /shop 200 in 707ms (next.js: 4ms, proxy.ts: 279ms, application-code: 424ms)
+MIDDLEWARE HIT: /api/auth/session
+releaseEarlyAccessIfExpired: {
+  earlyAccessActive: false,
+  dropModeActive: true,
+  countdownEnabled: false,
+  earlyAccessDropAt: '2026-05-20T00:07:00.000Z',
+  now: '2026-06-08T11:32:35.629Z'
+}
+ GET /api/internal/early-access-state 200 in 350ms (next.js: 3ms, application-code: 347ms)
+Internal state data: {
+  earlyAccessActive: false,
+  dropModeActive: true,
+  countdownEnabled: false,
+  earlyAccessDropAt: '2026-05-20T00:07:00.000Z'
+}
+ GET /api/auth/session 200 in 402ms (next.js: 13ms, proxy.ts: 363ms, application-code: 26ms)
+MIDDLEWARE HIT: /shop
+releaseEarlyAccessIfExpired: {
+  earlyAccessActive: false,
+  dropModeActive: true,
+  countdownEnabled: false,
+  earlyAccessDropAt: '2026-05-20T00:07:00.000Z',
+  now: '2026-06-08T11:33:06.504Z'
+}
+ GET /api/internal/early-access-state 200 in 533ms (next.js: 3ms, application-code: 531ms)
+Internal state data: {
+  earlyAccessActive: false,
+  dropModeActive: true,
+  countdownEnabled: false,
+  earlyAccessDropAt: '2026-05-20T00:07:00.000Z'
+}
+releaseEarlyAccessIfExpired: {
+  earlyAccessActive: false,
+  dropModeActive: true,
+  countdownEnabled: false,
+  earlyAccessDropAt: '2026-05-20T00:07:00.000Z',
+  now: '2026-06-08T11:33:07.001Z'
+}
+ GET /shop 200 in 1062ms (next.js: 4ms, proxy.ts: 549ms, application-code: 510ms)
+MIDDLEWARE HIT: /api/auth/session
+releaseEarlyAccessIfExpired: {
+  earlyAccessActive: false,
+  dropModeActive: true,
+  countdownEnabled: false,
+  earlyAccessDropAt: '2026-05-20T00:07:00.000Z',
+  now: '2026-06-08T11:33:07.516Z'
+}
+ GET /api/internal/early-access-state 200 in 269ms (next.js: 2ms, application-code: 266ms)
+Internal state data: {
+  earlyAccessActive: false,
+  dropModeActive: true,
+  countdownEnabled: false,
+  earlyAccessDropAt: '2026-05-20T00:07:00.000Z'
+}
+ GET /api/auth/session 200 in 330ms (next.js: 15ms, proxy.ts: 277ms, application-code: 38ms)
+MIDDLEWARE HIT: /shop
+releaseEarlyAccessIfExpired: {
+  earlyAccessActive: false,
+  dropModeActive: true,
+  countdownEnabled: false,
+  earlyAccessDropAt: '2026-05-20T00:07:00.000Z',
+  now: '2026-06-08T11:33:21.606Z'
+}
+ GET /api/internal/early-access-state 200 in 345ms (next.js: 3ms, application-code: 342ms)
+Internal state data: {
+  earlyAccessActive: false,
+  dropModeActive: true,
+  countdownEnabled: false,
+  earlyAccessDropAt: '2026-05-20T00:07:00.000Z'
+}
+releaseEarlyAccessIfExpired: {
+  earlyAccessActive: false,
+  dropModeActive: true,
+  countdownEnabled: false,
+  earlyAccessDropAt: '2026-05-20T00:07:00.000Z',
+  now: '2026-06-08T11:33:22.129Z'
+}
+ GET /shop 200 in 940ms (next.js: 4ms, proxy.ts: 356ms, application-code: 580ms)
+MIDDLEWARE HIT: /api/auth/session
+releaseEarlyAccessIfExpired: {
+  earlyAccessActive: false,
+  dropModeActive: true,
+  countdownEnabled: false,
+  earlyAccessDropAt: '2026-05-20T00:07:00.000Z',
+  now: '2026-06-08T11:33:22.598Z'
+}
+ GET /api/internal/early-access-state 200 in 284ms (next.js: 2ms, application-code: 282ms)
+Internal state data: {
+  earlyAccessActive: false,
+  dropModeActive: true,
+  countdownEnabled: false,
+  earlyAccessDropAt: '2026-05-20T00:07:00.000Z'
+}
+ GET /api/auth/session 200 in 343ms (next.js: 27ms, proxy.ts: 294ms, application-code: 22ms)
+✓ Compiled in 221ms
+MIDDLEWARE HIT: /shop
+releaseEarlyAccessIfExpired: {
+  earlyAccessActive: false,
+  dropModeActive: true,
+  countdownEnabled: false,
+  earlyAccessDropAt: '2026-05-20T00:07:00.000Z',
+  now: '2026-06-08T11:33:37.033Z'
+}
+ GET /api/internal/early-access-state 200 in 579ms (next.js: 75ms, application-code: 504ms)
+Internal state data: {
+  earlyAccessActive: false,
+  dropModeActive: true,
+  countdownEnabled: false,
+  earlyAccessDropAt: '2026-05-20T00:07:00.000Z'
+}
+releaseEarlyAccessIfExpired: {
+  earlyAccessActive: false,
+  dropModeActive: true,
+  countdownEnabled: false,
+  earlyAccessDropAt: '2026-05-20T00:07:00.000Z',
+  now: '2026-06-08T11:33:38.121Z'
+}
+ GET /shop 200 in 1645ms (next.js: 186ms, proxy.ts: 696ms, application-code: 762ms)
+[?25h

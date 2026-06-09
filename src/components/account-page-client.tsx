@@ -54,7 +54,10 @@ export function AccountPageClient() {
     password: "",
     confirmPassword: "",
   });
-  const [emailForm, setEmailForm] = useState({ email: "", currentPassword: "" });
+  const [emailForm, setEmailForm] = useState({
+    email: "",
+    currentPassword: "",
+  });
   const [addressForm, setAddressForm] = useState({
     label: "",
     firstName: "",
@@ -107,7 +110,10 @@ export function AccountPageClient() {
         firstName: profileData.user.firstName || "",
         lastName: profileData.user.lastName || "",
       });
-      setEmailForm((prev) => ({ ...prev, email: profileData.user.email || "" }));
+      setEmailForm((prev) => ({
+        ...prev,
+        email: profileData.user.email || "",
+      }));
     }
   };
 
@@ -138,7 +144,10 @@ export function AccountPageClient() {
             await refreshAll();
             // Scroll to orders section
             setTimeout(() => {
-              ordersSectionRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+              ordersSectionRef.current?.scrollIntoView({
+                behavior: "smooth",
+                block: "start",
+              });
             }, 300);
           } else {
             setMessage(data.message || "Failed to link order.");
@@ -186,9 +195,16 @@ export function AccountPageClient() {
     });
 
     const data = await res.json().catch(() => ({}));
-    setMessage(data.message || (res.ok ? "Password updated." : "Failed to update password."));
+    setMessage(
+      data.message ||
+        (res.ok ? "Password updated." : "Failed to update password."),
+    );
     if (res.ok) {
-      setPasswordForm({ currentPassword: "", password: "", confirmPassword: "" });
+      setPasswordForm({
+        currentPassword: "",
+        password: "",
+        confirmPassword: "",
+      });
       await signOut({ redirect: false });
       router.push("/auth/login?message=password-updated");
     }
@@ -205,7 +221,12 @@ export function AccountPageClient() {
       }),
     });
     const data = await res.json().catch(() => ({}));
-    setMessage(data.message || (res.ok ? "Email updated. Verify your new email." : "Email update failed."));
+    setMessage(
+      data.message ||
+        (res.ok
+          ? "Email updated. Verify your new email."
+          : "Email update failed."),
+    );
     if (res.ok) {
       setEmailForm((prev) => ({ ...prev, currentPassword: "" }));
       await refreshAll();
@@ -221,7 +242,9 @@ export function AccountPageClient() {
     });
 
     const data = await res.json().catch(() => ({}));
-    setMessage(data.message || (res.ok ? "Address saved." : "Address save failed."));
+    setMessage(
+      data.message || (res.ok ? "Address saved." : "Address save failed."),
+    );
 
     if (res.ok) {
       setAddressForm({
@@ -259,7 +282,9 @@ export function AccountPageClient() {
     const confirmed = window.confirm("Delete this address.");
     if (!confirmed) return;
 
-    const res = await csrfFetch(`/api/account/addresses/${id}`, { method: "DELETE" });
+    const res = await csrfFetch(`/api/account/addresses/${id}`, {
+      method: "DELETE",
+    });
     const data = await res.json().catch(() => ({}));
     if (!res.ok) {
       setMessage(data.message || "Unable to delete address.");
@@ -315,75 +340,177 @@ export function AccountPageClient() {
   }
 
   return (
-    <main className="bg-[#080808] px-6 pb-20 pt-28 text-[#EDE9E0] md:px-10">
+    <main className="bg-[#EBE4D8] px-6 pb-20 pt-28 text-[#1A1714] md:px-10">
       <div className="mx-auto max-w-5xl space-y-8">
         <h1 className="text-2xl uppercase tracking-[0.18em]">My Account</h1>
 
         {message ? (
-          <div className="border border-[#EDE9E0]/25 bg-[#080808] p-3 text-sm">{message}</div>
+          <div className="border border-[#1A1714]/25 bg-[#EBE4D8] p-3 text-sm">
+            {message}
+          </div>
         ) : null}
 
-        <section className="border border-[#EDE9E0]/15 bg-[#080808] p-5">
-          <h2 className="text-xs uppercase tracking-[0.18em] text-[#EDE9E0]/65">Profile</h2>
+        <section className="border border-[#1A1714]/12 bg-[#EBE4D8] p-5">
+          <h2 className="text-xs uppercase tracking-[0.18em] text-[#1A1714]/65">
+            Profile
+          </h2>
           <p className="mt-2 text-sm">Email: {profile?.email}</p>
-          <p className="text-sm text-[#EDE9E0]/70">Member since: {memberSince}</p>
+          <p className="text-sm text-[#1A1714]/70">
+            Member since: {memberSince}
+          </p>
 
-          <form className="mt-4 grid grid-cols-1 gap-3 md:grid-cols-2" onSubmit={saveName}>
-            <input className="h-12 border border-[#EDE9E0]/20 bg-[#080808] px-3" value={nameForm.firstName} onChange={(e) => setNameForm((p) => ({ ...p, firstName: e.target.value }))} placeholder="First name" />
-            <input className="h-12 border border-[#EDE9E0]/20 bg-[#080808] px-3" value={nameForm.lastName} onChange={(e) => setNameForm((p) => ({ ...p, lastName: e.target.value }))} placeholder="Last name" />
-            <button className="h-12 border border-[#EDE9E0] bg-[#EDE9E0] text-[#080808] text-xs uppercase tracking-[0.16em] md:col-span-2">Save name</button>
+          <form
+            className="mt-4 grid grid-cols-1 gap-3 md:grid-cols-2"
+            onSubmit={saveName}
+          >
+            <input
+              className="h-12 border border-[#1A1714]/20 bg-[#EBE4D8] px-3"
+              value={nameForm.firstName}
+              onChange={(e) =>
+                setNameForm((p) => ({ ...p, firstName: e.target.value }))
+              }
+              placeholder="First name"
+            />
+            <input
+              className="h-12 border border-[#1A1714]/20 bg-[#EBE4D8] px-3"
+              value={nameForm.lastName}
+              onChange={(e) =>
+                setNameForm((p) => ({ ...p, lastName: e.target.value }))
+              }
+              placeholder="Last name"
+            />
+            <button className="h-12 border border-[#1A1714] bg-[#1A1714] text-[#EBE4D8] text-xs uppercase tracking-[0.16em] md:col-span-2">
+              Save name
+            </button>
           </form>
 
           <form className="mt-6 space-y-3" onSubmit={changePassword}>
-            <p className="text-xs uppercase tracking-[0.16em] text-[#EDE9E0]/65">Change password</p>
-            <input type="password" className="h-12 w-full border border-[#EDE9E0]/20 bg-[#080808] px-3" value={passwordForm.currentPassword} onChange={(e) => setPasswordForm((p) => ({ ...p, currentPassword: e.target.value }))} placeholder="Current password" />
-            <input type="password" className="h-12 w-full border border-[#EDE9E0]/20 bg-[#080808] px-3" value={passwordForm.password} onChange={(e) => setPasswordForm((p) => ({ ...p, password: e.target.value }))} placeholder="New password" />
-            <input type="password" className="h-12 w-full border border-[#EDE9E0]/20 bg-[#080808] px-3" value={passwordForm.confirmPassword} onChange={(e) => setPasswordForm((p) => ({ ...p, confirmPassword: e.target.value }))} placeholder="Confirm new password" />
-            <button className="h-12 w-full border border-[#EDE9E0]/35 text-xs uppercase tracking-[0.16em]">Update password</button>
+            <p className="text-xs uppercase tracking-[0.16em] text-[#1A1714]/65">
+              Change password
+            </p>
+            <input
+              type="password"
+              className="h-12 w-full border border-[#1A1714]/20 bg-[#EBE4D8] px-3"
+              value={passwordForm.currentPassword}
+              onChange={(e) =>
+                setPasswordForm((p) => ({
+                  ...p,
+                  currentPassword: e.target.value,
+                }))
+              }
+              placeholder="Current password"
+            />
+            <input
+              type="password"
+              className="h-12 w-full border border-[#1A1714]/20 bg-[#EBE4D8] px-3"
+              value={passwordForm.password}
+              onChange={(e) =>
+                setPasswordForm((p) => ({ ...p, password: e.target.value }))
+              }
+              placeholder="New password"
+            />
+            <input
+              type="password"
+              className="h-12 w-full border border-[#1A1714]/20 bg-[#EBE4D8] px-3"
+              value={passwordForm.confirmPassword}
+              onChange={(e) =>
+                setPasswordForm((p) => ({
+                  ...p,
+                  confirmPassword: e.target.value,
+                }))
+              }
+              placeholder="Confirm new password"
+            />
+            <button className="h-12 w-full border border-[#1A1714]/35 text-xs uppercase tracking-[0.16em]">
+              Update password
+            </button>
           </form>
 
           <form className="mt-6 space-y-3" onSubmit={changeEmail}>
-            <p className="text-xs uppercase tracking-[0.16em] text-[#EDE9E0]/65">Change email</p>
-            <input className="h-12 w-full border border-[#EDE9E0]/20 bg-[#080808] px-3" value={emailForm.email} onChange={(e) => setEmailForm((p) => ({ ...p, email: e.target.value }))} placeholder="New email" />
-            <input type="password" className="h-12 w-full border border-[#EDE9E0]/20 bg-[#080808] px-3" value={emailForm.currentPassword} onChange={(e) => setEmailForm((p) => ({ ...p, currentPassword: e.target.value }))} placeholder="Confirm with current password" />
-            <button className="h-12 w-full border border-[#EDE9E0]/35 text-xs uppercase tracking-[0.16em]">Update email</button>
+            <p className="text-xs uppercase tracking-[0.16em] text-[#1A1714]/65">
+              Change email
+            </p>
+            <input
+              className="h-12 w-full border border-[#1A1714]/20 bg-[#EBE4D8] px-3"
+              value={emailForm.email}
+              onChange={(e) =>
+                setEmailForm((p) => ({ ...p, email: e.target.value }))
+              }
+              placeholder="New email"
+            />
+            <input
+              type="password"
+              className="h-12 w-full border border-[#1A1714]/20 bg-[#EBE4D8] px-3"
+              value={emailForm.currentPassword}
+              onChange={(e) =>
+                setEmailForm((p) => ({ ...p, currentPassword: e.target.value }))
+              }
+              placeholder="Confirm with current password"
+            />
+            <button className="h-12 w-full border border-[#1A1714]/35 text-xs uppercase tracking-[0.16em]">
+              Update email
+            </button>
           </form>
         </section>
 
-        <section className="border border-[#EDE9E0]/15 bg-[#080808] p-5" ref={ordersSectionRef}>
-          <h2 className="text-xs uppercase tracking-[0.18em] text-[#EDE9E0]/65">Order History</h2>
+        <section
+          className="border border-[#1A1714]/12 bg-[#EBE4D8] p-5"
+          ref={ordersSectionRef}
+        >
+          <h2 className="text-xs uppercase tracking-[0.18em] text-[#1A1714]/65">
+            Order History
+          </h2>
           <div className="mt-4 space-y-3">
-            {orders.length === 0 ? <p className="text-sm text-[#EDE9E0]/60">No orders yet.</p> : null}
+            {orders.length === 0 ? (
+              <p className="text-sm text-[#1A1714]/60">No orders yet.</p>
+            ) : null}
             {orders.map((order) => {
               const items = Array.isArray(order.items) ? order.items : [];
               return (
-                <div key={order.id} className="border border-[#EDE9E0]/10 p-3">
+                <div key={order.id} className="border border-[#1A1714]/10 p-3">
                   <div className="flex flex-wrap items-center justify-between gap-2">
-                    <p className="text-xs uppercase tracking-[0.14em]">{order.orderNumber}</p>
-                    <p className="text-xs text-[#EDE9E0]/65">{new Date(order.createdAt).toLocaleString()}</p>
+                    <p className="text-xs uppercase tracking-[0.14em]">
+                      {order.orderNumber}
+                    </p>
+                    <p className="text-xs text-[#1A1714]/65">
+                      {new Date(order.createdAt).toLocaleString()}
+                    </p>
                   </div>
                   <div className="mt-1 flex items-center gap-2">
-                    <span className="border border-[#EDE9E0]/25 px-2 py-1 text-[10px] uppercase tracking-[0.12em]">
+                    <span className="border border-[#1A1714]/25 px-2 py-1 text-[10px] uppercase tracking-[0.12em]">
                       {order.orderStatus.replace(/_/g, " ")}
                     </span>
-                    <span className="text-[11px] text-[#EDE9E0]/65">{order.paymentStatus}</span>
+                    <span className="text-[11px] text-[#1A1714]/65">
+                      {order.paymentStatus}
+                    </span>
                   </div>
                   <p className="mt-2 text-sm">{formatEGP(order.total)}</p>
-                  <p className="mt-1 text-[12px] text-[#EDE9E0]/60">{items.length} items</p>
+                  <p className="mt-1 text-[12px] text-[#1A1714]/60">
+                    {items.length} items
+                  </p>
                   <div className="mt-3 flex flex-wrap gap-2">
                     <button
                       onClick={() =>
-                        setExpandedOrderId((prev) => (prev === order.id ? null : order.id))
+                        setExpandedOrderId((prev) =>
+                          prev === order.id ? null : order.id,
+                        )
                       }
-                      className="border border-[#EDE9E0]/35 px-3 py-2 text-[11px] uppercase tracking-[0.16em]"
+                      className="border border-[#1A1714]/35 px-3 py-2 text-[11px] uppercase tracking-[0.16em]"
                     >
-                      {expandedOrderId === order.id ? "Hide details" : "View details"}
+                      {expandedOrderId === order.id
+                        ? "Hide details"
+                        : "View details"}
                     </button>
-                    <button onClick={() => reorder(order.id)} className="border border-[#EDE9E0]/35 px-3 py-2 text-[11px] uppercase tracking-[0.16em]">Reorder</button>
+                    <button
+                      onClick={() => reorder(order.id)}
+                      className="border border-[#1A1714]/35 px-3 py-2 text-[11px] uppercase tracking-[0.16em]"
+                    >
+                      Reorder
+                    </button>
                   </div>
 
                   {expandedOrderId === order.id ? (
-                    <div className="mt-3 border-t border-[#EDE9E0]/10 pt-3 text-[12px] text-[#EDE9E0]/75">
+                    <div className="mt-3 border-t border-[#1A1714]/10 pt-3 text-[12px] text-[#1A1714]/75">
                       {items.map((item: any, idx: number) => (
                         <p key={`${order.id}-${idx}`}>
                           {item.name} / {item.color} / {item.size} x{item.qty}
@@ -397,43 +524,140 @@ export function AccountPageClient() {
           </div>
         </section>
 
-        <section className="border border-[#EDE9E0]/15 bg-[#080808] p-5">
-          <h2 className="text-xs uppercase tracking-[0.18em] text-[#EDE9E0]/65">Saved Addresses</h2>
+        <section className="border border-[#1A1714]/12 bg-[#EBE4D8] p-5">
+          <h2 className="text-xs uppercase tracking-[0.18em] text-[#1A1714]/65">
+            Saved Addresses
+          </h2>
 
           <div className="mt-4 space-y-3">
             {addresses.map((address) => (
-              <div key={address.id} className="border border-[#EDE9E0]/10 p-3">
-                <p className="text-sm">{address.firstName} {address.lastName} {address.isDefault ? "(Default)" : ""}</p>
-                <p className="text-[12px] text-[#EDE9E0]/65">{address.governorate}, {address.city}, {address.street}</p>
+              <div key={address.id} className="border border-[#1A1714]/10 p-3">
+                <p className="text-sm">
+                  {address.firstName} {address.lastName}{" "}
+                  {address.isDefault ? "(Default)" : ""}
+                </p>
+                <p className="text-[12px] text-[#1A1714]/65">
+                  {address.governorate}, {address.city}, {address.street}
+                </p>
                 <div className="mt-2 flex gap-2">
-                  {!address.isDefault ? <button onClick={() => setDefaultAddress(address.id)} className="border border-[#EDE9E0]/35 px-3 py-1 text-[10px] uppercase">Set default</button> : null}
-                  <button onClick={() => deleteAddress(address.id)} className="border border-[#555555]/65 px-3 py-1 text-[10px] uppercase text-[#EDE9E0]">Delete</button>
+                  {!address.isDefault ? (
+                    <button
+                      onClick={() => setDefaultAddress(address.id)}
+                      className="border border-[#1A1714]/35 px-3 py-1 text-[10px] uppercase"
+                    >
+                      Set default
+                    </button>
+                  ) : null}
+                  <button
+                    onClick={() => deleteAddress(address.id)}
+                    className="border border-[#8C8278]/65 px-3 py-1 text-[10px] uppercase text-[#1A1714]"
+                  >
+                    Delete
+                  </button>
                 </div>
               </div>
             ))}
           </div>
 
-          <form className="mt-6 grid grid-cols-1 gap-3 md:grid-cols-2" onSubmit={addAddress}>
-            <input className="h-12 border border-[#EDE9E0]/20 bg-[#080808] px-3" placeholder="Label" value={addressForm.label} onChange={(e) => setAddressForm((p) => ({ ...p, label: e.target.value }))} />
-            <input className="h-12 border border-[#EDE9E0]/20 bg-[#080808] px-3" placeholder="First name" value={addressForm.firstName} onChange={(e) => setAddressForm((p) => ({ ...p, firstName: e.target.value }))} />
-            <input className="h-12 border border-[#EDE9E0]/20 bg-[#080808] px-3" placeholder="Last name" value={addressForm.lastName} onChange={(e) => setAddressForm((p) => ({ ...p, lastName: e.target.value }))} />
-            <input className="h-12 border border-[#EDE9E0]/20 bg-[#080808] px-3" placeholder="Phone" value={addressForm.phone} onChange={(e) => setAddressForm((p) => ({ ...p, phone: e.target.value }))} />
-            <input className="h-12 border border-[#EDE9E0]/20 bg-[#080808] px-3" placeholder="Governorate" value={addressForm.governorate} onChange={(e) => setAddressForm((p) => ({ ...p, governorate: e.target.value }))} />
-            <input className="h-12 border border-[#EDE9E0]/20 bg-[#080808] px-3" placeholder="City" value={addressForm.city} onChange={(e) => setAddressForm((p) => ({ ...p, city: e.target.value }))} />
-            <input className="h-12 border border-[#EDE9E0]/20 bg-[#080808] px-3 md:col-span-2" placeholder="Street" value={addressForm.street} onChange={(e) => setAddressForm((p) => ({ ...p, street: e.target.value }))} />
-            <input className="h-12 border border-[#EDE9E0]/20 bg-[#080808] px-3 md:col-span-2" placeholder="Building" value={addressForm.building} onChange={(e) => setAddressForm((p) => ({ ...p, building: e.target.value }))} />
+          <form
+            className="mt-6 grid grid-cols-1 gap-3 md:grid-cols-2"
+            onSubmit={addAddress}
+          >
+            <input
+              className="h-12 border border-[#1A1714]/20 bg-[#EBE4D8] px-3"
+              placeholder="Label"
+              value={addressForm.label}
+              onChange={(e) =>
+                setAddressForm((p) => ({ ...p, label: e.target.value }))
+              }
+            />
+            <input
+              className="h-12 border border-[#1A1714]/20 bg-[#EBE4D8] px-3"
+              placeholder="First name"
+              value={addressForm.firstName}
+              onChange={(e) =>
+                setAddressForm((p) => ({ ...p, firstName: e.target.value }))
+              }
+            />
+            <input
+              className="h-12 border border-[#1A1714]/20 bg-[#EBE4D8] px-3"
+              placeholder="Last name"
+              value={addressForm.lastName}
+              onChange={(e) =>
+                setAddressForm((p) => ({ ...p, lastName: e.target.value }))
+              }
+            />
+            <input
+              className="h-12 border border-[#1A1714]/20 bg-[#EBE4D8] px-3"
+              placeholder="Phone"
+              value={addressForm.phone}
+              onChange={(e) =>
+                setAddressForm((p) => ({ ...p, phone: e.target.value }))
+              }
+            />
+            <input
+              className="h-12 border border-[#1A1714]/20 bg-[#EBE4D8] px-3"
+              placeholder="Governorate"
+              value={addressForm.governorate}
+              onChange={(e) =>
+                setAddressForm((p) => ({ ...p, governorate: e.target.value }))
+              }
+            />
+            <input
+              className="h-12 border border-[#1A1714]/20 bg-[#EBE4D8] px-3"
+              placeholder="City"
+              value={addressForm.city}
+              onChange={(e) =>
+                setAddressForm((p) => ({ ...p, city: e.target.value }))
+              }
+            />
+            <input
+              className="h-12 border border-[#1A1714]/20 bg-[#EBE4D8] px-3 md:col-span-2"
+              placeholder="Street"
+              value={addressForm.street}
+              onChange={(e) =>
+                setAddressForm((p) => ({ ...p, street: e.target.value }))
+              }
+            />
+            <input
+              className="h-12 border border-[#1A1714]/20 bg-[#EBE4D8] px-3 md:col-span-2"
+              placeholder="Building"
+              value={addressForm.building}
+              onChange={(e) =>
+                setAddressForm((p) => ({ ...p, building: e.target.value }))
+              }
+            />
             <label className="md:col-span-2 flex items-center gap-2 text-xs uppercase tracking-[0.14em]">
-              <input type="checkbox" checked={addressForm.isDefault} onChange={(e) => setAddressForm((p) => ({ ...p, isDefault: e.target.checked }))} /> Set as default
+              <input
+                type="checkbox"
+                checked={addressForm.isDefault}
+                onChange={(e) =>
+                  setAddressForm((p) => ({ ...p, isDefault: e.target.checked }))
+                }
+              />{" "}
+              Set as default
             </label>
-            <button className="h-12 border border-[#EDE9E0] bg-[#EDE9E0] text-[#080808] text-xs uppercase tracking-[0.16em] md:col-span-2">Save address</button>
+            <button className="h-12 border border-[#1A1714] bg-[#1A1714] text-[#EBE4D8] text-xs uppercase tracking-[0.16em] md:col-span-2">
+              Save address
+            </button>
           </form>
         </section>
 
-        <section className="border border-[#555555]/45 bg-[#080808] p-5">
-          <h2 className="text-xs uppercase tracking-[0.18em] text-[#EDE9E0]">Account Actions</h2>
+        <section className="border border-[#8C8278]/45 bg-[#EBE4D8] p-5">
+          <h2 className="text-xs uppercase tracking-[0.18em] text-[#1A1714]">
+            Account Actions
+          </h2>
           <form className="mt-4 space-y-3" onSubmit={deleteAccount}>
-            <input type="password" className="h-12 w-full border border-[#555555]/70 bg-[#080808] px-3" placeholder="Enter password to confirm" value={deletePassword} onChange={(e) => setDeletePassword(e.target.value)} />
-            <button className="h-12 w-full border border-[#EDE9E0]/35 text-xs uppercase tracking-[0.18em]">Delete account</button>
+            <input
+              type="password"
+              className="h-12 w-full border border-[#8C8278]/70 bg-[#EBE4D8] px-3"
+              placeholder="Enter password to confirm"
+              value={deletePassword}
+              onChange={(e) => setDeletePassword(e.target.value)}
+            />
+            <button className="h-12 w-full border border-[#1A1714]/35 text-xs uppercase tracking-[0.18em]">
+              Delete account
+            </button>
           </form>
         </section>
       </div>

@@ -30,7 +30,7 @@ const instagramTiles = [
 function Logo({ className = "" }) {
   return (
     <span className={className}>
-      <span className="font-anton tracking-[16px] text-[#EDE9E0]">QUTB</span>
+      <span className="font-anton tracking-[16px] text-[#1A1714]">QUTB</span>
     </span>
   );
 }
@@ -63,7 +63,7 @@ function NavBar() {
 
   return (
     <nav
-      className={`fixed left-0 top-8 z-50 w-full border-b-[0.5px] border-[rgba(240,237,232,0.15)] ${
+      className={`fixed left-0 top-8 z-50 w-full border-b-[0.5px] border-[rgba(26, 23, 20, 0.12)] ${
         solid ? "bg-ink" : "bg-transparent"
       }`}
     >
@@ -105,21 +105,21 @@ function HeroBanner() {
         srcSet={`${heroImage} 400w, ${heroImage} 800w, ${heroImage} 1200w`}
         className="h-full w-full object-cover"
       />
-      <div className="absolute inset-0 bg-gradient-to-b from-[#080808]/30 to-[#080808]/60" />
+      <div className="absolute inset-0 bg-gradient-to-b from-[#EBE4D8]/30 to-[#EBE4D8]/60" />
       <div className="absolute inset-0 flex items-center justify-center px-6 text-center">
         <div>
           <motion.h1
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1.1, ease: "easeOut" }}
-            className="font-anton text-[72px] leading-none tracking-[16px] text-[#EDE9E0] drop-shadow-[0_4px_18px_rgba(0,0,0,0.8)] md:text-[120px]"
+            className="font-anton text-[72px] leading-none tracking-[16px] text-[#EBE4D8] drop-shadow-[0_4px_18px_rgba(0,0,0,0.8)] md:text-[120px]"
           >
             <Logo className="inline-flex items-end gap-1" />
           </motion.h1>
-          <p className="mt-3 text-[12px] font-medium uppercase tracking-[0.4em] text-ash/65 md:text-[13px]">
+          <p className="mt-3 text-[12px] font-medium uppercase tracking-[0.4em] text-[#EBE4D8]/80 md:text-[13px]">
             Everything revolves. We are the point it revolves around.
           </p>
-          <p className="mt-5 text-[13px] uppercase tracking-[0.3em] text-ash/95 md:text-[16px]">
+          <p className="mt-5 text-[13px] uppercase tracking-[0.3em] text-[#EBE4D8]/92 md:text-[16px]">
             ERA 99 — DROP 001 — ALEXANDRIA
           </p>
           <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
@@ -127,7 +127,7 @@ function HeroBanner() {
               href="/shop"
               whileHover={{ y: -2 }}
               transition={{ duration: 0.3, ease: "easeOut" }}
-              className="w-[190px] border border-ash bg-ash px-8 py-3 text-xs font-medium uppercase tracking-[0.16em] text-[#080808]"
+              className="w-[190px] border border-[#1A1714] bg-[#1A1714] px-8 py-3 text-xs font-medium uppercase tracking-[0.16em] text-[#EBE4D8]"
             >
               SHOP NOW
             </motion.a>
@@ -135,7 +135,7 @@ function HeroBanner() {
               href="#statement"
               whileHover={{ y: -2 }}
               transition={{ duration: 0.3, ease: "easeOut" }}
-              className="w-[190px] border border-ash bg-transparent px-8 py-3 text-xs font-medium uppercase tracking-[0.16em] text-ash"
+              className="w-[190px] border border-[#EBE4D8]/65 bg-transparent px-8 py-3 text-xs font-medium uppercase tracking-[0.16em] text-[#EBE4D8]"
             >
               OUR STORY
             </motion.a>
@@ -164,14 +164,14 @@ function ThreeColumnBanners() {
             srcSet={`${panel.image} 400w, ${panel.image} 800w, ${panel.image} 1200w`}
             className="h-full w-full object-cover"
           />
-          <div className="absolute inset-0 bg-[#080808]/45" />
+          <div className="absolute inset-0 bg-[#EBE4D8]/45" />
           <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
-            <h3 className="font-sans text-3xl font-medium uppercase tracking-[0.16em] text-ash">
+            <h3 className="font-sans text-3xl font-medium uppercase tracking-[0.16em] text-[#1A1714]">
               {panel.title}
             </h3>
             <a
               href="/shop"
-              className="mt-3 text-xs uppercase tracking-[0.2em] text-ash hover:text-ash/70"
+              className="mt-3 text-xs uppercase tracking-[0.2em] text-[#1A1714] hover:text-[#8C8278]"
             >
               SHOP NOW →
             </a>
@@ -228,7 +228,7 @@ function ProductCard({ product }: { product: Product }) {
       onHoverEnd={() => setHovered(false)}
       whileHover={{ y: -3 }}
       transition={{ duration: 0.3, ease: "easeOut" }}
-      className="border border-ash/20 bg-[#080808] p-3"
+      className="border border-ash/20 bg-[#EBE4D8] p-3"
     >
       <Link href={`/product/${product.slug}`}>
         <div className="relative aspect-[3/4] overflow-hidden border border-ash/15">
@@ -281,7 +281,7 @@ function ProductCard({ product }: { product: Product }) {
               onClick={() => setSelectedSize(size)}
               className={`border px-2 py-1 transition-colors ${
                 selectedSize === size
-                  ? "border-ash bg-ash text-[#080808]"
+                  ? "border-ash bg-ash text-[#EBE4D8]"
                   : "border-ash/25 hover:border-ash"
               }`}
             >
@@ -291,7 +291,7 @@ function ProductCard({ product }: { product: Product }) {
         </div>
         <button
           onClick={handleAddToCart}
-          className="mt-4 w-full bg-ash px-4 py-3 text-xs font-medium uppercase tracking-[0.15em] text-[#080808] hover:bg-ash/90 transition-colors"
+          className="mt-4 w-full bg-ash px-4 py-3 text-xs font-medium uppercase tracking-[0.15em] text-[#EBE4D8] hover:bg-ash/90 transition-colors"
         >
           ADD TO CART
         </button>
@@ -326,25 +326,25 @@ function BrandStatement() {
       id="statement"
       className="relative w-full overflow-hidden bg-ink px-6 py-24 md:px-10"
     >
-      <div className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-[20vw] leading-none text-ash/[0.06] md:left-10">
+      <div className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-[20vw] leading-none text-[#1A1714]/[0.06] md:left-10">
         Q
       </div>
       <div className="mx-auto grid max-w-7xl grid-cols-1 gap-10 md:grid-cols-2">
         <div />
         <div className="relative z-10 flex flex-col justify-center">
-          <p className="text-xs uppercase tracking-[0.22em] text-[#555555]">
+          <p className="text-xs uppercase tracking-[0.22em] text-[#8C8278]">
             NOT A BRAND. A POSITION.
           </p>
-          <h3 className="mt-5 max-w-2xl text-3xl leading-[1.3] text-ash md:text-[32px]">
+          <h3 className="mt-5 max-w-2xl text-3xl leading-[1.3] text-[#EBE4D8] md:text-[32px]">
             We are the axis. The fixed point. Everything revolves — we stay
             still.
           </h3>
-          <p className="mt-5 max-w-xl text-base text-ash/60">
+          <p className="mt-5 max-w-xl text-base text-[#EBE4D8]/75">
             Born in Alexandria. Built for those who do not ask for permission.
           </p>
           <Link
             href="/story"
-            className="mt-8 w-fit text-sm uppercase tracking-[0.16em] text-ash hover:underline"
+            className="mt-8 w-fit text-sm uppercase tracking-[0.16em] text-[#EBE4D8] hover:underline"
           >
             READ THE STORY →
           </Link>
@@ -395,25 +395,25 @@ function UrgencyStrip() {
   const format = (value: number) => String(value).padStart(2, "0");
 
   return (
-    <section className="w-full bg-[#080808] border-y border-[#080808] px-6 py-6 text-ash md:px-10">
+    <section className="w-full bg-[#EBE4D8] border-y border-[#EBE4D8] px-6 py-6 text-ash md:px-10">
       <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 md:flex-row">
         <p className="text-center text-xs uppercase tracking-[0.2em] md:text-left">
           ERA 99 — DROP 001 — LIMITED QUANTITIES — ORDER NOW
         </p>
         <div className="flex items-center gap-2 text-xs uppercase tracking-[0.15em]">
-          <div className="border border-ash/40 bg-[#080808]/20 px-2 py-1">
+          <div className="border border-ash/40 bg-[#EBE4D8]/20 px-2 py-1">
             {format(time.days)}D
           </div>
           <span>:</span>
-          <div className="border border-ash/40 bg-[#080808]/20 px-2 py-1">
+          <div className="border border-ash/40 bg-[#EBE4D8]/20 px-2 py-1">
             {format(time.hours)}H
           </div>
           <span>:</span>
-          <div className="border border-ash/40 bg-[#080808]/20 px-2 py-1">
+          <div className="border border-ash/40 bg-[#EBE4D8]/20 px-2 py-1">
             {format(time.minutes)}M
           </div>
           <span>:</span>
-          <div className="border border-ash/40 bg-[#080808]/20 px-2 py-1">
+          <div className="border border-ash/40 bg-[#EBE4D8]/20 px-2 py-1">
             {format(time.seconds)}S
           </div>
         </div>
@@ -447,7 +447,7 @@ function InstagramStrip() {
                 className="h-full w-full object-cover"
               />
               <motion.div
-                className="absolute inset-0 flex items-center justify-center bg-[#080808]/55"
+                className="absolute inset-0 flex items-center justify-center bg-[#EBE4D8]/55"
                 initial={{ opacity: 0 }}
                 whileHover={{ opacity: 1 }}
                 transition={{ duration: 0.3, ease: "easeOut" }}
@@ -480,16 +480,16 @@ function Footer() {
           <div className="text-[34px] text-ash">
             <Logo />
           </div>
-          <p className="mt-3 text-xs font-medium uppercase tracking-[0.3em] text-[#555555]">
+          <p className="mt-3 text-xs font-medium uppercase tracking-[0.3em] text-[#8C8278]">
             THE AXIS
           </p>
-          <p className="mt-1 text-[12px] font-medium uppercase tracking-[0.4em] text-[#555555]">
+          <p className="mt-1 text-[12px] font-medium uppercase tracking-[0.4em] text-[#8C8278]">
             QUTB
           </p>
           <p className="mt-3 text-xs uppercase tracking-[0.16em] text-ash/65">
             Alexandria, Egypt
           </p>
-          <p className="mt-2 text-sm text-[#555555]">
+          <p className="mt-2 text-sm text-[#8C8278]">
             QUTB · Alexandria, Egypt · The axis holds.
           </p>
         </div>
@@ -529,7 +529,7 @@ function Footer() {
             />
             <button
               type="submit"
-              className="border border-l-0 border-ash/25 bg-ash px-4 py-3 text-xs uppercase tracking-[0.12em] text-[#080808]"
+              className="border border-l-0 border-ash/25 bg-ash px-4 py-3 text-xs uppercase tracking-[0.12em] text-[#EBE4D8]"
             >
               JOIN
             </button>

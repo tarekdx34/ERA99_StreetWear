@@ -1,13 +1,20 @@
 @import "tailwindcss";
 
 :root {
-  --background: #080808;
-  --foreground: #EDE9E0;
-  --color-ink: #080808;
-  --color-ash: #EDE9E0;
+  --background: #FAF8F4;
+  --foreground: #111111;
+  --color-ink: #111111;
+  --color-ash: #FAF8F4;
+  --color-bone: #F5F0E8;
+  --color-salt: #EDE8DF;
+  --color-stone: #7C7C75;
+  --color-sea: #1D2635;
   --color-blood: #8B0000;
-  --color-concrete: #555555;
-  --font-ui: Arial, "Barlow Condensed", sans-serif;
+  --color-concrete: #7C7C75;
+  --font-ui: var(--font-dm-sans), "DM Sans", Arial, sans-serif;
+  --font-serif: var(--font-bodoni), "Bodoni Moda", Georgia, serif;
+  --font-editorial: var(--font-cormorant), "Cormorant Garamond", Georgia, serif;
+  --font-script: var(--font-gwendolyn), "Gwendolyn", cursive;
   --font-anton: var(--font-anton-google), "Anton", Arial, sans-serif;
 }
 
@@ -16,34 +23,47 @@
   --color-foreground: var(--foreground);
   --color-ink: var(--color-ink);
   --color-ash: var(--color-ash);
+  --color-bone: var(--color-bone);
+  --color-salt: var(--color-salt);
+  --color-stone: var(--color-stone);
+  --color-sea: var(--color-sea);
   --color-blood: var(--color-blood);
   --color-concrete: var(--color-concrete);
   --font-sans: var(--font-ui);
-  --font-blackletter: var(--font-anton);
+  --font-serif: var(--font-serif);
+  --font-editorial: var(--font-editorial);
+  --font-script: var(--font-script);
+  --font-blackletter: var(--font-serif);
   --font-sekuya: var(--font-ui);
+}
+
+html {
+  background: var(--background);
+  color: var(--foreground);
+  scroll-behavior: smooth;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-ui), sans-serif;
-  font-weight: 400;
+  font-weight: 300;
+  text-rendering: optimizeLegibility;
 }
 
 * {
   border-radius: 0 !important;
-  transition: all 0.3s ease;
 }
 
 .font-blackletter {
-  font-family: var(--font-anton), sans-serif;
-  font-weight: 400;
-  letter-spacing: 16px;
-  text-transform: uppercase;
+  font-family: var(--font-serif), Georgia, serif;
+  font-weight: 500;
+  letter-spacing: 0;
+  text-transform: none;
 }
 
 .display-logo {
-  letter-spacing: 16px;
+  letter-spacing: 0.18em;
 }
 
 .font-anton {
@@ -54,19 +74,50 @@ body {
 }
 
 .display-hero {
-  font-family: var(--font-anton), sans-serif;
-  letter-spacing: 16px !important;
-  text-transform: uppercase !important;
-  font-weight: 400 !important;
-  line-height: 0.85 !important;
-  color: #EDE9E0 !important;
+  font-family: var(--font-serif), Georgia, serif;
+  letter-spacing: -0.01em !important;
+  text-transform: none !important;
+  font-weight: 500 !important;
+  line-height: 1 !important;
+  color: #111111 !important;
+}
+
+.font-brand-serif {
+  font-family: var(--font-serif), Georgia, serif;
+}
+
+.font-brand-editorial {
+  font-family: var(--font-editorial), Georgia, serif;
+}
+
+.font-brand-script {
+  font-family: var(--font-script), cursive;
+}
+
+.qutb-eyebrow {
+  font-family: var(--font-ui), sans-serif;
+  font-size: 0.68rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  font-weight: 300;
+}
+
+.qutb-link-underline {
+  text-decoration-line: underline;
+  text-underline-offset: 4px;
+  text-decoration-thickness: 1px;
+}
+
+::selection {
+  background: #1D2635;
+  color: #FAF8F4;
 }
 
 @media (min-width: 768px) {
   .font-blackletter,
   .display-logo,
   .display-hero {
-    letter-spacing: 16px;
+    letter-spacing: 0;
   }
 }
 
@@ -84,4 +135,5 @@ select,
 textarea,
 button {
   border-radius: 0 !important;
+  font-family: var(--font-ui), sans-serif;
 }

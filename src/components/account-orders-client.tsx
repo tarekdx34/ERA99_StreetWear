@@ -73,7 +73,10 @@ export function AccountOrdersClient() {
       const res = await csrfFetch("/api/account/claim-order", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ orderId: claimOrderId, token: claimToken.trim() }),
+        body: JSON.stringify({
+          orderId: claimOrderId,
+          token: claimToken.trim(),
+        }),
       });
 
       const data = await res.json();
@@ -98,23 +101,23 @@ export function AccountOrdersClient() {
   }
 
   const inputBase =
-    "h-12 w-full border border-[#EDE9E0]/20 bg-[#080808] px-3 text-sm text-[#EDE9E0] placeholder:text-[#EDE9E0]/40 focus:border-[#EDE9E0] focus:outline-none";
+    "h-12 w-full border border-[#1A1714]/20 bg-[#EBE4D8] px-3 text-sm text-[#1A1714] placeholder:text-[#1A1714]/40 focus:border-[#1A1714] focus:outline-none";
 
   return (
-    <main className="bg-[#080808] px-6 pb-20 pt-28 md:px-10">
+    <main className="bg-[#EBE4D8] px-6 pb-20 pt-28 md:px-10">
       <div className="mx-auto max-w-4xl space-y-6">
         <div className="flex items-center justify-between">
           <h1 className="text-2xl uppercase tracking-[0.18em]">MY ORDERS</h1>
           <Link
             href="/account"
-            className="text-xs uppercase tracking-[0.14em] text-[#EDE9E0]/60 hover:text-[#EDE9E0]"
+            className="text-xs uppercase tracking-[0.14em] text-[#1A1714]/60 hover:text-[#1A1714]"
           >
             BACK TO ACCOUNT
           </Link>
         </div>
 
         {message ? (
-          <div className="border border-[#EDE9E0]/25 bg-[#080808] p-3 text-sm">
+          <div className="border border-[#1A1714]/25 bg-[#EBE4D8] p-3 text-sm">
             {message}
           </div>
         ) : null}
@@ -122,18 +125,18 @@ export function AccountOrdersClient() {
         {!showClaimForm ? (
           <button
             onClick={() => setShowClaimForm(true)}
-            className="w-full border border-[#EDE9E0]/25 px-4 py-3 text-left text-xs uppercase tracking-[0.14em] hover:border-[#EDE9E0]"
+            className="w-full border border-[#1A1714]/25 px-4 py-3 text-left text-xs uppercase tracking-[0.14em] hover:border-[#1A1714]"
           >
             LINK A GUEST ORDER
           </button>
         ) : (
-          <section className="border border-[#EDE9E0]/18 bg-[#080808] p-5">
-            <h2 className="text-xs uppercase tracking-[0.16em] text-[#EDE9E0]/65">
+          <section className="border border-[#1A1714]/18 bg-[#EBE4D8] p-5">
+            <h2 className="text-xs uppercase tracking-[0.16em] text-[#1A1714]/65">
               LINK A GUEST ORDER
             </h2>
-             <p className="mt-2 text-sm text-[#EDE9E0]/60">
-               Enter the order ID and claim token from your order confirmation.
-             </p>
+            <p className="mt-2 text-sm text-[#1A1714]/60">
+              Enter the order ID and claim token from your order confirmation.
+            </p>
 
             <div className="mt-4 space-y-3">
               <input
@@ -142,7 +145,9 @@ export function AccountOrdersClient() {
                 type="number"
                 value={claimOrderId || ""}
                 onChange={(e) =>
-                  setClaimOrderId(e.target.value ? parseInt(e.target.value, 10) : null)
+                  setClaimOrderId(
+                    e.target.value ? parseInt(e.target.value, 10) : null,
+                  )
                 }
               />
               <input
@@ -155,7 +160,7 @@ export function AccountOrdersClient() {
                 <button
                   onClick={claimOrder}
                   disabled={!claimOrderId || !claimToken.trim()}
-                  className="flex-1 border border-[#EDE9E0] bg-[#EDE9E0] px-4 py-3 text-xs font-medium uppercase tracking-[0.14em] text-[#080808] disabled:opacity-40"
+                  className="flex-1 border border-[#1A1714] bg-[#1A1714] px-4 py-3 text-xs font-medium uppercase tracking-[0.14em] text-[#EBE4D8] disabled:opacity-40"
                 >
                   LINK ORDER
                 </button>
@@ -165,7 +170,7 @@ export function AccountOrdersClient() {
                     setClaimOrderId(null);
                     setClaimToken("");
                   }}
-                  className="border border-[#EDE9E0]/25 px-4 py-3 text-xs uppercase tracking-[0.14em]"
+                  className="border border-[#1A1714]/25 px-4 py-3 text-xs uppercase tracking-[0.14em]"
                 >
                   CANCEL
                 </button>
@@ -176,11 +181,11 @@ export function AccountOrdersClient() {
 
         <section className="space-y-4">
           {orders.length === 0 ? (
-            <div className="border border-[#EDE9E0]/15 bg-[#080808] p-8 text-center">
-              <p className="text-sm text-[#EDE9E0]/60">No orders yet.</p>
+            <div className="border border-[#1A1714]/12 bg-[#EBE4D8] p-8 text-center">
+              <p className="text-sm text-[#1A1714]/60">No orders yet.</p>
               <Link
                 href="/shop"
-                className="mt-4 inline-block border border-[#EDE9E0]/25 px-6 py-3 text-xs uppercase tracking-[0.14em] hover:border-[#EDE9E0]"
+                className="mt-4 inline-block border border-[#1A1714]/25 px-6 py-3 text-xs uppercase tracking-[0.14em] hover:border-[#1A1714]"
               >
                 START SHOPPING
               </Link>
@@ -192,13 +197,13 @@ export function AccountOrdersClient() {
             return (
               <div
                 key={order.id}
-                className="border border-[#EDE9E0]/15 bg-[#080808] p-5"
+                className="border border-[#1A1714]/12 bg-[#EBE4D8] p-5"
               >
                 <div className="flex flex-wrap items-center justify-between gap-2">
                   <p className="text-xs uppercase tracking-[0.14em]">
                     #{order.orderNumber}
                   </p>
-                  <p className="text-xs text-[#EDE9E0]/65">
+                  <p className="text-xs text-[#1A1714]/65">
                     {new Date(order.createdAt).toLocaleString("en-GB", {
                       timeZone: "Africa/Cairo",
                       day: "2-digit",
@@ -217,12 +222,12 @@ export function AccountOrdersClient() {
                   />
                 </div>
 
-                <div className="mt-4 border-t border-[#EDE9E0]/10 pt-4">
+                <div className="mt-4 border-t border-[#1A1714]/10 pt-4">
                   <div className="mb-3 flex items-center gap-2">
-                    <span className="border border-[#EDE9E0]/25 px-2 py-1 text-[10px] uppercase tracking-[0.12em]">
+                    <span className="border border-[#1A1714]/25 px-2 py-1 text-[10px] uppercase tracking-[0.12em]">
                       {order.orderStatus.replace(/_/g, " ")}
                     </span>
-                    <span className="text-[11px] text-[#EDE9E0]/65">
+                    <span className="text-[11px] text-[#1A1714]/65">
                       {order.paymentStatus}
                     </span>
                   </div>
@@ -230,20 +235,20 @@ export function AccountOrdersClient() {
                   <p className="text-sm">
                     {formatEGP(order.total)} — {items.length} items
                   </p>
-                  <p className="mt-1 text-[12px] text-[#EDE9E0]/60">
+                  <p className="mt-1 text-[12px] text-[#1A1714]/60">
                     {order.city}, {order.governorate}
                   </p>
 
                   <div className="mt-3 flex flex-wrap gap-2">
                     <Link
                       href={`/track-order?order=${order.orderNumber}`}
-                      className="border border-[#EDE9E0]/35 px-3 py-2 text-[11px] uppercase tracking-[0.16em]"
+                      className="border border-[#1A1714]/35 px-3 py-2 text-[11px] uppercase tracking-[0.16em]"
                     >
                       VIEW DETAILS
                     </Link>
                     <button
                       onClick={() => reorder(order.id)}
-                      className="border border-[#EDE9E0]/35 px-3 py-2 text-[11px] uppercase tracking-[0.16em]"
+                      className="border border-[#1A1714]/35 px-3 py-2 text-[11px] uppercase tracking-[0.16em]"
                     >
                       REORDER
                     </button>

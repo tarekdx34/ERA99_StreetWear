@@ -2,34 +2,28 @@
 
 import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
+import { Minus, Plus, X } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
-import { makeItemKey, useCart } from "@/contexts/cart-context";
+import { QutbFooter } from "@/components/qutb-footer";
+import { ProductCard } from "@/components/product-card";
+import { useCart } from "@/contexts/cart-context";
 import { useAnalytics } from "@/hooks/useAnalytics";
 import { useMetaPixel } from "@/hooks/useMetaPixel";
 import type { Product } from "@/lib/products";
 import { sizes } from "@/lib/products";
 import { formatEGP } from "@/lib/utils";
-import {
-  MinusIcon,
-  PlusIcon,
-  ShieldIcon,
-  TruckIcon,
-  WeightIcon,
-  CloseIcon,
-} from "@/components/icons";
-import { ProductCard } from "@/components/product-card";
 
 function Accordion({ title, content }: { title: string; content: string }) {
   const [open, setOpen] = useState(false);
   return (
-    <div className="border-b border-[#EDE9E0]/15">
+    <div className="border-t border-[#111111]/10">
       <button
-        className="flex w-full items-center justify-between py-4 text-left text-sm uppercase tracking-[0.14em]"
-        onClick={() => setOpen((v) => !v)}
+        className="flex w-full items-center justify-between py-5 text-left text-[12px] uppercase tracking-[0.16em] text-[#111111]"
+        onClick={() => setOpen((value) => !value)}
       >
         <span>{title}</span>
-        <span>{open ? "−" : "+"}</span>
+        <span>{open ? "-" : "+"}</span>
       </button>
       <AnimatePresence>
         {open ? (
@@ -37,7 +31,7 @@ function Accordion({ title, content }: { title: string; content: string }) {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            className="overflow-hidden pb-4 text-sm text-[#EDE9E0]/72"
+            className="overflow-hidden pb-5 text-[15px] font-light leading-[1.8] text-[#7C7C75]"
           >
             {content}
           </motion.p>
@@ -59,50 +53,67 @@ function SizeGuideModal({
       {open ? (
         <>
           <motion.button
-            className="fixed inset-0 z-[90] bg-[#080808]/70"
+            aria-label="Close size guide"
+            className="fixed inset-0 z-[90] bg-[#111111]/45 backdrop-blur-[2px]"
             onClick={onClose}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
           />
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 30 }}
-            transition={{ duration: 0.3, ease: "easeOut" }}
-            className="fixed left-1/2 top-1/2 z-[100] w-[92vw] max-w-lg -translate-x-1/2 -translate-y-1/2 border border-[#EDE9E0]/30 bg-[#080808] p-5"
+            exit={{ opacity: 0, y: 24 }}
+            transition={{ duration: 0.28, ease: "easeOut" }}
+            className="fixed left-1/2 top-1/2 z-[100] w-[calc(100%-48px)] max-w-2xl -translate-x-1/2 -translate-y-1/2 bg-[#FAF8F4] p-8 text-[#111111] shadow-[0_24px_80px_rgba(17,17,17,0.2)] md:p-12"
+            role="dialog"
+            aria-modal="true"
           >
-            <div className="mb-4 flex items-center justify-between border-b border-[#EDE9E0]/15 pb-3">
-              <h4 className="text-sm uppercase tracking-[0.14em]">
-                SIZE GUIDE (CM)
-              </h4>
+            <div className="mb-8 flex items-start justify-between border-b border-[#111111]/10 pb-6">
+              <div>
+                <p className="qutb-eyebrow text-[#7C7C75]">
+                  Box Tee - Measurement Guide
+                </p>
+                <h3 className="mt-2 font-brand-serif text-3xl">
+                  Size Guide
+                </h3>
+              </div>
               <button
-                className="border border-[#EDE9E0]/25 p-2"
                 onClick={onClose}
+                className="text-[#7C7C75] hover:text-[#111111]"
+                aria-label="Close size guide"
               >
-                <CloseIcon />
+                <X size={18} strokeWidth={1.5} />
               </button>
             </div>
-            <table className="w-full text-left text-xs uppercase tracking-[0.1em]">
-              <thead>
-                <tr className="border-b border-[#EDE9E0]/15 text-[#EDE9E0]/60">
-                  <th className="py-2">Size</th>
-                  <th className="py-2">Chest</th>
-                  <th className="py-2">Length</th>
-                  <th className="py-2">Shoulder</th>
+            <table className="w-full text-left text-sm">
+              <thead className="text-[11px] uppercase tracking-[0.18em] text-[#7C7C75]">
+                <tr>
+                  <th className="border-b border-[#111111]/10 py-3">Size</th>
+                  <th className="border-b border-[#111111]/10 py-3">Chest</th>
+                  <th className="border-b border-[#111111]/10 py-3">Length</th>
+                  <th className="border-b border-[#111111]/10 py-3">Shoulder</th>
                 </tr>
               </thead>
               <tbody>
-                {["XS", "S", "M", "L", "XL", "XXL"].map((size, i) => (
-                  <tr key={size} className="border-b border-[#EDE9E0]/10">
-                    <td className="py-2">{size}</td>
-                    <td className="py-2">{56 + i * 2}</td>
-                    <td className="py-2">{64 + i * 1.5}</td>
-                    <td className="py-2">{55 + i * 1.5}</td>
+                {sizes.map((size, index) => (
+                  <tr key={size} className="border-b border-[#111111]/5">
+                    <td className="py-4 text-[#111111]">{size}</td>
+                    <td className="py-4 text-[#7C7C75]">{56 + index * 2} cm</td>
+                    <td className="py-4 text-[#7C7C75]">
+                      {64 + index * 1.5} cm
+                    </td>
+                    <td className="py-4 text-[#7C7C75]">
+                      {55 + index * 1.5} cm
+                    </td>
                   </tr>
                 ))}
               </tbody>
             </table>
+            <p className="mt-7 bg-[#F5F0E8] p-5 text-sm font-light leading-[1.8] text-[#7C7C75]">
+              Designed for structured ease. Choose your usual size for the
+              intended drape, or size down for a closer fit.
+            </p>
           </motion.div>
         </>
       ) : null}
@@ -129,66 +140,36 @@ function PhotoViewerModal({
   const [zoomX, setZoomX] = useState(50);
   const [zoomY, setZoomY] = useState(50);
   const touchStartXRef = useRef<number | null>(null);
-  const touchStartYRef = useRef<number | null>(null);
-  const navRef = useRef({
-    activeIndex: 0,
-    totalImages: 0,
-    onChangeIndex,
-  });
-
   const totalImages = images.length;
   const activeIndex = currentIndex >= 0 ? currentIndex : 0;
-  const activeImage = images[activeIndex] || images[0] || "";
-
-  useEffect(() => {
-    navRef.current = {
-      activeIndex,
-      totalImages,
-      onChangeIndex,
-    };
-  }, [activeIndex, totalImages, onChangeIndex]);
+  const activeImage = images[activeIndex] || images[0] || "/images/1.avif";
 
   const goPrev = () => {
-    const {
-      activeIndex: idx,
-      totalImages: count,
-      onChangeIndex: change,
-    } = navRef.current;
-    if (count <= 1) return;
-    const nextIndex = (idx - 1 + count) % count;
-    change(nextIndex);
+    if (totalImages <= 1) return;
+    onChangeIndex((activeIndex - 1 + totalImages) % totalImages);
     setZoomActive(false);
   };
 
   const goNext = () => {
-    const {
-      activeIndex: idx,
-      totalImages: count,
-      onChangeIndex: change,
-    } = navRef.current;
-    if (count <= 1) return;
-    const nextIndex = (idx + 1) % count;
-    change(nextIndex);
+    if (totalImages <= 1) return;
+    onChangeIndex((activeIndex + 1) % totalImages);
     setZoomActive(false);
   };
 
   useEffect(() => {
     if (!open) return;
-
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") onClose();
       if (event.key === "ArrowLeft") goPrev();
       if (event.key === "ArrowRight") goNext();
     };
-
     document.addEventListener("keydown", onKeyDown);
     document.body.style.overflow = "hidden";
-
     return () => {
       document.removeEventListener("keydown", onKeyDown);
       document.body.style.overflow = "";
     };
-  }, [open, onClose]);
+  }, [open, activeIndex, totalImages, onClose]);
 
   return (
     <AnimatePresence>
@@ -196,68 +177,51 @@ function PhotoViewerModal({
         <>
           <motion.button
             aria-label="Close photo viewer"
-            className="fixed inset-0 z-[130] bg-[#080808]/80"
+            className="fixed inset-0 z-[130] bg-[#111111]/75"
             onClick={onClose}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
           />
-
           <motion.div
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 18 }}
             transition={{ duration: 0.25, ease: "easeOut" }}
-            className="fixed left-1/2 top-1/2 z-[140] w-[96vw] max-w-5xl -translate-x-1/2 -translate-y-1/2 border border-[#EDE9E0]/30 bg-[#080808] p-4 md:p-5"
+            className="fixed left-1/2 top-1/2 z-[140] w-[96vw] max-w-5xl -translate-x-1/2 -translate-y-1/2 bg-[#FAF8F4] p-4 text-[#111111] md:p-5"
             role="dialog"
             aria-modal="true"
           >
             <div className="mb-3 flex items-center justify-between">
-              <p className="text-[11px] uppercase tracking-[0.18em] text-[#EDE9E0]/65">
-                View Photo - Hover to Zoom
+              <p className="text-[11px] uppercase tracking-[0.18em] text-[#7C7C75]">
+                View Photo
               </p>
-              <p className="text-[11px] uppercase tracking-[0.18em] text-[#EDE9E0]/55">
+              <p className="text-[11px] uppercase tracking-[0.18em] text-[#7C7C75]">
                 {activeIndex + 1} / {totalImages}
               </p>
-              <button
-                className="border border-[#EDE9E0]/25 p-2"
-                onClick={onClose}
-                aria-label="Close photo viewer"
-              >
-                <CloseIcon />
+              <button onClick={onClose} aria-label="Close photo viewer">
+                <X size={18} strokeWidth={1.5} />
               </button>
             </div>
-
             <div
-              className="relative overflow-hidden border border-[#EDE9E0]/15"
+              className="relative overflow-hidden bg-[#EDE8DF]"
               onTouchStart={(event) => {
-                const touch = event.touches[0];
-                touchStartXRef.current = touch.clientX;
-                touchStartYRef.current = touch.clientY;
+                touchStartXRef.current = event.touches[0].clientX;
               }}
               onTouchEnd={(event) => {
                 const startX = touchStartXRef.current;
-                const startY = touchStartYRef.current;
-                if (startX === null || startY === null) return;
-
-                const touch = event.changedTouches[0];
-                const deltaX = touch.clientX - startX;
-                const deltaY = touch.clientY - startY;
-
-                if (Math.abs(deltaX) > 35 && Math.abs(deltaY) < 35) {
+                if (startX === null) return;
+                const deltaX = event.changedTouches[0].clientX - startX;
+                if (Math.abs(deltaX) > 35) {
                   if (deltaX < 0) goNext();
                   else goPrev();
                 }
-
                 touchStartXRef.current = null;
-                touchStartYRef.current = null;
               }}
               onMouseMove={(event) => {
                 const rect = event.currentTarget.getBoundingClientRect();
-                const x = ((event.clientX - rect.left) / rect.width) * 100;
-                const y = ((event.clientY - rect.top) / rect.height) * 100;
-                setZoomX(Math.max(0, Math.min(100, x)));
-                setZoomY(Math.max(0, Math.min(100, y)));
+                setZoomX(((event.clientX - rect.left) / rect.width) * 100);
+                setZoomY(((event.clientY - rect.top) / rect.height) * 100);
               }}
               onMouseEnter={() => setZoomActive(true)}
               onMouseLeave={() => setZoomActive(false)}
@@ -268,7 +232,7 @@ function PhotoViewerModal({
                     type="button"
                     onClick={goPrev}
                     aria-label="Previous photo"
-                    className="absolute left-2 top-1/2 z-[141] -translate-y-1/2 border border-[#EDE9E0]/35 bg-[#080808]/45 px-3 py-2 text-sm"
+                    className="absolute left-2 top-1/2 z-[141] -translate-y-1/2 bg-[#FAF8F4]/85 px-3 py-2 text-sm"
                   >
                     ←
                   </button>
@@ -276,7 +240,7 @@ function PhotoViewerModal({
                     type="button"
                     onClick={goNext}
                     aria-label="Next photo"
-                    className="absolute right-2 top-1/2 z-[141] -translate-y-1/2 border border-[#EDE9E0]/35 bg-[#080808]/45 px-3 py-2 text-sm"
+                    className="absolute right-2 top-1/2 z-[141] -translate-y-1/2 bg-[#FAF8F4]/85 px-3 py-2 text-sm"
                   >
                     →
                   </button>
@@ -289,9 +253,9 @@ function PhotoViewerModal({
                 width={1200}
                 height={1600}
                 loading="lazy"
-                className="max-h-[90vh] w-full object-contain"
+                className="max-h-[86vh] w-full object-contain"
                 style={{
-                  transform: zoomActive ? "scale(2)" : "scale(1)",
+                  transform: zoomActive ? "scale(1.8)" : "scale(1)",
                   transformOrigin: `${zoomX}% ${zoomY}%`,
                   transition: zoomActive
                     ? "transform 40ms linear"
@@ -306,6 +270,68 @@ function PhotoViewerModal({
   );
 }
 
+function ProductStory({ product }: { product: Product }) {
+  return (
+    <>
+      <section className="bg-[#FAF8F4] px-6 py-24 md:px-12 md:py-32">
+        <div className="mx-auto grid max-w-[1400px] grid-cols-1 gap-12 lg:grid-cols-12">
+          <div className="lg:col-span-5">
+            <p className="qutb-eyebrow text-[#7C7C75]">Product Story</p>
+            <h2 className="mt-6 font-brand-serif text-[clamp(2.4rem,5vw,4.2rem)] leading-[1.05]">
+              Designed for daily repetition.
+            </h2>
+          </div>
+          <div className="space-y-6 text-[16px] font-light leading-[1.9] text-[#7C7C75] lg:col-span-5 lg:col-start-8">
+            <p>{product.fabricStory}</p>
+            <p>
+              Cut from cotton selected for structure and softened through wear,
+              this piece is made to become part of the day rather than a moment
+              in a season.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-[#111111] px-6 py-24 text-[#FAF8F4] md:px-12 md:py-32">
+        <div className="mx-auto grid max-w-[1400px] grid-cols-1 gap-12 lg:grid-cols-12">
+          <div className="lg:col-span-5">
+            <p className="qutb-eyebrow text-[#FAF8F4]/35">Origin</p>
+            <h2 className="mt-6 font-brand-serif text-[clamp(2.4rem,5vw,4.4rem)] leading-[1.05]">
+              Made near
+              <br />
+              the sea.
+            </h2>
+          </div>
+          <div className="space-y-6 text-[16px] font-light leading-[1.9] text-[#FAF8F4]/60 lg:col-span-5 lg:col-start-8">
+            <p>
+              Alexandria gives the garment its rhythm: practical, coastal, and
+              quietly exacting. The city is not a campaign reference. It is the
+              source.
+            </p>
+            <p>
+              Every stitch carries production memory from workshops and cutting
+              rooms shaped by generations of cotton craft.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-[#F5F0E8] px-6 py-24 md:px-12 md:py-32">
+        <div className="mx-auto max-w-[900px] text-center">
+          <p className="qutb-eyebrow text-[#7C7C75]">Fit Philosophy</p>
+          <h2 className="mt-6 font-brand-serif text-[clamp(2.4rem,6vw,5rem)] leading-[1.05]">
+            Fabric first.
+            <br />
+            Logo second.
+            <br />
+            Always.
+          </h2>
+        </div>
+      </section>
+    </>
+  );
+}
+
 export function ProductDetailClient({
   product,
   relatedProducts,
@@ -313,14 +339,14 @@ export function ProductDetailClient({
   product: Product;
   relatedProducts?: Product[];
 }) {
-  const [mainImage, setMainImage] = useState(product.images[0]);
+  const images = product.images.length ? product.images : ["/images/1.avif"];
+  const [mainImage, setMainImage] = useState(images[0]);
   const [selectedSize, setSelectedSize] = useState<string | null>(null);
   const [qty, setQty] = useState(1);
   const [openGuide, setOpenGuide] = useState(false);
   const [openPhotoViewer, setOpenPhotoViewer] = useState(false);
   const [fly, setFly] = useState(false);
   const imageTouchStartXRef = useRef<number | null>(null);
-  const imageTouchStartYRef = useRef<number | null>(null);
   const imageSwipeTriggeredRef = useRef(false);
   const { addItem, openCart } = useCart();
   const router = useRouter();
@@ -328,8 +354,7 @@ export function ProductDetailClient({
   const { track } = useMetaPixel();
 
   const related = useMemo(
-    () =>
-      (relatedProducts || []).filter((p) => p.id !== product.id).slice(0, 4),
+    () => (relatedProducts || []).filter((p) => p.id !== product.id).slice(0, 4),
     [product.id, relatedProducts],
   );
 
@@ -349,7 +374,7 @@ export function ProductDetailClient({
       value: product.price,
       currency: "EGP",
     });
-  }, [product.id]);
+  }, [product.id, product.name, product.price, track, trackEvent]);
 
   const handleAdd = () => {
     if (!canAdd || !selectedSize) return;
@@ -363,7 +388,7 @@ export function ProductDetailClient({
         size: selectedSize,
         qty,
         unitPrice: product.price,
-        image: product.images[0],
+        image: images[0],
       });
       setFly(false);
     }, 230);
@@ -379,266 +404,239 @@ export function ProductDetailClient({
       size: selectedSize,
       qty,
       unitPrice: product.price,
-      image: product.images[0],
+      image: images[0],
     });
     router.push("/checkout?mode=buynow");
   };
 
   const switchMainImageByStep = (step: number) => {
-    if (!product.images.length) return;
-    const currentIndex = Math.max(0, product.images.indexOf(mainImage));
-    const nextIndex =
-      (currentIndex + step + product.images.length) % product.images.length;
-    setMainImage(product.images[nextIndex]);
+    if (!images.length) return;
+    const currentIndex = Math.max(0, images.indexOf(mainImage));
+    const nextIndex = (currentIndex + step + images.length) % images.length;
+    setMainImage(images[nextIndex]);
   };
 
   return (
-    <main className="bg-[#080808] px-6 pb-20 pt-28 md:px-10">
-      <div className="mx-auto grid max-w-7xl grid-cols-1 gap-10 lg:grid-cols-[60%_40%]">
-        <section>
-          <div className="lg:sticky lg:top-28">
-            <div className="overflow-hidden border border-[#EDE9E0]/15">
-              <img
-                src={mainImage}
-                alt={`QUTB ${product.name} in ${product.color} — 100% COTTON garment dyed tee, ${product.price} EGP`}
-                width={1200}
-                height={1600}
-                fetchPriority="high"
-                loading="eager"
-                srcSet={`${mainImage} 400w, ${mainImage} 800w, ${mainImage} 1200w`}
-                className="w-full h-auto min-h-[75vh] object-cover cursor-zoom-in"
-                onTouchStart={(event) => {
-                  const touch = event.touches[0];
-                  imageTouchStartXRef.current = touch.clientX;
-                  imageTouchStartYRef.current = touch.clientY;
-                  imageSwipeTriggeredRef.current = false;
-                }}
-                onTouchEnd={(event) => {
-                  const startX = imageTouchStartXRef.current;
-                  const startY = imageTouchStartYRef.current;
-                  if (startX === null || startY === null) return;
-
-                  const touch = event.changedTouches[0];
-                  const deltaX = touch.clientX - startX;
-                  const deltaY = touch.clientY - startY;
-
-                  if (Math.abs(deltaX) > 35 && Math.abs(deltaY) < 35) {
-                    imageSwipeTriggeredRef.current = true;
-                    switchMainImageByStep(deltaX < 0 ? 1 : -1);
-                  }
-
-                  imageTouchStartXRef.current = null;
-                  imageTouchStartYRef.current = null;
-                }}
-                onClick={() => {
-                  if (imageSwipeTriggeredRef.current) {
-                    imageSwipeTriggeredRef.current = false;
-                    return;
-                  }
-                  setOpenPhotoViewer(true);
-                }}
-              />
-            </div>
-            <button
-              onClick={() => setOpenPhotoViewer(true)}
-              className="mt-2 text-xs uppercase tracking-[0.16em] text-[#EDE9E0]/72 hover:underline"
-            >
-              VIEW PHOTO →
-            </button>
-            <div className="mt-3 grid grid-cols-4 gap-2">
-              {product.images.map((image) => (
+    <div className="bg-[#FAF8F4] text-[#111111]">
+      <main>
+        <section className="mx-auto grid max-w-[1600px] grid-cols-1 lg:grid-cols-[62%_38%]">
+          <div className="pt-[99px] lg:pt-[99px]">
+            <div className="flex flex-col gap-[3px]">
+              {images.map((image, index) => (
                 <button
-                  key={image}
-                  onClick={() => setMainImage(image)}
-                  className={`overflow-hidden border ${mainImage === image ? "border-[#EDE9E0]" : "border-[#EDE9E0]/20"}`}
+                  key={`${image}-${index}`}
+                  type="button"
+                  onClick={() => {
+                    setMainImage(image);
+                    setOpenPhotoViewer(true);
+                  }}
+                  className="relative aspect-[3/4] w-full overflow-hidden bg-[#EDE8DF] text-left md:aspect-[4/5]"
                 >
                   <img
                     src={image}
-                    alt={`QUTB ${product.name} in ${product.color} — 100% COTTON garment dyed tee, ${product.price} EGP`}
-                    width={240}
-                    height={320}
-                    loading="lazy"
-                    className="h-24 w-full object-cover"
+                    alt={`${product.name} in ${product.color} ${index + 1}`}
+                    width={1200}
+                    height={1600}
+                    loading={index === 0 ? "eager" : "lazy"}
+                    fetchPriority={index === 0 ? "high" : undefined}
+                    className="h-full w-full object-cover"
+                    onTouchStart={(event) => {
+                      const touch = event.touches[0];
+                      imageTouchStartXRef.current = touch.clientX;
+                      imageSwipeTriggeredRef.current = false;
+                    }}
+                    onTouchEnd={(event) => {
+                      const startX = imageTouchStartXRef.current;
+                      if (startX === null) return;
+                      const deltaX = event.changedTouches[0].clientX - startX;
+                      if (Math.abs(deltaX) > 35) {
+                        imageSwipeTriggeredRef.current = true;
+                        switchMainImageByStep(deltaX < 0 ? 1 : -1);
+                      }
+                      imageTouchStartXRef.current = null;
+                    }}
                   />
                 </button>
               ))}
             </div>
           </div>
-        </section>
 
-        <section>
-          <p className="text-[11px] uppercase tracking-[0.14em] text-[#EDE9E0]/45">
-            HOME / SHOP / {product.name} {product.color}
-          </p>
-          <h1 className="mt-4 text-[32px] font-medium">
-            {product.name} — {product.color}
-          </h1>
-          <div className="mt-4 grid gap-2 text-xs uppercase tracking-[0.16em] text-[#EDE9E0]/65 sm:grid-cols-2">
-            <p>GSM: {product.weightGsm} GSM</p>
-            <p>Colorway: {product.color}</p>
-            <p>Q Variant: {product.qVariant}</p>
-            <p>Stock: {hasStock ? "IN STOCK" : "SOLD OUT"}</p>
-          </div>
-          <p className="mt-2 text-[28px] font-medium">
-            {product.compareAtPrice ? (
-              <>
-                <span className="mr-2 line-through text-[#EDE9E0]/45">
-                  {formatEGP(product.compareAtPrice)}
-                </span>
-                <span>{formatEGP(product.price)}</span>
-              </>
-            ) : (
-              <span>{formatEGP(product.price)}</span>
-            )}
-          </p>
-
-          <div className="mt-4 flex items-center gap-2 text-xs uppercase tracking-[0.16em] text-[#555555]">
-            <motion.span
-              className="h-2 w-2 bg-[#555555]"
-              animate={{ opacity: [0.4, 1, 0.4] }}
-              transition={{
-                duration: 1.4,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
-            />
-            ERA 99 — DROP 001 — LIMITED
-          </div>
-
-          <div className="my-6 border-b-[0.5px] border-[#EDE9E0]/15" />
-
-          {!hasStock ? (
-            <p className="mb-6 border border-[#8B0000] px-4 py-3 text-sm uppercase tracking-[0.18em] text-[#EDE9E0]">
-              Gone. Watch for the next era.
-            </p>
-          ) : null}
-
-          <div>
-            <p className="mb-3 text-xs uppercase tracking-[0.16em] text-[#EDE9E0]/65">
-              Select size
-            </p>
-            <div className="flex flex-wrap gap-2">
-              {sizes.map((size) => {
-                const inStock = product.stockBySize[size];
-                return (
-                  <button
-                    key={size}
-                    disabled={!inStock}
-                    onClick={() => setSelectedSize(size)}
-                    className={`h-11 w-11 border text-xs uppercase tracking-[0.1em] ${
-                      selectedSize === size
-                        ? "border-[#EDE9E0] bg-[#EDE9E0] text-[#080808]"
-                        : "border-[#EDE9E0]/30"
-                    } ${!inStock ? "cursor-not-allowed text-[#EDE9E0]/30 line-through" : "hover:border-[#EDE9E0]"}`}
-                  >
-                    {size}
-                  </button>
-                );
-              })}
-            </div>
-            {!selectedSize ? (
-              <p className="mt-2 text-xs text-[#555555]">
-                Please select a size.
+          <aside className="lg:sticky lg:top-[99px] lg:h-[calc(100vh-99px)] lg:overflow-y-auto">
+            <div className="px-6 py-12 md:px-12 lg:px-10 lg:py-16">
+              <Link
+                href="/shop"
+                className="mb-8 inline-block text-[11px] uppercase tracking-[0.18em] text-[#7C7C75] hover:text-[#111111]"
+              >
+                ← The Uniform
+              </Link>
+              <p className="qutb-eyebrow text-[#111111]/35">
+                {product.weightGsm} GSM - {product.qVariant}
               </p>
-            ) : null}
-            <button
-              onClick={() => setOpenGuide(true)}
-              className="mt-3 text-xs uppercase tracking-[0.16em] text-[#EDE9E0]/75 hover:underline"
-            >
-              SIZE GUIDE →
-            </button>
-          </div>
+              <h1 className="mt-3 font-brand-serif text-[clamp(2.1rem,4vw,3.2rem)] font-medium leading-none tracking-[-0.01em]">
+                {product.name}
+              </h1>
+              <p className="mt-2 text-sm font-light tracking-[0.08em] text-[#7C7C75]">
+                {product.color}
+              </p>
+              <p className="mt-6 text-lg text-[#111111]">
+                {product.compareAtPrice ? (
+                  <>
+                    <span className="mr-3 text-[#7C7C75] line-through">
+                      {formatEGP(product.compareAtPrice)}
+                    </span>
+                    {formatEGP(product.price)}
+                  </>
+                ) : (
+                  formatEGP(product.price)
+                )}
+              </p>
+              <p className="mt-6 text-[15px] font-light leading-[1.8] text-[#7C7C75]">
+                {product.shortDescription || product.description.fabric}
+              </p>
 
-          {hasStock ? (
-          <div className="mt-6 flex items-center gap-4">
-            <span className="text-xs uppercase tracking-[0.16em] text-[#EDE9E0]/65">
-              Qty
-            </span>
-            <div className="inline-flex items-center border border-[#EDE9E0]/30">
-              <button
-                className="grid h-11 w-11 place-items-center border-r border-[#EDE9E0]/30"
-                onClick={() => setQty((q) => Math.max(1, q - 1))}
-              >
-                <MinusIcon />
-              </button>
-              <span className="w-12 text-center text-sm">{qty}</span>
-              <button
-                className="grid h-11 w-11 place-items-center border-l border-[#EDE9E0]/30"
-                onClick={() => setQty((q) => q + 1)}
-              >
-                <PlusIcon />
-              </button>
-            </div>
-          </div>
-          ) : null}
+              <div className="my-8 border-t border-[#111111]/10" />
 
-          {hasStock ? (
-          <div className="mt-6 space-y-3">
-            <button
-              disabled={!canAdd}
-              onClick={handleAdd}
-              className="w-full bg-[#EDE9E0] px-4 py-3 text-sm font-medium uppercase tracking-[0.14em] text-[#080808] disabled:opacity-50"
-            >
-              ADD TO CART
-            </button>
-            <button
-              disabled={!canAdd}
-              onClick={handleBuyNow}
-              className="w-full border border-[#EDE9E0]/40 px-4 py-3 text-sm uppercase tracking-[0.14em] disabled:opacity-50"
-            >
-              BUY NOW
-            </button>
-          </div>
-          ) : null}
+              {!hasStock ? (
+                <p className="mb-7 border border-[#111111]/15 bg-[#F5F0E8] px-4 py-3 text-sm text-[#7C7C75]">
+                  Sold out. Watch for the next restock.
+                </p>
+              ) : null}
 
-          <div className="mt-6 grid grid-cols-1 gap-2 text-xs text-[#EDE9E0]/72 sm:grid-cols-3">
-            <div className="flex items-center gap-2 border border-[#EDE9E0]/12 px-3 py-2">
-              <TruckIcon />
-              Free Alex Delivery
-            </div>
-            <div className="flex items-center gap-2 border border-[#EDE9E0]/12 px-3 py-2">
-              <ShieldIcon />
-              ERA 99 99
-            </div>
-            <div className="flex items-center gap-2 border border-[#EDE9E0]/12 px-3 py-2">
-              <WeightIcon />
-              100% COTTON
-            </div>
-          </div>
+              <div>
+                <div className="mb-4 flex items-baseline justify-between">
+                  <p className="qutb-eyebrow text-[#7C7C75]">
+                    Size{selectedSize ? ` - ${selectedSize}` : ""}
+                  </p>
+                  <button
+                    onClick={() => setOpenGuide(true)}
+                    className="text-[11px] uppercase tracking-[0.14em] text-[#7C7C75] underline underline-offset-4 hover:text-[#111111]"
+                  >
+                    Size Guide
+                  </button>
+                </div>
+                <div className="flex flex-wrap gap-5">
+                  {sizes.map((size) => {
+                    const inStock = product.stockBySize[size];
+                    return (
+                      <button
+                        key={size}
+                        disabled={!inStock}
+                        onClick={() => setSelectedSize(size)}
+                        className={`border-b pb-1 text-[13px] uppercase tracking-[0.12em] ${
+                          selectedSize === size
+                            ? "border-[#111111] text-[#111111]"
+                            : "border-transparent text-[#7C7C75]"
+                        } ${!inStock ? "cursor-not-allowed text-[#111111]/25 line-through" : "hover:text-[#111111]"}`}
+                      >
+                        {size}
+                      </button>
+                    );
+                  })}
+                </div>
+                {!selectedSize && hasStock ? (
+                  <p className="mt-3 text-sm font-light text-[#7C7C75]">
+                    Please select a size.
+                  </p>
+                ) : null}
+              </div>
 
-          <div className="mt-8">
-            <Accordion
-              title="Fabric Details"
-              content={product.description.fabric}
-            />
-            <Accordion title="Fabric Story" content={product.fabricStory} />
-            <Accordion title="Q Variant" content={product.qVariant} />
-            <Accordion title="Size & Fit" content={product.description.fit} />
-            <Accordion
-              title="Care Instructions"
-              content={product.description.care}
-            />
-          </div>
+              {hasStock ? (
+                <div className="mt-8">
+                  <p className="qutb-eyebrow mb-3 text-[#7C7C75]">Quantity</p>
+                  <div className="inline-flex h-11 items-center border border-[#111111]/20">
+                    <button
+                      className="grid h-11 w-11 place-items-center border-r border-[#111111]/20 text-[#7C7C75] hover:text-[#111111]"
+                      onClick={() => setQty((value) => Math.max(1, value - 1))}
+                      aria-label="Decrease quantity"
+                    >
+                      <Minus size={15} strokeWidth={1.5} />
+                    </button>
+                    <span className="w-12 text-center text-sm">{qty}</span>
+                    <button
+                      className="grid h-11 w-11 place-items-center border-l border-[#111111]/20 text-[#7C7C75] hover:text-[#111111]"
+                      onClick={() => setQty((value) => value + 1)}
+                      aria-label="Increase quantity"
+                    >
+                      <Plus size={15} strokeWidth={1.5} />
+                    </button>
+                  </div>
+                </div>
+              ) : null}
+
+              {hasStock ? (
+                <div className="mt-8 space-y-3">
+                  <button
+                    disabled={!canAdd}
+                    onClick={handleAdd}
+                    className="h-12 w-full bg-[#111111] px-4 text-[12px] uppercase tracking-[0.16em] text-[#FAF8F4] transition-opacity hover:opacity-85 disabled:opacity-40"
+                  >
+                    Add To Bag
+                  </button>
+                  <button
+                    disabled={!canAdd}
+                    onClick={handleBuyNow}
+                    className="h-12 w-full border border-[#111111]/25 px-4 text-[12px] uppercase tracking-[0.16em] text-[#111111] transition-colors hover:border-[#111111] disabled:opacity-40"
+                  >
+                    Buy Now
+                  </button>
+                </div>
+              ) : null}
+
+              <div className="mt-8 grid grid-cols-1 gap-3 border-y border-[#111111]/10 py-5 text-sm font-light text-[#7C7C75]">
+                <p>Free Alexandria delivery</p>
+                <p>100% cotton construction</p>
+                <p>Made in Egypt</p>
+              </div>
+
+              <div className="mt-6">
+                <Accordion title="Fabric Details" content={product.description.fabric} />
+                <Accordion title="Fabric Story" content={product.fabricStory} />
+                <Accordion title="Fit" content={product.description.fit} />
+                <Accordion title="Care" content={product.description.care} />
+              </div>
+            </div>
+          </aside>
         </section>
-      </div>
 
-      <section className="mx-auto mt-16 max-w-7xl">
-        <h2 className="mb-8 text-2xl uppercase tracking-[0.14em]">
-          YOU MIGHT ALSO LIKE
-        </h2>
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-4">
-          {related.map((item) => (
-            <ProductCard key={item.id} product={item} />
-          ))}
-        </div>
-      </section>
+        <ProductStory product={product} />
+
+        {related.length > 0 ? (
+          <section className="bg-[#FAF8F4] px-6 py-24 md:px-12 md:py-32">
+            <div className="mx-auto max-w-[1400px]">
+              <div className="mb-14 flex items-end justify-between gap-5">
+                <div>
+                  <p className="qutb-eyebrow text-[#7C7C75]">
+                    Also From The Uniform
+                  </p>
+                  <h2 className="mt-4 font-brand-serif text-[clamp(2rem,4vw,3rem)]">
+                    Complete The Uniform
+                  </h2>
+                </div>
+                <Link
+                  href="/shop"
+                  className="qutb-link-underline text-[12px] uppercase tracking-[0.16em] text-[#111111]"
+                >
+                  View All
+                </Link>
+              </div>
+              <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
+                {related.map((item) => (
+                  <ProductCard key={item.id} product={item} />
+                ))}
+              </div>
+            </div>
+          </section>
+        ) : null}
+      </main>
+
+      <QutbFooter />
 
       <SizeGuideModal open={openGuide} onClose={() => setOpenGuide(false)} />
       <PhotoViewerModal
         open={openPhotoViewer}
-        images={product.images}
-        currentIndex={Math.max(0, product.images.indexOf(mainImage))}
-        onChangeIndex={(index) => setMainImage(product.images[index])}
+        images={images}
+        currentIndex={Math.max(0, images.indexOf(mainImage))}
+        onChangeIndex={(index) => setMainImage(images[index])}
         alt={`${product.name} enlarged view`}
         onClose={() => setOpenPhotoViewer(false)}
       />
@@ -646,9 +644,9 @@ export function ProductDetailClient({
       <AnimatePresence>
         {fly ? (
           <motion.div
-            className="fixed left-1/2 top-[50%] z-[120] h-8 w-8 border border-[#EDE9E0] bg-[#EDE9E0]"
+            className="fixed left-1/2 top-[50%] z-[120] h-8 w-8 bg-[#111111]"
             initial={{ x: 0, y: 0, opacity: 1 }}
-            animate={{ x: "42vw", y: "-44vh", opacity: 0.2, scale: 0.3 }}
+            animate={{ x: "42vw", y: "-44vh", opacity: 0.15, scale: 0.3 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.55, ease: "easeInOut" }}
             onAnimationComplete={() => {
@@ -658,6 +656,6 @@ export function ProductDetailClient({
           />
         ) : null}
       </AnimatePresence>
-    </main>
+    </div>
   );
 }

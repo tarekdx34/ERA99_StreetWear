@@ -23,7 +23,12 @@ export async function sendOrderConfirmation(order: {
   address: string;
   city: string;
   governorate: string;
-  items: Array<{ name: string; size: string; quantity: number; unitPrice: number }>;
+  items: Array<{
+    name: string;
+    size: string;
+    quantity: number;
+    unitPrice: number;
+  }>;
   subtotal: number;
   deliveryFee: number;
   total: number;
@@ -35,10 +40,10 @@ export async function sendOrderConfirmation(order: {
     .map(
       (item) => `
     <tr>
-      <td style="padding: 12px 0; border-bottom: 1px solid rgba(237, 233, 224, 0.15); color: #EDE9E0; font-family: Arial, sans-serif; font-size: 14px;">
+      <td style="padding: 12px 0; border-bottom: 1px solid rgba(26, 23, 20, 0.12); color: #1A1714; font-family: 'DM Sans', Arial, sans-serif; font-size: 14px;">
         ${escapeHtml(item.name)} &mdash; ${escapeHtml(item.size)}
       </td>
-      <td style="padding: 12px 0; border-bottom: 1px solid rgba(237, 233, 224, 0.15); color: #EDE9E0; font-family: Arial, sans-serif; font-size: 14px; text-align: right;">
+      <td style="padding: 12px 0; border-bottom: 1px solid rgba(26, 23, 20, 0.12); color: #1A1714; font-family: 'DM Sans', Arial, sans-serif; font-size: 14px; text-align: right;">
         ${escapeHtml(item.quantity)} &times; ${escapeHtml(item.unitPrice)} EGP
       </td>
     </tr>
@@ -54,60 +59,60 @@ export async function sendOrderConfirmation(order: {
       <!DOCTYPE html>
       <html>
       <head><meta charset="utf-8"><meta name="viewport" content="width=device-width"></head>
-      <body style="margin: 0; padding: 0; background-color: #080808;">
-        <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #080808; padding: 40px 20px;">
+      <body style="margin: 0; padding: 0; background-color: #EBE4D8;">
+        <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #EBE4D8; padding: 40px 20px;">
           <tr>
             <td align="center">
               <table width="600" cellpadding="0" cellspacing="0" style="max-width: 600px; width: 100%;">
                 <tr>
                   <td style="padding: 0 0 32px 0; text-align: center;">
-                    <p style="font-family: Arial, sans-serif; font-size: 32px; font-weight: 400; color: #EDE9E0; margin: 0; letter-spacing: 16px; text-transform: uppercase;">QUTB</p>
-                    <p style="font-family: Arial, sans-serif; font-size: 11px; color: #555555; margin: 8px 0 0 0; letter-spacing: 4px; text-transform: uppercase;">ERA 99 — ALEXANDRIA</p>
+                    <p style="font-family: 'Cormorant Garamond', 'DM Sans', Arial, serif; font-size: 52px; font-weight: 600; color: #1A1714; margin: 0; letter-spacing: 4px; text-transform: uppercase;">QUTB</p>
+                    <p style="font-family: 'DM Sans', Arial, sans-serif; font-size: 11px; color: #8C8278; margin: 8px 0 0 0; letter-spacing: 4px; text-transform: uppercase;">ERA 99 — ALEXANDRIA</p>
                   </td>
                 </tr>
-                <tr><td style="border-top: 1px solid rgba(237, 233, 224, 0.15); padding-bottom: 32px;"></td></tr>
+                <tr><td style="border-top: 1px solid rgba(26, 23, 20, 0.12); padding-bottom: 32px;"></td></tr>
                 <tr>
                   <td style="padding-bottom: 32px;">
-                    <p style="font-family: Arial, sans-serif; font-size: 13px; color: #555555; margin: 0 0 8px 0; letter-spacing: 3px; text-transform: uppercase;">Order confirmed</p>
-                    <p style="font-family: Arial, sans-serif; font-size: 24px; font-weight: 500; color: #EDE9E0; margin: 0;">${escapeHtml(order.orderNumber)}</p>
+                    <p style="font-family: 'DM Sans', Arial, sans-serif; font-size: 13px; color: #8C8278; margin: 0 0 8px 0; letter-spacing: 3px; text-transform: uppercase;">Order confirmed</p>
+                    <p style="font-family: 'DM Sans', Arial, sans-serif; font-size: 24px; font-weight: 500; color: #1A1714; margin: 0;">${escapeHtml(order.orderNumber)}</p>
                   </td>
                 </tr>
                 <tr>
-                  <td style="background-color: #080808; padding: 16px; margin-bottom: 32px;">
-                    <p style="font-family: Arial, sans-serif; font-size: 13px; color: #EDE9E0; margin: 0;">Our team will call you within 24 hours to confirm your order before shipping.</p>
+                  <td style="background-color: #EBE4D8; padding: 16px; margin-bottom: 32px;">
+                    <p style="font-family: 'DM Sans', Arial, sans-serif; font-size: 13px; color: #1A1714; margin: 0;">Our team will call you within 24 hours to confirm your order before shipping.</p>
                   </td>
                 </tr>
                 <tr><td style="padding: 16px 0;"></td></tr>
                 <tr>
                   <td>
-                    <p style="font-family: Arial, sans-serif; font-size: 11px; color: #555555; margin: 0 0 16px 0; letter-spacing: 3px; text-transform: uppercase;">Your order</p>
+                    <p style="font-family: 'DM Sans', Arial, sans-serif; font-size: 11px; color: #8C8278; margin: 0 0 16px 0; letter-spacing: 3px; text-transform: uppercase;">Your order</p>
                     <table width="100%" cellpadding="0" cellspacing="0">
                       ${itemsHtml}
                       <tr>
-                        <td style="padding: 16px 0 8px 0; color: #555555; font-family: Arial, sans-serif; font-size: 13px;">Subtotal</td>
-                        <td style="padding: 16px 0 8px 0; color: #555555; font-family: Arial, sans-serif; font-size: 13px; text-align: right;">${escapeHtml(order.subtotal)} EGP</td>
+                        <td style="padding: 16px 0 8px 0; color: #8C8278; font-family: 'DM Sans', Arial, sans-serif; font-size: 13px;">Subtotal</td>
+                        <td style="padding: 16px 0 8px 0; color: #8C8278; font-family: 'DM Sans', Arial, sans-serif; font-size: 13px; text-align: right;">${escapeHtml(order.subtotal)} EGP</td>
                       </tr>
                       <tr>
-                        <td style="padding: 4px 0; color: #555555; font-family: Arial, sans-serif; font-size: 13px;">Delivery</td>
-                        <td style="padding: 4px 0; color: #555555; font-family: Arial, sans-serif; font-size: 13px; text-align: right;">${order.deliveryFee === 0 ? "FREE" : `${escapeHtml(order.deliveryFee)} EGP`}</td>
+                        <td style="padding: 4px 0; color: #8C8278; font-family: 'DM Sans', Arial, sans-serif; font-size: 13px;">Delivery</td>
+                        <td style="padding: 4px 0; color: #8C8278; font-family: 'DM Sans', Arial, sans-serif; font-size: 13px; text-align: right;">${order.deliveryFee === 0 ? "FREE" : `${escapeHtml(order.deliveryFee)} EGP`}</td>
                       </tr>
                       <tr>
-                        <td style="padding: 16px 0 0 0; border-top: 1px solid rgba(237, 233, 224, 0.15); color: #EDE9E0; font-family: Arial, sans-serif; font-size: 16px; font-weight: 500;">Total</td>
-                        <td style="padding: 16px 0 0 0; border-top: 1px solid rgba(237, 233, 224, 0.15); color: #EDE9E0; font-family: Arial, sans-serif; font-size: 16px; font-weight: 500; text-align: right;">${escapeHtml(order.total)} EGP</td>
+                        <td style="padding: 16px 0 0 0; border-top: 1px solid rgba(26, 23, 20, 0.12); color: #1A1714; font-family: 'DM Sans', Arial, sans-serif; font-size: 16px; font-weight: 500;">Total</td>
+                        <td style="padding: 16px 0 0 0; border-top: 1px solid rgba(26, 23, 20, 0.12); color: #1A1714; font-family: 'DM Sans', Arial, sans-serif; font-size: 16px; font-weight: 500; text-align: right;">${escapeHtml(order.total)} EGP</td>
                       </tr>
                     </table>
                   </td>
                 </tr>
-                <tr><td style="border-top: 1px solid rgba(237, 233, 224, 0.15); padding: 32px 0;"></td></tr>
+                <tr><td style="border-top: 1px solid rgba(26, 23, 20, 0.12); padding: 32px 0;"></td></tr>
                 <tr>
                   <td style="padding-bottom: 32px;">
-                    <p style="font-family: Arial, sans-serif; font-size: 11px; color: #555555; margin: 0 0 12px 0; letter-spacing: 3px; text-transform: uppercase;">Delivering to</p>
-                    <p style="font-family: Arial, sans-serif; font-size: 14px; color: #EDE9E0; margin: 0; line-height: 1.6;">${escapeHtml(order.customerName)}<br>${escapeHtml(order.address)}<br>${escapeHtml(order.city)}, ${escapeHtml(order.governorate)}<br>${escapeHtml(order.phone)}</p>
+                    <p style="font-family: 'DM Sans', Arial, sans-serif; font-size: 11px; color: #8C8278; margin: 0 0 12px 0; letter-spacing: 3px; text-transform: uppercase;">Delivering to</p>
+                    <p style="font-family: 'DM Sans', Arial, sans-serif; font-size: 14px; color: #1A1714; margin: 0; line-height: 1.6;">${escapeHtml(order.customerName)}<br>${escapeHtml(order.address)}<br>${escapeHtml(order.city)}, ${escapeHtml(order.governorate)}<br>${escapeHtml(order.phone)}</p>
                   </td>
                 </tr>
                 <tr>
-                  <td style="border-top: 1px solid rgba(237, 233, 224, 0.15); padding-top: 32px; text-align: center;">
-                    <p style="font-family: Arial, sans-serif; font-size: 12px; color: #555555; margin: 0; letter-spacing: 2px;">QUTB · Alexandria, Egypt · The axis holds.</p>
+                  <td style="border-top: 1px solid rgba(26, 23, 20, 0.12); padding-top: 32px; text-align: center;">
+                    <p style="font-family: 'DM Sans', Arial, sans-serif; font-size: 12px; color: #8C8278; margin: 0; letter-spacing: 2px;">QUTB · Alexandria, Egypt · The axis holds.</p>
                   </td>
                 </tr>
               </table>
@@ -120,30 +125,33 @@ export async function sendOrderConfirmation(order: {
   });
 }
 
-export async function sendEmailVerification(email: string, verificationUrl: string) {
+export async function sendEmailVerification(
+  email: string,
+  verificationUrl: string,
+) {
   await resend.emails.send({
     from: getFromEmail(),
     to: email,
     subject: "QUTB — Verify your email.",
     html: `
-      <body style="margin:0;padding:0;background:#080808;">
-        <table width="100%" style="padding:40px 20px;background:#080808;">
+      <body style="margin:0;padding:0;background:#EBE4D8;">
+        <table width="100%" style="padding:40px 20px;background:#EBE4D8;">
           <tr><td align="center">
             <table width="600" style="max-width:600px;">
               <tr><td style="text-align:center;padding-bottom:32px;">
-                <p style="font-family:Arial;font-size:32px;font-weight:400;color:#EDE9E0;margin:0;letter-spacing:16px;text-transform:uppercase;">QUTB</p>
+                <p style="font-family:'Cormorant Garamond', 'DM Sans', Arial, serif;font-size:52px;font-weight:600;color:#1A1714;margin:0;letter-spacing:4px;text-transform:uppercase;">QUTB</p>
               </td></tr>
               <tr><td style="padding-bottom:24px;">
-                <p style="font-family:Arial;font-size:14px;color:#EDE9E0;margin:0;">Verify your email to access your QUTB account.</p>
+                <p style="font-family:'DM Sans', Arial, sans-serif;font-size:14px;color:#1A1714;margin:0;">Verify your email to access your QUTB account.</p>
               </td></tr>
               <tr><td style="padding-bottom:32px;">
-                <a href="${escapeHtml(verificationUrl)}" style="display:inline-block;background:#EDE9E0;color:#080808;font-family:Arial;font-size:13px;font-weight:500;padding:14px 32px;text-decoration:none;letter-spacing:2px;">VERIFY EMAIL</a>
+                <a href="${escapeHtml(verificationUrl)}" style="display:inline-block;background:#1A1714;color:#EBE4D8;font-family:'DM Sans', Arial, sans-serif;font-size:13px;font-weight:500;padding:14px 32px;text-decoration:none;letter-spacing:2px;">VERIFY EMAIL</a>
               </td></tr>
               <tr><td>
-                <p style="font-family:Arial;font-size:12px;color:#555555;margin:0;">This link expires in 24 hours. If you did not create a QUTB account, ignore this email.</p>
+                <p style="font-family:'DM Sans', Arial, sans-serif;font-size:12px;color:#8C8278;margin:0;">This link expires in 24 hours. If you did not create a QUTB account, ignore this email.</p>
               </td></tr>
-              <tr><td style="border-top:1px solid rgba(237, 233, 224, 0.15);padding-top:24px;margin-top:32px;">
-                <p style="font-family:Arial;font-size:12px;color:#555555;margin:0;text-align:center;letter-spacing:2px;">QUTB · Alexandria, Egypt · The axis holds.</p>
+              <tr><td style="border-top:1px solid rgba(26, 23, 20, 0.12);padding-top:24px;margin-top:32px;">
+                <p style="font-family:'DM Sans', Arial, sans-serif;font-size:12px;color:#8C8278;margin:0;text-align:center;letter-spacing:2px;">QUTB · Alexandria, Egypt · The axis holds.</p>
               </td></tr>
             </table>
           </td></tr>
@@ -159,24 +167,24 @@ export async function sendPasswordReset(email: string, resetUrl: string) {
     to: email,
     subject: "QUTB — Reset your password.",
     html: `
-      <body style="margin:0;padding:0;background:#080808;">
-        <table width="100%" style="padding:40px 20px;background:#080808;">
+      <body style="margin:0;padding:0;background:#EBE4D8;">
+        <table width="100%" style="padding:40px 20px;background:#EBE4D8;">
           <tr><td align="center">
             <table width="600" style="max-width:600px;">
               <tr><td style="text-align:center;padding-bottom:32px;">
-                <p style="font-family:Arial;font-size:32px;font-weight:400;color:#EDE9E0;margin:0;letter-spacing:16px;text-transform:uppercase;">QUTB</p>
+                <p style="font-family:'Cormorant Garamond', 'DM Sans', Arial, serif;font-size:52px;font-weight:600;color:#1A1714;margin:0;letter-spacing:4px;text-transform:uppercase;">QUTB</p>
               </td></tr>
               <tr><td style="padding-bottom:24px;">
-                <p style="font-family:Arial;font-size:14px;color:#EDE9E0;margin:0;">Someone requested a password reset for your QUTB account. If this was you, click below.</p>
+                <p style="font-family:'DM Sans', Arial, sans-serif;font-size:14px;color:#1A1714;margin:0;">Someone requested a password reset for your QUTB account. If this was you, click below.</p>
               </td></tr>
               <tr><td style="padding-bottom:32px;">
-                <a href="${escapeHtml(resetUrl)}" style="display:inline-block;background:#EDE9E0;color:#080808;font-family:Arial;font-size:13px;font-weight:500;padding:14px 32px;text-decoration:none;letter-spacing:2px;">RESET PASSWORD</a>
+                <a href="${escapeHtml(resetUrl)}" style="display:inline-block;background:#1A1714;color:#EBE4D8;font-family:'DM Sans', Arial, sans-serif;font-size:13px;font-weight:500;padding:14px 32px;text-decoration:none;letter-spacing:2px;">RESET PASSWORD</a>
               </td></tr>
               <tr><td>
-                <p style="font-family:Arial;font-size:12px;color:#555555;margin:0;">This link expires in 1 hour. If you did not request a reset, ignore this email.</p>
+                <p style="font-family:'DM Sans', Arial, sans-serif;font-size:12px;color:#8C8278;margin:0;">This link expires in 1 hour. If you did not request a reset, ignore this email.</p>
               </td></tr>
-              <tr><td style="border-top:1px solid rgba(237, 233, 224, 0.15);padding-top:24px;margin-top:32px;">
-                <p style="font-family:Arial;font-size:12px;color:#555555;margin:0;text-align:center;letter-spacing:2px;">QUTB · Alexandria, Egypt · The axis holds.</p>
+              <tr><td style="border-top:1px solid rgba(26, 23, 20, 0.12);padding-top:24px;margin-top:32px;">
+                <p style="font-family:'DM Sans', Arial, sans-serif;font-size:12px;color:#8C8278;margin:0;text-align:center;letter-spacing:2px;">QUTB · Alexandria, Egypt · The axis holds.</p>
               </td></tr>
             </table>
           </td></tr>
