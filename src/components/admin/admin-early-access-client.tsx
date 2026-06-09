@@ -173,8 +173,7 @@ export function AdminEarlyAccessClient() {
               </h2>
             </div>
             <p className="mt-3 max-w-2xl text-sm text-[#555555]">
-              Optional. When the timer reaches zero, early access turns off and
-              drop mode turns on automatically.
+              Optional. Enable to show a live countdown timer. When disabled, the page displays a large "COMING SOON" message instead. When the timer reaches zero, early access turns off and drop mode turns on automatically.
             </p>
           </div>
           <div className="grid gap-2 sm:grid-cols-[minmax(0,280px)_auto]">

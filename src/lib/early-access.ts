@@ -278,7 +278,7 @@ async function releaseEarlyAccessIfExpired() {
     });
   } catch {}
 
-  if (!dropAt) {
+  if (!countdownEnabled || !dropAt) {
     return false;
   }
 

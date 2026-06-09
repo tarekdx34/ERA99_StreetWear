@@ -63,8 +63,12 @@ export default async function EarlyAccessPage() {
         </p>
         <div className="mx-auto mt-9 w-full max-w-3xl sm:mt-11">
           <EarlyAccessCountdown
-            deadline={state.earlyAccessDropAt}
-            initialRemaining={getInitialRemaining(state.earlyAccessDropAt)}
+            deadline={state.countdownEnabled ? state.earlyAccessDropAt : null}
+            initialRemaining={
+              state.countdownEnabled
+                ? getInitialRemaining(state.earlyAccessDropAt)
+                : null
+            }
           />
         </div>
         <div className="mx-auto mt-9 w-full max-w-xl sm:mt-11">

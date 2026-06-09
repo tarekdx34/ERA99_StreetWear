@@ -65,9 +65,11 @@ export function EarlyAccessCountdown({
 
   if (!hasDeadline || !remaining) {
     return (
-      <p className="text-[12px] uppercase leading-relaxed tracking-[0.24em] text-[#EDE9E0]/75 sm:text-[13px] sm:tracking-[0.3em]">
-        Drop time is private. Leave your email for the first signal.
-      </p>
+      <div className="border-y border-[#EDE9E0]/20 py-8 sm:py-10">
+        <p className="font-anton text-[clamp(42px,12vw,96px)] uppercase leading-none tracking-[0.06em] text-[#EDE9E0] sm:tracking-[0.12em]">
+          COMING SOON
+        </p>
+      </div>
     );
   }
 
